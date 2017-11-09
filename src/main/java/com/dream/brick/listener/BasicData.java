@@ -1,0 +1,123 @@
+package com.dream.brick.listener;
+
+import com.dream.brick.admin.bean.Department;
+import com.dream.brick.admin.bean.Role;
+import com.dream.brick.admin.bean.Syslog;
+import com.dream.brick.admin.bean.User;
+import com.dream.brick.admin.dao.IDeptDao;
+import com.dream.brick.admin.dao.IRoleDao;
+import com.dream.brick.admin.dao.IUserDao;
+import com.dream.brick.admin.dao.SyslogDao;
+import com.dream.brick.equipment.bean.Area;
+import com.dream.brick.equipment.bean.Company;
+import com.dream.brick.equipment.bean.Product;
+import com.dream.brick.equipment.bean.Qgorg;
+import com.dream.brick.equipment.dao.CompanyDao;
+import com.dream.brick.equipment.dao.ProductDao;
+import com.dream.brick.equipment.dao.QgorgDao;
+
+import com.dream.util.AppMsg;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 获取基础数据 有些公用的查询，像文件，部门等放在这里，提供通用的方法
+ * @author maolei
+ * @date 2015-05-11 16:35
+**/
+public class BasicData {
+	 public static SpringUtil sprintUtil;
+	 public static IRoleDao roleDao;
+	 public static IUserDao userDao;
+	 public static IDeptDao deptDao;
+	 public static QgorgDao qgorgDao;
+	 public static CompanyDao companyDao;
+	 public static ProductDao prodDao;
+	 public static SyslogDao logDao;
+	   public static SpringUtil getSprintUtil()
+	   {
+	     return sprintUtil;
+	   }	
+	   public static void setSprintUtil(SpringUtil su) {
+		     sprintUtil = su;	  
+		     roleDao=(IRoleDao) SpringUtil.getObject("roleDao");
+		     userDao=(IUserDao) SpringUtil.getObject("userDao");
+		     deptDao=(IDeptDao) SpringUtil.getObject("deptDao");
+		     qgorgDao=(QgorgDao) SpringUtil.getObject("qgorgDaoImpl");
+		     companyDao=(CompanyDao) SpringUtil.getObject("companyDaoImpl");
+		     prodDao=(ProductDao) SpringUtil.getObject("productDaoImpl");
+		     logDao=(SyslogDao) SpringUtil.getObject("syslogDaoImpl");
+	   }
+	   /**
+	    * files 指fileid字符串,格式如'1111.txt;1112.doc;1113.png'
+	    * 
+	    * **/
+	   public static List<Role> findAll(){
+		   return roleDao.findAll();
+	   }
+	   public static List<Department> findDeptIdAndName(){
+		   return deptDao.findDeptIdAndName();
+	   }
+	   public static Map<String,Department> cacheDepartment(){
+		   Map<String,Department> deptMap=new HashMap<String,Department>();
+		   List<Department> list=deptDao.findDeptIdAndName();
+		   for(Department dept:list){
+			   deptMap.put(dept.getId(), dept);
+		   }
+		   return deptMap;
+	   }
+	   public static Map<String,User> cacheAllUser(){
+		   Map<String,User> userMap=new HashMap<String,User>();
+		   List<User> allUser=userDao.cacheAllUser();
+		   for(User user:allUser){
+			   userMap.put(user.getId(), user);
+		   }
+		   return userMap;
+	   }
+
+	   public static String findUserDeptId(String userId){
+		   return (userDao.cacheUserDeptId()).get(userId);
+	   }
+	   public static String getAppMsg(String key){
+		   return AppMsg.getMessage(key);
+	   }
+	   public static User findByUsername(String uname){
+		   return userDao.findByUsername(uname);
+	   }
+	   public static List<Area> findAllArea(){
+		   return qgorgDao.findAllArea();
+	   }
+	   public static List<Qgorg> findAllQgorg(){
+		   return qgorgDao.findAllQgorg();
+	   }
+	   public static Area findAreaByAreacode(String areacode){
+		   return qgorgDao.findAreaByAreacode(areacode);
+	   }
+	   public static List<Company> findAllCompany(){
+		   return companyDao.findAllCompany();
+	   }
+	   public static List<Company> findCompanyByAreacode(String areacode){
+		   return companyDao.findCompanyByAreacode(areacode);
+	   }
+	   public static Product findBasicProduct(String id){
+		   return prodDao.findBasicProduct(id);
+	   }
+	   public static List<Qgorg> findQgorgByAreacode(String areacode){
+		   return qgorgDao.findQgorgByAreacode(areacode);
+	   }
+	   public static Qgorg findQgorgById(String id){
+		   return (Qgorg)qgorgDao.find(Qgorg.class,id);
+	   }
+	   public static void saveSyslog(Syslog syslog){
+		   logDao.saveSyslog(syslog);
+	   }
+	   public static Map<String,String> cacheCompanyName(){
+		   return companyDao.cacheCompanyName();
+	   }
+	   public static Map<String,String> cacheProdName(){
+		   return companyDao.cacheProdName();
+	   }
+}
