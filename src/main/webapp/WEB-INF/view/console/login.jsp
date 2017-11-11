@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>郑州市新型墙材革新综合信息管理平台</title>
+	<title>智能门禁综合信息管理平台</title>
 	<script type="text/javascript">
 		window.onload=function(){
 			initUser();
@@ -214,7 +214,7 @@
 </form>
 
 <div class="bottom2016">
-	Copyrigth@郑州市墙材革新办公室&nbsp;&nbsp;&nbsp;&nbsp;技术支持： <a href="http://www.flysent.cn" class="reglink" target="_blank">晴天网络工作室</a> 服务电话:0371-67188813</div>
+	Copyrigth@郑州市海威光电&nbsp;&nbsp;&nbsp;&nbsp;技术支持： <a href="http://www.flysent.cn" class="reglink" target="_blank">海威光电</a> 服务电话:0371-</div>
 
 </body>
 </html>

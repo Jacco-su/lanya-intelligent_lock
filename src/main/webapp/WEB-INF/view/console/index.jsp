@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%--
-  ~ * Copyright (c) 2016-2020  陶乐乐,毛磊版权所有 
+  ~ * Copyright (c) 2016-2020 
   ~ * Tao Lele, Pierre Morel. All Rights Reserved.
   --%>
 
@@ -14,7 +14,7 @@ request.setAttribute("basePath",path);
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title> 郑州市墙改办公室信息管理系统</title>
+    <title> 智能门禁信息管理系统</title>
 	<link href="${basePath}/css/mainframe.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css" />
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css" />
@@ -296,7 +296,7 @@ request.setAttribute("basePath",path);
 	    </div>
     </div>
      <div style="padding:5px;text-align:center;">
-            @版权所有 郑州市建筑节能与墙体材料革新办公室
+            @版权所有 郑州市海威光电科技
     </div>
     <div id="mm" class="easyui-menu" style="width:150px;">
 		<div id="mm-tabupdate">刷新</div>

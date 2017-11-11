@@ -19,7 +19,7 @@
 		<td><input type="hidden" name="parentId"  value="${parentId }"/><input name="name"  class="easyui-validatebox" required="true"/></td>
 	</tr>
 	<tr>
-		<td>所属墙办:</td>
+		<td>所属区域:</td>
 		<td>
 				<select name="qgorgId" name="qgorgId" style="width:200px;" class="easyui-validatebox" required="true">
 						<option value="">---请选择---</option>
