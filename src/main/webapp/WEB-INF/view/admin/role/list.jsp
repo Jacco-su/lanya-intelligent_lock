@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>角色列表</title>
+<title>权限列表</title>
 <link rel="stylesheet" type="text/css"	href="${basePath}/css/mainframe.css" />
 <link rel="stylesheet" type="text/css"	href="${basePath}/js/easyui/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css"	href="${basePath}/js/easyui/themes/icon.css" />
@@ -20,7 +20,7 @@
 	$(function() {
 		var infolist = $('#infolist');
 		infolist.datagrid( {
-			title : '角色列表',
+			title : '权限列表',
 			iconCls : 'icon-users',
 			width : '95%',
 			height : 560,
@@ -43,7 +43,7 @@
 			},
 			columns : [ [
 		{
-				title : '角色名',
+				title : '权限名',
 				field : 'name',
 				width : $(this).width() * 0.7,
 				rowspan : 2,
@@ -90,7 +90,7 @@
 			if (select) {
 				$('#addFrom').window('open');
 			} else {
-				$.messager.alert('警告', '请选择一行数据', 'warning');
+				$.messager.alert('提醒', '请选择一行数据', 'warning');
 			}
 		}
 		function save() {
@@ -134,7 +134,7 @@
 
 		function add() {
 			addWin = $.createWin( {
-				title : "角色添加",
+				title : "权限添加",
 				url : '${basePath}/role/prAdd',
 				height : 550,
 				width : 800,
@@ -150,18 +150,18 @@
 			if (select) {
 				showEdit(select.roId);
 			} else {
-				$.messager.alert('警告', '请选择一行数据', 'warning');
+				$.messager.alert('提醒', '请选择一行数据', 'warning');
 			}
 		}
 		function showEdit(id){
 			updateWin = $.createWin( {
-				title : "角色修改",
+				title : "权限修改",
 				url : '${basePath}/role/prUpdate',
 				data : 'id=' + id,
 				height : 550,
 				width : 800,
 				buttons : [ {
-					text : '修改',
+					text : '权限',
 					iconCls : 'icon-ok',
 					handler : update
 				} ]
@@ -213,7 +213,7 @@
 				for (i = 0; i < selections.length; i++) {
 					id = id + selections[i].roId + ',';
 				}
-				$.messager.confirm('警告', '确认删除么?', function(f) {
+				$.messager.confirm('提醒', '确认删除么?', function(f) {
 					if (f) {
 						$.ajax( {
 							type : "POST",
@@ -234,7 +234,7 @@
 					}
 				});
 			} else {
-				$.messager.alert('警告', '请选择一行数据', 'warning');
+				$.messager.alert('提醒', '请选择一行数据', 'warning');
 			}
 		}
 		function query() {

@@ -115,7 +115,7 @@
 				},{
 					"menuid" : "53",
 					"icon" : "icon icon-role",
-					"menuname" : "角色管理",
+					"menuname" : "权限管理",
 					"url" : "role/index"
 				},{
 					"menuid" : "54",

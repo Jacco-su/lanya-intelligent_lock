@@ -10,18 +10,18 @@
 <form name="editForm" id="editForm" action="${basePath}/orga/update" method="post">
 <table class="mytable" align="center">
 	<tr>
-		<td>机构名称:</td>
+		<td>地区名称:</td>
 		<td><input type="hidden" name="id"  value="${orga.id}"/>
 		<input name="name" value="${orga.name }" class="easyui-validatebox" required="true"/></td>
 	</tr>
 	<tr>
-		<td>机构地址:</td>
+		<td>地址:</td>
 		<td>
 		<input name="address" value="${orga.address}" class="easyui-validatebox" required="true"/>
 		</td>
 	</tr>	
 	<tr>
-		<td width="100">管辖地区</td>
+		<td width="100">管辖区域</td>
 		<td>
 			<input  type="text" name="areaname" id="areaname" value="${orga.areaname}" readonly/><a class="easyui-linkbutton"  onclick="$('#selectArea').window('open');">选择</a>
 			<input  type="hidden" name="areacode" id="areacode" value="${orga.areacode}"/>

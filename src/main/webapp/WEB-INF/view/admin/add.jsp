@@ -23,15 +23,10 @@
 		<td>重复密码:</td>
 		<td><input size="40" class="easyui-validatebox" type="password" required="true" validType="equalTo['#password']" value="111aaa"/></td>
 	</tr>
-	<%--<tr>
-		<td>绩效考核:</td>
-		<td>
-						<select name="haskh" id="haskh">
-									<option value="1" selected>参与</option>
-									<option value="0" >不参与</option>
-						</select>
-		</td>
-	</tr>--%>
+	<tr>
+		<td>工号:</td>
+		<td><input size="40" class="easyui-validatebox" name="userNum" value=""/></td>
+	</tr>
 	<tr>
 		<td>手机:</td>
 		<td><input size="40" class="easyui-validatebox" name="phone" value="" validType="mobile"/></td>
@@ -54,7 +49,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>角色:</td>
+		<td>权限:</td>
 		<td>
 			<input name="roIdList" type="hidden" />
 			<c:forEach items="${roles}" var="role" varStatus="s">

@@ -57,7 +57,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				},
 				width : $(this).width() * 0.1,
 				align : 'center'
-			},  
+			},
+                {
+                    title : '工号',
+                    field : 'id',
+                    width : $(this).width() * 0.1,
+                    rowspan : 2,
+                    align : 'center'
+                },
 			              
 			{
 				title : '帐户',
@@ -65,7 +72,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				width : $(this).width() * 0.1,
 				rowspan : 2,
 				align : 'center'
-			},{
+			},
+				{
 				title : '用户名',
 				field : 'username',
 				width : $(this).width() * 0.1,
@@ -90,7 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				rowspan : 2,
 				align : 'center'
 			}, {
-				title : '角色',
+				title : '权限',
 				field : 'roles',
 				formatter : function(value, rec) {
 					var t = "";
@@ -155,14 +163,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			if (select) {
 				$('#addFrom').window('open');
 			} else {
-				$.messager.alert('警告', '请选择一行数据', 'warning');
+				$.messager.alert('提醒', '请选择一行数据', 'warning');
 			}
 		}
 		
 		function initPassword(){
 			var select = infolist.datagrid('getSelected');
 			if (select) {
-					$.messager.confirm('警告', '确定要重置密码?', function(f) {
+					$.messager.confirm('提醒', '确定要重置密码?', function(f) {
 						if (f) {
 								  $.post("${basePath}/user/initPassword",{"id":select.id},function(json){
 									  	$.messager.alert('提示', json.message, 'warning');
@@ -170,7 +178,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						}
 					});
 			} else {
-				$.messager.alert('警告', '请选择一行数据', 'warning');
+				$.messager.alert('提醒', '请选择一行数据', 'warning');
 			}
 		}
 
@@ -209,7 +217,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					} ]
 				});
 			}else{
-				$.messager.alert('警告', '请选择一个部门', 'warning');
+				$.messager.alert('提醒', '请选择一个部门', 'warning');
 			}
 		}
 		function edit() {
@@ -217,7 +225,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			if (select) {
 				showEdit(select.id);
 			} else {
-				$.messager.alert('警告', '请选择一行数据', 'warning');
+				$.messager.alert('提醒', '请选择一行数据', 'warning');
 			}
 		}
 		function showEdit(id){
@@ -258,7 +266,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				for (i = 0; i < selections.length; i++) {
 					id = id + selections[i].id + ',';
 				}
-				$.messager.confirm('警告', '确认删除么?', function(f) {
+				$.messager.confirm('提醒', '确认删除么?', function(f) {
 					if (f) {
 						$.ajax( {
 							type : "POST",
@@ -274,7 +282,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}
 				});
 			} else {
-				$.messager.alert('警告', '请选择一行数据', 'warning');
+				$.messager.alert('提醒', '请选择一行数据', 'warning');
 			}
 		}
 		

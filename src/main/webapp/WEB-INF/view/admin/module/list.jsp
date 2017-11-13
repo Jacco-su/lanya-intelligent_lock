@@ -83,7 +83,7 @@
 					if(selected){
 						add(selected.id);
 					}else{
-						$.messager.alert('警告', '请选择父节点', 'warning');
+						$.messager.alert('提醒', '请选择父节点', 'warning');
 					}
 				}
 			},"-",{
@@ -105,7 +105,7 @@
 				handler:function(){
 					var selected=$('#tree').tree('getSelected');
 					if(selected){
-						$.messager.confirm('警告', '确认删除么?', function(f) {
+						$.messager.confirm('提醒', '确认删除么?', function(f) {
 							if (f) {
 								$.ajax( {
 									type : "get",
@@ -124,7 +124,7 @@
 							}
 						});
 					}else{
-						$.messager.alert('警告', '请选择一行数据', 'warning');
+						$.messager.alert('提醒', '请选择一行数据', 'warning');
 					}
 				}
 			}]

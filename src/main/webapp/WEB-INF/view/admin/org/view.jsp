@@ -9,17 +9,17 @@
 <div>
 <table class="mytable" align="center">
 	<tr>
-		<td>机构名称:</td>
+		<td>地区名称:</td>
 		<td>${orga.name}</td>
 	</tr>
 	<tr>
-		<td>机构地址:</td>
+		<td>地址:</td>
 		<td>
 		${orga.address}
 		</td>
 	</tr>	
 	<tr>
-		<td width="100">管辖地区:</td>
+		<td width="100">管辖区域:</td>
 		<td>
 				${orga.areaname}	
 		</td>

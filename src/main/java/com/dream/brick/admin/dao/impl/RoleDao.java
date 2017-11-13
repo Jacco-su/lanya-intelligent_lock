@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 角色数据库访问实现类
+ * 角色权限数据库访问实现类
  * 
  * @author maolei
- * id='useforall' 代表全部角色，在考核小项需要用到
+ * id='useforall' 代表全部角色权限，在考核小项需要用到
  */
 @Transactional
 @Repository()

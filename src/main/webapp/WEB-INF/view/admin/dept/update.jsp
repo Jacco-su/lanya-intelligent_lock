@@ -14,7 +14,7 @@
 		<td><input type="hidden" name="id"  value="${dept.id}"/><input type="hidden" name="parentId"  value="${dept.parentId}"/><input name="name" value="${dept.name }"  class="easyui-validatebox" required="true"/></td>
 	</tr>
 	<tr>
-		<td>所属墙办:</td>
+		<td>所属区域:</td>
 		<td>
 				<select name="qgorgId" name="qgorgId" style="width:200px;" class="easyui-validatebox" required="true">
 						<c:forEach items="${qgorgList}" var="qgorg" varStatus="s">

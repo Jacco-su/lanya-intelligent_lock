@@ -21,13 +21,13 @@ public class Qgorg  implements java.io.Serializable{
 	 */
 	private static final long serialVersionUID = 4725135016331954412L;
 	private String id;
-	private String name;//墙改机构名称
-	private String address;//墙改机构地址
-	private String areacode;//墙改机构所在地区编码
-	private String areaname;//墙改机构所在地区名称
-	private String phone;//墙改机构手机
-	private String telephone;//墙改机构电话
-	private int sortorder;////墙改机构显示顺序
+	private String name;//墙改地区名称
+	private String address;//墙改地区地址
+	private String areacode;//墙改地区所在地区编码
+	private String areaname;//墙改地区所在地区名称
+	private String phone;//墙改地区手机
+	private String telephone;//墙改地区电话
+	private int sortorder;////墙改地区显示顺序
 	
 	@Id
 	@GenericGenerator(name = "systemUUID", strategy = "uuid")

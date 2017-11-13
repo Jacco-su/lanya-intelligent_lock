@@ -54,7 +54,7 @@ public class User implements java.io.Serializable{
 	 */
 	private Department dept;
 	/**
-	 * 角色
+	 * 角色权限
 	 */
 	private List<Role> roles=new ArrayList<Role>();
 	
@@ -72,7 +72,11 @@ public class User implements java.io.Serializable{
 	
 	private String loginTime;
 	private String loginKey;
-	
+
+
+	private String userNum; //员工工号
+
+
 	@Id
 	@GenericGenerator(name = "systemUUID", strategy = "uuid")
 	@GeneratedValue(generator = "systemUUID")
@@ -209,6 +213,13 @@ public class User implements java.io.Serializable{
 
 	public void setLoginKey(String loginKey) {
 		this.loginKey = loginKey;
-	}	
+	}
 
+	public String getUserNum() {
+		return userNum;
+	}
+
+	public void setUserNum(String userNum) {
+		this.userNum = userNum;
+	}
 }

@@ -62,6 +62,7 @@ a.download:hover{ color:Red; text-decoration:underline;}
 <table class="mytable" width="800">
 <tr><td  width="100">账号：</td><td>${user.name}</td></tr>
 <tr><td  width="100">姓名：</td><td>${user.username}</td></tr>
+	<tr><td  width="100">工号：</td><td>${user.userNum}</td></tr>
 <tr><td  width="100">部门：</td><td>${user.dept.name}</td></tr>
 <tr><td  width="100">手机：</td><td><input type="text" id="phone" style="width: 200px;" value="${user.phone}" /></td></tr>
 <tr><td  width="100">Email：</td><td><input type="text" id="email" style="width: 200px;" value="${user.email}" /></td></tr>

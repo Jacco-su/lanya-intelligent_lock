@@ -26,8 +26,8 @@ public class Jinzhan {
 	private String areacode;//企业所在地区编码
 	@PropertyNote(name="地区名称")
 	private String areaname;//企业所在地区名称
-	private String orgid;//所属机构ID
-	private String orgname;//所属机构名称
+	private String orgid;//所属地区ID
+	private String orgname;//所属地区名称
 	@PropertyNote(name = "计划年度")
 	private int year;
 	private String checktime;

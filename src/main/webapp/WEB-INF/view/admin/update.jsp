@@ -99,7 +99,7 @@ $.each(deptIds.split(','), function(i, v) {
 		</td>
 	</tr>
 	<tr>
-		<td>角色:</td>
+		<td>权限:</td>
 		<td>
 			<input name="roIdList" type="hidden" />
 			<table align="center" width="100%" cellpadding="0" cellspacing="0">

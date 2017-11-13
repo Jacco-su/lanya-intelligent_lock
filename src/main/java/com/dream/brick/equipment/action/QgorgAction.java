@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 机构操作实现类
+ * 区域操作实现类
  * 
  * @author ml
  * 
@@ -112,7 +112,7 @@ public class QgorgAction {
 			int count=orgDao.getResultNumber(hql,id);
 			if(count>0){
 				message=StringUtil.jsonValue("0",AppMsg.getMessage("orga101"));
-				//101该机构拥有部门，不允许删除
+				//101该地区拥有部门，不允许删除
 				return message;
 			}
 			try{

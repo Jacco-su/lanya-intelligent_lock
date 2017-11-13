@@ -121,13 +121,24 @@
 			font-size: 12px;
 			color: #333333;
 		}
-		body {
+		body{
+			width:95%;
+			padding: 0;
+			margin-left: auto;
+			margin-right: auto;
+
+		}
+		.body {
+			position: absolute;
+			padding: 0;
 			margin:0 auto;
 			background-image: url(<%=path %>/images/xlogin/loginbg.jpg);
 			background-repeat: no-repeat;
-			background-position: center top;
+			background-position: center;
 			background-color:#F2F2F2;
-			width:1000px;
+			width:95%;
+			height:750px;
+
 		}
 		a:link {
 			color: #333333;
@@ -145,9 +156,19 @@
 			text-decoration: none;
 			color: #01A2AA;
 		}
-		.login2016{ width:auto; height:455px; padding-top:305px; padding-left:678px; padding-right:48px;}
+		.login2016{
+			width:18%;
+			height:455px;
+			position:relative;
+			padding-top:315px;
+			left:70%;
+			position: relative;
+
+			border: 1px;
+			}
 		#logtab{}
-		#logtab td{height:55px;}
+		#logtab td{height:50px;margin-left:auto;
+			margin-right:auto; text-align: center;}
 		.reglink{ color:#FFFFFF; font-weight:bold; font-size:14px;}
 		.reglink a{ color:#FFFFFF!important;}
 		#logtab .input1{
@@ -163,6 +184,7 @@
 			color:#666666;
 			font-size:14px;
 			border-radius:3px;
+
 		}
 
 		#logtab .input2{
@@ -179,7 +201,8 @@
 			font-size:14px;
 			border-radius:3px;
 		}
-		.bottom2016{ width:1000px; height:105px; padding-top:35px; line-height:35px; text-align:center; color:#878787;}
+		.dl {background-image: url(<%=path %>/images/xlogin/login_14.jpg);}
+		.bottom2016{ width:100%; height:105px; padding-top:25px; line-height:35px; text-align:center; color:#878787;}
 		.bottom2016 a{ color:#878787!important;}
 
 		-->
@@ -187,10 +210,11 @@
 </head>
 
 <body>
+<div class="body">
 <form id="loginForm" name="loginForm" action="${basePath}/log/userlogin" method="post" onsubmit="return checkLogin()">
 <div class="login2016">
 
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" id="logtab">
+	<table width="100%" border="2" cellspacing="0" cellpadding="0" id="logtab">
 		<tr>
 			<td><input name="loginName" id="txtUserName"  type="text" class="input1" /></td>
 		</tr>
@@ -207,14 +231,14 @@
 		<tr>
 			<td valign="middle">
 				<a href="javascript:void(0)" onclick="createCookieObj()">
-					<input type="image" src="<%=path %>/images/xlogin/login_14.jpg" width="274" height="40" border="0" /></a></td>
+					<input class="dl" type="image" value=" "  width="225" height="40" border="0"  /></a></td>
 		</tr>
 	</table>
 </div>
 </form>
 
 <div class="bottom2016">
-	Copyrigth@郑州市海威光电&nbsp;&nbsp;&nbsp;&nbsp;技术支持： <a href="http://www.flysent.cn" class="reglink" target="_blank">海威光电</a> 服务电话:0371-</div>
-
+	Copyrigth@郑州市海威光电&nbsp;&nbsp;&nbsp;&nbsp;技术支持： <a href="http://www.haiweir.com" class="reglink" target="_blank">郑州海威光电</a> 服务电话:0371-85512855</div>
+</div>
 </body>
 </html>
