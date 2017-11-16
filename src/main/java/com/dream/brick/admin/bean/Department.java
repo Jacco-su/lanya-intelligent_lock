@@ -34,7 +34,7 @@ public class Department implements java.io.Serializable{
 	 */
 	private String parentId;
 	/**
-	 * 地区ID
+	 * 机构ID
 	 */
 	private String orgId;
 	/**

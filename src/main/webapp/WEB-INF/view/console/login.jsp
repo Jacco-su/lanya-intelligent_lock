@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>智能门禁综合信息管理平台</title>
+	<title>智能门禁综合管理信息平台</title>
 	<script type="text/javascript">
 		window.onload=function(){
 			initUser();
@@ -118,27 +118,21 @@
 		<!--
 		body,td,th {
 			font-family: 微软雅黑;
-			font-size: 12px;
+			font-size: 15px;
 			color: #333333;
 		}
-		body{
-			width:95%;
-			padding: 0;
-			margin-left: auto;
-			margin-right: auto;
-
-		}
-		.body {
-			position: absolute;
-			padding: 0;
+		body {
 			margin:0 auto;
 			background-image: url(<%=path %>/images/xlogin/loginbg.jpg);
 			background-repeat: no-repeat;
-			background-position: center;
+			background-position: center top;
 			background-color:#F2F2F2;
-			width:95%;
-			height:750px;
-
+			width:1024px;
+			padding: 0px 0px;
+			background-size:100%;
+			max-width: 1024px;
+			min-width: 1024px;
+			min-height: 768px;
 		}
 		a:link {
 			color: #333333;
@@ -157,64 +151,96 @@
 			color: #01A2AA;
 		}
 		.login2016{
-			width:18%;
-			height:455px;
-			position:relative;
-			padding-top:315px;
-			left:70%;
-			position: relative;
+			/*width:235px;*/
+			/*height:267px;*/
+			/*padding-top:195px;*/
+			/*padding-left:897px;*/
+			/*padding-right:100px;*/
+			/*left: 888px;*/
+			/*top:200px;*/
+			/*right: 200px;*/
+			/*padding: 0;*/
+			margin-left: auto;
+			margin-right: auto;
+			width: 465px;
+			height: 557px;
+			padding-top: 1px;
+			padding-left: 777px;
+		}
+		#logtab{
+			padding: 0px 0px;
+			height: 475px;
+			padding-top: 170px;
 
-			border: 1px;
-			}
-		#logtab{}
-		#logtab td{height:50px;margin-left:auto;
-			margin-right:auto; text-align: center;}
-		.reglink{ color:#FFFFFF; font-weight:bold; font-size:14px;}
+		}
+		#logtab td{
+			height:15px;
+			padding-top: 5px;
+			margin-left:auto;
+			margin-right:auto;
+			text-align: center;
+		}
+		.reglink{ color:#FFFFFF; font-weight:bold; font-size:15px;}
 		.reglink a{ color:#FFFFFF!important;}
 		#logtab .input1{
 			background-image: url(<%=path %>/images/xlogin/login_3.jpg);
 			background-repeat: no-repeat;
 			background-position: left center;
-			width:224px;
-			height:38px;
-			line-height:38px;
+			width:275px;
+			height:45px;
+			line-height:43px;
 			background-color:#FFFFFF;
 			padding-left:50px;
 			border:0px #fff solid;
 			color:#666666;
-			font-size:14px;
-			border-radius:3px;
-
+			font-size:20px;
+			border-radius:25px;
 		}
 
 		#logtab .input2{
 			background-image: url(<%=path %>/images/xlogin/login_6.jpg);
 			background-repeat: no-repeat;
 			background-position: left center;
-			width:224px;
-			height:38px;
-			line-height:38px;
+			width:275px;
+			height:45px;
+			line-height:43px;
 			background-color:#FFFFFF;
 			padding-left:50px;
 			border:0px #fff solid;
 			color:#666666;
-			font-size:14px;
-			border-radius:3px;
+			font-size:20px;
+			border-radius:25px;
 		}
-		.dl {background-image: url(<%=path %>/images/xlogin/login_14.jpg);}
-		.bottom2016{ width:100%; height:105px; padding-top:25px; line-height:35px; text-align:center; color:#878787;}
+		.dl {margin: 0 auto; background-image: url("<%=path %>/images/xlogin/login_14.jpg"); background-position: center;}
+		.bottom2016{ width:1024px; height:90px; padding-top:120px; margin-top: 50px; line-height:25px; text-align: center ; text-blink:  margin-bottom: 0px; margin-bottom: 0px; margin-left: auto;
+			margin-right: auto;color:#878787;}
 		.bottom2016 a{ color:#878787!important;}
 
 		-->
 	</style>
+
+	<%--//页面动态自适应--%>
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.js"></script>
+
+	<script type="text/javascript">
+        $(function() {
+            var r = document.body.offsetWidth / window.screen.availWidth;
+            $(document.body).css("-webkit-transform","scale(" + r + ")");
+        });
+        $(window).resize(function() {
+            var r = document.body.offsetWidth / window.screen.availWidth;
+            $(document.body).css("-webkit-transform","scale(" + r + ")");
+        });
+	</script>
+
 </head>
 
 <body>
-<div class="body">
-<form id="loginForm" name="loginForm" action="${basePath}/log/userlogin" method="post" onsubmit="return checkLogin()">
-<div class="login2016">
 
-	<table width="100%" border="2" cellspacing="0" cellpadding="0" id="logtab">
+<div class="login2016">
+	<form id="loginForm" name="loginForm" action="${basePath}/log/userlogin" method="post" onsubmit="return checkLogin()">
+	<table width="100%"  border="0" cellspacing="0" cellpadding="0" id="logtab">
 		<tr>
 			<td><input name="loginName" id="txtUserName"  type="text" class="input1" /></td>
 		</tr>
@@ -229,16 +255,17 @@
 			</td>
 		</tr>
 		<tr>
-			<td valign="middle">
+			<td valign="middle" >
 				<a href="javascript:void(0)" onclick="createCookieObj()">
-					<input class="dl" type="image" value=" "  width="225" height="40" border="0"  /></a></td>
+					<input class="dl" type="image"  width="274" height="40"  border="0" value=" " /></a></td>
 		</tr>
 	</table>
+	</form>
 </div>
-</form>
+
 
 <div class="bottom2016">
-	Copyrigth@郑州市海威光电&nbsp;&nbsp;&nbsp;&nbsp;技术支持： <a href="http://www.haiweir.com" class="reglink" target="_blank">郑州海威光电</a> 服务电话:0371-85512855</div>
-</div>
+	Copyrigth@智能蓝牙&nbsp;&nbsp;&nbsp;&nbsp;技术支持： <a href="http://www.haiwei.crom" class="reglink" target="_blank">郑州海威光电</a> 服务电话:0371-85512855</div>
+
 </body>
 </html>

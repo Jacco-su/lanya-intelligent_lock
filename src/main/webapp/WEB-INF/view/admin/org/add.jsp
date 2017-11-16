@@ -10,11 +10,11 @@
 <form name="addForm" id="addForm" action="${basePath}/orga/add" method="post">
 <table class="mytable" align="center">
 	<tr>
-		<td>地区名称:</td>
+		<td>机构名称:</td>
 		<td><input name="name"  value="" class="easyui-validatebox" required="true"/></td>
 	</tr>
 	<tr>
-		<td>地区地址:</td>
+		<td>机构地址:</td>
 		<td>
 		<input name="address" value="" class="easyui-validatebox" required="true"/>
 		</td>

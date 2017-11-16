@@ -13,7 +13,7 @@
 <form name="addForm" id="addForm" action="${basePath}/role/add" method="post">
 <table class="mytable" align="center">
 	<tr>
-		<td width="100">权限名:</td>
+		<td width="100">角色名:</td>
 		<td align="left"><input name="name" size="40"  class="easyui-validatebox" required="true"/></td>
 	</tr>
 	<tr>

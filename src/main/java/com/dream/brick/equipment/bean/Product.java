@@ -17,7 +17,7 @@ public class Product implements Serializable {
 	private String id;
 	private String name;//产品名称
 	private String zxbz;//执行标准
-	private String jyjgmc;//产品检验地区名称
+	private String jyjgmc;//产品检验机构名称
 	private String jytime;//检验时间
 	private String ycl_one;//主要原材料1
 	private String ly_one;//来源
@@ -26,23 +26,23 @@ public class Product implements Serializable {
 	private String ycl_three;
 	private String ly_three;
 	private String zlbzsm; //企业质量保证<br/>体系说明
-	private String attr1;//县（市）区墙改管理地区审查意见
+	private String attr1;//县（市）区电力管理机构审查意见
 	private String atime1;//审核日期
 	private String attr2;//质量保证<br/>体系和现场<br/>考核意见
 	private String uname2;//考核人
 	private String attr3;//省辖市确认委员会推荐意见
 	private String uname3;//签字
 	private String atime3;//签字日期4
-	private String attr4;//省辖市墙改<br/>管理地区<br/>初审意见<br/>
+	private String attr4;//省辖市电力<br/>管理机构<br/>初审意见<br/>
 	private String atime4 ;//签字日期4
-	private String attr5;//外省企业<br/>省级墙改<br/>管理地区<br/>审核意见
+	private String attr5;//外省企业<br/>省级电力<br/>管理机构<br/>审核意见
 	private String atime5;
 	private String attr6;//产品表示
 	private String ownerid;//登记人
 	private String owname;//登记人姓名
 	private String create_time;//登记时间
-	private String orgname;//登记地区名称
-	private String orgid;//登记地区ID
+	private String orgname;//登记机构名称
+	private String orgid;//登记机构ID
 	private String typeid;//墙材类型ID
 	private String typedesc;//墙材类型描述
 	private Company company;//所属公司

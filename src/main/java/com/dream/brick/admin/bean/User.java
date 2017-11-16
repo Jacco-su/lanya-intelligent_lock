@@ -54,13 +54,13 @@ public class User implements java.io.Serializable{
 	 */
 	private Department dept;
 	/**
-	 * 角色权限
+	 * 角色
 	 */
 	private List<Role> roles=new ArrayList<Role>();
 	
 	private List<UserRole> roleList=new ArrayList<UserRole>();
-	
-	
+
+
 	/**
 	 * 排序ID
 	 */
@@ -73,13 +73,9 @@ public class User implements java.io.Serializable{
 	private String loginTime;
 	private String loginKey;
 
-
-	private String userNum; //员工工号
-
-
 	@Id
 	@GenericGenerator(name = "systemUUID", strategy = "uuid")
-	@GeneratedValue(generator = "systemUUID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public String getId() {
 		return id;
 	}
@@ -128,7 +124,7 @@ public class User implements java.io.Serializable{
 		this.rdate = rdate;
 	}
 
-	
+
 
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -215,11 +211,4 @@ public class User implements java.io.Serializable{
 		this.loginKey = loginKey;
 	}
 
-	public String getUserNum() {
-		return userNum;
-	}
-
-	public void setUserNum(String userNum) {
-		this.userNum = userNum;
-	}
 }

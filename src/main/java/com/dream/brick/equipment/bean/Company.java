@@ -50,7 +50,7 @@ public class Company implements java.io.Serializable{
 	private String yd_pzjg;//建厂用地批准机关
 	private String yd_pzwh;//用地批准文号
 	private String yd_pztime;//用地批准文号批准时间
-	private String hj_pjjg;//环境影响<br/>评价地区
+	private String hj_pjjg;//环境影响<br/>评价机构
 	private String hj_pzwh;//批准文号
 	private String hj_pjtime;//批准时间
 	private String scnl;//生产能力
@@ -74,8 +74,8 @@ public class Company implements java.io.Serializable{
 	private String djrenid;
 	private String areacode;//企业所在地区编码
 	private String areaname;//企业所在地区名称
-	private String orgid;//所属地区ID
-	private String orgname;//所属地区名称
+	private String orgid;//所属机构ID
+	private String orgname;//所属机构名称
 
 	//extents
 	private String scgyqk;//生产工艺,<br/>技术装备和<br/>产能升级情<br/>况

@@ -116,7 +116,7 @@
 			if (select) {
 				$('#addFrom').window('open');
 			} else {
-				$.messager.alert('提醒', '请选择一行数据', 'warning');
+				$.messager.alert('警告', '请选择一行数据', 'warning');
 			}
 		}
 
@@ -125,7 +125,7 @@
 			if (select) {
 				detail(select.id);
 			} else {
-				$.messager.alert('提醒', '请选择一行数据', 'warning');
+				$.messager.alert('警告', '请选择一行数据', 'warning');
 			}
 		}
 
@@ -137,7 +137,7 @@
 					//id = id + selections[0].id + ',';
 				}
 				id=selections[0].id;
-				$.messager.confirm('提醒', '确认删除么?', function(f) {
+				$.messager.confirm('警告', '确认删除么?', function(f) {
 					if (f) {
 						$.ajax( {
 							type : "POST",
@@ -153,7 +153,7 @@
 					}
 				});
 			} else {
-				$.messager.alert('提醒', '请选择一行数据', 'warning');
+				$.messager.alert('警告', '请选择一行数据', 'warning');
 			}
 		}
 		function query() {

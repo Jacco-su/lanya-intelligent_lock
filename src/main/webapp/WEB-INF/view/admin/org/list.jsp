@@ -20,7 +20,7 @@
 	$(function() {
 		var infolist = $('#infolist');
 		infolist.datagrid({
-			title : '区域列表',
+			title : '电力区域列表',
 			iconCls : 'icon-users',
 			width : '95%',
 			height : 400,
@@ -42,7 +42,7 @@
 				detail(id);
 			},			
 			columns : [ [ {
-				title : '地区名称',
+				title : '区域名称',
 				field : 'name',
 				width:200,
 				align : 'center'
@@ -54,7 +54,7 @@
 				align : 'center'
 			},			
 			 {
-					title : '地址',
+					title : '区域地址',
 					field : 'address',
 					width:400,
 					align : 'left'
@@ -124,7 +124,7 @@
 			if (select) {
 				detail(select.id);
 			} else {
-				$.messager.alert('提醒', '请选择一行数据', 'warning');
+				$.messager.alert('警告', '请选择一行数据', 'warning');
 			}
 		}
 		function detail(id){
@@ -165,7 +165,7 @@
 			if (select) {
 				showEdit(select.id);
 			} else {
-				$.messager.alert('提醒', '请选择一行数据', 'warning');
+				$.messager.alert('警告', '请选择一行数据', 'warning');
 			}
 		}	
 		function update() {
@@ -202,7 +202,7 @@
 		function del(){
 			var selected= infolist.datagrid('getSelected');
 			if(selected){
-					$.messager.confirm('提醒', '确定要删除么?', function(f) {
+					$.messager.confirm('警告', '确定要删除么?', function(f) {
 						if (f) {
 							 $.post( "${basePath}/orga/delete",{"id":selected.id},function(json) {
 										$.messager.alert('提示', json.message);
@@ -213,7 +213,7 @@
 						}
 					});
 			}else{
-					$.messager.alert('提醒', '未选中任何数据', 'warning');
+					$.messager.alert('警告', '未选中任何数据', 'warning');
 			}
 		}
 	});

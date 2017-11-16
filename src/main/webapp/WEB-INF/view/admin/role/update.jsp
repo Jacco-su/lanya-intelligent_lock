@@ -25,7 +25,7 @@
 <form name="editForm" id="editForm" action="${basePath}/role/update" method="post">
 <table class="mytable" align="center">
 	<tr>
-		<td width="100">权限名:</td>
+		<td width="100">角色名:</td>
 		<td align="left"><input type="hidden" size="40" name="roId" value="${role.roId }"/><input name="name" class="easyui-validatebox" required="true" value="${role.name}"/></td>
 	</tr>
 	<tr>

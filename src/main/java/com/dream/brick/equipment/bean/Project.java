@@ -36,8 +36,8 @@ public class Project implements Serializable {
 	private String djtime;
 	private String djrenid;
 	private String areacode;//所属区域编码
-	private String orgid;//登记地区ID
-	private String orgname;//登记地区名称
+	private String orgid;//登记机构ID
+	private String orgname;//登记机构名称
 
 
 	//add to
