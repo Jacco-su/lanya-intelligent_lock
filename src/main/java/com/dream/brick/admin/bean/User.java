@@ -74,7 +74,6 @@ public class User implements java.io.Serializable{
 	private String loginKey;
 
 	@Id
-	@GenericGenerator(name = "systemUUID", strategy = "uuid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public String getId() {
 		return id;

@@ -60,11 +60,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			},
                 {
                     title : '工号',
-                    field : 'userid',
-                    formatter : function(value,rowData,rowIndx) {
-                        return rowData.user.id;
-                    },
+                    field : 'id',
                     width : $(this).width() * 0.1,
+                    rowspan : 2,
                     align : 'center'
                 },
 

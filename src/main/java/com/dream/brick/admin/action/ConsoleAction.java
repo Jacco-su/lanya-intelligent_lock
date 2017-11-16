@@ -142,7 +142,7 @@ public class ConsoleAction {
 				model.addAttribute("module", jsonObject.toString());
 				model.addAttribute("root", root);
 				model.addAttribute("tip", tip);
-				SessionData.createSyslog(request,0, "登录系统");
+				//SessionData.createSyslog(request,0, "登录系统");
 				return "/console/index";
 			} else {
 				errormsg =findLogMsg(101);

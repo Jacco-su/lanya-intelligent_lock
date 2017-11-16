@@ -115,17 +115,17 @@ $.each(deptIds.split(','), function(i, v) {
 		</td>
 	</tr>
 	
-	<%--<tr>
-		<td>负责部门:</td>
-		<td>
-		      <div id="deptList" class="easyui-accordion"  border=false animate=false>
-					<c:forEach items="${deptList}" var="dept" varStatus="s">
-						<span><input name="deptIdList" type="checkbox" value="${dept.id}"/>${dept.name }</span>
-						<c:if test="${(s.index+1)%5==0}"><br/></c:if>
-					</c:forEach>
-				</div>
-		</td>
-	</tr>--%>
+	<%--<tr>--%>
+		<%--<td>负责区域:</td>--%>
+		<%--<td>--%>
+		      <%--<div id="deptList" class="easyui-accordion"  border=false animate=false>--%>
+					<%--<c:forEach items="${deptList}" var="dept" varStatus="s">--%>
+						<%--<span><input name="deptIdList" type="checkbox" value="${dept.id}"/>${dept.name }</span>--%>
+						<%--<c:if test="${(s.index+1)%5==0}"><br/></c:if>--%>
+					<%--</c:forEach>--%>
+				<%--</div>--%>
+		<%--</td>--%>
+	<%--</tr>--%>
 </table>
 	</form>
 	</div>

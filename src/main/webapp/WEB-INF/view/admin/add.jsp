@@ -63,8 +63,8 @@
 			</c:forEach>
 		</td>
 	</tr>
-<%--	<tr>
-		<td>负责部门:</td>
+	<tr>
+		<td>负责区域:</td>
 		<td>
 				<div class="easyui-accordion" style="width: 500px;"  border=false animate=false>
 							<c:forEach items="${deptList}" var="dept" varStatus="s">
@@ -73,7 +73,7 @@
 							</c:forEach>
 				</div>
 		</td>
-	</tr>--%>
+	</tr>
 </table>
 	</form>
 </div>
