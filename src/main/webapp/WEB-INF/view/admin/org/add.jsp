@@ -10,19 +10,20 @@
 <form name="addForm" id="addForm" action="${basePath}/orga/add" method="post">
 <table class="mytable" align="center">
 	<tr>
-		<td>机构名称:</td>
+        <td>区域名称:</td>
 		<td><input name="name"  value="" class="easyui-validatebox" required="true"/></td>
 	</tr>
 	<tr>
-		<td>机构地址:</td>
+        <td>区域地址:</td>
 		<td>
 		<input name="address" value="" class="easyui-validatebox" required="true"/>
 		</td>
 	</tr>	
 	<tr>
-		<td width="100">管辖地区</td>
+        <td width="100">上级区域</td>
 		<td>
-			<input  type="text" name="areaname" id="areaname" value="" readonly/><a class="easyui-linkbutton"  onclick="$('#selectArea').window('open');">选择</a>
+            <input type="text" name="areaname" id="areaname" value="" readonly/>
+            <a class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>
 			<input  type="hidden" name="areacode" id="areacode" value=""/>
 		</td>
 	</tr>		

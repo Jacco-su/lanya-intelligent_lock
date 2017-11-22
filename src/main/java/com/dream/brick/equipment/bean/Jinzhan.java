@@ -12,7 +12,7 @@ import javax.persistence.Table;
  *禁粘禁实信息
  * 
  * @author maolei
- * @date 2016-02-20 16:00
+ * @date 2017-12-20 16:00
  */
 @Entity
 @Table(name = "t_jinzhan")
@@ -26,9 +26,9 @@ public class Jinzhan {
 	private String areacode;//企业所在地区编码
 	@PropertyNote(name="地区名称")
 	private String areaname;//企业所在地区名称
-	private String orgid;//所属机构ID
-	private String orgname;//所属机构名称
-	@PropertyNote(name = "计划年度")
+    private String orgid;//所属区域ID
+    private String orgname;//所属区域名称
+    @PropertyNote(name = "计划年度")
 	private int year;
 	private String checktime;
 	private int type;

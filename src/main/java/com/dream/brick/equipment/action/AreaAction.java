@@ -1,12 +1,12 @@
 package com.dream.brick.equipment.action;
 
 /**
- * Created by taller on 16/2/29.
+ * Created by taller on 17/11/29.
  */
 
-import com.google.gson.Gson;
 import com.dream.brick.equipment.bean.SysArea;
 import com.dream.brick.equipment.dao.SysAreaDao;
+import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

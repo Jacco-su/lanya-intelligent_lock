@@ -8,7 +8,7 @@ import javax.persistence.*;
  * 产品流向统计 墙材使用
  * 
  * @author maolei
- * @date 2016-02-19 10:35
+ * @date 2017-12-19 10:35
  */
 @Entity
 @Table(name = "t_projprod")

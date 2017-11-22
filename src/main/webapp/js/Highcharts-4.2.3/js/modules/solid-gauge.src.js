@@ -1,5 +1,5 @@
 /**
- * @license  Highcharts JS v4.2.3 (2016-02-08)
+ * @license  Highcharts JS v4.2.3 (2017-12-08)
  * Solid angular gauge module
  *
  * (c) 2010-2016 Torstein Honsi

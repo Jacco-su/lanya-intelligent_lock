@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%--
-  ~ * Copyright (c) 2016-2020  陶乐乐,毛磊版权所有 
-  ~ * Tao Lele, Pierre Morel. All Rights Reserved.
+  ~ * Copyright (c) 2016-2020  版权所有 
+  ~ * 
   --%>
 
 <%
@@ -48,7 +48,7 @@ request.setAttribute("basePath",path);
 /*	function findmsgCount(){
 		$.ajax( {
 			type : "get",
-			url : "${basePath}/msg/getMsg",
+			url : "$ {basePath}/msg/getMsg",
 			data : "state=1&limit=1",
 			dataType : "text",
 			cache : false,
@@ -63,13 +63,9 @@ request.setAttribute("basePath",path);
 			}
 		});
 	}*/
-    
-    
-    
-    
-    
-    
-       var t;
+
+
+        var t;
     	var _menus = eval('('+'${module}'+')');
     	var syspath="${basePath}";
     	var changeYearWin;
@@ -78,7 +74,7 @@ request.setAttribute("basePath",path);
             var contents='<form action="${basePath}/log/alterPass" method="post" id="alterPassForm" name="alterPassForm">\
 		    	<table class="mytable" align="center">\
 		    		<tr>\
-						<td width="25%">原密码:</td>\
+						<td width="25%">原密码--:</td>\
 						<td><input type="password" name="oldpwd" size="30" class="easyui-validatebox" required="true" /></td>\
 					</tr>\
 		    		<tr>\

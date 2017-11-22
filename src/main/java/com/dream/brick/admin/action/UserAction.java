@@ -1,6 +1,5 @@
 package com.dream.brick.admin.action;
 
-import com.dream.framework.dao.Pager;
 import com.dream.brick.admin.bean.Role;
 import com.dream.brick.admin.bean.User;
 import com.dream.brick.admin.bean.UserRole;
@@ -9,6 +8,7 @@ import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.admin.dao.IRoleDao;
 import com.dream.brick.admin.dao.IUserDao;
 import com.dream.brick.listener.SessionData;
+import com.dream.framework.dao.Pager;
 import com.dream.util.AppData;
 import com.dream.util.AppMsg;
 import com.dream.util.MD5;
@@ -31,6 +31,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+/**
+ * 用户操作实现类
+ */
+
 
 @Controller()
 @Scope("prototype")
@@ -71,9 +76,16 @@ public class UserAction {
 		return datas.toString();
 	}
 
+	//	管理员
 	@RequestMapping("/index")
 	public String index(){
 		return "admin/list";
+	}
+
+	//	人员管理
+	@RequestMapping("/uindex")
+	public String uindex() {
+		return "admin/ulist";
 	}
 
 	@RequestMapping("/prAdd")
@@ -96,13 +108,13 @@ public class UserAction {
 		initRole(user,roIdList,deptIdList);
 		String message="";
 		try{
-			
+
 			userDao.addUser(user);
 			message=StringUtil.jsonValue("1",AppMsg.ADD_SUCCESS);
 		}catch(Exception e){
 			message=StringUtil.jsonValue("0",AppMsg.ADD_ERROR);
 		}
-		
+
 		return message;
 	}
 
@@ -128,8 +140,7 @@ public class UserAction {
 
 	@RequestMapping(value="/update",method = RequestMethod.POST)
 	@ResponseBody
-	public String update(@ModelAttribute User user, String[] roIdList, String[] deptIdList)
-	{
+	public String update(@ModelAttribute User user, String[] roIdList, String[] deptIdList) {
 
 		String message="";
 		try{
@@ -150,12 +161,12 @@ public class UserAction {
 					//考核大项由该人员负责
 				}
 			}
-			
+
 		}catch(Exception e){
 			e.printStackTrace();
 			message=StringUtil.jsonValue("0",AppMsg.UPDATE_ERROR);
 		}
-		
+
 		return message;
 	}
 
@@ -209,6 +220,7 @@ public class UserAction {
 		}
 		return msg;
 	}
+
 	@RequestMapping("/initPassword")
 	@ResponseBody
 	public String initPassword(String id){
@@ -226,11 +238,12 @@ public class UserAction {
 		}
 		return message;
 	}
+
 	@RequestMapping("/prDbbark")
 	public String prDbbark(){
 		return "admin/dbbark";
 	}
-	
+
 	@RequestMapping("/dbbark")
 	@ResponseBody
 	public String dbbark(){
@@ -245,6 +258,7 @@ public class UserAction {
 		//备份成功
 		return message;
 	}
+
 	/**
 	 * 用户更新自己的信息
 	 * ***/

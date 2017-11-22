@@ -1,10 +1,10 @@
-*{font-size:12px; font-family:Tahoma,Verdana,Î¢ÈíÑÅºÚ,ÐÂËÎÌå}
+*{font-size:12px; font-family:Tahoma,Verdana,Î¢ï¿½ï¿½ï¿½Åºï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½}
 body{background:#D2E0F2; }
 a{ color:Black; text-decoration:none;}
 a:hover{ color:Red; text-decoration:underline;}
-.textbox03 {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,ËÎÌå;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;  font-weight: bold; width: 190px;}
-.txt01{font:Verdana, Geneva, sans-serif,ËÎÌå;padding:3px 2px 2px 2px; border-width:1px; border-color:#ddd;  color:#000;}
-.txt {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,ËÎÌå;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;}
+.textbox03 {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,ï¿½ï¿½ï¿½ï¿½;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;  font-weight: bold; width: 190px;}
+.txt01{font:Verdana, Geneva, sans-serif,ï¿½ï¿½ï¿½ï¿½;padding:3px 2px 2px 2px; border-width:1px; border-color:#ddd;  color:#000;}
+.txt {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,ï¿½ï¿½ï¿½ï¿½;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;}
 .footer{text-align:center;color:#15428B; margin:0px; padding:0px;line-height:23px; font-weight:bold;}
 .head a{color:White;text-decoration:underline;}
 .easyui-accordion ul{list-style-type:none;margin:0px; padding:10px;}
@@ -24,47 +24,116 @@ a:hover{ color:Red; text-decoration:underline;}
 .icon-dept{ background-position:-300px -80px;}
 .icon-operation{ background-position:-20px -220px;}
 .icon-filetype{ background-position:-200px -280px;}
+
 .icon-flow{ background-position:-280px -80px;}
 .icon-jwd{ background-position:-40px -320px;}
 .icon-bmwd{ background-position:-180px -280px;}
 .icon-grwd{ background-position:-60px -320px;}
 .icon-inbox{ background-position:-160px -180px;}
+
 .icon-outbox{ background-position:-180px -180px;}
 .icon-dbrw{ background-position:-40px 0px;}
 .icon-fqrw{ background-position:-60px 0px;}
 .icon-shfa{ background-position:-240px -80px;}
 .icon-shjh{ background-position:-60px -360px;}
+
 .icon-shtz{ background-position:-200px -400px;}
 .icon-shz{ background-position:-20px -380px;}
 .icon-shzby{ background-position:0px -380px;}
 .icon-shlc{ background-position:-280px -440px;}
 .icon-zcbg{ background-position:-260px -300px;}
+
 .icon-shbg{ background-position:-260px -80px;}
 .icon-shjlgd{ background-position:-340px -80px;}
 .icon-set{ background-position:-380px -200px;}
 .icon-add{background-position: -20px 0px;}
 .icon-add1{background:url('icon/edit_add.png') no-repeat;}
+
 .icon-nav{background-position: -100px -20px; }
-.icon-users{background-position: -100px -480px;}
+
+.icon-user {
+    background-position: -100px -480px;
+}
 .icon-role{background-position: -360px -200px;}
 .icon-form{background-position: -60px -240px;}
-.icon-set{background-position: -380px -200px;}
+
+.icon-keys {
+    background-position: -380px -220px;
+}
+
 .icon-print{background-position: -240px -340px;}
 .icon-log{background-position: -380px -80px;}
 .icon-delete16{background:url('icon/delete.gif') no-repeat;width:18px; line-height:18px; display:inline-block;}
 .icon-delete{ background-position:-140px -120px;}
 .icon-edit{ background-position:-380px -320px;}
+
 .icon-magic{ background-position:0px -500px;}
 .icon-database{ background-position:-20px -140px;}
 .icon-expand{ background:url('../images/framework/coll2.gif') no-repeat;}
 .icon-collapse{ background:url('../images/framework/coll3.gif') no-repeat;}
 .icon-write{background-position: -100px -300px;}
+
 .icon-readletter{background-position: -360px -40px;}
 .icon-garbage{background-position: -340px -40px ;}
 .icon-rizhi{background-position: -380px -80px ;}
 .icon-rizhiall{background-position: -320px -320px ;}
 .icon-ipnode{background-position: -180px -360px ;}
+
 .icon-phone{background-position: -240px -260px ;}
 .icon-wnl{background-position: -120px -80px ;}
 .icon-notice{background-position: -80px -140px ;}
 .icon-key{background-position: -40px -80px ;}
+
+.icon-quyu {
+    background: url('../images/framework/097.png');
+}
+
+.icon-baobiao {
+    background-position: -320px -80px;
+}
+
+.icon-locks {
+    background-position: -0px -260px;
+}
+
+.icon-lock {
+    background-position: -20px -260px;
+}
+
+.icon-jiankong {
+    background-position: -140px -500px;
+}
+
+.icon-tuku {
+    background-position: -20px -340px;
+}
+
+.icon-tupian {
+    background-position: -40px -340px;
+}
+
+.icon-luxiang {
+    background-position: -280px -140px;
+}
+
+.icon-collector {
+    background-position: -340px -220px;
+}
+
+.icon-users {
+    background: url('../images/icons/icon025a11.gif');
+}
+
+.icon-admin {
+    background-position: -80px -420px;
+}
+
+.icon-dianfang {
+    background-position: -340px -240px;
+}
+
+.icon-quyutj {
+    background-position: -320px -80px;
+}
+
+

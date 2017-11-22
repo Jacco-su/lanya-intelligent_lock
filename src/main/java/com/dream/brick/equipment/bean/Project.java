@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 工程基本情况
  * 
  * @author maolei
- * @date 2016-02-05
+ * @date 2017-12-05
  */
 @Entity
 @Table(name = "t_project")
@@ -36,8 +36,8 @@ public class Project implements Serializable {
 	private String djtime;
 	private String djrenid;
 	private String areacode;//所属区域编码
-	private String orgid;//登记机构ID
-	private String orgname;//登记机构名称
+    private String orgid;//登记区域ID
+    private String orgname;//登记区域名称
 
 
 	//add to

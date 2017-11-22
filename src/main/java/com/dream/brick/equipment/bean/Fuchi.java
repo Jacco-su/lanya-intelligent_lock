@@ -8,7 +8,7 @@ import javax.persistence.*;
  *市级专项基金扶持
  * 
  * @author maolei
- * @date 2016-02-10 10:50
+ * @date 2017-12-10 10:50
  */
 @Entity
 @Table(name = "t_fuchi")

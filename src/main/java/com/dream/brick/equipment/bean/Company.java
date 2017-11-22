@@ -3,14 +3,16 @@ package com.dream.brick.equipment.bean;
 import com.dream.util.PropertyNote;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 企业基本情况
  * 
  * @author maolei
- * @date 2016-02-05
+ * @date 2017-12-05
  */
 @Entity
 @Table(name = "t_company")
@@ -50,8 +52,8 @@ public class Company implements java.io.Serializable{
 	private String yd_pzjg;//建厂用地批准机关
 	private String yd_pzwh;//用地批准文号
 	private String yd_pztime;//用地批准文号批准时间
-	private String hj_pjjg;//环境影响<br/>评价机构
-	private String hj_pzwh;//批准文号
+    private String hj_pjjg;//环境影响<br/>评价区域
+    private String hj_pzwh;//批准文号
 	private String hj_pjtime;//批准时间
 	private String scnl;//生产能力
 	private String cl_one;//近三年产品<br/>产量1
@@ -74,8 +76,8 @@ public class Company implements java.io.Serializable{
 	private String djrenid;
 	private String areacode;//企业所在地区编码
 	private String areaname;//企业所在地区名称
-	private String orgid;//所属机构ID
-	private String orgname;//所属机构名称
+    private String orgid;//所属区域ID
+    private String orgname;//所属区域名称
 
 	//extents
 	private String scgyqk;//生产工艺,<br/>技术装备和<br/>产能升级情<br/>况

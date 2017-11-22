@@ -3,7 +3,7 @@ package com.dream.brick.equipment.bean;
 import javax.persistence.*;
 
 /**
- * Created by taller on 16/2/29.
+ * Created by taller on 17/11/29.
  */
 @Entity
 @Table(name = "t_syslog")

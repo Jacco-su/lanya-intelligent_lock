@@ -10,12 +10,12 @@
 <form name="editForm" id="editForm" action="${basePath}/orga/update" method="post">
 <table class="mytable" align="center">
 	<tr>
-		<td>机构名称:</td>
+        <td>区域名称:</td>
 		<td><input type="hidden" name="id"  value="${orga.id}"/>
 		<input name="name" value="${orga.name }" class="easyui-validatebox" required="true"/></td>
 	</tr>
 	<tr>
-		<td>机构地址:</td>
+        <td>区域地址:</td>
 		<td>
 		<input name="address" value="${orga.address}" class="easyui-validatebox" required="true"/>
 		</td>

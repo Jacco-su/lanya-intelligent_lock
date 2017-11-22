@@ -20,10 +20,10 @@
 	$(function() {
 		var infolist = $('#infolist');
 		infolist.datagrid({
-			title : '电力区域列表',
+            title: '区域列表',
 			iconCls : 'icon-users',
 			width : '95%',
-			height : 400,
+            height: 500,
 			pageSize : 20,
 			pageList : [ 20, 30, 50, 100 ],
 			nowrap : false,
@@ -58,7 +58,13 @@
 					field : 'address',
 					width:400,
 					align : 'left'
-			}
+             },
+                {
+                    title: '区域编号',
+                    field: 'areacode',
+                    width: 400,
+                    align: 'left'
+                },
 ] ],
 			pagination : true,
 			rownumbers : true,
@@ -225,6 +231,7 @@
 		if(selections){
 			id = selections.id ;
 			show = selections.attributes.areaname;
+
 			$("#areacode").val(id);
 			getAreaname(selections);
 			fullname=fullname.substring(0,fullname.length-1);
@@ -234,6 +241,7 @@
 	}
 	var fullname="";
 	function getAreaname(node){
+        if (node == null) return;					//改动
 		fullname=node.text+" "+fullname;
 		if(node.attributes.parentcode==0){
 			return;

@@ -8,17 +8,10 @@ import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.admin.dao.IRoleDao;
 import com.dream.brick.admin.dao.IUserDao;
 import com.dream.brick.admin.dao.SyslogDao;
-import com.dream.brick.equipment.bean.Area;
-import com.dream.brick.equipment.bean.Company;
-import com.dream.brick.equipment.bean.Product;
-import com.dream.brick.equipment.bean.Qgorg;
-import com.dream.brick.equipment.dao.CompanyDao;
-import com.dream.brick.equipment.dao.ProductDao;
-import com.dream.brick.equipment.dao.QgorgDao;
-
+import com.dream.brick.equipment.bean.*;
+import com.dream.brick.equipment.dao.*;
 import com.dream.util.AppMsg;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +19,7 @@ import java.util.Map;
 /**
  * 获取基础数据 有些公用的查询，像文件，部门等放在这里，提供通用的方法
  * @author maolei
- * @date 2015-05-11 16:35
+ * @date 2017-11-11 16:35
 **/
 public class BasicData {
 	 public static SpringUtil sprintUtil;
@@ -34,9 +27,15 @@ public class BasicData {
 	 public static IUserDao userDao;
 	 public static IDeptDao deptDao;
 	 public static QgorgDao qgorgDao;
-	 public static CompanyDao companyDao;
+    public static QgdisDao qgdisDao;
+    public static CollectorDao collectorDao;
+    public static CompanyDao companyDao;
 	 public static ProductDao prodDao;
 	 public static SyslogDao logDao;
+
+
+    public static ILocksDao ilocksDao;
+
 	   public static SpringUtil getSprintUtil()
 	   {
 	     return sprintUtil;
@@ -47,10 +46,13 @@ public class BasicData {
 		     userDao=(IUserDao) SpringUtil.getObject("userDao");
 		     deptDao=(IDeptDao) SpringUtil.getObject("deptDao");
 		     qgorgDao=(QgorgDao) SpringUtil.getObject("qgorgDaoImpl");
-		     companyDao=(CompanyDao) SpringUtil.getObject("companyDaoImpl");
+           qgdisDao = (QgdisDao) SpringUtil.getObject("qgdisDaoImpl");
+           companyDao=(CompanyDao) SpringUtil.getObject("companyDaoImpl");
 		     prodDao=(ProductDao) SpringUtil.getObject("productDaoImpl");
 		     logDao=(SyslogDao) SpringUtil.getObject("syslogDaoImpl");
-	   }
+
+           ilocksDao = (ILocksDao) SpringUtil.getObject("locksDaoImpl");
+       }
 	   /**
 	    * files 指fileid字符串,格式如'1111.txt;1112.doc;1113.png'
 	    * 
@@ -96,6 +98,21 @@ public class BasicData {
 	   public static Area findAreaByAreacode(String areacode){
 		   return qgorgDao.findAreaByAreacode(areacode);
 	   }
+
+    //**********
+    public static List<Qgdis> findAllQgdis() {
+        return qgdisDao.findAllQgdis();
+    }
+
+    public static List<Collector> findAllCollector() {
+        return collectorDao.findAllCollector();
+    }
+
+    public static List<Locks> findAllLocks() {
+        return ilocksDao.findAllLocks();
+    }
+    //*******
+
 	   public static List<Company> findAllCompany(){
 		   return companyDao.findAllCompany();
 	   }
@@ -111,6 +128,24 @@ public class BasicData {
 	   public static Qgorg findQgorgById(String id){
 		   return (Qgorg)qgorgDao.find(Qgorg.class,id);
 	   }
+
+    //***************
+    public static List<Qgdis> findQgdisByAreacode(String areacode) {
+        return qgdisDao.findQgdisByAreacode(areacode);
+    }
+
+    public static Qgdis findQgdsiById(String id) {
+        return (Qgdis) qgdisDao.find(Qgdis.class, id);
+    }
+
+    public static List<Collector> findCollectorByAreacode(String areacode) {
+        return collectorDao.findCollectorByAreacode(areacode);
+    }
+
+    public static Collector findCollectorById(String id) {
+        return (Collector) collectorDao.find(Collector.class, id);
+    }
+
 	   public static void saveSyslog(Syslog syslog){
 		   logDao.saveSyslog(syslog);
 	   }
@@ -120,4 +155,12 @@ public class BasicData {
 	   public static Map<String,String> cacheProdName(){
 		   return companyDao.cacheProdName();
 	   }
+
+
+    public static Locks finLocksById(String id) {
+        return (Locks) ilocksDao.find(Locks.class, id);
+    }
+
+
+
 }

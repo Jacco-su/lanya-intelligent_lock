@@ -9,7 +9,7 @@ import javax.persistence.*;
  *现场核查
  * 
  * @author maolei
- * @date 2016-02-10 17:50
+ * @date 2017-12-10 17:50
  */
 @Entity
 @Table(name = "t_xc_detail")

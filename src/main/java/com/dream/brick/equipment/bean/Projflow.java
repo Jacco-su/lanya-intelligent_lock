@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 材料产品流向单
  * 
  * @author maolei
- * @date 2016-02-08 15:30
+ * @date 2017-12-08 15:30
  */
 @Entity
 @Table(name = "t_projflow")

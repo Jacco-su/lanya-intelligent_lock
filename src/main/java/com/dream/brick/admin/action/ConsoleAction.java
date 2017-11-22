@@ -9,7 +9,10 @@ import com.dream.brick.admin.dao.IModuleDao;
 import com.dream.brick.admin.dao.IUserDao;
 import com.dream.brick.equipment.bean.Qgorg;
 import com.dream.brick.listener.SessionData;
-import com.dream.util.*;
+import com.dream.util.AppData;
+import com.dream.util.AppMsg;
+import com.dream.util.MD5;
+import com.dream.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -45,16 +48,7 @@ public class ConsoleAction {
 	@RequestMapping(value = "/userlogin", method = RequestMethod.POST)
 	public String userlogin(HttpServletRequest request, String loginName, String loginPwd, ModelMap model)
 	{
-
-		String ip=request.getRemoteHost();
-		boolean right=checkIP(ip);
-		if(right==false){
-			request.setAttribute("message",findLogMsg(100));
-			//100该IP地址没有登录权限
-			return "/commons/globalmsg";
-		}
 		String errormsg = "";
-		String year=request.getParameter("year");
 		try {
 			moduleSet = new HashSet<String>();
 			User admin=userDao.findByName(loginName);
@@ -82,11 +76,8 @@ public class ConsoleAction {
 				request.getSession().setAttribute("admin", admin);
 				request.getSession().setAttribute("dept", dept);
 				request.getSession().setAttribute("seqgorg",qgorg);
-				request.getSession().setAttribute("seareacode",qgorg.getAreacode());				
-				year= FormatDate.getCurrentYear();
-				
-				request.getSession().setAttribute("operateYear",year);
-				admin.setRoles(userDao.findRoles(admin.getId()));
+                request.getSession().setAttribute("seareacode", qgorg.getAreacode());    //**
+                admin.setRoles(userDao.findRoles(admin.getId()));
 				List<Role> roles = admin.getRoles();
 				if(roles.size()==0){
 					Role ptRole=userDao.find(Role.class, AppData.NORMALROLEID);

@@ -10,8 +10,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 <!--
-		针对控制器返回视图字符串的修饰 最终视图路径为 [prefix][returnValue][suffix]
-	-->
+		针对控制器返回视图字符串的修饰 最终视图路径为 [prefix][returnValue][suffix]		-->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
@@ -19,6 +18,7 @@
 		<property name="prefix" value="/WEB-INF/view/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+
 	<!-- 解决ResponseBody乱码 -->
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
@@ -97,6 +97,8 @@
     <bean id="LisBasicData" class="com.dream.brick.listener.BasicData" >
                 <property  name="sprintUtil"   ref="LisSprintUtil" />
     </bean>
+
+
 	<!-- SpringMVC在超出上传文件限制时，会抛出org.springframework.web.multipart.MaxUploadSizeExceededException -->
 	<!-- 该异常是SpringMVC在检查上传的文件信息时抛出来的，而且此时还没有进入到Controller方法中 -->
 	<bean id="uploadExceptionResolver"

@@ -1,17 +1,12 @@
 package com.dream.brick.equipment.bean;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
- * 电力部门
- * 
- * @author maolei
- * @date 2016-02-05
+ * 区域
+ *
+ * @author
+ * @date 2017-12-05
  */
 @Entity
 @Table(name = "t_qgorg")
@@ -21,18 +16,18 @@ public class Qgorg  implements java.io.Serializable{
 	 */
 	private static final long serialVersionUID = 4725135016331954412L;
 	private String id;
-	private String name;//电力机构名称
-	private String address;//电力机构地址
-	private String areacode;//电力机构所在地区编码
-	private String areaname;//电力机构所在地区名称
-	private String phone;//电力机构手机
-	private String telephone;//电力机构电话
-	private int sortorder;////电力机构显示顺序
-	
-	@Id
-	@GenericGenerator(name = "systemUUID", strategy = "uuid")
-	@GeneratedValue(generator = "systemUUID")
-	public String getId() {
+    private String name;//区域名称
+    private String address;//区域地址
+    private String areacode;//区域所在地区编码
+    private String areaname;//区域所在地区名称
+    private String phone;//区域手机
+    private String telephone;//区域电话
+    private int sortorder;//区域显示顺序
+
+    @Id
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public String getId() {
 		return id;
 	}
 	public void setId(String id) {

@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * 机构实体类
+ * 区域实体类
  * 
  * @author maolei
  * 
@@ -17,16 +17,16 @@ import javax.persistence.Table;
 @Table(name = "t_org")
 public class Organization {
 	/**
-	 * 机构ID
-	 */
+     * 区域ID
+     */
 	private String id;
 	/**
-	 * 机构名称
-	 */
+     * 区域名称
+     */
 	private String name;
 	/**
-	 * 父机构ID
-	 */
+     * 父区域ID
+     */
 	private String parentId;
 	/**
 	 * 排序ID

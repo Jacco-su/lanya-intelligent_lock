@@ -9,7 +9,7 @@ import javax.persistence.*;
  *专项基金返还
  * 
  * @author maolei
- * @date 2016-02-11 13:50
+ * @date 2017-12-11 13:50
  */
 @Entity
 @Table(name = "t_fanhuan")

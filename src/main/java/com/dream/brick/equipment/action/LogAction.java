@@ -1,8 +1,8 @@
 package com.dream.brick.equipment.action;
 
-import com.dream.framework.dao.Pager;
 import com.dream.brick.equipment.bean.Log;
 import com.dream.brick.equipment.dao.LogDao;
+import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.MsgResponse;
 import org.json.JSONObject;
@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * Created by taller on 16/2/29.
+ * Created by taller on 17/11/29.
  */
 @Controller
 @Scope("prototype")

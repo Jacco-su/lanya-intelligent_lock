@@ -1,10 +1,10 @@
 package com.dream.brick.equipment.action;
 
-import com.dream.framework.dao.Pager;
 import com.dream.brick.equipment.bean.Area;
 import com.dream.brick.equipment.bean.Qgorg;
 import com.dream.brick.equipment.dao.QgorgDao;
 import com.dream.brick.listener.BasicData;
+import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.StringUtil;
 import org.json.JSONObject;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 机构操作实现类
+ * 区域操作实现类
  * 
  * @author ml
  * 
@@ -112,8 +112,8 @@ public class QgorgAction {
 			int count=orgDao.getResultNumber(hql,id);
 			if(count>0){
 				message=StringUtil.jsonValue("0",AppMsg.getMessage("orga101"));
-				//101该机构拥有部门，不允许删除
-				return message;
+                //101该区域拥有部门，不允许删除
+                return message;
 			}
 			try{
 				Qgorg orga = orgDao.find(Qgorg.class, id);

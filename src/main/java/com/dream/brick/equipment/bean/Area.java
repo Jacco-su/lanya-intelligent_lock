@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * 地区
  * 
  * @author maolei
- * @date 2016-02-13 16:50
+ * @date 2017-12-13 16:50
  */
 @Entity
 @Table(name = "t_areacode")

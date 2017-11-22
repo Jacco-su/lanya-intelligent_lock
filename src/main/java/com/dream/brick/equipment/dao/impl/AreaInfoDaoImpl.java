@@ -1,15 +1,15 @@
 package com.dream.brick.equipment.dao.impl;
 
-import com.dream.framework.dao.BaseDaoImpl;
 import com.dream.brick.equipment.bean.Area;
 import com.dream.brick.equipment.dao.AreaInfoDao;
+import com.dream.framework.dao.BaseDaoImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
- * Created by taller on 16/3/11.
+ * Created by taller on 17/11/11.
  */
 @Transactional
 @Repository
@@ -29,7 +29,8 @@ public class AreaInfoDaoImpl extends BaseDaoImpl implements AreaInfoDao {
         }
         return findList(hql);
     }
-    public Area cacheAreaById(String id){
+
+    public Area cacheAreaById(String id) {
         return (Area)find(Area.class,id);
     }
 

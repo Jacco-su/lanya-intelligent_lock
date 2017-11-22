@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 基金征收
  * 
  * @author maolei
- * @date 2016-02-09 16:10
+ * @date 2017-12-09 16:10
  */
 @Entity
 @Table(name = "t_zhengshou")

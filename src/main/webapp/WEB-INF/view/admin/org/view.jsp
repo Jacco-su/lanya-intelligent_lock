@@ -9,11 +9,11 @@
 <div>
 <table class="mytable" align="center">
 	<tr>
-		<td>机构名称:</td>
+        <td>区域名称:</td>
 		<td>${orga.name}</td>
 	</tr>
 	<tr>
-		<td>机构地址:</td>
+        <td>区域地址:</td>
 		<td>
 		${orga.address}
 		</td>

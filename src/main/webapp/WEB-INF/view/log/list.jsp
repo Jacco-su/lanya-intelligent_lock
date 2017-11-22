@@ -84,13 +84,13 @@
 					align : 'left'
 				}
 			] ],
-			pagination : true,
-			rownumbers : true,
-			toolbar : [{
-				text : '删除',
-				iconCls : 'icon-remove',
-				handler : del
-			}]
+//			pagination : true,
+//			rownumbers : true,
+//			toolbar : [{
+//				text : '删除',
+//				iconCls : 'icon-remove',
+//				handler : del
+//			}]
 		});
 		displayMsg();
 
