@@ -55,9 +55,13 @@ public class Module {
 	 */
 	private String descript;
 
-	private int type;
-	@Id
-	@GenericGenerator(name = "systemUUID", strategy = "uuid")
+    /**
+     * 树形层级
+     */
+    private int type;
+
+    @Id
+    @GenericGenerator(name = "systemUUID", strategy = "uuid")
 	@GeneratedValue(generator = "systemUUID")
 	public String getId() {
 		return id;

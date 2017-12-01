@@ -1,8 +1,8 @@
 package com.dream.brick.admin.dao.impl;
 
-import com.dream.framework.dao.BaseDaoImpl;
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.dao.IDeptDao;
+import com.dream.framework.dao.BaseDaoImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,11 +23,11 @@ public class DeptDao extends BaseDaoImpl implements IDeptDao {
 	public List<Department> getChildren(String parentId, String areacode) {
 		if (parentId == null)
 			parentId = "null";
-		return query("from Department where parentId = ? and areacode like '"+areacode+"%' order by orderId asc",
-				0, 0, parentId);
-	}
-	
-	public List<Department> findDeptIdAndName(){
+        return query("from Department where parentId = ? and areacode like '" + areacode + "%' order by Id asc",
+                0, 0, parentId);
+    }
+
+    public List<Department> findDeptIdAndName(){
 		String hql="select id,name,parentId,haskh from Department order by parentId asc,orderId asc";
 		List<Object[]> results=query(hql,0,0);
 		List<Department> list=new ArrayList<Department>();

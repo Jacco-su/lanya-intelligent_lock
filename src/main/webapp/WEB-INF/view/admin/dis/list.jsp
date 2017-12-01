@@ -161,13 +161,20 @@
 
             $('#tree').tree({
                 checkbox: false,
-                url: '${basePath}/areainfo/findAreaByCode',
-                simpleDataModel: true,
+                <%--url: '${basePath}/areainfo/findAreaByCode',--%>
+                url: '${basePath}/dept/getChildren',
+                //simpleDataModel: true,
                 onBeforeExpand: function (node, param) {
-                    $('#tree').tree('options').url = "${basePath}/areainfo/findAreaByParentId?parentId=" + node.id;// change the url
-                    return true;
+                    <%--$('#tree').tree('options').url = "${basePath}/areainfo/findAreaByParentId?parentId=" + node.id;// change the url--%>
+                    <%--return true;--%>
+                    $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId=" + node.id;
+                },
+                onClick: function (node) {
+                    deptId = node.id;
+                    refresh();
                 }
             });
+
 
             function refresh() {
                 infolist.datagrid("clearSelections");

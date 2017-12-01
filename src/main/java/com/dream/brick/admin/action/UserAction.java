@@ -1,5 +1,6 @@
 package com.dream.brick.admin.action;
 
+import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.bean.Role;
 import com.dream.brick.admin.bean.User;
 import com.dream.brick.admin.bean.UserRole;
@@ -90,12 +91,12 @@ public class UserAction {
 
 	@RequestMapping("/prAdd")
 	public String prAdd(String deptId, ModelMap model){
-		List<Role> roles = roleDao.findRoleName(false);
-		//List<Department> deptList=deptDao.findDeptIdAndName();
+		//List<Role> roles = roleDao.findRoleName(false);
+		List<Department> deptList = deptDao.findDeptIdAndName();
 		model.addAttribute("deptId", deptId);
-		model.addAttribute("roles", roles);
-		//model.addAttribute("deptList",deptList);
-		return "admin/add";
+		//model.addAttribute("roles", roles);
+		model.addAttribute("deptList", deptList);
+		return "admin/uadd";
 	}
 
 	@RequestMapping(value="/add",method = RequestMethod.POST)

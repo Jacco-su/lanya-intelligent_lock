@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			},
 			columns : [ [ 
 			{
-				title : '部门',
+                title: '区域',
 				field : 'deptname',
 				formatter : function(value,rowData,rowIndx) {
 					   return rowData.dept.name;
@@ -330,7 +330,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<tr>
 		<td width="12%" valign="top" style="border: 1px solid #99bbe8; border-right: 0;">
 		<div style="width: 100%;">
-			<div class="panel-header" style="border-left: 0; border-right: 0;">部门</div>
+			<div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
 			<ul id="tree" style="margin-top: 10px;  height: 500px; overflow: scroll;">
 		    </ul>
 		</div>

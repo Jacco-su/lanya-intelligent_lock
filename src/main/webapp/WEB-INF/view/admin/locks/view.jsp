@@ -9,19 +9,25 @@
 <div>
     <table class="mytable" align="center">
         <tr>
-            <td>采集器编号:</td>
+            <td>智能锁编号:</td>
             <td>${lock.id}</td>
         </tr>
         <tr>
-            <td>所属配电房:</td>
+            <td>识别码:</td>
             <td>
-                ${lock.qgdisname}
+                ${lock.locksCode}
             </td>
         </tr>
         <tr>
-            <td width="100">IP地址:</td>
+            <td width="100">安装地点:</td>
             <td>
-                ${lock.cip}
+                ${lock.disName} 配电房
+            </td>
+        </tr>
+        <tr>
+            <td width="100">安装时间:</td>
+            <td>
+                ${lock.lockDate}
             </td>
         </tr>
         <tr>

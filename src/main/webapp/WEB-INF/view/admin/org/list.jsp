@@ -47,22 +47,23 @@
 				width:200,
 				align : 'center'
 			},
+                {
+                    title: '区域位置',
+                    field: 'address',
+                    width: 300,
+                    align: 'left'
+                },
 			{
-				title : '管辖区域',
+                title: '上级区域',
 				field : 'areaname',
 				width:200,
 				align : 'center'
 			},			
-			 {
-					title : '区域地址',
-					field : 'address',
-					width:400,
-					align : 'left'
-             },
+
                 {
                     title: '区域编号',
-                    field: 'areacode',
-                    width: 400,
+                    field: 'id',
+                    width: 300,
                     align: 'left'
                 },
 ] ],

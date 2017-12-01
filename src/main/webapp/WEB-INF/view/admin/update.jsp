@@ -23,7 +23,7 @@ $.each(deptIds.split(','), function(i, v) {
 		});
 		
 		$('#selectDept').window({
-			title:'选择部门',
+            title: '选择区域',
 			width:300,
 			height:500,
 			closed:true,
@@ -61,11 +61,11 @@ $.each(deptIds.split(','), function(i, v) {
 		<td><input name="username" size="40" class="easyui-validatebox" required="true" validType="CHS" value="${user.username}"/></td>
 	</tr>
 	<tr>
-		<td>部门:</td>
+		<td>区域:</td>
 		<td>
 			<input type="hidden"  name="dept.id" id="deptId" value="${user.dept.id}"/>
 			<input size="40" readonly="readonly" class="easyui-validatebox" required="true" id="deptName"  value="${user.dept.name}"/>
-			<a class="easyui-linkbutton" onclick="$('#selectDept').window('open');">部门调动</a>
+			<a class="easyui-linkbutton" onclick="$('#selectDept').window('open');">区域调动</a>
 		</td>
 	</tr>
 <%--

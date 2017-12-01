@@ -22,11 +22,11 @@ public class Area implements java.io.Serializable{
 	private String areaname;//地区名称
 	private int sortorder;//地区显示顺序
 	private int grade;
-	private String parentcode;
-	private int islast;
-	
-	@Id
-	public String getAreacode() {
+    private String parentcode;    //上级
+    private int islast;
+
+    @Id
+    public String getAreacode() {
 		return areacode;
 	}
 	public void setAreacode(String areacode) {

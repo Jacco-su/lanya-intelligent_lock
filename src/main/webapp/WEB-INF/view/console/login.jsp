@@ -190,7 +190,7 @@
 			height:45px;
 			line-height:43px;
 			background-color:#FFFFFF;
-			padding-left:50px;
+			padding-left: 55px;
 			border:0px #fff solid;
 			color:#666666;
 			font-size:20px;
@@ -205,14 +205,29 @@
 			height:45px;
 			line-height:43px;
 			background-color:#FFFFFF;
-			padding-left:50px;
+			padding-left: 55px;
 			border:0px #fff solid;
 			color:#666666;
 			font-size:20px;
 			border-radius:25px;
 		}
-		.dl {margin: 0 auto; background-image: url("<%=path %>/images/xlogin/login_14.jpg"); background-position: center;}
-		.bottom2016{ width:1024px; height:90px; padding-top:120px; margin-top: 50px; line-height:25px; text-align: center ; text-blink:  margin-bottom: 0px; margin-bottom: 0px; margin-left: auto;
+
+		.dl {
+			margin: 0 auto;
+			background-image: url("<%=path%>/images/xlogin/login_14.jpg");
+			background-position: center;
+		}
+
+		.bottom2016 {
+			width: 1024px;
+			height: 90px;
+			padding-top: 120px;
+			margin-top: 50px;
+			line-height: 25px;
+			text-align: center;
+			text-blink: 0px;
+			margin-bottom: 0px;
+			margin-left: auto;
 			margin-right: auto;color:#878787;}
 		.bottom2016 a{ color:#878787!important;}
 

@@ -49,6 +49,21 @@ public class LocksAction {
         return datas.toString();
     }
 
+    @RequestMapping("/prAdd")
+    public String prAdd() {
+        return "admin/locks/add";
+    }
+
+    @RequestMapping("/add")
+    public String daa() {
+
+
+        return null;
+    }
+
+
+
+
 
     @RequestMapping("/prView")
     public String prView(String id, ModelMap model) {
@@ -81,4 +96,3 @@ public class LocksAction {
 
 
 }
-    

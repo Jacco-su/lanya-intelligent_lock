@@ -2,7 +2,10 @@ package com.dream.brick.equipment.action;
 
 
 import com.dream.brick.equipment.bean.Collector;
+import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.CollectorDao;
+import com.dream.brick.listener.BasicData;
+import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.StringUtil;
@@ -52,10 +55,16 @@ public class CollectorAction {
         return datas.toString();
     }
 
+
     @RequestMapping("/prAdd")
-    public String prAdd(ModelMap model) {
+    public String prAdd(String parentId, ModelMap model, HttpServletRequest request) {
+        String areacode = SessionData.getAreacode(request);
+        List<Qgdis> qgdisList = BasicData.findQgdisByAreacode(areacode);
+        model.addAttribute("qgdisList", qgdisList);
+        model.addAttribute("parentId", parentId);
         return "admin/collector/add";
     }
+
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -139,4 +148,29 @@ public class CollectorAction {
         }
         return message;
     }
+
+//    @RequestMapping("/info")
+//    @ResponseBody
+//    public String getChildren(String parentId, HttpServletRequest request)
+//            throws Exception {
+//        JSONArray datas = new JSONArray();
+//        String areacode= SessionData.getAreacode(request);
+//        List<Department> children = deptDao.getChildren(parentId,areacode);
+//        List<Department> deptAll=deptDao.findDeptIdAndName();
+//        for (Department dept : children) {
+//            Map<String, Object> tempMap = new HashMap<String, Object>();
+//            tempMap.put("id", dept.getId());
+//            tempMap.put("text", dept.getName());
+//            tempMap.put("iconCls", "icon-ok");
+//            for(Department d:deptAll){
+//                if((dept.getId()).equals(d.getParentId())){
+//                    tempMap.put("state", "closed");
+//                    break;
+//                }
+//            }
+//            datas.put(tempMap);
+//        }
+//        return datas.toString();
+//    }
+
 }

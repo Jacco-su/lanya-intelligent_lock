@@ -95,7 +95,7 @@
 	
 	<bean id="LisSprintUtil" class="com.dream.brick.listener.SpringUtil" />
     <bean id="LisBasicData" class="com.dream.brick.listener.BasicData" >
-                <property  name="sprintUtil"   ref="LisSprintUtil" />
+        <property name="sprintUtil" ref="LisSprintUtil"/>
     </bean>
 
 

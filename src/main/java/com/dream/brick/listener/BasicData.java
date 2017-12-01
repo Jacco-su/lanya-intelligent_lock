@@ -35,6 +35,9 @@ public class BasicData {
 
 
     public static ILocksDao ilocksDao;
+    public static IKeyssDao ikeyssDao;
+
+
 
 	   public static SpringUtil getSprintUtil()
 	   {
@@ -52,6 +55,7 @@ public class BasicData {
 		     logDao=(SyslogDao) SpringUtil.getObject("syslogDaoImpl");
 
            ilocksDao = (ILocksDao) SpringUtil.getObject("locksDaoImpl");
+           ikeyssDao = (IKeyssDao) SpringUtil.getObject("keyssDaoImpl");
        }
 	   /**
 	    * files 指fileid字符串,格式如'1111.txt;1112.doc;1113.png'
@@ -111,6 +115,10 @@ public class BasicData {
     public static List<Locks> findAllLocks() {
         return ilocksDao.findAllLocks();
     }
+
+    public static List<Keyss> findAllKeyss() {
+        return ikeyssDao.findAllKeyss();
+    }
     //*******
 
 	   public static List<Company> findAllCompany(){
@@ -160,6 +168,11 @@ public class BasicData {
     public static Locks finLocksById(String id) {
         return (Locks) ilocksDao.find(Locks.class, id);
     }
+
+    public static Keyss finKeyssById(String id) {
+        return (Keyss) ikeyssDao.find(Keyss.class, id);
+    }
+
 
 
 

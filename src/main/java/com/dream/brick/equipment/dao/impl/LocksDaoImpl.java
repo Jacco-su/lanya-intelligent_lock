@@ -9,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * 数据库 接口实现类
+ */
+
+
 @Transactional
 @Repository
 public class LocksDaoImpl extends BaseDaoImpl implements ILocksDao {

@@ -20,9 +20,10 @@ public class Qgorg  implements java.io.Serializable{
     private String address;//区域地址
     private String areacode;//区域所在地区编码
     private String areaname;//区域所在地区名称
-    private String phone;//区域手机
-    private String telephone;//区域电话
+
+
     private int sortorder;//区域显示顺序
+
 
     @Id
 
@@ -57,21 +58,11 @@ public class Qgorg  implements java.io.Serializable{
 	public void setAreaname(String areaname) {
 		this.areaname = areaname;
 	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public String getTelephone() {
-		return telephone;
-	}
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-	public int getSortorder() {
-		return sortorder;
-	}
+
+
+    public int getSortorder() {
+        return sortorder;
+    }
 	public void setSortorder(int sortorder) {
 		this.sortorder = sortorder;
 	}

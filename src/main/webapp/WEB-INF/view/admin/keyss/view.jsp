@@ -9,24 +9,30 @@
 <div>
     <table class="mytable" align="center">
         <tr>
-            <td>采集器编号:</td>
-            <td>${collectora.id}</td>
+            <td>钥匙编号:</td>
+            <td>${keyss.id}</td>
         </tr>
         <tr>
-            <td>所属配电房:</td>
+            <td>自定义名称:</td>
             <td>
-                ${collectora.qgdisname}
+                ${keyss.keyssName}
             </td>
         </tr>
         <tr>
-            <td width="100">IP地址:</td>
+            <td>钥匙MAC:</td>
             <td>
-                ${collectora.cip}
+                ${keyss.keyssMAC}
             </td>
         </tr>
         <tr>
-            <td>排序:</td>
-            <td>${collectora.sortorder}
+            <td width="100">领用人:</td>
+            <td>
+                ${keyss.userName}
+            </td>
+        </tr>
+        <tr>
+            <td>领用时间:</td>
+            <td>${keyss.keyssDate}
             </td>
         </tr>
     </table>

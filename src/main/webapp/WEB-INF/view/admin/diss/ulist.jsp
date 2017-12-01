@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>人员列表</title>
+    <title>配电房列表</title>
     <link rel="stylesheet" type="text/css"
           href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css"
@@ -26,8 +26,8 @@
             var deptId = "";
             var infolist = $('#infolist');
             infolist.datagrid({
-                title: '员工列表',
-                iconCls: 'icon-users',
+                title: '配电房列表',
+                iconCls: 'icon-disss',
                 width: '95%',
                 height: 560,
                 pageSize: 20,
@@ -37,7 +37,7 @@
                 collapsible: false,
                 fitColumns: true,
                 singleSelect: true,
-                url: '${basePath}/user/list',
+                url: '${basePath}/diss/list',
                 queryParams: {
                     'deptId': deptId
                 },
@@ -59,59 +59,28 @@
                         align: 'center'
                     },
                     {
-                        title: '工号',
+                        title: '编号',
+                        field: 'areaname',
+                        width: $(this).width() * 0.1,
+                        rowspan: 2,
+                        align: 'center'
+                    },
+                    {
+                        title: '编号',
                         field: 'id',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
                     },
 
-//                {
-//				title : '帐户',
-//				field : 'name',
-//				width : $(this).width() * 0.1,
-//				rowspan : 2,
-//				align : 'center'
-//			},
+
                     {
-                        title: '姓名',
-                        field: 'username',
-                        width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        align: 'center'
-                    }, {
-                        title: '手机',
-                        field: 'phone',
-                        width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        align: 'center'
-                    }, {
-                        title: '邮箱',
-                        field: 'email',
-                        width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        align: 'center'
-                    }, {
-                        title: '注册时间',
-                        field: 'rdate',
+                        title: '配电房',
+                        field: 'name',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
                     },
-//			{
-//				title : '角色',
-//				field : 'roles',
-//				formatter : function(value, rec) {
-//					var t = "";
-//					$.each(value, function(i, v) {
-//						t += v.name + " ";
-//					});
-//					return t;
-//				},
-//				width : $(this).width() * 0.2,
-//				rowspan : 2,
-//				align : 'center'
-//			}
                 ]],
                 pagination: true,
                 rownumbers: true,
@@ -143,7 +112,7 @@
 
             function refresh() {
                 infolist.datagrid({
-                    url: '${basePath}/user/list',
+                    url: '${basePath}/diss/list',
                     queryParams: {
                         'deptId': deptId
                     },
@@ -179,7 +148,7 @@
                 if (select) {
                     $.messager.confirm('警告', '确定要重置密码?', function (f) {
                         if (f) {
-                            $.post("${basePath}/user/initPassword", {"id": select.id}, function (json) {
+                            $.post("${basePath}/diss/initPassword", {"id": select.id}, function (json) {
                                 $.messager.alert('提示', json.message, 'warning');
                             }, "json");
                         }
@@ -213,7 +182,7 @@
                 if (deptId != "") {
                     addWin = $.createWin({
                         title: "用户添加",
-                        url: basePath + '/user/prAdd?deptId=' + deptId,
+                        url: basePath + '/diss/prAdd?deptId=' + deptId,
                         height: 550,
                         width: 800,
                         buttons: [{
@@ -239,7 +208,7 @@
             function showEdit(id) {
                 updateWin = $.createWin({
                     title: "用户修改",
-                    url: basePath + '/user/prUpdate',
+                    url: basePath + '/diss/prUpdate',
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
@@ -280,7 +249,7 @@
                         if (f) {
                             $.ajax({
                                 type: "POST",
-                                url: basePath + "/user/delete",
+                                url: basePath + "/diss/delete",
                                 data: "ids=" + id,
                                 dataType: "text",
                                 cache: false,
@@ -299,7 +268,7 @@
             function search() {
                 addWin = $.createWin({
                     title: "查询条件",
-                    contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr></table>",
+                    contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=dissname /></td></tr></table>",
                     width: 300,
                     buttons: [{
                         text: '查询',
@@ -311,9 +280,9 @@
 
             function query() {
                 infolist.datagrid({
-                    url: basePath + '/user/list',
+                    url: basePath + '/diss/list',
                     queryParams: {
-                        'username': $('#username').val()
+                        'dissname': $('#dissname').val()
                     },
                     loadMsg: '数据装载中......'
                 });

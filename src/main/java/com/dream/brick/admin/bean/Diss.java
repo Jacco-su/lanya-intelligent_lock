@@ -1,4 +1,4 @@
-package com.dream.brick.equipment.bean;
+package com.dream.brick.admin.bean;
 
 import javax.persistence.*;
 
@@ -10,12 +10,12 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "t_qgdis")
-public class Qgdis implements java.io.Serializable {
+public class Diss implements java.io.Serializable {
     /**
      *
      */
     private static final long serialVersionUID = 4725135016331954412L;
-    private Integer id;
+    private int id;
     private String name;// 配电房名称
     private String address;// 配电房地址
     private String areacode;// 配电房所在地区编码

@@ -18,6 +18,10 @@ public class Locks {
     private String disName;     // 安装地点  配电房名称
     private Date lockDate;      //安装时间
     private Integer sortorder;      //序列
+    /**
+     * 常显
+     */
+    private int alwaysShow;
 
 
     @Id
@@ -60,5 +64,21 @@ public class Locks {
 
     public void setLockDate(Date lockDate) {
         this.lockDate = lockDate;
+    }
+
+    public Integer getSortorder() {
+        return sortorder;
+    }
+
+    public void setSortorder(Integer sortorder) {
+        this.sortorder = sortorder;
+    }
+
+    public int getAlwaysShow() {
+        return alwaysShow;
+    }
+
+    public void setAlwaysShow(int alwaysShow) {
+        this.alwaysShow = alwaysShow;
     }
 }

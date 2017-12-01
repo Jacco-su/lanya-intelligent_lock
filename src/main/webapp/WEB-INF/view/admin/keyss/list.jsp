@@ -23,14 +23,14 @@
                 title: '蓝牙钥匙列表',
                 iconCls: 'icon-users',
                 width: '95%',
-                height: 520,
+                height: 500,
                 pageSize: 20,
                 pageList: [20, 30, 50, 100],
                 nowrap: false,
                 striped: true,
                 collapsible: false,
                 fitColumns: true,
-                url: '${basePath}/collector/list',
+                url: '${basePath}/keyss/list',
                 queryParams: {},
                 loadMsg: '数据装载中......',
                 remoteSort: false,
@@ -69,7 +69,7 @@
 //                },
                     {
                         title: '领用时间 ',
-                        field: 'cdate',
+                        field: 'keyssDate',
                         width: 200,
                         align: 'left'
                     },
@@ -113,7 +113,7 @@
             function add() {
                 addWin = $.createWin({
                     title: "添加",
-                    url: '${basePath}/keys/prAdd',
+                    url: '${basePath}/keyss/prAdd',
                     height: 350,
                     width: 800,
                     buttons: [{
@@ -150,7 +150,7 @@
             function detail(id) {
                 seeWin = $.createWin({
                     title: "详情",
-                    url: '${basePath}/skeyss/prView',
+                    url: '${basePath}/keyss/prView',
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
@@ -159,7 +159,7 @@
             }
 
             $('#selectArea').window({
-                title: '地区选择',
+                title: '领用人',
                 width: 400,
                 height: 500,
                 closed: true,
@@ -169,7 +169,7 @@
 
             $('#tree').tree({
                 checkbox: false,
-                url: '${basePath}/areainfo/findAreaByCode',
+                url: '${basePath}/user/list',
                 simpleDataModel: true,
                 onBeforeExpand: function (node, param) {
                     $('#tree').tree('options').url = "${basePath}/areainfo/findAreaByParentId?parentId=" + node.id;// change the url

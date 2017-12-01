@@ -158,7 +158,7 @@
                 });
             }
 
-            $('#selectArea').window({
+            $('#selectDept').window({
                 title: '安装区域选择',
                 width: 400,
                 height: 500,
@@ -169,10 +169,13 @@
 
             $('#tree').tree({
                 checkbox: false,
-                url: '${basePath}/areainfo/findAreaByCode',
+                <%--url: '${basePath}/areainfo/findAreaByCode',--%>
+                url: '${basePath}/dept/getChildren',
                 simpleDataModel: true,
                 onBeforeExpand: function (node, param) {
-                    $('#tree').tree('options').url = "${basePath}/areainfo/findAreaByParentId?parentId=" + node.id;// change the url
+                    $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId="
+                        + node.id;
+                    <%--$('#tree').tree('options').url = "${basePath}/deptinfo/findDeptByParentId?parentId=" + node.id;// change the url--%>
                     return true;
                 }
             });
@@ -244,6 +247,9 @@
             }
         });
 
+
+        //        -----
+
         function setToarea() {
             var id = "";
             var show = "";
@@ -251,18 +257,19 @@
             var selections = $('#tree').tree('getSelected');
             if (selections) {
                 id = selections.id;
-                show = selections.attributes.areaname;
-                $("#areacode").val(id);
+                show = selections.attributes.deptname;
+                $("#deptid").val(id);
                 getAreaname(selections);
                 fullname = fullname.substring(0, fullname.length - 1);
-                $("#areaname").val(fullname);
+                $("#deptid").val(fullname);
             }
-            $('#selectArea').window('close');
+            $('#selectDept').window('close');
         }
 
         var fullname = "";
 
         function getAreaname(node) {
+            if (node == null) return;					//改动 控制树显示
             fullname = node.text + " " + fullname;
             if (node.attributes.parentcode == 0) {
                 return;
@@ -276,14 +283,14 @@
 <div>
     <table id="infolist"></table>
 </div>
-<div id="selectArea">
+<div id="selectDept">
     <div class="easyui-layout" fit="true">
         <div region="center" border="false" style="padding: 10px;">
             <ul id="tree" style="margin-top: 10px;"></ul>
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
-            <a class="easyui-linkbutton" onclick="$('#selectArea').window('close');">关闭</a>
+            <a class="easyui-linkbutton" onclick="$('#selectDept').window('close');">关闭</a>
         </div>
     </div>
 </div>

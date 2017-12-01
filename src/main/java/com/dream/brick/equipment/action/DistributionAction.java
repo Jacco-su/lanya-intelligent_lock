@@ -1,10 +1,8 @@
 package com.dream.brick.equipment.action;
 
 
-import com.dream.brick.equipment.bean.Area;
 import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.QgdisDao;
-import com.dream.brick.listener.BasicData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.StringUtil;
@@ -66,7 +64,7 @@ public class DistributionAction {
         String message = "";
 //            try{
 //                Area area= BasicData.findAreaByAreacode(disa.getAreacode());
-
+//
 //                disa.setAreaname(area.getAreaname());
 //                disa.setAddress(disa.getAddress().trim());
 //                disDao.save(disa);
@@ -74,12 +72,13 @@ public class DistributionAction {
 //            }catch(Exception e){
 //                message=StringUtil.jsonValue("0",AppMsg.ADD_ERROR);
 //            }
+//
 //            try {
 //                Area area = BasicData.findAreaByAreacode(disa.getAreacode());
-//                return qgdisDao.findQgdisByAreacode(areacode);
+//
 //                disa.setAreaname(area.getAreaname());
 //                disa.setAddress(disa.getAddress().trim());
-        //disa.setLock(disa.getLock());
+//                disa.setLock(disa.getLock());
 //                disDao.save(disa);
 //                message= StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
 //             }catch(Exception e){
@@ -119,8 +118,8 @@ public class DistributionAction {
 //                message=StringUtil.jsonValue("0",AppMsg.UPDATE_ERROR);
 //            }
         try {
-            Area area = BasicData.findAreaByAreacode(disa.getAreacode());
-            disa.setAreaname(area.getAreaname());
+            // Qgdis disa = BasicData.findAreaByAreacode(disa.getAreacode());
+            disa.setAreaname(disa.getAreaname());
             disa.setAddress(disa.getAddress().trim());
             disa.setName(disa.getName().trim());
             disDao.update(disa);
@@ -135,7 +134,7 @@ public class DistributionAction {
     @ResponseBody
     public String delete(String id) {
         String message = "";
-        String hql = "select count(*) from locks t where t.qgdisId=?";
+        String hql = "select count(*) from t_lokes t where t.qgdisId=?";
         int count = disDao.getResultNumber(hql, id);
         if (count > 0) {
             message = StringUtil.jsonValue("0", AppMsg.getMessage("disa101"));

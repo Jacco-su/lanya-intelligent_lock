@@ -1,11 +1,6 @@
 package com.dream.brick.admin.bean;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 部门实体类
@@ -57,9 +52,13 @@ public class Department implements java.io.Serializable{
 	
 	private String qgorgId;
 	private String areacode;
+
+	//	@Id
+//	@GenericGenerator(name = "systemUUID", strategy = "uuid")
+//	@GeneratedValue(generator = "systemUUID")
 	@Id
-	@GenericGenerator(name = "systemUUID", strategy = "uuid")
-	@GeneratedValue(generator = "systemUUID")
+
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public String getId() {
 		return id;
 	}
