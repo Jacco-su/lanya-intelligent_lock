@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>智能门禁综合管理信息平台</title>
+    <title>智能门禁综合信息管理平台</title>
 	<script type="text/javascript">
 		window.onload=function(){
 			initUser();
@@ -114,25 +114,42 @@
 			return true;
 		}
 	</script>
+
 	<style type="text/css">
 		<!--
 		body,td,th {
 			font-family: 微软雅黑;
-			font-size: 15px;
+            font-size: 0.8em;
 			color: #333333;
 		}
-		body {
+
+        body {
+            width: 99%;
+            height: 99%;
+            padding: 0;
+            margin-top: 0;
+            margin-left: auto;
+            margin-right: auto;
+
+            /*position:absolute;*/
+            /*clip:rect(auto,1366px,768px,auto);*/
+        <%--background-size:contain;--%> <%--background-image: url(<%=path %>/images/xlogin/loginbg.jpg);--%> <%--background-repeat: no-repeat;--%> <%--margin-top: 2px;--%>
+
+        }
+
+        .body {
+
+            padding: 0 0;
 			margin:0 auto;
 			background-image: url(<%=path %>/images/xlogin/loginbg.jpg);
 			background-repeat: no-repeat;
-			background-position: center top;
+            background-position: center top;
 			background-color:#F2F2F2;
-			width:1024px;
-			padding: 0px 0px;
-			background-size:100%;
-			max-width: 1024px;
-			min-width: 1024px;
-			min-height: 768px;
+            background-size: contain;
+            /*width:1366px;*/
+            height: 100%;
+            width: 100%;
+
 		}
 		a:link {
 			color: #333333;
@@ -151,84 +168,95 @@
 			color: #01A2AA;
 		}
 		.login2016{
-			/*width:235px;*/
-			/*height:267px;*/
-			/*padding-top:195px;*/
-			/*padding-left:897px;*/
-			/*padding-right:100px;*/
-			/*left: 888px;*/
-			/*top:200px;*/
-			/*right: 200px;*/
-			/*padding: 0;*/
-			margin-left: auto;
-			margin-right: auto;
-			width: 465px;
-			height: 557px;
-			padding-top: 1px;
-			padding-left: 777px;
-		}
-		#logtab{
-			padding: 0px 0px;
-			height: 475px;
-			padding-top: 170px;
+            width: 17%;
+            height: 55%;
+            position: absolute;
+            /*padding: 289px 10% 0 0;*/
+            top: 23%;
+            /*top: 280px;*/
+            left: 66%;
+            right: 30%;
 
-		}
+            border: 1em;
+            /*resize:both;*/
+            /*overflow:auto;*/
+
+        }
+
+        #loginForm {
+            width: 100%;
+            height: 100% .;
+            background: url(<%=path%>/images/xlogin/dlk.png) no-repeat right;
+        }
+
+        #logtab {
+        }
 		#logtab td{
-			height:15px;
-			padding-top: 5px;
+            height: 3em;
 			margin-left:auto;
-			margin-right:auto;
-			text-align: center;
-		}
-		.reglink{ color:#FFFFFF; font-weight:bold; font-size:15px;}
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .reglink {
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: 2em;
+        }
 		.reglink a{ color:#FFFFFF!important;}
 		#logtab .input1{
 			background-image: url(<%=path %>/images/xlogin/login_3.jpg);
 			background-repeat: no-repeat;
 			background-position: left center;
-			width:275px;
-			height:45px;
-			line-height:43px;
+            /*width:224px;*/
+            /*height:38px;*/
+            /*line-height:38px;*/
+            width: 90%;
+            height: 90%;
+            line-height: 80%;
 			background-color:#FFFFFF;
-			padding-left: 55px;
-			border:0px #fff solid;
+            padding-left: 20%;
+            border: 0em #fff solid;
 			color:#666666;
-			font-size:20px;
-			border-radius:25px;
+            font-size: 1.5em;
+            border-radius: 2em;
+
 		}
 
 		#logtab .input2{
 			background-image: url(<%=path %>/images/xlogin/login_6.jpg);
 			background-repeat: no-repeat;
 			background-position: left center;
-			width:275px;
-			height:45px;
-			line-height:43px;
+            /*width:224px;*/
+            /*height:38px;*/
+            /*line-height:38px;*/
+            width: 90%;
+            height: 90%;
+            line-height: 80%;
 			background-color:#FFFFFF;
-			padding-left: 55px;
-			border:0px #fff solid;
+            padding-left: 20%;
+            border: 0em #fff solid;
 			color:#666666;
-			font-size:20px;
-			border-radius:25px;
-		}
+            font-size: 1.5em;
+            border-radius: 2em;
+        }
 
-		.dl {
-			margin: 0 auto;
-			background-image: url("<%=path%>/images/xlogin/login_14.jpg");
-			background-position: center;
-		}
+        .dl {
+            background-image: url(<%=path %>/images/xlogin/login_14.jpg);
+            margin: 0 auto;
+            background-position: center;
+        }
 
-		.bottom2016 {
-			width: 1024px;
-			height: 90px;
-			padding-top: 120px;
-			margin-top: 50px;
-			line-height: 25px;
-			text-align: center;
-			text-blink: 0px;
-			margin-bottom: 0px;
-			margin-left: auto;
-			margin-right: auto;color:#878787;}
+        .bottom2016 {
+            width: 100%;
+            height: 5%;
+            position: relative;
+            top: 739px;
+            line-height: 2%;
+            font-size: 1em;
+            text-align: center;
+            color: #878787;
+        }
 		.bottom2016 a{ color:#878787!important;}
 
 		-->
@@ -248,39 +276,44 @@
             $(document.body).css("-webkit-transform","scale(" + r + ")");
         });
 	</script>
-
 </head>
 
 <body>
+<div class="body">
 
-<div class="login2016">
-	<form id="loginForm" name="loginForm" action="${basePath}/log/userlogin" method="post" onsubmit="return checkLogin()">
-	<table width="100%"  border="0" cellspacing="0" cellpadding="0" id="logtab">
-		<tr>
-			<td><input name="loginName" id="txtUserName"  type="text" class="input1" /></td>
-		</tr>
-		<tr>
-			<td><input name="loginPwd" type="password" id="txtPassword"  class="input2" /></td>
-		</tr>
-		<tr>
-			<td>
-				<input type="checkbox" name="cookie_username_flag" id="cookie_username_flag" value="1"><span class="white">记住用户名</span>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				<input id="cookie_password_flag" type="checkbox"	name="cookie_password_flag" value="1" /><span class="white">记住密码</span>
-			</td>
-		</tr>
-		<tr>
-			<td valign="middle" >
-				<a href="javascript:void(0)" onclick="createCookieObj()">
-					<input class="dl" type="image"  width="274" height="40"  border="0" value=" " /></a></td>
-		</tr>
-	</table>
-	</form>
+    <div class="login2016">
+        <form id="loginForm" name="loginForm" action="${basePath}/log/userlogin" method="post"
+              onsubmit="return checkLogin()">
+            <table width="100%" border="2" cellspacing="0" cellpadding="0" id="logtab">
+                <tr>
+                    <td><input name="loginName" id="txtUserName" type="text" class="input1"/></td>
+                </tr>
+                <tr>
+                    <td><input name="loginPwd" type="password" id="txtPassword" class="input2"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="cookie_username_flag" id="cookie_username_flag" value="1"><span
+                            class="white">记住用户名</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input id="cookie_password_flag" type="checkbox" name="cookie_password_flag" value="1"/><span
+                            class="white">记住密码</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="middle">
+                        <a href="javascript:void(0)" onclick="createCookieObj()">
+                            <input class="dl" type="image" value=" " width="225" height="40" border="0"/></a>
+                    </td>
+                </tr>
+            </table>
 </div>
+    </form>
 
-
-<div class="bottom2016">
-	Copyrigth@智能蓝牙&nbsp;&nbsp;&nbsp;&nbsp;技术支持： <a href="http://www.haiwei.crom" class="reglink" target="_blank">郑州海威光电</a> 服务电话:0371-85512855</div>
-
+    <div class="bottom2016">
+        Copyrigth@郑州市海威光电技术有限公司&nbsp;&nbsp;&nbsp;&nbsp;技术支持： <a href="http://www.haiweir.com" class="reglink"
+                                                                target="_blank">郑州海威光电</a> 服务电话:0371-85512855
+    </div>
+</div>
 </body>
 </html>

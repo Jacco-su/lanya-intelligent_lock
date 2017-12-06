@@ -15,22 +15,22 @@ public class Qgdis implements java.io.Serializable {
      *
      */
     private static final long serialVersionUID = 4725135016331954412L;
-    private Integer id;
+    private String id;
     private String name;// 配电房名称
     private String address;// 配电房地址
     private String areacode;// 配电房所在地区编码
     private String areaname;// 配电房所在地区名称
 
-    private String lock;
+    private String lock;   //锁
     private int sortorder;// 配电房显示顺序
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

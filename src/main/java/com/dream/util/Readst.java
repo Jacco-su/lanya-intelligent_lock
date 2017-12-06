@@ -2,7 +2,7 @@
 //
 ////读取串口 com 外部设备
 ////        原创 2012年08月21日 16:43:10 标签：java /string /exception /templates /thread /buffer 16649
-////        [java] view plain copy
+////        [java] view plain copy'
 /////*
 //// * To change this template, choose Tools | Templates
 //// * and open the template in the editor.

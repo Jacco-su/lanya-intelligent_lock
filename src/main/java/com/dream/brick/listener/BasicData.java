@@ -56,6 +56,7 @@ public class BasicData {
 
            ilocksDao = (ILocksDao) SpringUtil.getObject("locksDaoImpl");
            ikeyssDao = (IKeyssDao) SpringUtil.getObject("keyssDaoImpl");
+           collectorDao = (CollectorDao) SpringUtil.getObject("collectorDaoImp");
        }
 	   /**
 	    * files 指fileid字符串,格式如'1111.txt;1112.doc;1113.png'
@@ -146,8 +147,8 @@ public class BasicData {
         return (Qgdis) qgdisDao.find(Qgdis.class, id);
     }
 
-    public static List<Collector> findCollectorByAreacode(String areacode) {
-        return collectorDao.findCollectorByAreacode(areacode);
+    public static List<Collector> findCollectorByQgdisid(String disId) {
+        return collectorDao.findCollectorByQgdisid(disId);
     }
 
     public static Collector findCollectorById(String id) {

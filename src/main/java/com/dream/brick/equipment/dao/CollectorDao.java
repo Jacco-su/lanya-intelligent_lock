@@ -12,13 +12,15 @@ import java.util.List;
  */
 
 public interface CollectorDao extends BaseDao {
-    public List<Qgdis> findAllArea();
+    public List<Qgdis> findAllQgdis();
 
     public List<Collector> findAllCollector();
 
-    public Qgdis findQgdisByAreacode(String disid);
+    public Qgdis findQgdisByAreacode(String qgdisid);
 
-    public List<Collector> findCollectorByAreacode(String areacode);
+    public List<Collector> findCollectorByQgdisid(String disId);
 
-    public List<Collector> findCollectorList(Pager pager);
+    public List<Collector> findCollectorList(Pager pager, String qgdisId);
+
+    public void addCollector(Collector collector);
 }

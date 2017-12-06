@@ -18,8 +18,9 @@ import java.util.List;
 @Transactional
 @Repository
 public class CollectorDaoImpl extends BaseDaoImpl implements CollectorDao {
-    public List<Qgdis> findAllArea() {
+    public List<Qgdis> findAllQgdis() {
         String hql = "from Qgdis t order by t.sortorder";
+
         return findList(hql);
     }
 
@@ -28,17 +29,28 @@ public class CollectorDaoImpl extends BaseDaoImpl implements CollectorDao {
         return findList(hql);
     }
 
-    public Qgdis findQgdisByAreacode(String disid) {
-        return (Qgdis) find(Qgdis.class, disid);
+    public Qgdis findQgdisByAreacode(String disId) {
+        return (Qgdis) find(Qgdis.class, disId);
     }
 
-    public List<Collector> findCollectorByAreacode(String areacode) {
+    public List<Collector> findCollectorByQgdisid(String disId) {
         String hql = "from Collector t where order by t.sortorder";
         return findList(hql);
     }
 
-    public List<Collector> findCollectorList(Pager pager) {
-        String hql = "from Collector t order by t.disid";
+    public List<Collector> findCollectorList(Pager pager, String disId) {
+//        String hql = "from Collector t order by t.sortorder";
+        String hql = "from Collector t,Qgdis q where q.id = t.disId order by t.sortorder ";
+
         return query(hql, pager);
+    }
+
+    public void addCollector(Collector collector) {
+        save(collector);
+//        List<UserRole> roleList=user.getRoleList();
+//        for(UserRole ur:roleList){
+//            ur.setCollector(collector);
+//            save(ur);
+        //       }
     }
 }
