@@ -119,7 +119,7 @@
 		<!--
 		body,td,th {
 			font-family: 微软雅黑;
-            font-size: 0.8em;
+            font-size: 12px;
 			color: #333333;
 		}
 
@@ -168,40 +168,52 @@
 			color: #01A2AA;
 		}
 		.login2016{
-            width: 17%;
+            width: 23%;
             height: 55%;
             position: absolute;
-            /*padding: 289px 10% 0 0;*/
-            top: 23%;
-            /*top: 280px;*/
-            left: 66%;
-            right: 30%;
-
-            border: 1em;
+            left: 61%;
+            /*border: 1px;*/
             /*resize:both;*/
             /*overflow:auto;*/
+            margin-top: 7%;
+
+            /*width: 309px;*/
+            /*height: 412px;*/
+            padding-top: 0%;
+            /*padding-left: 777px;*/
+            background: url(<%=path%>/images/xlogin/dlk.png);
+            background-repeat: no-repeat;
+            background-position: center top;
+            /*background-color:#F2F2F2;*/
+            background-size: contain;
 
         }
 
         #loginForm {
-            width: 100%;
-            height: 100% .;
-            background: url(<%=path%>/images/xlogin/dlk.png) no-repeat right;
+
+        <%--background: url(<%=path%>/images/xlogin/dlk.png) no-repeat right;--%>
         }
 
         #logtab {
+
+            width: 65%;
+            height: 85%;
+            padding-top: 42%;
+
+            margin-left: 18%;
+            text-align: center;
         }
 		#logtab td{
-            height: 3em;
-			margin-left:auto;
-            margin-right: auto;
+            height: 30%;
             text-align: center;
+            margin-top: 5px;
+            padding-bottom: 5px;
         }
 
         .reglink {
             color: #FFFFFF;
             font-weight: bold;
-            font-size: 2em;
+            font-size: 13px;
         }
 		.reglink a{ color:#FFFFFF!important;}
 		#logtab .input1{
@@ -211,47 +223,91 @@
             /*width:224px;*/
             /*height:38px;*/
             /*line-height:38px;*/
-            width: 90%;
-            height: 90%;
-            line-height: 80%;
+            width: 70%;
+            height: 65%;
+            /*line-height: 65%;*/
 			background-color:#FFFFFF;
             padding-left: 20%;
-            border: 0em #fff solid;
+            border: 0 #fff solid;
 			color:#666666;
-            font-size: 1.5em;
-            border-radius: 2em;
+            /*font-size: 1em;*/
+            /*border-radius: 2em;*/
+            font-size: 15px;
+            border-radius: 25px;
 
 		}
-
 		#logtab .input2{
 			background-image: url(<%=path %>/images/xlogin/login_6.jpg);
 			background-repeat: no-repeat;
 			background-position: left center;
-            /*width:224px;*/
-            /*height:38px;*/
-            /*line-height:38px;*/
-            width: 90%;
-            height: 90%;
-            line-height: 80%;
+            width: 70%;
+            height: 65%;
+            /*line-height: 65%;*/
 			background-color:#FFFFFF;
             padding-left: 20%;
-            border: 0em #fff solid;
+            border: 0 #fff solid;
 			color:#666666;
-            font-size: 1.5em;
-            border-radius: 2em;
+            /*font-size: 1em;*/
+            /*border-radius: 2em;*/
+            font-size: 15px;
+            border-radius: 25px;
         }
+
+        <%--#logtab .input1 {--%>
+        <%--background-image: url(<%=path %>/images/xlogin/login_3.jpg);--%>
+        <%--background-repeat: no-repeat;--%>
+        <%--background-position: left center;--%>
+        <%--width: 200px;--%>
+        <%--height: 30px;--%>
+        <%--line-height: 25px;--%>
+        <%--background-color: #FFFFFF;--%>
+        <%--padding-left: 55px;--%>
+        <%--border: 0px #fff solid;--%>
+        <%--color: #666666;--%>
+        <%--font-size: 18px;--%>
+        <%--border-radius: 25px;--%>
+        <%--}--%>
+        <%--#logtab .input2 {--%>
+        <%--background-image: url(<%=path %>/images/xlogin/login_6.jpg);--%>
+        <%--background-repeat: no-repeat;--%>
+        <%--background-position: left center;--%>
+        <%--width: 200px;--%>
+        <%--height: 30px;--%>
+        <%--line-height: 43px;--%>
+        <%--background-color: #FFFFFF;--%>
+        <%--padding-left: 55px;--%>
+        <%--border: 0px #fff solid;--%>
+        <%--color: #666666;--%>
+        <%--font-size: 18px;--%>
+        <%--border-radius: 25px;--%>
+        <%--}--%>
 
         .dl {
             background-image: url(<%=path %>/images/xlogin/login_14.jpg);
-            margin: 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+            /*margin: 0 auto;*/
             background-position: center;
+            width: 75%;
+            height: 98%;
+            border-radius: 2em;
         }
+
+        <%--.dl {--%>
+        <%--margin: 0 auto;--%>
+        <%--background-image: url("<%=path%>/images/xlogin/login_14.jpg");--%>
+        <%--background-position: center;--%>
+        <%--width:205px;--%>
+        <%--height:35px;--%>
+        <%--border-radius: 25px;--%>
+        <%--}--%>
 
         .bottom2016 {
             width: 100%;
             height: 5%;
             position: relative;
-            top: 739px;
+            top: 95%;
+            /*margin-top: 10%;*/
             line-height: 2%;
             font-size: 1em;
             text-align: center;
@@ -264,9 +320,9 @@
 
 	<%--//页面动态自适应--%>
 
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.js">
 
-	<script type="text/javascript">
+
         $(function() {
             var r = document.body.offsetWidth / window.screen.availWidth;
             $(document.body).css("-webkit-transform","scale(" + r + ")");
@@ -281,10 +337,12 @@
 <body>
 <div class="body">
 
+
     <div class="login2016">
         <form id="loginForm" name="loginForm" action="${basePath}/log/userlogin" method="post"
               onsubmit="return checkLogin()">
-            <table width="100%" border="2" cellspacing="0" cellpadding="0" id="logtab">
+
+            <table cellspacing="0" cellpadding="0" id="logtab">
                 <tr>
                     <td><input name="loginName" id="txtUserName" type="text" class="input1"/></td>
                 </tr>
@@ -303,12 +361,14 @@
                 <tr>
                     <td valign="middle">
                         <a href="javascript:void(0)" onclick="createCookieObj()">
-                            <input class="dl" type="image" value=" " width="225" height="40" border="0"/></a>
+                            <input class="dl" type="submit" value=" " border="0"/>
+                        </a>
                     </td>
                 </tr>
             </table>
-</div>
-    </form>
+        </form>
+    </div>
+
 
     <div class="bottom2016">
         Copyrigth@郑州市海威光电技术有限公司&nbsp;&nbsp;&nbsp;&nbsp;技术支持： <a href="http://www.haiweir.com" class="reglink"

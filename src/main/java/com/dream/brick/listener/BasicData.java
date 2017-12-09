@@ -36,6 +36,7 @@ public class BasicData {
 
     public static ILocksDao ilocksDao;
     public static IKeyssDao ikeyssDao;
+    //public static IAuthorizationDao iauthorizationDao;
 
 
 
@@ -44,11 +45,11 @@ public class BasicData {
 	     return sprintUtil;
 	   }	
 	   public static void setSprintUtil(SpringUtil su) {
-		     sprintUtil = su;	  
-		     roleDao=(IRoleDao) SpringUtil.getObject("roleDao");
-		     userDao=(IUserDao) SpringUtil.getObject("userDao");
-		     deptDao=(IDeptDao) SpringUtil.getObject("deptDao");
-		     qgorgDao=(QgorgDao) SpringUtil.getObject("qgorgDaoImpl");
+           sprintUtil = su;
+           roleDao = (IRoleDao) SpringUtil.getObject("roleDao");
+           userDao = (IUserDao) SpringUtil.getObject("userDao");
+           deptDao = (IDeptDao) SpringUtil.getObject("deptDao");
+           qgorgDao = (QgorgDao) SpringUtil.getObject("qgorgDaoImpl");
            qgdisDao = (QgdisDao) SpringUtil.getObject("qgdisDaoImpl");
            companyDao=(CompanyDao) SpringUtil.getObject("companyDaoImpl");
 		     prodDao=(ProductDao) SpringUtil.getObject("productDaoImpl");
@@ -56,7 +57,8 @@ public class BasicData {
 
            ilocksDao = (ILocksDao) SpringUtil.getObject("locksDaoImpl");
            ikeyssDao = (IKeyssDao) SpringUtil.getObject("keyssDaoImpl");
-           collectorDao = (CollectorDao) SpringUtil.getObject("collectorDaoImp");
+           collectorDao = (CollectorDao) SpringUtil.getObject("collectorDaoImpl");
+           // iauthorizationDao = (IAuthorizationDao) SpringUtil.getObject("authorizationDapImpl");
        }
 	   /**
 	    * files 指fileid字符串,格式如'1111.txt;1112.doc;1113.png'
@@ -120,6 +122,8 @@ public class BasicData {
     public static List<Keyss> findAllKeyss() {
         return ikeyssDao.findAllKeyss();
     }
+    //public static List<Authorization> findAllAuthorization() {
+    //	return iauthorizationDao.findAllAuthorization();}
     //*******
 
 	   public static List<Company> findAllCompany(){
@@ -137,6 +141,7 @@ public class BasicData {
 	   public static Qgorg findQgorgById(String id){
 		   return (Qgorg)qgorgDao.find(Qgorg.class,id);
 	   }
+
 
     //***************
     public static List<Qgdis> findQgdisByAreacode(String areacode) {
@@ -173,8 +178,6 @@ public class BasicData {
     public static Keyss finKeyssById(String id) {
         return (Keyss) ikeyssDao.find(Keyss.class, id);
     }
-
-
 
 
 }

@@ -173,5 +173,17 @@ a:hover{ color:Red; text-decoration:underline;}
     background-position: -320px -80px;
 }
 
+.icon-baiheiq {
+    background-position: -200px -100px;
+}
+
+.icon-heiq {
+    background-position: -360px -120px;
+}
+
+.icon-huangq {
+    background-position: -0px -420px;
+}
+
 
 

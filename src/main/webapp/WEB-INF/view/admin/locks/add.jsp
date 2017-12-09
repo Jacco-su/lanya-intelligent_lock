@@ -55,7 +55,7 @@
 //                        out.print( "<h5 align=\"center\">" + ft.format(dNow)+"</h5>" );
                         String date = ft.format(new Date());
                     %>
-                    <input type="text" value=<%=date%>/>
+
                     <input type="text" name="lockDate" id="lockDate" value=<%=date%>  readonly/>
 
                     <input type="hidden" name="lockDate" id="lockDate" value=""/>

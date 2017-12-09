@@ -31,7 +31,9 @@
                 collapsible: false,
                 fitColumns: true,
                 url: '${basePath}/collector/list',
-                queryParams: {},
+                queryParams: {
+                    // 'disId': disId
+                },
                 loadMsg: '数据装载中......',
                 remoteSort: false,
                 singleSelect: true,

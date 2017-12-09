@@ -20,10 +20,10 @@ public class Collector implements java.io.Serializable {
     private static final long serialVersionUID = 4725135016331954412L;
     private String id;
     private String cip;// 采集器IP地址
-    //    private String disid;// 所在配电房
-//	  private String dname; // 所在配电房名称
-    private Qgdis dis;
-    private String collectorDiss;
+    private String disid;// 所在配电房
+    private String dname; // 所在配电房名称
+    // private Qgdis dis;
+    // private String collectorDiss;
     private Date cdate;// 日期
 
     private int sortorder;// 采集器显示顺序
@@ -41,29 +41,31 @@ public class Collector implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "disId", nullable = false, updatable = true)
-    public Qgdis getDis() {
-        return dis;
-    }
+//    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "disId", nullable = false, updatable = true)
+//    public Qgdis getDis() {
+//        return dis;
+//    }
 
 //    public void setDis(Qgdis dis) {
 //        this.dis = dis;
 //    }
 
-    //	public String getDname() {
-//		return dname;
-//	}
-//	public void setDname(String dname) {
-//		this.dname = dname;
-//	}
-//    public String getDisid() {
-//        return disid;
-//    }
-//
-//    public void setDisid(String disid) {
-//        this.disid = disid;
-//    }
+    public String getDname() {
+        return dname;
+    }
+
+    public void setDname(String dname) {
+        this.dname = dname;
+    }
+
+    public String getDisid() {
+        return disid;
+    }
+
+    public void setDisid(String disid) {
+        this.disid = disid;
+    }
 
     public Date getCdate() {
         return cdate;
@@ -91,12 +93,12 @@ public class Collector implements java.io.Serializable {
     }
 
 
-    @Column(name = "collector_diss")
-    public String getCollectorDiss() {
-        return collectorDiss;
-    }
-
-    public void setCollectorDiss(String collectorDiss) {
-        this.collectorDiss = collectorDiss;
-    }
+//    @Column(name = "collector_diss")
+//    public String getCollectorDiss() {
+//        return collectorDiss;
+//    }
+//
+//    public void setCollectorDiss(String collectorDiss) {
+//        this.collectorDiss = collectorDiss;
+//    }
 }

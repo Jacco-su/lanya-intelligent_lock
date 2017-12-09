@@ -100,49 +100,49 @@ public class CollectorAction {
         //collector.setStatus(1);
         //collector.setPassword(MD5.encrytion(user.getPassword()));
         //collector.setRdate(sdf.format(new Date().getTime()));
-        initRole(collector, disIdList);
-
-        try {
-
-            collectorDao.addCollector(collector);
-            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
-        } catch (Exception e) {
-            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
-        }
-
+//        initRolea(collector, disIdList);
+//
+//        try {
+//           // collectorDao.save(collector);
+//            collectorDao.addCollector(collector);
+//            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+//        } catch (Exception e) {
+//            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+//        }
+//
         return message;
     }
-
-    public void initRole(Collector collector, String[] disIdList) {
-//        if(list==null){
-//            list=new String[0];
+//
+//    public void initRolea(Collector collector, String[] disIdList) {
+////        if(list==null){
+////            list=new String[0];
+////        }
+//        if (disIdList == null) {
+//            disIdList = new String[0];
 //        }
-        if (disIdList == null) {
-            disIdList = new String[0];
-        }
-//        List<UserRole> roleList=new ArrayList<UserRole>();
-//        for(String roleId:list){
-//            if("".equals(roleId)){
-//                continue;
-//            }
-//            UserRole ur=new UserRole();
-//            Role role=new Role();
-//            role.setRoId(roleId);
-//            ur.setRole(role);
-//            ur.setUser(user);
-//            roleList.add(ur);
+////        List<UserRole> roleList=new ArrayList<UserRole>();
+////        for(String roleId:list){
+////            if("".equals(roleId)){
+////                continue;
+////            }
+////            UserRole ur=new UserRole();
+////            Role role=new Role();
+////            role.setRoId(roleId);
+////            ur.setRole(role);
+////            ur.setUser(user);
+////            roleList.add(ur);
+////        }
+//        // user.setRoleList(roleList);
+//        StringBuilder sb = new StringBuilder("");
+//        for (String disId : disIdList) {
+//            sb.append(disId).append(",");
 //        }
-        // user.setRoleList(roleList);
-        StringBuilder sb = new StringBuilder("");
-        for (String disId : disIdList) {
-            sb.append(disId).append(",");
-        }
-        String disIds = sb.toString();
-        if (disIds.length() > 0) {
-            disIds = disIds.substring(0, disIds.length() - 1);
-        }
-        collector.setCollectorDiss(disIds);
-    }
+//        String disIds = sb.toString();
+//        if (disIds.length() > 0) {
+//            disIds = disIds.substring(0, disIds.length() - 1);
+//        }
+//        collector.setCollectorDiss(disIds);
+//    }
 
 
     @RequestMapping("/prUpdate")

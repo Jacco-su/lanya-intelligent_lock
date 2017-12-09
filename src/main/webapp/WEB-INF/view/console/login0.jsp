@@ -131,7 +131,7 @@
             background-size: 100%;
             max-width: 1024px;
             min-width: 1024px;
-            min-height: 768px;
+            min-height: 758px;
         }
 
         a:link {
@@ -166,11 +166,12 @@
             /*padding: 0;*/
             margin-left: auto;
             margin-right: auto;
-            width: 465px;
-            height: 567px;
+            width: 325px;
+            height: 477px;
             padding-top: 1px;
             padding-left: 777px;
             background: url(<%=path%>/images/xlogin/dlk.png) no-repeat right;
+            position: absolute;
 
         }
 
@@ -180,7 +181,7 @@
 
         #logtab {
             padding: 0px 0px;
-            height: 475px;
+            height: 335px;
             padding-top: 170px;
 
         }
@@ -196,7 +197,7 @@
         .reglink {
             color: #FFFFFF;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 12px;
         }
 
         .reglink a {
@@ -237,6 +238,8 @@
             margin: 0 auto;
             background-image: url("<%=path%>/images/xlogin/login_14.jpg");
             background-position: center;
+            width: 274px;
+            height: 40px;
         }
 
         .bottom2016 {
@@ -262,9 +265,9 @@
 
     <%--//页面动态自适应--%>
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.js">
 
-    <script type="text/javascript">
+
         $(function () {
             var r = document.body.offsetWidth / window.screen.availWidth;
             $(document.body).css("-webkit-transform", "scale(" + r + ")");
@@ -282,7 +285,7 @@
 <div class="login2016">
     <form id="loginForm" name="loginForm" action="${basePath}/log/userlogin" method="post"
           onsubmit="return checkLogin()">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="logtab">
+        <table border="0" cellspacing="0" cellpadding="0" id="logtab">
             <tr>
                 <td><input name="loginName" id="txtUserName" type="text" class="input1"/></td>
             </tr>
@@ -301,7 +304,7 @@
             <tr>
                 <td valign="middle">
                     <a href="javascript:void(0)" onclick="createCookieObj()">
-                        <input class="dl" type="image" width="274" height="40" border="0" value=" "/></a></td>
+                        <input class="dl" type="image" border="0" value=" "/></a></td>
             </tr>
         </table>
     </form>

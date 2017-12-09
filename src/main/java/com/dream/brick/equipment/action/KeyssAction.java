@@ -58,9 +58,10 @@ public class KeyssAction {
     public String add(@ModelAttribute Keyss keyss) {
         String message = "";
         // Keyss keyss = BasicData.findKeyssByUserName(disa.getUserName());
+        ikeyssDao.save(keyss);
 
 
-        return null;
+        return "success";
     }
 
 

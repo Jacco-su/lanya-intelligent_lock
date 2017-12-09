@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>用户列表</title>
+    <title>授权记录列表</title>
     <link rel="stylesheet" type="text/css"
           href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css"
@@ -26,7 +26,7 @@
             var deptId = "";
             var infolist = $('#infolist');
             infolist.datagrid({
-                title: '用户列表',
+                title: '授权记录列表',
                 iconCls: 'icon-users',
                 width: '95%',
                 height: 560,
@@ -37,9 +37,9 @@
                 collapsible: false,
                 fitColumns: true,
                 singleSelect: true,
-                url: '${basePath}/user/list',
+                url: '${basePath}/authorization/list',
                 queryParams: {
-                    'deptId': deptId
+//                    'deptId': deptId
                 },
                 loadMsg: '数据装载中......',
                 remoteSort: false,
@@ -49,92 +49,93 @@
                     showEdit(id);
                 },
                 columns: [[
-                    {
-                        title: '区域',
-                        field: 'deptname',
-                        formatter: function (value, rowData, rowIndx) {
-                            return rowData.dept.name;
-                        },
-                        width: $(this).width() * 0.1,
-                        align: 'center'
-                    },
+//                    {
+//                        title: '区域',
+//                        field: 'deptname',
+//                        formatter: function (value, rowData, rowIndx) {
+//                            return rowData.dept.name;
+//                        },
+//                        width: $(this).width() * 0.1,
+//                        align: 'center'
+//                    },
                     {
                         title: '钥匙',
-                        field: 'id',
+                        field: 'keyssId',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
                     }, {
                         title: '锁具编号',
-                        field: 'name',
+                        field: 'locksId',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
                     }, {
                         title: '类型',
-                        field: 'username',
+                        field: 'type',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
                     }, {
                         title: '使用人',
-                        field: 'username',
+                        field: 'uName',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
                     }, {
                         title: '起始日期',
-                        field: 'phone',
+                        field: 'starttime',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         lign: 'center'
                     }, {
                         title: '起始日期',
-                        field: 'phone',
+                        field: 'endtime',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
                     }, {
                         title: '失效日期',
-                        field: 'email',
+                        field: 'endtime',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
                     }, {
                         title: '经办人',
-                        field: 'rdate',
+                        field: 'aName',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
                     }, {
                         title: '授权日期',
-                        field: 'rdate',
+                        field: 'aDate',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
                     }, {
                         title: '工作票',
-                        field: 'rdate',
+                        field: 'workticket',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
                     },
 
 
-                    {
-                        title: '角色',
-                        field: 'roles',
-                        formatter: function (value, rec) {
-                            var t = "";
-                            $.each(value, function (i, v) {
-                                t += v.name + " ";
-                            });
-                            return t;
-                        },
-                        width: $(this).width() * 0.2,
-                        rowspan: 2,
-                        align: 'center'
-                    }]],
+//                    {
+//                        title: '角色',
+//                        field: 'roles',
+//                        formatter: function (value, rec) {
+//                            var t = "";
+//                            $.each(value, function (i, v) {
+//                                t += v.name + " ";
+//                            });
+//                            return t;
+//                        },
+//                        width: $(this).width() * 0.2,
+//                        rowspan: 2,
+//                        align: 'center'
+//                    }
+                ]],
                 pagination: true,
                 rownumbers: true,
                 toolbar: [{
