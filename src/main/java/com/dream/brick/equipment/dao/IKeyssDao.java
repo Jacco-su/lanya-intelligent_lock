@@ -1,6 +1,5 @@
 package com.dream.brick.equipment.dao;
 
-
 import com.dream.brick.equipment.bean.Keyss;
 import com.dream.framework.dao.BaseDao;
 import com.dream.framework.dao.Pager;

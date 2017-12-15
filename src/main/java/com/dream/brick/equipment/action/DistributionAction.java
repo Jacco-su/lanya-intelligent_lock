@@ -37,7 +37,7 @@ public class DistributionAction {
     @RequestMapping("/prList")
     public String prList(String disId, HttpServletRequest request)
             throws Exception {
-        return "admin/dis/list";
+        return "admin/diss/list";
     }
 
     @RequestMapping("/list")

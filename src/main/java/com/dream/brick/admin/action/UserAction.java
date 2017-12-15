@@ -90,14 +90,44 @@ public class UserAction {
 	}
 
 	@RequestMapping("/prAdd")
-	public String prAdd(String deptId, ModelMap model){
-		//List<Role> roles = roleDao.findRoleName(false);
-		List<Department> deptList = deptDao.findDeptIdAndName();
-		model.addAttribute("deptId", deptId);
-		//model.addAttribute("roles", roles);
-		model.addAttribute("deptList", deptList);
-		return "admin/uadd";
-	}
+    public String prAdd(String deptId, ModelMap model) {
+        //List<Role> roles = roleDao.findRoleName(false);
+        List<Department> deptList = deptDao.findDeptIdAndName();
+        model.addAttribute("deptId", deptId);
+        //model.addAttribute("roles", roles);
+        model.addAttribute("deptList", deptList);
+        return "admin/add";
+    }
+
+    @RequestMapping("/uprAdd")
+    public String uprAdd(String deptId, ModelMap model) {
+        //List<Role> roles = roleDao.findRoleName(false);
+        List<Department> deptList = deptDao.findDeptIdAndName();
+        model.addAttribute("deptId", deptId);
+        //model.addAttribute("roles", roles);
+        model.addAttribute("deptList", deptList);
+        return "admin/uadd";
+    }
+
+    @RequestMapping(value = "/uadd", method = RequestMethod.POST)
+    @ResponseBody
+    public String uadd(@ModelAttribute User user, String[] roIdList, String[] deptIdList)
+            throws Exception {
+        user.setStatus(1);
+
+        user.setRdate(sdf.format(new Date().getTime()));
+        initRole(user, roIdList, deptIdList);
+        String message = "";
+        try {
+
+            userDao.addUser(user);
+            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+        } catch (Exception e) {
+            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+        }
+
+        return message;
+    }
 
 	@RequestMapping(value="/add",method = RequestMethod.POST)
 	@ResponseBody
@@ -282,4 +312,19 @@ public class UserAction {
 		}
 		return message;
 	}
+
+
+    //钥匙领用人
+    @RequestMapping("/kList")
+    @ResponseBody
+    public String listAll(int page, int rows, Pager pager)
+            throws Exception {
+        pager.setCurrentPage(page);
+        pager.setPageSize(rows);
+        JSONObject datas = new JSONObject();
+        List<User> list = userDao.listAll(pager);
+        datas.put("total", pager.getTotalRow());
+        datas.put("rows", list);
+        return datas.toString();
+    }
 }

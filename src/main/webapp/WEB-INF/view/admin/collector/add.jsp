@@ -27,20 +27,22 @@
             <tr>
                 <td>所属配电房:</td>
                 <td>
-                    <select name="qgdisId" name="qgdisId" style="width:200px;" class="easyui-validatebox"
+                    <select name="deptId" name="deptId" style="width:200px;" class="easyui-validatebox"
                             required="true">
                         <option value="">---请选择---</option>
-                        <c:forEach items="${qgdisList}" var="qgdis" varStatus="s">
-                            <option value="${qgdis.id}"
-                                    <c:if test="${qgdis.id eq seqgdis.id}">selected</c:if>>${qgdis.name}</option>
+                        <c:forEach items="${deptList}" var="dept" varStatus="s">
+                            <option value="${dept.id}"
+                                    <c:if test="${dept.id eq sedept.id}">selected</c:if>>${dept.name}</option>
                         </c:forEach>
                     </select>
                 </td>
             <tr>
                 <td>IP地址:</td>
                 <td>
+                    <%--<input name="cip" value="点击获取" class="easyui-validatebox" required="true"--%>
+                    <%--onclick="$('#selectArea').window('open');"/>--%>
                     <input name="cip" value="点击获取" class="easyui-validatebox" required="true"
-                           onclick="$('#selectArea').window('open');"/>
+                           onclick="$('').window('open');"/>
                 </td>
             </tr>
             <tr>

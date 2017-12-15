@@ -20,7 +20,7 @@ public interface CollectorDao extends BaseDao {
 
     public List<Collector> findCollectorByQgdisid(String disId);
 
-    public List<Collector> findCollectorList(Pager pager, String qgdisId);
+    public List<Collector> findCollectorList(Pager pager);
 
     public void addCollector(Collector collector);
 }

@@ -24,7 +24,7 @@ public class Collector implements java.io.Serializable {
     private String dname; // 所在配电房名称
     // private Qgdis dis;
     // private String collectorDiss;
-    private Date cdate;// 日期
+    private String cdate;// 日期
 
     private int sortorder;// 采集器显示顺序
 
@@ -67,11 +67,11 @@ public class Collector implements java.io.Serializable {
         this.disid = disid;
     }
 
-    public Date getCdate() {
+    public String getCdate() {
         return cdate;
     }
 
-    public void setCdate(Date cdate) {
+    public void setCdate(String cdate) {
         this.cdate = cdate;
     }
 

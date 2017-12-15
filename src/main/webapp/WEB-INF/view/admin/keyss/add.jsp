@@ -7,6 +7,10 @@
     response.setDateHeader("Expires", 0);
 %>
 
+<script type="text/javascript">
+
+</script>
+
 
 <style>
 
@@ -45,29 +49,29 @@
             <tr>
                 <td width="100">领用人:</td>
                 <td>
-                    <%--<input type="text" name="name" id="username" value="" readonly/><a class="easyui-linkbutton"--%>
-                    <%--onclick="$('#selectArea').window('open');">选择</a>--%>
-                    <%--<input type="hidden" name="userid" id="usercode" value=""/>--%>
-                    <select name="userId" name="userId" style="width:200px;" class="easyui-validatebox" required="true">
-                        <option value="">---请选择---</option>
-                        <c:forEach items="${userList}" var="user" varStatus="s">
-                            <option value="${user.id}"
-                                    <c:if test="${user.id eq seuser.id}">selected</c:if>>${user.name}</option>
-                        </c:forEach>
-                    </select>
+                    <input type="text" name="name" id="username" value="" readonly/><a class="easyui-linkbutton"
+                                                                                       onclick="$('#selectUser').window('open');">选择</a>
+                    <input type="hidden" name="userid" id="usercode" value=""/>
+                    <%--<select name="userId" name="userId" style="width:200px;" class="easyui-validatebox" required="true">--%>
+                    <%--<option value="">---请选择---</option>--%>
+                    <%--<c:forEach items="${userList}" var="user" varStatus="s">--%>
+                    <%--<option value="${user.id}"--%>
+                    <%--<c:if test="${user.id eq seuser.id}">selected</c:if>>${user.name}</option>--%>
+                    <%--</c:forEach>--%>
+                    <%--</select>--%>
+                    <%--<a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>--%>
+                </td>
 
-                </td>
-                <td>
-                    <select name="qgdisId" name="qgdisId" style="width:200px;" class="easyui-validatebox"
-                            required="true">
-                        <option value="">---请选择---</option>
-                        <c:forEach items="${qgdisList}" var="qgdis" varStatus="s">
-                            <option value="${qgdis.id}"
-                                    <c:if test="${qgdis.id eq seqgdis.id}">selected</c:if>>${qgdis.name}</option>
-                        </c:forEach>
-                    </select>
-                </td>
             </tr>
         </table>
     </form>
+</div>
+
+<div>
+    <table>
+        <tr>
+            <td></td>
+        </tr>
+
+    </table>
 </div>

@@ -38,9 +38,9 @@ public class CollectorDaoImpl extends BaseDaoImpl implements CollectorDao {
         return findList(hql);
     }
 
-    public List<Collector> findCollectorList(Pager pager, String disId) {
+    public List<Collector> findCollectorList(Pager pager) {
 //        String hql = "from Collector t order by t.sortorder";
-        String hql = "from Collector t,Qgdis q where q.id = t.disId order by t.sortorder ";
+        String hql = "SELECT * from t_collector t,t_qgdis q where q.id = t.disId order by t.sortorder ";
 
         return query(hql, pager);
     }

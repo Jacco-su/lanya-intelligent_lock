@@ -58,7 +58,7 @@ public class BasicData {
            ilocksDao = (ILocksDao) SpringUtil.getObject("locksDaoImpl");
            ikeyssDao = (IKeyssDao) SpringUtil.getObject("keyssDaoImpl");
            collectorDao = (CollectorDao) SpringUtil.getObject("collectorDaoImpl");
-           // iauthorizationDao = (IAuthorizationDao) SpringUtil.getObject("authorizationDapImpl");
+           //    iauthorizationDao = (IAuthorizationDao) SpringUtil.getObject("authorizationDapImpl");
        }
 	   /**
 	    * files 指fileid字符串,格式如'1111.txt;1112.doc;1113.png'

@@ -169,12 +169,12 @@
 
             $('#tree').tree({
                 checkbox: false,
-                url: '${basePath}/user/list',
+                url: '${basePath}/user/kList',
                 simpleDataModel: true,
-                onBeforeExpand: function (node, param) {
-                    $('#tree').tree('options').url = "${basePath}/areainfo/findAreaByParentId?parentId=" + node.id;// change the url
-                    return true;
-                }
+                <%--onBeforeExpand: function (node, param) {--%>
+                <%--$('#tree').tree('options').url = "${basePath}/userinfo/findAreaByParentId?parentId=" + node.id;// change the url--%>
+                <%--return true;--%>
+                <%--}--%>
             });
 
             function refresh() {
@@ -251,18 +251,18 @@
             var selections = $('#tree').tree('getSelected');
             if (selections) {
                 id = selections.id;
-                show = selections.attributes.areaname;
-                $("#areacode").val(id);
-                getAreaname(selections);
+                show = selections.attributes.username;
+                $("#usercode").val(id);
+                getUsername(selections);
                 fullname = fullname.substring(0, fullname.length - 1);
-                $("#areaname").val(fullname);
+                $("#username").val(fullname);
             }
-            $('#selectArea').window('close');
+            $('#selectUser').window('close');
         }
 
         var fullname = "";
 
-        function getAreaname(node) {
+        function getUsername(node) {
             fullname = node.text + " " + fullname;
             if (node.attributes.parentcode == 0) {
                 return;
@@ -270,20 +270,61 @@
             var abc = $('#tree').tree('getParent', node.target);
             getAreaname(abc);
         }
+
+
+        function search() {
+            addWin = $.createWin({
+                title: "查询条件",
+                contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr></table>",
+                width: 300,
+                buttons: [{
+                    text: '查询',
+                    iconCls: 'icon-search',
+                    handler: query
+                }]
+            });
+        }
+
+        function query() {
+            infolist.datagrid({
+                url: basePath + '/user/list',
+                queryParams: {
+                    'username': $('#username').val()
+                },
+                loadMsg: '数据装载中......'
+            });
+            infolist.datagrid("clearSelections");
+            displayMsg();
+            $.closeWin(addWin);
+        }
+
+
     </script>
 </head>
 <body>
 <div>
     <table id="infolist"></table>
 </div>
-<div id="selectArea">
+<%--<div id="selectUser">--%>
+<%--<div class="easyui-layout" fit="true">--%>
+<%--<a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>--%>
+<%--<div region="center" border="false" style="padding: 10px;">--%>
+<%--<ul id="tree" style="margin-top: 10px;"></ul>--%>
+<%--</div>--%>
+<%--<div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">--%>
+<%--<a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>--%>
+<%--<a class="easyui-linkbutton" onclick="$('#selectUser').window('close');">关闭</a>--%>
+<%--</div>--%>
+<%--</div>--%>
+<div id="selectUser">
     <div class="easyui-layout" fit="true">
+        <a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>
         <div region="center" border="false" style="padding: 10px;">
             <ul id="tree" style="margin-top: 10px;"></ul>
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
-            <a class="easyui-linkbutton" onclick="$('#selectArea').window('close');">关闭</a>
+            <a class="easyui-linkbutton" onclick="$('#selectUser').window('close');">关闭</a>
         </div>
     </div>
 </div>

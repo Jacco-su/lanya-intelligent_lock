@@ -149,6 +149,8 @@
             /*width:1366px;*/
             height: 100%;
             width: 100%;
+            min-width: 50%;
+            min-height: 50%;
 
 		}
 		a:link {
@@ -200,11 +202,11 @@
             height: 85%;
             padding-top: 42%;
 
-            margin-left: 18%;
+            margin-left: 19%;
             text-align: center;
         }
 		#logtab td{
-            height: 30%;
+            height: 26%;
             text-align: center;
             margin-top: 5px;
             padding-bottom: 5px;
@@ -213,7 +215,7 @@
         .reglink {
             color: #FFFFFF;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 5px;
         }
 		.reglink a{ color:#FFFFFF!important;}
 		#logtab .input1{
@@ -289,7 +291,7 @@
             /*margin: 0 auto;*/
             background-position: center;
             width: 75%;
-            height: 98%;
+            height: 59%;
             border-radius: 2em;
         }
 
@@ -353,7 +355,7 @@
                     <td>
                         <input type="checkbox" name="cookie_username_flag" id="cookie_username_flag" value="1"><span
                             class="white">记住用户名</span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;
                         <input id="cookie_password_flag" type="checkbox" name="cookie_password_flag" value="1"/><span
                             class="white">记住密码</span>
                     </td>

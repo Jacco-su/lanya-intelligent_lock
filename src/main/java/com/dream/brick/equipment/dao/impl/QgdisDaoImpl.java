@@ -45,7 +45,7 @@ public class QgdisDaoImpl extends BaseDaoImpl implements QgdisDao {
     }
 
     public List<Qgdis> findDisIdAndName() {
-        String hql = "select id,name,deptId from Qgdis order by sortorder ,orderId asc";
+        String hql = "select id,name,deptId from t_qgdis order by sortorder";
         List<Object[]> results = query(hql, 0, 0);
         List<Qgdis> list = new ArrayList<Qgdis>();
         for (Object[] objs : results) {

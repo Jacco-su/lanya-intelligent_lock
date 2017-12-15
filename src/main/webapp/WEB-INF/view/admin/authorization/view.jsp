@@ -9,30 +9,27 @@
 <div>
     <table class="mytable" align="center">
         <tr>
-            <td>智能锁编号:</td>
-            <td>${lock.id}</td>
-        </tr>
-        <tr>
-            <td>识别码:</td>
+            <td>区域名称:</td>
             <td>
-                ${lock.locksCode}
+                ${authorizationa.name}
             </td>
         </tr>
         <tr>
-            <td width="100">安装地点:</td>
+            <td>区域地址:</td>
             <td>
-                ${lock.disName}
+                ${authorizationa.address}
             </td>
         </tr>
         <tr>
-            <td width="100">安装时间:</td>
+            <td width="100">管辖地区:</td>
             <td>
-                ${lock.lockDate}
+                ${authorizationa.areaname}
             </td>
         </tr>
         <tr>
             <td>排序:</td>
-            <td>${lock.sortorder}
+            <td>
+                ${authorizationa.sortorder}
             </td>
         </tr>
     </table>

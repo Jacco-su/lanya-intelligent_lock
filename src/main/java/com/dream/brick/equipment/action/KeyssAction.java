@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -54,7 +55,7 @@ public class KeyssAction {
     }
 
 
-    @RequestMapping("/add")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(@ModelAttribute Keyss keyss) {
         String message = "";
         // Keyss keyss = BasicData.findKeyssByUserName(disa.getUserName());

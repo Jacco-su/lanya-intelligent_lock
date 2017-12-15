@@ -250,7 +250,7 @@
 
         //        -----
 
-        function setToarea() {
+        function setTodept() {
             var id = "";
             var show = "";
             fullname = ""
@@ -259,7 +259,7 @@
                 id = selections.id;
                 show = selections.attributes.deptname;
                 $("#deptid").val(id);
-                getAreaname(selections);
+                getDisname(selections);
                 fullname = fullname.substring(0, fullname.length - 1);
                 $("#deptid").val(fullname);
             }
@@ -268,14 +268,14 @@
 
         var fullname = "";
 
-        function getAreaname(node) {
+        function getDisname(node) {
             if (node == null) return;					//改动 控制树显示
             fullname = node.text + " " + fullname;
-            if (node.attributes.parentcode == 0) {
+            if (node.attributes.parentId == 0) {
                 return;
             }
             var abc = $('#tree').tree('getParent', node.target);
-            getAreaname(abc);
+            getDisname(abc);
         }
     </script>
 </head>
@@ -289,7 +289,7 @@
             <ul id="tree" style="margin-top: 10px;"></ul>
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
-            <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
+            <a class="easyui-linkbutton" icon="icon-ok" onclick="setTodept();">确定</a>
             <a class="easyui-linkbutton" onclick="$('#selectDept').window('close');">关闭</a>
         </div>
     </div>

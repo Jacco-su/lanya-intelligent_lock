@@ -9,11 +9,14 @@ import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +30,8 @@ public class LocksAction {
 
     @Resource
     private ILocksDao ilocksDao;
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 
 
     @RequestMapping("/prList")
@@ -55,10 +60,24 @@ public class LocksAction {
     }
 
     @RequestMapping("/add")
-    public String daa() {
+    public String daa(@ModelAttribute Locks locks, String[] disIdList) {
+        String message = "";
+        locks.setId(1);
+        locks.setLockNum(locks.getLockNum());
+        locks.setLockCode(locks.getLockCode());
+        locks.setLockDate(sdf.format(new Date().getTime()));
+        //initRolea(collector, disIdList);
+
+        try {
+            ilocksDao.save(locks);
+            //ilocksDao.addLocks(locks);
+            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+        } catch (Exception e) {
+            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+        }
 
 
-        return null;
+        return message;
     }
 
 

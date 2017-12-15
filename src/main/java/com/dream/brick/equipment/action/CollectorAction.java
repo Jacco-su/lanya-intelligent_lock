@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,21 +41,22 @@ public class CollectorAction {
     private CollectorDao collectorDao;
 
     private QgdisDao qgdisDao;
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @RequestMapping("/prList")
-    public String prList(String collectorId, HttpServletRequest request)
+    public String prList(String collectorId, String distId, HttpServletRequest request)
             throws Exception {
         return "admin/collector/list";
     }
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, String deptId, String disId, Pager pager)
+    public String list(int page, int rows, String deptId, String qgdisId, Pager pager)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        List<Collector> list = collectorDao.findCollectorList(pager, disId);
+        List<Collector> list = collectorDao.findCollectorList(pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
@@ -63,7 +65,7 @@ public class CollectorAction {
 
     @RequestMapping("/prAdd")
     public String prAdd(String qgdisId, ModelMap model, HttpServletRequest request) {
-        //String areacode = SessionData.getAreacode(request);
+        String areacode = SessionData.getAreacode(request);
         //List<Qgdis> qgdisList = BasicData.findQgdisByAreacode(areacode);
         List<Qgdis> qgdisList = qgdisDao.findDisIdAndName();
         model.addAttribute("qgdisList", qgdisList);
@@ -97,19 +99,19 @@ public class CollectorAction {
 //             }catch(Exception e){
 //                message=StringUtil.jsonValue("0",AppMsg.ADD_ERROR);
 //            }
-        //collector.setStatus(1);
-        //collector.setPassword(MD5.encrytion(user.getPassword()));
-        //collector.setRdate(sdf.format(new Date().getTime()));
-//        initRolea(collector, disIdList);
-//
-//        try {
-//           // collectorDao.save(collector);
-//            collectorDao.addCollector(collector);
-//            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
-//        } catch (Exception e) {
-//            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
-//        }
-//
+        collector.setId("1");
+        collector.setCip(collector.getCip());
+        collector.setCdate(sdf.format(new Date().getTime()));
+        //initRolea(collector, disIdList);
+
+        try {
+            collectorDao.save(collector);
+            //collectorDao.addCollector(collector);
+            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+        } catch (Exception e) {
+            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+        }
+
         return message;
     }
 //

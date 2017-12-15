@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <div>
-    <form name="addForm" id="addForm" action="${basePath}/user/add" method="post">
+    <form name="addForm" id="addForm" action="${basePath}/user/uadd" method="post">
         <table class="mytable" align="center">
 
 
@@ -52,22 +52,20 @@
                     </c:forEach>
                 </td>
             </tr>
-            <tr>
-                <td>负责区域:</td>
-                <td>
-                    <select id="deptId" name="deptId" style="width:100px;">
-                        <%--/<div class="easyui-accordion" style="width: 500px;"  border=false animate=false>--%>
-                        <%--<c:forEach items="${deptList}" var="dept" varStatus="s">--%>
-                        <%--<span><input name="deptIdList" type="checkbox" value="${dept.id}"/>${dept.name }</span>--%>
-                        <%--<c:if test="${(s.index+1)%5==0}"><br/></c:if>--%>
-                        <%--</c:forEach>--%>
-                        <%--</div>--%>
-                        <c:forEach var="x" begin="1" end="50" step="1">
-                            <option value="${x}">${x}</option>
-                        </c:forEach>
-                    </select>
-                </td>
-            </tr>
+            <%--<tr>--%>
+            <%--<td>负责区域:</td>--%>
+            <%--<td>--%>
+            <%--<select id="deptId" name="deptId" style="width:100px;">--%>
+            <%--&lt;%&ndash;/<div class="easyui-accordion" style="width: 500px;"  border=false animate=false>&ndash;%&gt;--%>
+            <%--&lt;%&ndash;<c:forEach items="${deptList}" var="dept" varStatus="s">&ndash;%&gt;--%>
+            <%--&lt;%&ndash;<span><input name="deptIdList" type="checkbox" value="${dept.id}"/>${dept.name }</span>&ndash;%&gt;--%>
+            <%--&lt;%&ndash;<c:if test="${(s.index+1)%5==0}"><br/></c:if>&ndash;%&gt;--%>
+            <%--&lt;%&ndash;</c:forEach>&ndash;%&gt;--%>
+            <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+            <%----%>
+            <%--</select>--%>
+            <%--</td>--%>
+            <%--</tr>--%>
         </table>
     </form>
 </div>

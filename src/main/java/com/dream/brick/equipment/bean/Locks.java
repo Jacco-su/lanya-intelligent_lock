@@ -16,7 +16,7 @@ public class Locks {
     private String lockNum;     //锁编号
     private String lockCode;       //锁识别码
     private String disName;     // 安装地点  配电房名称
-    private Date lockDate;      //安装时间
+    private String lockDate;      //安装时间
     private Integer sortorder;      //序列
     /**
      * 常显
@@ -58,11 +58,11 @@ public class Locks {
         this.disName = disName;
     }
 
-    public Date getLockDate() {
+    public String getLockDate() {
         return lockDate;
     }
 
-    public void setLockDate(Date lockDate) {
+    public void setLockDate(String lockDate) {
         this.lockDate = lockDate;
     }
 

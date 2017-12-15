@@ -1,6 +1,5 @@
 package com.dream.brick.equipment.dao.impl;
 
-
 import com.dream.brick.equipment.bean.Keyss;
 import com.dream.brick.equipment.dao.IKeyssDao;
 import com.dream.framework.dao.BaseDaoImpl;
@@ -14,11 +13,9 @@ import java.util.List;
  * 数据库访问 接口实现类
  */
 
-
 @Transactional
 @Repository
 public class KeyssDaoImpl extends BaseDaoImpl implements IKeyssDao {
-
 
     public List<Keyss> findAllKeyss() {
         String hql = "from Keyss t order by t.sortorder";

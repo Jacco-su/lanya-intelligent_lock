@@ -213,7 +213,7 @@
                 if (deptId != "") {
                     addWin = $.createWin({
                         title: "用户添加",
-                        url: basePath + '/user/prAdd?deptId=' + deptId,
+                        url: basePath + '/user/uprAdd?deptId=' + deptId,
                         height: 550,
                         width: 800,
                         buttons: [{
@@ -239,7 +239,7 @@
             function showEdit(id) {
                 updateWin = $.createWin({
                     title: "用户修改",
-                    url: basePath + '/user/prUpdate',
+                    url: basePath + '/user/uprUpdate',
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
@@ -280,7 +280,7 @@
                         if (f) {
                             $.ajax({
                                 type: "POST",
-                                url: basePath + "/user/delete",
+                                url: basePath + "/user/udelete",
                                 data: "ids=" + id,
                                 dataType: "text",
                                 cache: false,
@@ -311,7 +311,7 @@
 
             function query() {
                 infolist.datagrid({
-                    url: basePath + '/user/list',
+                    url: basePath + '/user/ulist',
                     queryParams: {
                         'username': $('#username').val()
                     },

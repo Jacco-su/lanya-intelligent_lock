@@ -380,8 +380,16 @@
 		<!--<scope>system</scope>-->
 		<!--</dependency>-->
 
+        <!--图表统计-->
+        <!-- https://mvnrepository.com/artifact/jcharts/jcharts -->
+        <dependency>
+            <groupId>jcharts</groupId>
+            <artifactId>jcharts</artifactId>
+            <version>1.0.0-alpha-1</version>
+        </dependency>
 
-	</dependencies>
+
+    </dependencies>
 
 
 	<build>
