@@ -53,26 +53,26 @@ public class AuthorizationAction {
         return datas.toString();
     }
 
-//		@RequestMapping("/prAdd")
-//		public String prAdd(ModelMap model){
-//			return "admin/authorization/add";
-//		}
+    @RequestMapping("/prAdd")
+    public String prAdd(ModelMap model) {
+        return "admin/authorization/add";
+    }
 
-//		@RequestMapping(value = "/add", method = RequestMethod.POST)
-//		@ResponseBody
-//		public String add(@ModelAttribute Authorization authorizationa){
-//			String message="";
-//			try{
-//				//Area area= BasicData.findAreaByAreacode(orga.getAreacode());
-//				//authorizationa.setAdminname(admina.getAdminname());
-//				//authorizationa.setAddress(authorizationa.getAddress().trim());
-//				authorizationDao.save(authorizationa);
-//				message=StringUtil.jsonValue("1",AppMsg.ADD_SUCCESS);
-//			}catch(Exception e){
-//				message=StringUtil.jsonValue("0",AppMsg.ADD_ERROR);
-//			}
-//			return message;
-//		}
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
+    public String add(@ModelAttribute Authorization authorizationa) {
+        String message = "";
+        try {
+            //Area area= BasicData.findAreaByAreacode(orga.getAreacode());
+            //authorizationa.setAdminname(admina.getAdminname());
+            //authorizationa.setAddress(authorizationa.getAddress().trim());
+            authorizationDao.save(authorizationa);
+            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+        } catch (Exception e) {
+            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+        }
+        return message;
+    }
 
 //		@RequestMapping("/prUpdate")
 //		public String prUpdate(String id, ModelMap model){
@@ -126,4 +126,19 @@ public class AuthorizationAction {
 //			return message;
 //		}
 
+
+    // 离线授权
+
+
+//    @RequestMapping("/prOffLine")
+//    public String proffLine(String authorizationId, HttpServletRequest request)
+//            throws Exception {
+//        return "admin/authorization/offLine";
+//    }
+
+//    @RequestMapping("/offLine")
+//    @ResponseBody
+//    public String offLine (int page, int rows, String authorizationId, String uName, Pager pager) throws Exception {
+//        return null;
+//    }
 }

@@ -14,12 +14,12 @@ public class Authorization implements java.io.Serializable {
     private String id;
     private String starttime;   //起始时间
     private Date endtime;       //失效时间
-    private String keyssId; //授权钥匙id
-    private String locksId;   //开锁Id
+    private String keyssid; //授权钥匙id
+    private String locksid;   //开锁Id
     private String type;        //授权类型
     private String uid;    // 授权于
-    private String aName;   //操作员
-    private String aDate;       //授权时间
+    private String aname;   //操作员
+    private String adate;       //授权时间
     private String workticket; //工作票
 
 
@@ -49,20 +49,20 @@ public class Authorization implements java.io.Serializable {
         this.endtime = endtime;
     }
 
-    public String getKeyssId() {
-        return keyssId;
+    public String getKeyssid() {
+        return keyssid;
     }
 
-    public void setKeyssId(String keyssId) {
-        this.keyssId = keyssId;
+    public void setKeyssid(String keyssid) {
+        this.keyssid = keyssid;
     }
 
-    public String getLocksId() {
-        return locksId;
+    public String getLocksid() {
+        return locksid;
     }
 
-    public void setLocksId(String locksId) {
-        this.locksId = locksId;
+    public void setLocksid(String locksid) {
+        this.locksid = locksid;
     }
 
     public String getType() {
@@ -73,21 +73,28 @@ public class Authorization implements java.io.Serializable {
         this.type = type;
     }
 
-
-    public String getaName() {
-        return aName;
+    public String getUid() {
+        return uid;
     }
 
-    public void setaName(String aName) {
-        this.aName = aName;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getaDate() {
-        return aDate;
+    public String getAname() {
+        return aname;
     }
 
-    public void setaDate(String aDate) {
-        this.aDate = aDate;
+    public void setAname(String aname) {
+        this.aname = aname;
+    }
+
+    public String getAdate() {
+        return adate;
+    }
+
+    public void setAdate(String adate) {
+        this.adate = adate;
     }
 
     public String getWorkticket() {
@@ -96,13 +103,5 @@ public class Authorization implements java.io.Serializable {
 
     public void setWorkticket(String workticket) {
         this.workticket = workticket;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 }

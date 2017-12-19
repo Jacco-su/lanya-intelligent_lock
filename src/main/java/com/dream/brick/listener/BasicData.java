@@ -36,7 +36,7 @@ public class BasicData {
 
     public static ILocksDao ilocksDao;
     public static IKeyssDao ikeyssDao;
-    //public static IAuthorizationDao iauthorizationDao;
+//    public static IAuthorizationDao iauthorizationDao;
 
 
 
@@ -58,8 +58,8 @@ public class BasicData {
            ilocksDao = (ILocksDao) SpringUtil.getObject("locksDaoImpl");
            ikeyssDao = (IKeyssDao) SpringUtil.getObject("keyssDaoImpl");
            collectorDao = (CollectorDao) SpringUtil.getObject("collectorDaoImpl");
-           //    iauthorizationDao = (IAuthorizationDao) SpringUtil.getObject("authorizationDapImpl");
-       }
+//               iauthorizationDao = (IAuthorizationDao) SpringUtil.getObject("authorizationDapImpl");
+	   }
 	   /**
 	    * files 指fileid字符串,格式如'1111.txt;1112.doc;1113.png'
 	    * 
@@ -122,9 +122,9 @@ public class BasicData {
     public static List<Keyss> findAllKeyss() {
         return ikeyssDao.findAllKeyss();
     }
-    //public static List<Authorization> findAllAuthorization() {
-    //	return iauthorizationDao.findAllAuthorization();}
-    //*******
+//    public static List<Authorization> findAllAuthorization() {
+//    	return iauthorizationDao.findAllAuthorization();}
+	//*******
 
 	   public static List<Company> findAllCompany(){
 		   return companyDao.findAllCompany();
