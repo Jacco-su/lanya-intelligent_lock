@@ -9,13 +9,13 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>区域添加</title>
+    <title>配电房添加</title>
 </head>
 <body>
 <form name="addForm" id="addForm" action="add" method="post">
     <table class="mytable" align="center">
         <tr>
-            <td>区域名称:</td>
+            <td>配电房名称:</td>
             <td><input type="hidden" name="parentId" value="${parentId }"/><input name="name" class="easyui-validatebox"
                                                                                   required="true"/></td>
         </tr>

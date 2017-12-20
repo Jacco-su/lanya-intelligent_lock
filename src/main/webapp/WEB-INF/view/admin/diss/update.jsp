@@ -10,7 +10,7 @@
     <form name="editForm" id="editForm" action="${basePath}/dept/update" method="post">
         <table class="mytable" align="center">
             <tr>
-                <td>区域名称:</td>
+                <td>配电房名称:</td>
                 <td><input type="hidden" name="id" value="${dept.id}"/><input type="hidden" name="parentId"
                                                                               value="${dept.parentId}"/><input
                         name="name" value="${dept.name }" class="easyui-validatebox" required="true"/></td>
@@ -34,7 +34,7 @@
 
             <tr>
                 <td>
-                    区域编号:
+                    配电房编号:
                 </td>
                 <td>
                     <input value="${dept.id}" disabled="true "/>

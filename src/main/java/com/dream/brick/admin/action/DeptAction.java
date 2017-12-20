@@ -87,7 +87,8 @@ public class DeptAction {
 		return "admin/dept/update";
 	}
 
-	@RequestMapping("/delete")
+
+    @RequestMapping("/delete")
 	@ResponseBody
 	public String delete(String ids, HttpServletRequest request){
 		String message="";

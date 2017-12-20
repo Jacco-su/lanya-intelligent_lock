@@ -40,6 +40,7 @@ public class DistributionAction {
         return "admin/diss/list";
     }
 
+
     @RequestMapping("/list")
     @ResponseBody
     public String list(int page, int rows, boolean lock, String deptId, String username, Pager pager)

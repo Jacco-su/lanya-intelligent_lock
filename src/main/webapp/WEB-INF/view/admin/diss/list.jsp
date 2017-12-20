@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>区域列表</title>
+    <title>配电房列表</title>
     <link rel="stylesheet" type="text/css"
           href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css"
@@ -66,7 +66,7 @@
 
             function add(parentId) {
                 addWin = $.createWin({
-                    title: "区域添加",
+                    title: "配电房添加",
                     url: '${basePath}/dept/prAdd?parentId=' + parentId,
                     height: 320,
                     width: 500,
@@ -148,11 +148,11 @@
     <tr>
         <td width="12%" valign="top"
             style="border: 1px solid #99bbe8; border-right: 0;">
-            <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
+            <div class="panel-header" style="border-left: 0; border-right: 0;">配电房</div>
             <ul id="tree" style="margin-top: 10px;"></ul>
         </td>
         <td valign="top" style="border: 1px solid #99bbe8;">
-            <div class="panel-header" style="border-left: 0; border-right: 0;">修改区域</div>
+            <div class="panel-header" style="border-left: 0; border-right: 0;">修改配电房</div>
             <div id="toolbar"></div>
             <div id="dept"></div>
         </td>
