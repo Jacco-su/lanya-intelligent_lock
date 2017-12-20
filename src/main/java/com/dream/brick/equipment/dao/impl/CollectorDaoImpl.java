@@ -34,13 +34,12 @@ public class CollectorDaoImpl extends BaseDaoImpl implements CollectorDao {
     }
 
     public List<Collector> findCollectorByQgdisid(String disId) {
-        String hql = "from Collector t where order by t.sortorder";
+        String hql = "from Collector t  order by t.sortorder";
         return findList(hql);
     }
 
     public List<Collector> findCollectorList(Pager pager) {
-//        String hql = "from Collector t order by t.sortorder";
-        String hql = "SELECT * from t_collector t,t_qgdis q where q.id = t.disId order by t.sortorder ";
+        String hql = "from Collector t  order by t.sortorder";
 
         return query(hql, pager);
     }

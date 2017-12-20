@@ -36,7 +36,7 @@
 			method:'GET',
 			url : '${basePath}/log/list',
 			loadMsg : '数据装载中......',
-			sortName : 'orderId',
+			sortName : 'id',
 			sortOrder : 'desc',
 			remoteSort : false,
 			singleSelect:true,
@@ -84,8 +84,8 @@
 					align : 'left'
 				}
 			] ],
-//			pagination : true,
-//			rownumbers : true,
+			pagination : true,
+			rownumbers : true
 //			toolbar : [{
 //				text : '删除',
 //				iconCls : 'icon-remove',

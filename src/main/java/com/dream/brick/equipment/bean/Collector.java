@@ -20,8 +20,8 @@ public class Collector implements java.io.Serializable {
     private static final long serialVersionUID = 4725135016331954412L;
     private String id;
     private String cip;// 采集器IP地址
-    private String disid;// 所在配电房
-    private String dname; // 所在配电房名称
+    private String disId;// 所在配电房
+    private String disName; // 所在配电房名称
     // private Qgdis dis;
     // private String collectorDiss;
     private String cdate;// 日期
@@ -51,20 +51,21 @@ public class Collector implements java.io.Serializable {
 //        this.dis = dis;
 //    }
 
-    public String getDname() {
-        return dname;
+
+    public String getDisId() {
+        return disId;
     }
 
-    public void setDname(String dname) {
-        this.dname = dname;
+    public void setDisId(String disId) {
+        this.disId = disId;
     }
 
-    public String getDisid() {
-        return disid;
+    public String getDisName() {
+        return disName;
     }
 
-    public void setDisid(String disid) {
-        this.disid = disid;
+    public void setDisName(String disName) {
+        this.disName = disName;
     }
 
     public String getCdate() {

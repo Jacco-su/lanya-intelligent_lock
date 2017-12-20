@@ -55,8 +55,8 @@
                         align: 'center'
                     },
                     {
-                        title: '配电房id',
-                        field: 'disid',
+                        title: '配电房',
+                        field: 'disId',
                         width: 350,
                         align: 'left'
                     },
