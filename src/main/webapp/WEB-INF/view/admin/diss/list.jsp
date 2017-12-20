@@ -31,7 +31,7 @@
                 onClick: function (node) {
                     $.ajax({
                         type: "get",
-                        url: "${basePath}/dept/prUpdate",
+                        url: "${basePath}/disa/prUpdate",
                         data: "id=" + node.id,
                         dataType: "text",
                         cache: false,

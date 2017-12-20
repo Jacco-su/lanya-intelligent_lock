@@ -1,8 +1,12 @@
 package com.dream.brick.equipment.action;
 
 
+import com.dream.brick.admin.bean.Department;
 import com.dream.brick.equipment.bean.Qgdis;
+import com.dream.brick.equipment.bean.Qgorg;
 import com.dream.brick.equipment.dao.QgdisDao;
+import com.dream.brick.listener.BasicData;
+import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.StringUtil;
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import static com.dream.brick.listener.BasicData.deptDao;
 
 //import com.dream.brick.equipment.bean.Qgorg;
 
@@ -89,18 +95,28 @@ public class DistributionAction {
         return message;
     }
 
+    //    @RequestMapping("/prUpdate")
+//    public String prUpdate(String id, ModelMap model) {
+//        Qgdis disa = disDao.find(Qgdis.class, id);
+//        model.addAttribute("disa", disa);
+//        return "admin/dis/update";
+//    }
     @RequestMapping("/prUpdate")
-    public String prUpdate(String id, ModelMap model) {
-        Qgdis disa = disDao.find(Qgdis.class, id);
-        model.addAttribute("disa", disa);
-        return "admin/dis/update";
+    public String prUpdate(String id, ModelMap model, HttpServletRequest request) {
+        Department dept = deptDao.find(Department.class, id);
+        String areacode = SessionData.getAreacode(request);
+        List<Qgorg> qgorgList = BasicData.findQgorgByAreacode(areacode);
+        model.addAttribute("qgorgList", qgorgList);
+        model.addAttribute("dept", dept);
+        return "admin/diss/update";
     }
+
 
     @RequestMapping("/prView")
     public String prView(String id, ModelMap model) {
         Qgdis disa = disDao.find(Qgdis.class, id);
         model.addAttribute("disa", disa);
-        return "admin/dis/view";
+        return "admin/diss/view";
     }
 
 
