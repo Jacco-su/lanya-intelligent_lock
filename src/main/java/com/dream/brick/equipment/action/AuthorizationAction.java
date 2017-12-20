@@ -130,11 +130,11 @@ public class AuthorizationAction {
     // 离线授权
 
 
-//    @RequestMapping("/prOffLine")
-//    public String proffLine(String authorizationId, HttpServletRequest request)
-//            throws Exception {
-//        return "admin/authorization/offLine";
-//    }
+    @RequestMapping("/prOffLine")
+    public String proffLine(String authorizationId, HttpServletRequest request)
+            throws Exception {
+        return "commons/notBuild";
+    }
 
 //    @RequestMapping("/offLine")
 //    @ResponseBody
