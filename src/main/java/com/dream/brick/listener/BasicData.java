@@ -139,13 +139,13 @@ public class BasicData {
         return (Qgdis) qgdisDao.find(Qgdis.class, id);
     }
 
-    public static List<Collector> findCollectorByQgdisid(String disId) {
-        return collectorDao.findCollectorByQgdisid(disId);
-    }
+//    public static List<Collector> findCollectorByQgdisid(String disId) {
+//        return collectorDao.findCollectorByQgdisid(disId);
+//    }
 
-    public static Collector findCollectorById(String id) {
-        return (Collector) collectorDao.find(Collector.class, id);
-    }
+//    public static Collector findCollectorById(String id) {
+//        return (Collector) collectorDao.find(Collector.class, id);
+//    }
 
 	   public static void saveSyslog(Syslog syslog){
 		   logDao.saveSyslog(syslog);

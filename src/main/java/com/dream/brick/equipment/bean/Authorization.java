@@ -14,11 +14,11 @@ public class Authorization implements java.io.Serializable {
     private String id;
     private String starttime;   //起始时间
     private Date endtime;       //失效时间
-    private String keyssid; //授权钥匙id
-    private String locksid;   //开锁Id
+    private String keysId; //授权钥匙id
+    private String locksId;   //开锁Id
     private String type;        //授权类型
-    private String uid;    // 授权于
-    private String aname;   //操作员
+    private String uId;    // 授权于
+    private String aId;   //操作员
     private String adate;       //授权时间
     private String workticket; //工作票
 
@@ -49,20 +49,20 @@ public class Authorization implements java.io.Serializable {
         this.endtime = endtime;
     }
 
-    public String getKeyssid() {
-        return keyssid;
+    public String getKeysid() {
+        return keysId;
     }
 
-    public void setKeyssid(String keyssid) {
-        this.keyssid = keyssid;
+    public void setKeysid(String keysId) {
+        this.keysId = keysId;
     }
 
     public String getLocksid() {
-        return locksid;
+        return locksId;
     }
 
-    public void setLocksid(String locksid) {
-        this.locksid = locksid;
+    public void setLocksid(String locksId) {
+        this.locksId = locksId;
     }
 
     public String getType() {
@@ -74,19 +74,19 @@ public class Authorization implements java.io.Serializable {
     }
 
     public String getUid() {
-        return uid;
+        return uId;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUid(String uId) {
+        this.uId = uId;
     }
 
-    public String getAname() {
-        return aname;
+    public String getAid() {
+        return aId;
     }
 
-    public void setAname(String aname) {
-        this.aname = aname;
+    public void setAid(String aId) {
+        this.aId = aId;
     }
 
     public String getAdate() {

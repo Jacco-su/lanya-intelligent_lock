@@ -44,14 +44,14 @@ public class CollectorAction {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @RequestMapping("/prList")
-    public String prList(String collectorId, String distId, HttpServletRequest request)
+    public String prList()
             throws Exception {
         return "admin/collector/list";
     }
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, String deptId, String qgdisId, Pager pager)
+    public String list(int page, int rows, String qgdisId, Pager pager)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
@@ -99,18 +99,18 @@ public class CollectorAction {
 //             }catch(Exception e){
 //                message=StringUtil.jsonValue("0",AppMsg.ADD_ERROR);
 //            }
-        collector.setId("1");
-        collector.setCip(collector.getCip());
-        collector.setCdate(sdf.format(new Date().getTime()));
-        //initRolea(collector, disIdList);
-
-        try {
-            collectorDao.save(collector);
-            //collectorDao.addCollector(collector);
-            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
-        } catch (Exception e) {
-            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
-        }
+//        collector.setId("1");
+//        collector.setCip(collector.getCip());
+//        collector.setCdate(sdf.format(new Date().getTime()));
+//        //initRolea(collector, disIdList);
+//
+//        try {
+//            collectorDao.save(collector);
+//            //collectorDao.addCollector(collector);
+//            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+//        } catch (Exception e) {
+//            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+//        }
 
         return message;
     }
