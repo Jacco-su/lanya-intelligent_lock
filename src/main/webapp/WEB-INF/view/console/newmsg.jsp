@@ -67,8 +67,8 @@ function findMailList(){
 		},"json");
 }
 $(function() {
-		findNeedTodo();
-		findMailList();
+		//findNeedTodo();
+		//findMailList();
 });
 
 function todoList(type){

@@ -6,6 +6,7 @@ import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.QgdisDao;
 import com.dream.framework.dao.BaseDaoImpl;
 import com.dream.framework.dao.Pager;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +22,12 @@ import java.util.List;
 @Repository
 public class QgdisDaoImpl extends BaseDaoImpl implements QgdisDao {
     public List<Area> findAllArea() {
-        String hql = "from Area t order by t.sortorder";
+        String hql = "from Area t ";
         return findList(hql);
     }
 
     public List<Qgdis> findAllQgdis() {
-        String hql = "from Qgdis t order by t.sortorder";
+        String hql = "from Qgdis t ";
         return findList(hql);
     }
 
@@ -35,17 +36,17 @@ public class QgdisDaoImpl extends BaseDaoImpl implements QgdisDao {
     }
 
     public List<Qgdis> findQgdisByAreacode(String areacode) {
-        String hql = "from Qgdis t where t.areacode like '" + areacode + "%' order by t.sortorder";
+        String hql = "from Qgdis t ";
         return findList(hql);
     }
 
     public List<Qgdis> findQgdisList(Pager pager) {
-        String hql = "from Qgdis t order by t.areacode";
+        String hql = "from Qgdis t ";
         return query(hql, pager);
     }
 
     public List<Qgdis> findDisIdAndName() {
-        String hql = "select id,name,deptId from t_qgdis order by sortorder";
+        String hql = "select id,name,deptId from t_qgdis";
         List<Object[]> results = query(hql, 0, 0);
         List<Qgdis> list = new ArrayList<Qgdis>();
         for (Object[] objs : results) {
@@ -59,4 +60,21 @@ public class QgdisDaoImpl extends BaseDaoImpl implements QgdisDao {
         return list;
     }
 
+    @Override
+    public void addDis(Qgdis qgdis) {
+        save(qgdis);
+    }
+
+    @Override
+    public List<Qgdis> findQgdisList(String deptId, String dissName, Pager pager) {
+        StringBuilder hql=new StringBuilder();
+        hql.append("from Qgdis t where 1=1 ");
+        if(StringUtils.isNotEmpty(deptId)){
+            hql.append("and t.dept.id=").append(deptId);
+        }
+        if(StringUtils.isNotEmpty(dissName)){
+            hql.append("and t.name like '%").append(dissName).append("%'");
+        }
+        return query(hql.toString(), pager);
+    }
 }

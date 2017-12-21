@@ -16,26 +16,14 @@
     <table class="mytable" align="center">
         <tr>
             <td>配电房名称:</td>
-            <td><input type="hidden" name="parentId" value="${parentId }"/><input name="name" class="easyui-validatebox"
-                                                                                  required="true"/></td>
-        </tr>
-        <%--<tr>--%>
-        <%--<td>所属区域:</td>--%>
-        <%--<td>--%>
-        <%--<select name="qgorgId" name="qgorgId" style="width:200px;" class="easyui-validatebox" required="true">--%>
-        <%--<option value="">---请选择---</option>--%>
-        <%--<c:forEach items="${qgorgList}" var="qgorg" varStatus="s">--%>
-        <%--<option value="${qgorg.id}"--%>
-        <%--<c:if test="${qgorg.id eq seqgorg.id}">selected</c:if>>${qgorg.name}</option>--%>
-        <%--</c:forEach>--%>
-        <%--</select>--%>
-        <%--</td>--%>
-        <%--</tr>--%>
-        <tr>
-            <td>排序:</td>
             <td>
-                <input name="orderId" class="easyui-validatebox" required="true"/>
-                <input type="hidden" name="treeShow" value="1"/>
+                <input  name="dept.id" type="hidden" value="${deptId}"/>
+                <input name="name" class="easyui-validatebox" width="280px" required="true"/></td>
+        </tr>
+        <tr>
+            <td>所在地址:</td>
+            <td>
+                <textarea name="address" class="easyui-validatebox" id="address" cols="30" rows="10"required="true"></textarea>
             </td>
         </tr>
     </table>

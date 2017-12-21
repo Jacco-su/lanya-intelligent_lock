@@ -156,9 +156,9 @@ request.setAttribute("basePath",path);
 				});
 			}
 
-			msg();
+			//msg();
 			//findmsgCount();
-            setInterval(msg,120*1000);
+            //setInterval(msg,120*1000);
            // setInterval(findmsgCount,60*1000);
             tick();
             $(".tabs-inner").click(function(){

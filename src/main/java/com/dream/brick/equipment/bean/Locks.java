@@ -17,7 +17,7 @@ public class Locks {
     private String lockCode;       //锁识别码
     private String disName;     // 安装地点  配电房名称
     private String lockDate;      //安装时间
-    private Integer sortorder;      //序列
+    private String address;//详细地址
     /**
      * 常显
      */
@@ -66,13 +66,6 @@ public class Locks {
         this.lockDate = lockDate;
     }
 
-    public Integer getSortorder() {
-        return sortorder;
-    }
-
-    public void setSortorder(Integer sortorder) {
-        this.sortorder = sortorder;
-    }
 
     public int getAlwaysShow() {
         return alwaysShow;
@@ -80,5 +73,13 @@ public class Locks {
 
     public void setAlwaysShow(int alwaysShow) {
         this.alwaysShow = alwaysShow;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

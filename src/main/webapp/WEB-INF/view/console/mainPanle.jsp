@@ -77,9 +77,9 @@ function suggestCheck(){
 $(function() {
 		//findNeedTodo();
 		//setInterval(findNeedTodo,600*1000);
-		findMailList();
-		findNoticeList();
-		suggestCheck();
+		//findMailList();
+		//findNoticeList();
+		//suggestCheck();
 		
 });
 

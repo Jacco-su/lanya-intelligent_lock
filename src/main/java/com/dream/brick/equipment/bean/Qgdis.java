@@ -1,5 +1,7 @@
 package com.dream.brick.equipment.bean;
 
+import com.dream.brick.admin.bean.Department;
+
 import javax.persistence.*;
 
 /**
@@ -18,11 +20,10 @@ public class Qgdis implements java.io.Serializable {
     private String id;
     private String name;// 配电房名称
     private String address;// 配电房地址
-    private String areacode;// 配电房所在地区编码
-    private String areaname;// 配电房所在地区名称
-
-    private String lock;   //锁
-    private int sortorder;// 配电房显示顺序
+    /**
+     * 部门
+     */
+    private Department dept;//所属
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,38 +50,13 @@ public class Qgdis implements java.io.Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
-
-    public String getAreacode() {
-        return areacode;
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "deptId", nullable = false, updatable = true)
+    public Department getDept() {
+        return dept;
     }
 
-    public void setAreacode(String areacode) {
-        this.areacode = areacode;
-    }
-
-    public String getAreaname() {
-        return areaname;
-    }
-
-    public void setAreaname(String areaname) {
-        this.areaname = areaname;
-    }
-
-
-    public int getSortorder() {
-        return sortorder;
-    }
-
-    public void setSortorder(int sortorder) {
-        this.sortorder = sortorder;
-    }
-
-
-    public String getLock() {
-        return lock;
-    }
-
-    public void setLock(String lock) {
-        this.lock = lock;
+    public void setDept(Department dept) {
+        this.dept = dept;
     }
 }

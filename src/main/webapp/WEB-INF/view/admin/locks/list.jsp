@@ -40,9 +40,16 @@
                     var id = rows[rowIndex].id;
                     detail(id);
                 },
-                columns: [[{
+                columns: [[
+                    {
                     title: '智能锁编号',
                     field: 'id',
+                    width: 250,
+                    align: 'center'
+                  },
+                {
+                    title: '识别码',
+                    field: 'lockCode',
                     width: 250,
                     align: 'center'
                 },
@@ -68,7 +75,7 @@
 //                    align : 'center'
 //                },
                     {
-                        title: '添加日期 ',
+                        title: '添加时间',
                         field: 'lockDate',
                         width: 200,
                         align: 'left'

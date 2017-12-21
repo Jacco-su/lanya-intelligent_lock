@@ -29,8 +29,6 @@ public class BasicData {
 	 public static QgorgDao qgorgDao;
     public static QgdisDao qgdisDao;
     public static CollectorDao collectorDao;
-    public static CompanyDao companyDao;
-	 public static ProductDao prodDao;
 	 public static SyslogDao logDao;
 
 
@@ -51,8 +49,6 @@ public class BasicData {
            deptDao = (IDeptDao) SpringUtil.getObject("deptDao");
            qgorgDao = (QgorgDao) SpringUtil.getObject("qgorgDaoImpl");
            qgdisDao = (QgdisDao) SpringUtil.getObject("qgdisDaoImpl");
-           companyDao=(CompanyDao) SpringUtil.getObject("companyDaoImpl");
-		     prodDao=(ProductDao) SpringUtil.getObject("productDaoImpl");
 		     logDao=(SyslogDao) SpringUtil.getObject("syslogDaoImpl");
 
            ilocksDao = (ILocksDao) SpringUtil.getObject("locksDaoImpl");
@@ -126,15 +122,6 @@ public class BasicData {
 //    	return iauthorizationDao.findAllAuthorization();}
 	//*******
 
-	   public static List<Company> findAllCompany(){
-		   return companyDao.findAllCompany();
-	   }
-	   public static List<Company> findCompanyByAreacode(String areacode){
-		   return companyDao.findCompanyByAreacode(areacode);
-	   }
-	   public static Product findBasicProduct(String id){
-		   return prodDao.findBasicProduct(id);
-	   }
 	   public static List<Qgorg> findQgorgByAreacode(String areacode){
 		   return qgorgDao.findQgorgByAreacode(areacode);
 	   }
@@ -162,12 +149,6 @@ public class BasicData {
 
 	   public static void saveSyslog(Syslog syslog){
 		   logDao.saveSyslog(syslog);
-	   }
-	   public static Map<String,String> cacheCompanyName(){
-		   return companyDao.cacheCompanyName();
-	   }
-	   public static Map<String,String> cacheProdName(){
-		   return companyDao.cacheProdName();
 	   }
 
 

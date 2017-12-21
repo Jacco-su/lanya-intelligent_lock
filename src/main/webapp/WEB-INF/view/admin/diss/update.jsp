@@ -7,37 +7,20 @@
 %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <div>
-    <form name="editForm" id="editForm" action="${basePath}/dept/update" method="post">
+    <form name="editForm" id="editForm" action="${basePath}/disa/update" method="post">
         <table class="mytable" align="center">
             <tr>
                 <td>配电房名称:</td>
-                <td><input type="hidden" name="id" value="${dept.id}"/><input type="hidden" name="parentId"
-                                                                              value="${dept.parentId}"/><input
-                        name="name" value="${dept.name }" class="easyui-validatebox" required="true"/></td>
-            </tr>
-            <tr>
-                <%--<td>所属区域:</td>--%>
-                <%--<td>--%>
-                <%--<select name="qgorgId" name="qgorgId" style="width:200px;" class="easyui-validatebox" required="true">--%>
-                <%--<c:forEach items="${qgorgList}" var="qgorg" varStatus="s">--%>
-                <%--<option value="${qgorg.id}" <c:if test="${qgorg.id eq dept.qgorgId}">selected</c:if>>${qgorg.name}</option>--%>
-                <%--</c:forEach>--%>
-                <%--</select>--%>
-                <%--</td>--%>
-            </tr>
-            <tr>
-                <td>排序:</td>
-                <td><input name="orderId" value="${dept.orderId}" class="easyui-validatebox" required="true"/>
-                    <input type="hidden" name="treeShow" value="1"/>
-                </td>
-            </tr>
-
-            <tr>
                 <td>
-                    配电房编号:
-                </td>
+                    <input  name="id" type="hidden" value="${qgdis.id}"/>
+                    <input  name="dept.id" type="hidden" value="${qgdis.dept.id}"/>
+                    <input name="name" class="easyui-validatebox" width="280px" value="${qgdis.name}" required="true"/>
+                    </td>
+            </tr>
+            <tr>
+                <td>所在地址:</td>
                 <td>
-                    <input value="${dept.id}" disabled="true "/>
+                    <textarea name="address" class="easyui-validatebox" id="address" cols="30" rows="10"required="true">${qgdis.address}</textarea>
                 </td>
             </tr>
         </table>
