@@ -18,28 +18,28 @@ import java.util.List;
 @Transactional
 @Repository
 public class CollectorDaoImpl extends BaseDaoImpl implements CollectorDao {
-    public List<Qgdis> findAllQgdis() {
-        String hql = "from Qgdis t order by t.sortorder";
-
-        return findList(hql);
-    }
-
+    //    public List<Qgdis> findAllQgdis() {
+//        String hql = "from Qgdis t order by t.sortorder";
+//
+//        return findList(hql);
+//    }
+//
     public List<Collector> findAllCollector() {
-        String hql = "from Collector t order by t.sortorder";
+        String hql = "from Collector t order by t.id";
         return findList(hql);
     }
-
-    public Qgdis findQgdisByAreacode(String disId) {
-        return (Qgdis) find(Qgdis.class, disId);
-    }
-
-    public List<Collector> findCollectorByQgdisid(String disId) {
-        String hql = "from Collector t  order by t.sortorder";
-        return findList(hql);
-    }
+//
+//    public Qgdis findQgdisByAreacode(String disId) {
+//        return (Qgdis) find(Qgdis.class, disId);
+//    }
+//
+//    public List<Collector> findCollectorByQgdisid(String disId) {
+//        String hql = "from Collector t  order by t.sortorder";
+//        return findList(hql);
+//    }
 
     public List<Collector> findCollectorList(Pager pager) {
-        String hql = "from Collector t  order by t.sortorder";
+        String hql = "from Collector t order by t.id";
 
         return query(hql, pager);
     }

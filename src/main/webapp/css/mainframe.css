@@ -189,8 +189,12 @@ a:hover{ color:Red; text-decoration:underline;}
     background-position: -0px -420px;
 }
 
-.icon-ziliao {
+.icon-qita {
     background: url("../images/framework/bg_sign52.png") no-repeat;
+}
+
+.icon-ziliao {
+    background: url("../images/login/00100.jpg");
 }
 
 

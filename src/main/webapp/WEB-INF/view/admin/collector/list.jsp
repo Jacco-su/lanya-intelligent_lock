@@ -4,11 +4,13 @@
     response.setHeader("Pragma", "No-Cache");
     response.setHeader("Cache-Control", "No-Cache");
     response.setDateHeader("Expires", 0);
+    response.setContentType("text/html;charset=UTF-8");
 %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>采集器信息</title>
+    <link rel="stylesheet" type="text/css" href="${basePath}/css/mainframe.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
@@ -30,6 +32,7 @@
                 striped: true,
                 collapsible: false,
                 fitColumns: true,
+
                 url: '${basePath}/collector/list',
                 queryParams: {
                     // 'disId': disId
@@ -45,19 +48,19 @@
                 columns: [[{
                     title: '采集器编号',
                     field: 'id',
-                    width: 250,
+                    width: $(this).width() * 0.2,
                     align: 'center'
                 },
                     {
                         title: 'IP地址',
                         field: 'cip',
-                        width: 350,
+                        width: $(this).width() * 0.2,
                         align: 'center'
                     },
                     {
                         title: '配电房',
                         field: 'disId',
-                        width: 350,
+                        width: $(this).width() * 0.2,
                         align: 'left'
                     },
 //                {
@@ -72,7 +75,7 @@
                     {
                         title: '添加日期 ',
                         field: 'cdate',
-                        width: 200,
+                        width: $(this).width() * 0.2,
                         align: 'left'
                     },
                 ]],
@@ -171,10 +174,10 @@
 
             $('#tree').tree({
                 checkbox: false,
-                url: '${basePath}/areainfo/findAreaByCode',
+                url: '${basePath}/dept/getChildren',
                 simpleDataModel: true,
                 onBeforeExpand: function (node, param) {
-                    $('#tree').tree('options').url = "${basePath}/areainfo/findAreaByParentId?parentId=" + node.id;// change the url
+                    $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId=" + node.id;// change the url
                     return true;
                 }
             });
@@ -253,24 +256,34 @@
             var selections = $('#tree').tree('getSelected');
             if (selections) {
                 id = selections.id;
-                show = selections.attributes.areaname;
+                show = selections.attributes.deptname;
                 $("#areacode").val(id);
-                getAreaname(selections);
+                getDisname(selections);
                 fullname = fullname.substring(0, fullname.length - 1);
-                $("#areaname").val(fullname);
+                $("#deptid").val(fullname);
             }
-            $('#selectArea').window('close');
+            $('#selectDept').window('close');
         }
 
         var fullname = "";
 
-        function getAreaname(node) {
+        function getDisname(node) {
             fullname = node.text + " " + fullname;
             if (node.attributes.parentcode == 0) {
                 return;
             }
             var abc = $('#tree').tree('getParent', node.target);
-            getAreaname(abc);
+            getDisname(abc);
+        }
+
+        function query() {
+            var queryParams = infolist.datagrid('options').queryParams;
+            queryParams.queryWord = $('#qq').val();
+            infolist.datagrid({
+                url: 'easyQuery.action'
+            });
+            displayMsg();
+            $('#query').window('close');
         }
     </script>
 </head>
@@ -285,7 +298,7 @@
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
-            <a class="easyui-linkbutton" onclick="$('#selectArea').window('close');">关闭</a>
+            <a class="easyui-linkbutton" onclick="$('#selectDept').window('close');">关闭</a>
         </div>
     </div>
 </div>

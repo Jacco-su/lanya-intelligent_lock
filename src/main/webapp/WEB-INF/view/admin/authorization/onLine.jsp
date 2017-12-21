@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>授权记录</title>
+    <title>授权信息</title>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
@@ -20,7 +20,7 @@
         $(function () {
             var infolist = $('#infolist');
             infolist.datagrid({
-                title: '区域列表',
+                title: '蓝牙钥匙列表',
                 iconCls: 'icon-users',
                 width: '95%',
                 height: 500,
@@ -30,7 +30,7 @@
                 striped: true,
                 collapsible: false,
                 fitColumns: true,
-                url: '${basePath}/authorization/list',
+                url: '${basePath}/keyss/list',
                 queryParams: {},
                 loadMsg: '数据装载中......',
                 remoteSort: false,
@@ -40,67 +40,38 @@
                     var id = rows[rowIndex].id;
                     detail(id);
                 },
-                columns: [[
-//                    {
-//                    title: '区域名称',
-//                    field: 'name',
-//                    width: $(this).width() * 0.2,
-//                    align: 'center'
+                columns: [[{
+                    title: '钥匙编号',
+                    field: 'id',
+                    width: 250,
+                    align: 'center'
+                },
+                    {
+                        title: '钥匙名称',
+                        field: 'keyssName',
+                        width: 350,
+                        align: 'center'
+                    },
+                    {
+                        title: '领用人',
+                        field: 'userName',
+                        width: 350,
+                        align: 'left'
+                    },
+//                {
+//                    title : '领用人',
+//                    field : 'userNume',
+//                    formatter : function(value,rowData,rowIndx) {
+//                        return rowData.user.username;
+//                    },
+//                    width : $(this).width() * 0.1,
+//                    align : 'center'
 //                },
                     {
-                        title: '钥匙',
-                        field: 'keysId',
-                        width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        align: 'center'
-                    }, {
-                        title: '锁具编号',
-                        field: 'locksId',
-                        width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        align: 'center'
-                    }, {
-                        title: '类型',
-                        field: 'type',
-                        width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        align: 'center'
-                    }, {
-                        title: '使用人',
-                        field: 'uName',
-                        width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        align: 'center'
-                    }, {
-                        title: '起始日期',
-                        field: 'starttime',
-                        width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        lign: 'center'
-                    }, {
-                        title: '失效日期',
-                        field: 'endtime',
-                        width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        align: 'center'
-                    }, {
-                        title: '经办人',
-                        field: 'aName',
-                        width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        align: 'center'
-                    }, {
-                        title: '授权日期',
-                        field: 'aDate',
-                        width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        align: 'center'
-                    }, {
-                        title: '工作票',
-                        field: 'workticket',
-                        width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        align: 'center'
+                        title: '领用时间 ',
+                        field: 'keyssDate',
+                        width: 200,
+                        align: 'left'
                     },
                 ]],
                 pagination: true,
@@ -116,7 +87,7 @@
                         text: "添加",
                         handler: add
                     }, '-', {
-                        text: '修改',
+                        text: '授权',
                         iconCls: 'icon-edit',
                         handler: edit
                     }, '-', {
@@ -179,7 +150,7 @@
             function detail(id) {
                 seeWin = $.createWin({
                     title: "详情",
-                    url: '${basePath}/authorization/prView',
+                    url: '${basePath}/keyss/prView',
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
@@ -188,7 +159,7 @@
             }
 
             $('#selectArea').window({
-                title: '地区选择',
+                title: '领用人',
                 width: 400,
                 height: 500,
                 closed: true,
@@ -198,12 +169,12 @@
 
             $('#tree').tree({
                 checkbox: false,
-                url: '${basePath}/areainfo/findAreaByCode',
+                url: '${basePath}/user/kList',
                 simpleDataModel: true,
-                onBeforeExpand: function (node, param) {
-                    $('#tree').tree('options').url = "${basePath}/areainfo/findAreaByParentId?parentId=" + node.id;// change the url
-                    return true;
-                }
+                <%--onBeforeExpand: function (node, param) {--%>
+                <%--$('#tree').tree('options').url = "${basePath}/userinfo/findAreaByParentId?parentId=" + node.id;// change the url--%>
+                <%--return true;--%>
+                <%--}--%>
             });
 
             function refresh() {
@@ -241,7 +212,7 @@
             function showEdit(id) {
                 updateWin = $.createWin({
                     title: "修改",
-                    url: '${basePath}/authorization/prUpdate',
+                    url: '${basePath}/authorization/prAdd',
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
@@ -259,7 +230,7 @@
                 if (selected) {
                     $.messager.confirm('警告', '确定要删除么?', function (f) {
                         if (f) {
-                            $.post("${basePath}/authorization/delete", {"id": selected.id}, function (json) {
+                            $.post("${basePath}/keyss/delete", {"id": selected.id}, function (json) {
                                 $.messager.alert('提示', json.message);
                                 if (json.result == 1) {
                                     infolist.datagrid('reload');
@@ -280,20 +251,18 @@
             var selections = $('#tree').tree('getSelected');
             if (selections) {
                 id = selections.id;
-                show = selections.attributes.areaname;
-
-                $("#areacode").val(id);
-                getAreaname(selections);
+                show = selections.attributes.username;
+                $("#usercode").val(id);
+                getUsername(selections);
                 fullname = fullname.substring(0, fullname.length - 1);
-                $("#areaname").val(fullname);
+                $("#username").val(fullname);
             }
-            $('#selectArea').window('close');
+            $('#selectUser').window('close');
         }
 
         var fullname = "";
 
-        function getAreaname(node) {
-            if (node == null) return;					//改动
+        function getUsername(node) {
             fullname = node.text + " " + fullname;
             if (node.attributes.parentcode == 0) {
                 return;
@@ -301,11 +270,104 @@
             var abc = $('#tree').tree('getParent', node.target);
             getAreaname(abc);
         }
+
+
+        function search() {
+            addWin = $.createWin({
+                title: "查询条件",
+                contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr></table>",
+                width: 300,
+                buttons: [{
+                    text: '查询',
+                    iconCls: 'icon-search',
+                    handler: query
+                }]
+            });
+        }
+
+        function query() {
+            infolist.datagrid({
+                url: basePath + '/user/list',
+                queryParams: {
+                    'username': $('#username').val()
+                },
+                loadMsg: '数据装载中......'
+            });
+            infolist.datagrid("clearSelections");
+            displayMsg();
+            $.closeWin(addWin);
+        }
+
     </script>
 </head>
 <body>
 <div>
-    <table id="infolist"></table>
+    <table id="infolist">
+        <div class="mytable">
+            <form name="addForm" id="addForm" action="${basePath}/authorization/onLine" method="post">
+                <table>
+                    <tr>
+                        <td>
+                            获取钥匙MAC:
+                        </td>
+                        <td>
+                            <input type=""> <br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            授权期限:
+                        </td>
+                        <td>
+                            <input type="datetime"> <br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            授权使用人:
+                        </td>
+                        <td>
+                            <input type=""> <br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            锁具范围:
+                        </td>
+                        <td>
+                            <input type="text"> <br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            操作人:
+                        </td>
+                        <td>
+                            <input type="text"> <br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            工作票:
+                        </td>
+                        <td>
+                            <input type="file" value="ss"> <br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" value="确认授权">
+                        </td>
+                        <td>
+                            <input type="reset" value="重置"><br/>
+                        </td>
+                    </tr>
+
+
+                </table>
+            </form>
+        </div>
+    </table>
 </div>
 <div id="selectArea">
     <div class="easyui-layout" fit="true">
@@ -317,6 +379,8 @@
             <a class="easyui-linkbutton" onclick="$('#selectArea').window('close');">关闭</a>
         </div>
     </div>
-</div>
+
 </body>
 </html>
+
+

@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "t_collector")
-public class Collector implements java.io.Serializable {
+public class Collector {
     /**
      *
      */
@@ -26,7 +26,7 @@ public class Collector implements java.io.Serializable {
     // private String collectorDiss;
     private String cdate;// 日期
 
-    private int sortorder;// 采集器显示顺序
+//    private int sortorder;// 采集器显示顺序
 
     // private Set<Employee> emps = new HashSet<>();
     // private List<Qgdis> dis=new ArrayList<Qgdis>();
@@ -77,13 +77,13 @@ public class Collector implements java.io.Serializable {
     }
 
 
-    public int getSortorder() {
-        return sortorder;
-    }
-
-    public void setSortorder(int sortorder) {
-        this.sortorder = sortorder;
-    }
+//    public int getSortorder() {
+//        return sortorder;
+//    }
+//
+//    public void setSortorder(int sortorder) {
+//        this.sortorder = sortorder;
+//    }
 
     public String getCip() {
         return cip;
