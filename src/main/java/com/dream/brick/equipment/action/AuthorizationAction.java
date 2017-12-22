@@ -42,14 +42,16 @@ public class AuthorizationAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, String authorizationId, String uName, Pager pager)
+    public String list(int page, int rows, String name, String username, Pager pager)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
         List<Authorization> list = authorizationDao.findAuthorizationList(pager);
+        List<Authorization> list2 = authorizationDao.findAllAuthorization();
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
+        datas.put("rows2", list2);
         return datas.toString();
     }
 
@@ -60,6 +62,13 @@ public class AuthorizationAction {
         Authorization authorizationa = authorizationDao.find(Authorization.class, id);
         model.addAttribute("authorizationa", authorizationa);
         return "admin/authorization/view";
+    }
+
+    @RequestMapping("/workView")
+    public String workView(String id, ModelMap model) {
+        Authorization authorizationa = authorizationDao.find(Authorization.class, id);
+        model.addAttribute("authorizationa", authorizationa);
+        return "admin/authorization/workview";
     }
 
 

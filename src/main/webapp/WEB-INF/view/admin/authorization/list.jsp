@@ -20,7 +20,7 @@
         $(function () {
             var infolist = $('#infolist');
             infolist.datagrid({
-                title: '区域列表',
+                title: '授权记录列表',
                 iconCls: 'icon-users',
                 width: '95%',
                 height: 500,
@@ -49,13 +49,13 @@
 //                },
                     {
                         title: '钥匙',
-                        field: 'keysId',
+                        field: 'keyssid',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
                     }, {
                         title: '锁具编号',
-                        field: 'locksId',
+                        field: 'locksid',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
@@ -67,11 +67,21 @@
                         align: 'center'
                     }, {
                         title: '使用人',
-                        field: 'uName',
+                        field: 'uid',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
-                    }, {
+                    },
+//                    {
+//                    title : '领用人',
+//                    field : 'usernume',
+//                    formatter : function(value,rowData,rowIndx) {
+//                        return rowData.user.username;
+//                    },
+//                    width : $(this).width() * 0.1,
+//                    align : 'center'
+//                },
+                    {
                         title: '起始日期',
                         field: 'starttime',
                         width: $(this).width() * 0.1,
@@ -85,13 +95,23 @@
                         align: 'center'
                     }, {
                         title: '经办人',
-                        field: 'aName',
+                        field: 'aid',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
-                    }, {
+                    },
+//                    {
+//                        title : '经办人',
+//                        field : 'aname',
+//                        formatter : function(value,rowData,rowIndx) {
+//                            return rowData.user.name;
+//                        },
+//                        width : $(this).width() * 0.1,
+//                        align : 'center'
+//                    },
+                    {
                         title: '授权日期',
-                        field: 'aDate',
+                        field: 'adate',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
                         align: 'center'
@@ -100,7 +120,9 @@
                         field: 'workticket',
                         width: $(this).width() * 0.1,
                         rowspan: 2,
-                        align: 'center'
+                        align: 'center',
+//                        url:onClick() workticket(),
+                        handler: workticket,
                     },
                 ]],
                 pagination: true,
@@ -182,6 +204,17 @@
                     url: '${basePath}/authorization/prView',
                     data: 'id=' + id,
                     height: 550,
+                    width: 800,
+                    buttons: []
+                });
+            }
+
+            function workticket(id) {
+                seeWin = $.createWin({
+                    title: "工作票",
+                    url: '${basePath}/authorization/workView',
+                    data: 'id=' + id,
+                    height: 650,
                     width: 800,
                     buttons: []
                 });

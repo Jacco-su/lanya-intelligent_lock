@@ -94,7 +94,13 @@
                         text: '删除',
                         iconCls: 'icon-remove',
                         handler: del
+                    },
+                    {
+                        text: '查询',
+                        iconCls: 'icon-search',
+                        handler: search
                     }]
+
             });
             displayMsg();
 
@@ -275,7 +281,8 @@
         function search() {
             addWin = $.createWin({
                 title: "查询条件",
-                contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr></table>",
+                contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr><tr><td>钥匙名称：</td><td><input id=keyssname /></td></tr></table>",
+
                 width: 300,
                 buttons: [{
                     text: '查询',
@@ -287,7 +294,7 @@
 
         function query() {
             infolist.datagrid({
-                url: basePath + '/user/list',
+                url: basePath + '/keyss/list',
                 queryParams: {
                     'username': $('#username').val()
                 },

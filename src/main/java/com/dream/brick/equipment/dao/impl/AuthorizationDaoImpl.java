@@ -20,13 +20,16 @@ public class AuthorizationDaoImpl extends BaseDaoImpl implements IAuthorizationD
 
 
     public List<Authorization> findAllAuthorization() {
-        String hql = "from Authorization a order by a.adate";
+//        String hql = "from Authorization a order by a.adate";
+        String hql = "from Authorization,User ";
         return findList(hql);
     }
 
 
     public List<Authorization> findAuthorizationList(Pager pager) {
-        String hql = "from Authorization a order by a.adate";
+        String hql = "from Authorization a order by a.adate desc";
+//        String hql = "from Authorization where aId=?  and name != 'admin' and name != 'alluser' and status!=0 order by orderId , rdate asc";
         return query(hql, pager);
+
     }
 }

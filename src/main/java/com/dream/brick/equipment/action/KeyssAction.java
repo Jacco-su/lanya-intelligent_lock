@@ -22,8 +22,8 @@ import java.util.List;
 
 @Controller
 @Scope("prototype")
-@RequestMapping("/keys")
-public class KeysAction {
+@RequestMapping("/keyss")
+public class KeyssAction {
 
     @Resource
     private IKeyssDao ikeyssDao;
