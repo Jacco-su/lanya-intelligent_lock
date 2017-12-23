@@ -27,6 +27,12 @@ public class ChartsAction {
     @RequestMapping("/prList")
     public String prList(String orgId, HttpServletRequest request)
             throws Exception {
+        return "admin/charts/list";
+    }
+
+    @RequestMapping("/keysList")
+    public String keysList(String orgId, HttpServletRequest request)
+            throws Exception {
         return "admin/charts/view";
     }
 

@@ -35,11 +35,11 @@
                 loadMsg: '数据装载中......',
                 remoteSort: false,
                 singleSelect: true,
-                onDblClickRow: function (rowIndex, field, value) {
-                    var rows = infolist.datagrid("getRows");
-                    var id = rows[rowIndex].id;
-                    detail(id);
-                },
+//                onDblClickRow: function (rowIndex, field, value) {
+//                    var rows = infolist.datagrid("getRows");
+//                    var id = rows[rowIndex].id;
+//                    detail(id);
+//                },
                 columns: [[
 //                    {
 //                    title: '区域名称',
@@ -72,15 +72,15 @@
                         rowspan: 2,
                         align: 'center'
                     },
-//                    {
-//                    title : '领用人',
-//                    field : 'usernume',
-//                    formatter : function(value,rowData,rowIndx) {
-//                        return rowData.user.username;
-//                    },
-//                    width : $(this).width() * 0.1,
-//                    align : 'center'
-//                },
+                    {
+                        title: '领用人',
+                        field: 'usernume',
+                        formatter: function (value, rowData, rowIndx) {
+                            return rowData.user.username;
+                        },
+                        width: $(this).width() * 0.1,
+                        align: 'center'
+                    },
                     {
                         title: '起始日期',
                         field: 'starttime',
@@ -122,7 +122,20 @@
                         rowspan: 2,
                         align: 'center',
 //                        url:onClick() workticket(),
-                        handler: workticket,
+//                        formatter:function(value,rec){
+//                            return '<span style="color:red"><a href="#" onclick="editfunc('+value+')">查看</a></span>';}
+//                        formatter:function(value,row,index){
+//                            if (row.editing){
+//                                var s = '<a href="#" onclick="saverow('+index+')">Save</a> ';
+//                                var c = '<a href="#" onclick="cancelrow('+index+')">Cancel</a>';
+//                                return s+c;
+//                            } else {
+//                                var e = '<a href="#" onclick="editrow('+index+')">Edit</a> ';
+//                                var d = '<a href="#" onclick="deleterow('+index+')">Delete</a>';
+//                                return e+d;
+//                            }
+//                        }
+
                     },
                 ]],
                 pagination: true,
@@ -220,6 +233,16 @@
                 });
             }
 
+            $('workticket').tree({
+                url: '${basePath}/authorization/workView',
+                onDblClick: function (node) {
+                    var editor = $('#dg').datagrid('getEditor', {index: 1, field: field});//首先双击datagrid单元格时需要记住单元格的field (可以设置一个全局变量)
+                    $(editor.target).val(node.text);
+
+                }
+
+            })
+
             $('#selectArea').window({
                 title: '地区选择',
                 width: 400,
@@ -238,6 +261,7 @@
                     return true;
                 }
             });
+
 
             function refresh() {
                 infolist.datagrid("clearSelections");

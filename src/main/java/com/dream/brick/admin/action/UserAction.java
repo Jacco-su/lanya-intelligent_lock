@@ -101,12 +101,12 @@ public class UserAction {
 
     @RequestMapping("/uprAdd")
     public String uprAdd(String deptId, ModelMap model) {
-        //List<Role> roles = roleDao.findRoleName(false);
-        List<Department> deptList = deptDao.findDeptIdAndName();
-        model.addAttribute("deptId", deptId);
-        //model.addAttribute("roles", roles);
-        model.addAttribute("deptList", deptList);
-        return "admin/uadd";
+		List<Role> roles = roleDao.findRoleName(false);
+		List<Department> deptList = deptDao.findDeptIdAndName();
+		model.addAttribute("deptId", deptId);
+		model.addAttribute("roles", roles);
+		model.addAttribute("deptList", deptList);
+		return "admin/uadd";
     }
 
     @RequestMapping(value = "/uadd", method = RequestMethod.POST)
