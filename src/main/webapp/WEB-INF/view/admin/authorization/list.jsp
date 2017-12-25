@@ -35,11 +35,11 @@
                 loadMsg: '数据装载中......',
                 remoteSort: false,
                 singleSelect: true,
-//                onDblClickRow: function (rowIndex, field, value) {
-//                    var rows = infolist.datagrid("getRows");
-//                    var id = rows[rowIndex].id;
-//                    detail(id);
-//                },
+                onDblClickRow: function (rowIndex, field, value) {
+                    var rows = infolist.datagrid("getRows");
+                    var id = rows[rowIndex].id;
+                    detail(id);
+                },
                 columns: [[
 //                    {
 //                    title: '区域名称',
@@ -72,15 +72,15 @@
                         rowspan: 2,
                         align: 'center'
                     },
-                    {
-                        title: '领用人',
-                        field: 'usernume',
-                        formatter: function (value, rowData, rowIndx) {
-                            return rowData.user.username;
-                        },
-                        width: $(this).width() * 0.1,
-                        align: 'center'
-                    },
+//                    {
+//                        title: '领用人',
+//                        field: 'usernume',
+//                        formatter: function (value, rowData, rowIndx) {
+//                            return rowData.user.username;
+//                        },
+//                        width: $(this).width() * 0.1,
+//                        align: 'center'
+//                    },
                     {
                         title: '起始日期',
                         field: 'starttime',

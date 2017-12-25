@@ -99,7 +99,7 @@
         myChart.setOption({
             xAxis: {
                 data: data.categories,
-                data2: data2.categories2,
+                data2: data.categories2,
             },
             series: [{
                 // 根据名字对应到相应的系列
