@@ -9,14 +9,13 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "t_locks")
-
 public class Locks {
 
     private Integer id;         //锁id 编号
     private String lockNum;     //锁编号
     private String lockCode;       //锁识别码
-    private String disName;     // 安装地点  配电房名称
     private String lockDate;      //安装时间
+    private Qgdis qgdis;
     private String address;//详细地址
     /**
      * 常显
@@ -50,14 +49,6 @@ public class Locks {
         this.lockCode = lockCode;
     }
 
-    public String getDisName() {
-        return disName;
-    }
-
-    public void setDisName(String disName) {
-        this.disName = disName;
-    }
-
     public String getLockDate() {
         return lockDate;
     }
@@ -81,5 +72,14 @@ public class Locks {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "dissId", nullable = false, updatable = true)
+    public Qgdis getQgdis() {
+        return qgdis;
+    }
+
+    public void setQgdis(Qgdis qgdis) {
+        this.qgdis = qgdis;
     }
 }

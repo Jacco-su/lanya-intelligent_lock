@@ -76,6 +76,13 @@
                         width : $(this).width() * 0.1,
                         rowspan : 2,
                         align : 'center'
+                    },
+                    {
+                        title : '添加时间',
+                        field : 'createTime',
+                        width : $(this).width() * 0.1,
+                        rowspan : 2,
+                        align : 'center'
                     }
                     ] ],
                 pagination : true,
@@ -272,7 +279,7 @@
 <body>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
     <tr>
-        <td width="12%" valign="top"
+        <td width="20%" valign="top"
             style="border: 1px solid #99bbe8; border-right: 0;">
             <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
             <ul id="tree" style="margin-top: 10px;"></ul>

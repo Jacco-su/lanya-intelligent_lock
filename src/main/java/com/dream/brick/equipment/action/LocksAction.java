@@ -1,9 +1,12 @@
 package com.dream.brick.equipment.action;
 
+import com.alibaba.fastjson.JSON;
 import com.dream.brick.equipment.bean.Locks;
 import com.dream.brick.equipment.dao.ILocksDao;
+import com.dream.brick.equipment.dao.QgdisDao;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
+import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -23,15 +26,14 @@ import java.util.List;
  * 门锁操作 类
  */
 @Controller
-//@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Scope("prototype")
 @RequestMapping("/locks")
 public class LocksAction {
-
+    @Resource
+    private QgdisDao disDao;
     @Resource
     private ILocksDao ilocksDao;
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 
 
     @RequestMapping("/prList")
@@ -55,28 +57,24 @@ public class LocksAction {
     }
 
     @RequestMapping("/prAdd")
-    public String prAdd() {
+    public String prAdd(ModelMap modelMap) {
+        modelMap.addAttribute("dissList",JSON.toJSONString(disDao.findAllQgdis()));
         return "admin/locks/add";
     }
 
     @RequestMapping("/add")
-    public String daa(@ModelAttribute Locks locks, String[] disIdList) {
+    @ResponseBody
+    public String daa(@ModelAttribute Locks locks) {
         String message = "";
-        locks.setId(1);
         locks.setLockNum(locks.getLockNum());
         locks.setLockCode(locks.getLockCode());
-        locks.setLockDate(sdf.format(new Date().getTime()));
-        //initRolea(collector, disIdList);
-
+        locks.setLockDate(FormatDate.getYMdHHmmss());
         try {
             ilocksDao.save(locks);
-            //ilocksDao.addLocks(locks);
             message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {
             message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
         }
-
-
         return message;
     }
 

@@ -184,6 +184,6 @@ public class FormatDate {
 		return sdfyM.format(cd.getTime());
 	}
 	public static void main(String[] args){
-		System.out.println(FormatDate.formatDate("04/24/2016"));
+		System.out.println(FormatDate.getYMdHHmmss());
 	}
 }

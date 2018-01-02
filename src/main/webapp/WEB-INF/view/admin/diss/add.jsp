@@ -18,7 +18,7 @@
             <td>配电房名称:</td>
             <td>
                 <input  name="dept.id" type="hidden" value="${deptId}"/>
-                <input name="name" class="easyui-validatebox" width="280px" required="true"/></td>
+                <input name="name" class="easyui-validatebox"  required="true" width="280px"/></td>
         </tr>
         <tr>
             <td>所在地址:</td>
