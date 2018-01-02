@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/jquery.easyui.min.1.2.2.js"></script>
+    <script type="text/javascript" src="${basePath}/js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
@@ -38,7 +39,7 @@
                 onDblClickRow: function (rowIndex, field, value) {
                     var rows = infolist.datagrid("getRows");
                     var id = rows[rowIndex].id;
-                    detail(id);
+                    workticket(id);
                 },
                 columns: [[
 //                    {
@@ -119,19 +120,49 @@
                         title: '工作票',
                         field: 'workticket',
                         width: $(this).width() * 0.1,
-                        rowspan: 2,
-                        align: 'center',
+//                        rowspan: 2,
+//                        align: 'center',
 //                        url:onClick() workticket(),
+//                        handler: workticket(),
 //                        formatter:function(value,rec){
-//                            return '<span style="color:red"><a href="#" onclick="editfunc('+value+')">查看</a></span>';}
+//                            return '<a href="../authorization/add.jsp" onclick="editfunc('+value+')"> 查看</a>';
+//                        },
+//                        formatter: function (val, row) {
+//
+//                            var w = '<a style="color:red;" href="' + val + '">点击下载' + '</a>';
+//                            return w;
+//                        },
+
+                        formatter: function (value, row, index) { //参数row表示当前行, 参数index表示当前行的索引值
+
+                            var id = '+row.Id+'
+                            //row.Id表示这个button按钮所在的那一行的Id这个字段的值
+                            var btn = '<input type="button" id=' + index + ' value="双击查看查看工作票"  onclick="workticket(id)"/>';
+
+                            return btn;
+                        }
+//                        onDblClickRow: function (rowIndex, field, value) {
+//                    var rows = infolist.datagrid("getRows");
+//                    var id = rows[rowIndex].id;
+//                    detail(id);
+//                },
+
+
+//                        toolbar: [
+//                            {
+//                                text: '详情',
+//                                iconCls: 'icon-view',
+//                                handler: seedetail
+//                            },]
+//
 //                        formatter:function(value,row,index){
 //                            if (row.editing){
 //                                var s = '<a href="#" onclick="saverow('+index+')">Save</a> ';
 //                                var c = '<a href="#" onclick="cancelrow('+index+')">Cancel</a>';
 //                                return s+c;
 //                            } else {
-//                                var e = '<a href="#" onclick="editrow('+index+')">Edit</a> ';
-//                                var d = '<a href="#" onclick="deleterow('+index+')">Delete</a>';
+//                                var e = '<a href="#selectArea" onclick="function workticket(id)">查看3</a> ';
+//                                var d = '<a href="authorization/workView" onclick="deleterow('+index+')">Delete</a>';
 //                                return e+d;
 //                            }
 //                        }
@@ -145,8 +176,7 @@
                         text: '详情',
                         iconCls: 'icon-view',
                         handler: seedetail
-                    },
-                    {
+                    }, '-', {
                         iconCls: "icon-add",
                         text: "添加",
                         handler: add
@@ -158,7 +188,12 @@
                         text: '删除',
                         iconCls: 'icon-remove',
                         handler: del
-                    }]
+                    }, {
+                        iconCls: "icon-add",
+                        text: "票",
+                        handler: workticket
+                    },
+                ]
             });
             displayMsg();
 
@@ -233,15 +268,15 @@
                 });
             }
 
-            $('workticket').tree({
-                url: '${basePath}/authorization/workView',
-                onDblClick: function (node) {
-                    var editor = $('#dg').datagrid('getEditor', {index: 1, field: field});//首先双击datagrid单元格时需要记住单元格的field (可以设置一个全局变量)
-                    $(editor.target).val(node.text);
+            <%--$('workticket').tree({--%>
+            <%--url: '${basePath}/authorization/workView',--%>
+            <%--onDblClick: function (node) {--%>
+            <%--var editor = $('#dg').datagrid('getEditor', {index: 1, field: field});//首先双击datagrid单元格时需要记住单元格的field (可以设置一个全局变量)--%>
+            <%--$(editor.target).val(node.text);--%>
 
-                }
+            <%--}--%>
 
-            })
+            <%--})--%>
 
             $('#selectArea').window({
                 title: '地区选择',
@@ -358,13 +393,37 @@
             var abc = $('#tree').tree('getParent', node.target);
             getAreaname(abc);
         }
+
+
+        function LoadUserInfo(row) {
+
+            /*获取选中行*/
+            var row = $('#Cse_Bespeak_Log').datagrid('getSelected'); //获取选中行
+
+            $("#datagrid").datagrid({
+                url: "authorization/workView" + row,
+                iconCls: "icon-add",
+                fitColumns: false,
+                loadMsg: "数据加载中......",
+                pagination: true,
+                rownumbers: true,
+                nowrap: false,
+                showFooter: true,
+                singleSelect: true,
+                pageList: [100, 50, 20, 10],
+            })
+
+
+            $('#dlg').window('open');  //弹出这个dialog框
+        }
+
     </script>
 </head>
 <body>
 <div>
     <table id="infolist"></table>
 </div>
-<div id="selectArea">
+<div id="dlg">
     <div class="easyui-layout" fit="true">
         <div region="center" border="false" style="padding: 10px;">
             <ul id="tree" style="margin-top: 10px;"></ul>

@@ -65,11 +65,11 @@ public class CollectorAction {
 
     @RequestMapping("/prAdd")
     public String prAdd(String qgdisId, ModelMap model, HttpServletRequest request) {
-        String areacode = SessionData.getAreacode(request);
+//        String areacode = SessionData.getAreacode(request);
         //List<Qgdis> qgdisList = BasicData.findQgdisByAreacode(areacode);
-        List<Qgdis> qgdisList = qgdisDao.findDisIdAndName();
-        model.addAttribute("qgdisList", qgdisList);
-        model.addAttribute("qgdisId", qgdisId);
+//        List<Qgdis> qgdisList = qgdisDao.findDisIdAndName();
+//        model.addAttribute("qgdisList", qgdisList);
+//        model.addAttribute("qgdisId", qgdisId);
         return "admin/collector/add";
     }
 
@@ -157,7 +157,7 @@ public class CollectorAction {
     @RequestMapping("/prView")
     public String prView(String id, ModelMap model) {
         Collector collector = collectorDao.find(Collector.class, id);
-        model.addAttribute("collector", collector);
+        model.addAttribute("collectora", collector);
         return "admin/collector/view";
     }
 

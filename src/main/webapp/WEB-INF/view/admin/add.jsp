@@ -11,7 +11,7 @@
 	
 	
 	<tr>
-		<td>用户名:</td>
+        <td>用户姓名:</td>
 		<td><input size="40" class="easyui-validatebox" name="username" required="true" validType="CHS"/></td>
 	</tr>
 		
@@ -58,7 +58,7 @@
 		<td>
 			<input name="roIdList" type="hidden" />
 			<c:forEach items="${roles}" var="role" varStatus="s">
-				<span><input name="roIdList" type="checkbox" value="${role.roId}"/>${role.name }</span>
+                <span><input name="roIdList" type="radio" value="${role.roId}"/>${role.name }</span>
 				<c:if test="${(s.index+1)%3==0}"><br/></c:if>
 			</c:forEach>
 		</td>

@@ -26,7 +26,7 @@ public class Collector {
     // private String collectorDiss;
     private String cdate;// 日期
 
-//    private int sortorder;// 采集器显示顺序
+    private int sortorder;// 采集器显示顺序
 
     // private Set<Employee> emps = new HashSet<>();
     // private List<Qgdis> dis=new ArrayList<Qgdis>();

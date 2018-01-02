@@ -158,7 +158,7 @@
                 });
             }
 
-            $('#selectArea').window({
+            $('#selectUser').window({
                 title: '领用人',
                 width: 400,
                 height: 500,

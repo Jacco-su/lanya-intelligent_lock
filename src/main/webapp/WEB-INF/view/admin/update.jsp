@@ -116,9 +116,9 @@ $.each(deptIds.split(','), function(i, v) {
 	</tr>
 
     <tr>
-        <td>负责区域:</td>
+        <td>区域调动:</td>
         <td>
-            <div id="deptList" class="easyui-accordion" border=false animate=false>
+            <div class="easyui-accordion" style="width: 500px;" border=false animate=false>
                 <c:forEach items="${deptList}" var="dept" varStatus="s">
                     <span><input name="deptIdList" type="checkbox" value="${dept.id}"/>${dept.name }</span>
                     <c:if test="${(s.index+1)%5==0}"><br/></c:if>
