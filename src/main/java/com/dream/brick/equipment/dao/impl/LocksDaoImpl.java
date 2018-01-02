@@ -19,7 +19,7 @@ import java.util.List;
 public class LocksDaoImpl extends BaseDaoImpl implements ILocksDao {
 
     public List<Locks> findAllLocks() {
-        String hql = "from Locks t order by t.sortorder";
+        String hql = "from Locks";
         return findList(hql);
     }
 
@@ -30,7 +30,7 @@ public class LocksDaoImpl extends BaseDaoImpl implements ILocksDao {
 
     @Override
     public List<Locks> findLocksList(Pager pager) {
-        String hql = "from Locks t order by t.sortorder";
+        String hql = "from Locks";
         return query(hql, pager);
     }
 }

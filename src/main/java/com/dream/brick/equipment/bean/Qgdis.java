@@ -25,6 +25,8 @@ public class Qgdis implements java.io.Serializable {
      */
     private Department dept;//所属
 
+    private String createTime;//创建时间
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public String getId() {
@@ -58,5 +60,13 @@ public class Qgdis implements java.io.Serializable {
 
     public void setDept(Department dept) {
         this.dept = dept;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 }

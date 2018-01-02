@@ -9,6 +9,7 @@ import com.dream.brick.listener.BasicData;
 import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
+import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -73,6 +74,7 @@ public class DistributionAction {
     public String add(@ModelAttribute Qgdis disa) {
         String message = "";
         try{
+            disa.setCreateTime(FormatDate.getYMdHHmmss());
             disDao.addDis(disa);
             message=StringUtil.jsonValue("1",AppMsg.ADD_SUCCESS);
         }catch(Exception e){
@@ -116,7 +118,7 @@ public class DistributionAction {
     @ResponseBody
     public String delete(String id) {
         String message = "";
-        String hql = "from Locks t where t.disName=?";
+        String hql = "from Locks t where t.dissId=?";
         try {
             int count = disDao.getResultNumber(hql, id);
             if (count > 0) {

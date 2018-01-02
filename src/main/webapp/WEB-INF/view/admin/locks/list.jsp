@@ -16,6 +16,7 @@
     <script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
+    <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
     <script type="text/javascript">
         $(function () {
             var infolist = $('#infolist');
@@ -53,27 +54,21 @@
                     width: 250,
                     align: 'center'
                 },
+                {
+                    title : '所属配电房',
+                    field : 'dissName',
+                    formatter : function(value,rowData,rowIndx) {
+                        return rowData.qgdis.name;
+                    },
+                    width : $(this).width() * 0.1,
+                    align : 'center'
+                },
                     {
-                        title: '安装地点',
-                        field: 'disName',
-                        width: 350,
+                        title: '地址',
+                        field: 'address',
+                        width: 250,
                         align: 'center'
                     },
-                    {
-                        title: '配电房',
-                        field: 'disName',
-                        width: 350,
-                        align: 'left'
-                    },
-//                {
-//                    title : '安装于电房',
-//                    field : 'qgdisname',
-//                    formatter : function(value,rowData,rowIndx) {
-//                        return rowData.qgdis.name;
-//                    },
-//                    width : $(this).width() * 0.1,
-//                    align : 'center'
-//                },
                     {
                         title: '添加时间',
                         field: 'lockDate',

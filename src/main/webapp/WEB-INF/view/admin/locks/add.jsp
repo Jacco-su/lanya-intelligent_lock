@@ -2,8 +2,6 @@
          pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
 <%
     response.setHeader("Pragma", "No-Cache");
     response.setHeader("Cache-Control", "No-Cache");
@@ -27,27 +25,30 @@
             <tr>
                 <td width="100">选择配电房:</td>
                 <td>
-                    <input type="text" name="name" id="deptname" value="" readonly/><a class="easyui-linkbutton"
-                                                                                       onclick="$('#selectDept').window('open');">选择</a></td>
+                    <select id="dissName" name="qgdis.name" style="width: 220px;"></select>
+            </tr>
+            <tr>
+                <td width="100">添加时间:</td>
+                <td>
+                    <input id="lockDate" name="lockDate" class="easyui-validatebox"  required="true"  value=""/>
+                    <img onclick="WdatePicker({el:'lockDate'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
             </tr>
             <tr>
                 <td width="100">详细地址:</td>
                 <td>
-                    <input type="text" name="name" id="address" value="" /></td>
+                    <textarea name="address" class="easyui-validatebox" id="address" cols="30" rows="10"required="true"></textarea>
             </tr>
-            <tr>
-                <td width="100">安装时间:</td>
-                <td>
-                    <%
-                        SimpleDateFormat ft =
-                                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                        out.print( "<h5 align=\"center\">" + ft.format(dNow)+"</h5>" );
-                        String date = ft.format(new Date());
-                    %>
-                    <input type="text" name="lockDate" id="lockDate" value=<%=date%> />
 
-                </td>
-            </tr>
         </table>
     </form>
 </div>
+<script>
+    $(function () {
+        var data='${dissList}';
+        data=JSON.parse(data);
+        $('#dissName').empty();
+        for (var i=0;i<data.length;i++){
+            $('#dissName').append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
+        }
+    })
+</script>
