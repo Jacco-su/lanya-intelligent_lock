@@ -181,7 +181,7 @@
                 });
             }
 
-            $('#selectArea').window({
+            $('#selectUser').window({
                 title: '领用人',
                 width: 400,
                 height: 500,
@@ -194,10 +194,10 @@
                 checkbox: false,
                 url: '${basePath}/user/kList',
                 simpleDataModel: true,
-                <%--onBeforeExpand: function (node, param) {--%>
-                <%--$('#tree').tree('options').url = "${basePath}/userinfo/findAreaByParentId?parentId=" + node.id;// change the url--%>
-                <%--return true;--%>
-                <%--}--%>
+                onBeforeExpand: function (node, param) {
+                    $('#tree').tree('options').url = "${basePath}/userinfo/findAreaByParentId?parentId=" + node.id;// change the url
+                    return true;
+                }
             });
 
             function refresh() {
@@ -313,80 +313,18 @@
 <body>
 <div>
     <table id="infolist">
-        <div class="mytable">
-            <%--<form name="addForm" id="addForm" action="${basePath}/authorization/onLine" method="post">--%>
-            <%--<table>--%>
-            <%--<tr>--%>
-            <%--<td>--%>
-            <%--获取钥匙MAC:--%>
-            <%--</td>--%>
-            <%--<td>--%>
-            <%--<input type=""> <br/>--%>
-            <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-            <%--<td>--%>
-            <%--授权期限:--%>
-            <%--</td>--%>
-            <%--<td>--%>
-            <%--<input type="datetime"> <br/>--%>
-            <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-            <%--<td>--%>
-            <%--授权使用人:--%>
-            <%--</td>--%>
-            <%--<td>--%>
-            <%--<input type=""> <br/>--%>
-            <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-            <%--<td>--%>
-            <%--锁具范围:--%>
-            <%--</td>--%>
-            <%--<td>--%>
-            <%--<input type="text"> <br/>--%>
-            <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-            <%--<td>--%>
-            <%--操作人:--%>
-            <%--</td>--%>
-            <%--<td>--%>
-            <%--<input type="text"> <br/>--%>
-            <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-            <%--<td>--%>
-            <%--工作票:--%>
-            <%--</td>--%>
-            <%--<td>--%>
-            <%--<input type="file" value="ss"> <br/>--%>
-            <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-            <%--<td>--%>
-            <%--<input type="button" value="确认授权">--%>
-            <%--</td>--%>
-            <%--<td>--%>
-            <%--<input type="reset" value="重置"><br/>--%>
-            <%--</td>--%>
-            <%--</tr>--%>
 
-
-            <%--</table>--%>
-            <%--</form>--%>
-        </div>
     </table>
 </div>
-<div id="selectArea">
+<div id="selectUser">
     <div class="easyui-layout" fit="true">
+        <a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>
         <div region="center" border="false" style="padding: 10px;">
             <ul id="tree" style="margin-top: 10px;"></ul>
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
-            <a class="easyui-linkbutton" onclick="$('#selectArea').window('close');">关闭</a>
+            <a class="easyui-linkbutton" onclick="$('#selectUser').window('close');">关闭</a>
         </div>
     </div>
 </div>
