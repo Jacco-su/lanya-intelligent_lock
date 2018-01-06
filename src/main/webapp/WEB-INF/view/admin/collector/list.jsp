@@ -57,21 +57,21 @@
                         width: $(this).width() * 0.2,
                         align: 'center'
                     },
-                    {
-                        title: '配电房',
-                        field: 'disId',
-                        width: $(this).width() * 0.2,
-                        align: 'left'
-                    },
-//                {
-//                    title : '所属配电房',
-//                    field : 'qgdisname',
-//                    formatter : function(value,rowData,rowIndx) {
-//                        return rowData.qgdis.name;
+//                    {
+//                        title: '配电房',
+//                        field: 'disId',
+//                        width: $(this).width() * 0.2,
+//                        align: 'left'
 //                    },
-//                    width : $(this).width() * 0.1,
-//                    align : 'center'
-//                },
+                    {
+                        title: '所属配电房',
+                        field: 'dissName',
+                        formatter: function (value, rowData, rowIndx) {
+                            return rowData.dis.name;
+                        },
+                        width: $(this).width() * 0.1,
+                        align: 'center'
+                    },
                     {
                         title: '添加日期 ',
                         field: 'cdate',
@@ -164,7 +164,7 @@
             }
 
             $('#selectArea').window({
-                title: '地区选择',
+                title: '安装区域选择',
                 width: 400,
                 height: 500,
                 closed: true,
@@ -285,13 +285,14 @@
             displayMsg();
             $('#query').window('close');
         }
+
     </script>
 </head>
 <body>
 <div>
     <table id="infolist"></table>
 </div>
-<div id="selectArea">
+<div id="selectDept">
     <div class="easyui-layout" fit="true">
         <div region="center" border="false" style="padding: 10px;">
             <ul id="tree" style="margin-top: 10px;"></ul>

@@ -117,6 +117,27 @@
             var seeWin;
             var updateWin;
 
+            function save() {
+                $('#addForm').form('submit', {
+                    onSubmit: function () {
+                        return $(this).form('validate');
+                    },
+                    success: function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.result == '1') {
+                            $.messager.alert('提示', '保存成功', 'warning');
+                            $.closeWin(addWin);
+                            refresh();
+                        } else {
+                            $.messager.alert('提示', '保存失败', 'warning');
+                            $.closeWin(addWin);
+                            refresh();
+                        }
+
+                    }
+                });
+            }
+
             function add() {
                 addWin = $.createWin({
                     title: "添加",
@@ -147,19 +168,19 @@
 
             }
 
-            function save() {
-                $('#addForm').form('submit', {
-                    onSubmit: function () {
-                        return $(this).form('validate');
-                    },
-                    success: function (data) {
-                        var json = eval("(" + data + ")");
-                        $.messager.alert('提示', json.message, 'warning');
-                        $.closeWin(addWin);
-                        refresh();
-                    }
-                });
-            }
+//            function save() {
+//                $('#addForm').form('submit', {
+//                    onSubmit: function () {
+//                        return $(this).form('validate');
+//                    },
+//                    success: function (data) {
+//                        var json = eval("(" + data + ")");
+//                        $.messager.alert('提示', json.message, 'warning');
+//                        $.closeWin(addWin);
+//                        refresh();
+//                    }
+//                });
+//            }
 
             function seedetail() {
                 var select = infolist.datagrid('getSelected');
@@ -297,7 +318,7 @@
 
         function query() {
             infolist.datagrid({
-                url: basePath + '/keyss/list',
+                url: basePath + '/user/list',
                 queryParams: {
                     'username': $('#username').val()
                 },

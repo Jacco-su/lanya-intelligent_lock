@@ -15,4 +15,6 @@ public interface IAuthorizationDao extends BaseDao {
     public List<Authorization> findAllAuthorization();
 
     public List<Authorization> findAuthorizationList(Pager pager);
+
+
 }

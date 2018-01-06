@@ -44,14 +44,14 @@ public class CollectorAction {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @RequestMapping("/prList")
-    public String prList()
+    public String prList(String collectorId, HttpServletRequest request)
             throws Exception {
         return "admin/collector/list";
     }
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, String qgdisId, Pager pager)
+    public String list(int page, int rows, Pager pager)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);

@@ -15,7 +15,7 @@
         <tr>
             <td>所属配电房:</td>
             <td>
-                ${collectora.disName}
+                ${collectora.dis}
             </td>
         </tr>
         <tr>

@@ -317,12 +317,12 @@ public class UserAction {
     //钥匙领用人
     @RequestMapping("/kList")
     @ResponseBody
-    public String listAll(int page, int rows, Pager pager)
+    public String findByUsernames(int page, int rows, Pager pager)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        List<User> list = userDao.listAll(pager);
+        List<User> list = userDao.findByUsernames(pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
