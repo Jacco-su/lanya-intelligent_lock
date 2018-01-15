@@ -132,14 +132,25 @@
 //                            return w;
 //                        },
 
+//                    <a href="http://localhost:8080/lanya/src/main/webapp/uploads/workticket/00129.jpg">预览图片</a>
+
+
                         formatter: function (value, row, index) { //参数row表示当前行, 参数index表示当前行的索引值
-
-                            var id = '+row.Id+'
-                            //row.Id表示这个button按钮所在的那一行的Id这个字段的值
-                            var btn = '<input type="button" id=' + index + ' value="双击查看查看工作票"  onclick="workticket(id)"/>';
-
-                            return btn;
+//
+//                            var id = '+row.Id+'
+//                            //row.Id表示这个button按钮所在的那一行的Id这个字段的值
+//                            var btn = '<input type="button" id=' + index + ' value="双击查看工作票"  onclick="workticket(id)"/>';
+//
+//                            return btn;
+                            var imgNum = $('img').length;
+                            $('img').load(function () {
+                                if (!--imgNum) {
+                                    // 加载完成
+                                }
+                            });
                         }
+
+
 //                        onDblClickRow: function (rowIndex, field, value) {
 //                    var rows = infolist.datagrid("getRows");
 //                    var id = rows[rowIndex].id;

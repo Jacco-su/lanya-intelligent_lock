@@ -22,7 +22,7 @@
             var infolist = $('#infolist');
             infolist.datagrid({
                 title: '智能锁列表',
-                iconCls: 'icon-users',
+                iconCls: 'icon-us-=-ers',
                 width: '95%',
                 height: 500,
                 pageSize: 20,

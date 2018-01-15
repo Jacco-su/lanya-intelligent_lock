@@ -23,7 +23,7 @@
             var infolist = $('#infolist');
             infolist.datagrid({
                 title: '采集器列表',
-                iconCls: 'icon-users',
+                iconCls: 'icon-collector',
                 width: '95%',
                 height: 500,
                 pageSize: 20,
@@ -76,7 +76,13 @@
                         title: '添加日期 ',
                         field: 'cdate',
                         width: $(this).width() * 0.2,
-                        align: 'left'
+                        align: 'left',
+//                        formatter:function(date)
+//                        { /* 调用函数显示时间 */
+////                            SimpleDateFormat c = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+//                            return format(date);
+//
+//                        }
                     },
                 ]],
                 pagination: true,
@@ -285,6 +291,7 @@
             displayMsg();
             $('#query').window('close');
         }
+
 
     </script>
 </head>

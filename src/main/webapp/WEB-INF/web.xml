@@ -80,7 +80,22 @@
         <servlet-name>AxisServlet</servlet-name>
         <url-pattern>/services/*</url-pattern>
     </servlet-mapping>	-->
-	<session-config>
+
+
+    <session-config>
 		<session-timeout>600</session-timeout>
 	</session-config>
+
+
+    <servlet>
+        <servlet-name>imageUrl</servlet-name>
+        <servlet-class>com.dream.util.extend.ImageAction</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>imageUrl</servlet-name>
+        <url-pattern>/imgurl</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

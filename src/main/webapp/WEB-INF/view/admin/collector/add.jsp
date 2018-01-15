@@ -76,7 +76,7 @@
 
 <script>
     $(function () {
-        var data = '${dissList}';
+        var data = '${qgdisList}';
         data = JSON.parse(data);
         $('#dissName').empty();
         for (var i = 0; i < data.length; i++) {
