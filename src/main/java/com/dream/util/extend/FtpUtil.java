@@ -226,6 +226,7 @@ public class FtpUtil {
 
     }
 
+
 //        public static void main(String[] args) {
 //            try {
 //               FtpUtil.downfile("/uploads/");
