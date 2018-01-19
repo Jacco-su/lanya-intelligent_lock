@@ -35,7 +35,28 @@
     <script type="text/javascript" src="${basePath}js/resources/js/jquery-1.8.2.min.js"></script>
 
     <script type="text/javascript">
+        ImageCropper.prototype.loadImage = function (file) {
+            if (!this.isAvaiable() || !this.isImage(file)) return;
+            var reader = new FileReader();
+            var me = this;
+            reader.readAsDataURL(file);
+            reader.onload = function (evt) {
+                if (!me.image) me.image = new Image();
+                me.image.onload = function (e) {
+                    me._init()
+                };
+                me.image.src = evt.target.result;
+            }
+        };
 
+        ImageCropper.prototype.loadImage2 = function (url) {
+            var me = this;
+            if (!me.image) me.image = new Image();
+            me.image.onload = function (e) {
+                me._init()
+            };
+            me.image.src = url;
+        }
 
     </script>
 </head>
@@ -44,25 +65,70 @@
 <p>图片列表</p>
 
 
+<%--<div>--%>
+<%--<c:forEach var="me" items="${fileNameMap}">--%>
+<%--<c:url value="/uploads/" var="downurl">--%>
+<%--&lt;%&ndash;<c:param name="filename" value="${me.key}"></c:param>&ndash;%&gt;--%>
+<%--</c:url>--%>
+<%--${me.value}<a href="${downurl}">下载</a>--%>
+<%--<br/>--%>
+<%--</c:forEach>--%>
+
+
+<%--<img alt="image" src="${fileUrl}">--%>
+<%--</div>--%>
 <div>
-    <c:forEach var="me" items="${fileNameMap}">
-        <c:url value="/uploads/" var="downurl">
-            <%--<c:param name="filename" value="${me.key}"></c:param>--%>
-        </c:url>
-        ${me.value}<a href="${downurl}">下载</a>
-        <br/>
-    </c:forEach>
+    <%--<%--%>
+    <%--int length = (Integer) request.getAttribute("length");--%>
+    <%--String[] picNames = (String[])--%>
+    <%--request.getAttribute("picNames");--%>
+    <%--%>--%>
+    <%--<% for (int i = 0; i<length; i++) {%>--%>
+    <%--<img src=<%=picNames[i]%>--%>
+    <%--<%}%>--%>
 
 
-    <img alt="image" src="${fileUrl}">
+
 </div>
 
-访问图片静态资源：<br>
+<table border="2" width="500" height="300">
+    <tr>
+        <td>
+            <div>
+                1<img alt="图片资源" src="${basePath}/uploads/workticket/00129.jpg">
+            </div>
+        </td>
+        <td>
+            2访问图片静态资源：<br>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            3<img border=0 src="downPhoto.do?fileId=${fileList}">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            4访问FTP
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            5<img src=”ftp://sdzdz:'hlxx@2017'@218.28.166.165:19999/zdzjpg/”>
+        </td>
+        <td>
+            6 ${toClient}
+        </td>
+        <td>
+            <img src="${src}">
+        </td>
+    </tr>
+</table>
 <div>
-    <img alt="图片资源" src="${basePath}/uploads/workticket/00129.jpg">
+    8<input type="file" id="input" size="10" style="visibility:hidden;" onchange="selectImage(this.files)"/>
 </div>
 
-<img src=”ftp://sdzdz:hlxx@2017@218.28.166.165:19999/zdzjpg/”>
 </body>
 </html>
 

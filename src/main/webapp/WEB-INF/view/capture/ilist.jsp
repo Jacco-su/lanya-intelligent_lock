@@ -14,7 +14,7 @@
 捕捉图像的抓拍
 <%--< img src=”ftp://用户名:密码@FTP地址:路径/”>--%>
 <div>
-    <img src=”ftp://sdzdz:hlxx@2017@218.28.166.165:19999/zdzjpg/”>
+    <img src=”ftp:\\sdzdz:hlxx@2017@218.28.166.165:19999/”>
 </div>
 
 

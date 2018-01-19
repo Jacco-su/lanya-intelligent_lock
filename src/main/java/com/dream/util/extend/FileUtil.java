@@ -22,35 +22,35 @@ public class FileUtil {
                         mf.setFname(tempList[i].getName());
                         mf.setFpath(tempList[i].toString());
                         /**
-                         * »ñÈ¡ÎÄ¼ş´´½¨Ê±¼ä
+                         * è·å–æ–‡ä»¶åˆ›å»ºæ—¶é—´
                          */
                         // ================================================
                         DateFormat format = new SimpleDateFormat(
                                 "yyyy-MM-dd HH:mm:ss");
-                        // ºÁÃëÊı
+                        // æ¯«ç§’æ•°
                         long modifiedTime = tempList[i].lastModified();
-                        // Í¨¹ıºÁÃëÊı¹¹ÔìÈÕÆÚ ¼´¿É½«ºÁÃëÊı×ª»»ÎªÈÕÆÚ
+                        // é€šè¿‡æ¯«ç§’æ•°æ„é€ æ—¥æœŸ å³å¯å°†æ¯«ç§’æ•°è½¬æ¢ä¸ºæ—¥æœŸ
                         Date d = new Date(modifiedTime);
                         mf.setCreateTime(format.format(d));
                         // ===============================================
                         /**
-                         * »ñÈ¡ÎÄ¼ş´óĞ¡
+                         * è·å–æ–‡ä»¶å¤§å°
                          */
                         // ===============================================
                         try {
                             mf.setFszie(getFileSizes(tempList[i]));
                             mf.setFormatSize(formetFileSize(mf.getFszie()));
                         } catch (Exception e) {
-                            System.out.println("¼ÆËãÎÄ¼ş´óĞ¡³ö´í");
+                            System.out.println("è®¡ç®—æ–‡ä»¶å¤§å°å‡ºé”™");
                             e.printStackTrace();
                         }
                         // ===============================================
                         fileList.add(mf);
-                        System.out.println("ÎÄ¼ş¾ø¶ÔÂ·¾¶£º" + tempList[i]);
+                        System.out.println("æ–‡ä»¶ç»å¯¹è·¯å¾„ï¼š" + tempList[i]);
 
                     }
                     if (tempList[i].isDirectory()) {
-                        System.out.println("ÎÄ¼ş¼Ğ£º" + tempList[i]);
+                        System.out.println("æ–‡ä»¶å¤¹ï¼š" + tempList[i]);
                     }
                 }
             }
@@ -58,7 +58,7 @@ public class FileUtil {
         return fileList;
     }
 
-    public static long getFileSizes(File f) throws Exception {// È¡µÃÎÄ¼ş´óĞ¡
+    public static long getFileSizes(File f) throws Exception {// å–å¾—æ–‡ä»¶å¤§å°
         long s = 0;
         if (f.exists()) {
             FileInputStream fis = null;
@@ -66,13 +66,13 @@ public class FileUtil {
             s = fis.available();
         } else {
             //f.createNewFile();
-            System.out.println("ÎÄ¼ş²»´æÔÚ");
+            System.out.println("æ–‡ä»¶ä¸å­˜åœ¨");
         }
         return s;
     }
 
-    // µİ¹é
-    public long getFileSize(File f) throws Exception// È¡µÃÎÄ¼ş¼Ğ´óĞ¡
+    // é€’å½’
+    public long getFileSize(File f) throws Exception// å–å¾—æ–‡ä»¶å¤¹å¤§å°
     {
         long size = 0;
         File flist[] = f.listFiles();
@@ -86,7 +86,7 @@ public class FileUtil {
         return size;
     }
 
-    public static String formetFileSize(long fileS) {// ×ª»»ÎÄ¼ş´óĞ¡
+    public static String formetFileSize(long fileS) {// è½¬æ¢æ–‡ä»¶å¤§å°
         DecimalFormat df = new DecimalFormat("#.00");
         String fileSizeString = "";
         if (fileS < 1024) {

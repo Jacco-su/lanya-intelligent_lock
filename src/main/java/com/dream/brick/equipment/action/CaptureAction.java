@@ -1,7 +1,6 @@
 package com.dream.brick.equipment.action;
 
 import com.dream.util.extend.FtpUtil;
-import com.dream.util.extend.FtpUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -12,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 
 @Controller
@@ -25,15 +27,16 @@ import java.io.OutputStream;
 @RequestMapping("/capture")
 public class CaptureAction {
     private static final String JPG = ".jpg";
-    private FtpUtils readFTP;
+//    private FtpUtils readFTP;
 
     private String GIF;
 
     private Logger log = Logger.getLogger(this.getClass());
     public FtpUtil ftpUtil;
 
+
     @RequestMapping("/icture")
-    public String iList(String id, ModelMap model, String path, File srcFile, HttpServletRequest request, HttpServletResponse response) {
+    public String iList(String id, ModelMap model, String path) {
 
 //                    List list = readFTP.getFileList(path);
 //            if ( ) {
@@ -62,15 +65,6 @@ public class CaptureAction {
 
 //            在servlet 或 action中用IO流读取图片，输出到html中，
 
-//            FileInputStream hFile = new FileInputStream(“”); // 以byte流的方式打开文件
-//            int i = hFile.available(); // 得到文件大小
-//            byte data[] = new byte[i];
-//            hFile.read(data); // 读数据
-//            hFile.close();
-//            response.setContentType("image/*"); // 设置返回的文件类型
-//            OutputStream toClient = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
-//            toClient.write(data); // 输出数据
-//            toClient.close();
 
 //            FileUtil.readFile("**/webapp/uploads");
 
@@ -84,7 +78,84 @@ public class CaptureAction {
 ////                listfile(new File(uploadFilePath), fileNameMap);// File既可以代表一个文件也可以代表一个目录
 //                // 将Map集合发送到listfile.jsp页面进行显示
 //                request.setAttribute("fileNameMap", fileNameMap);
+
+
         return "capture/ilist";
+    }
+
+
+    @RequestMapping("/list")
+    @ResponseBody
+//    public String list(int page, int rows, Pager pager,HttpServletRequest request, HttpServletResponse response)
+//            throws Exception {
+//        pager.setCurrentPage(page);
+//        pager.setPageSize(rows);
+//        JSONObject datas = new JSONObject();
+//        List<FtpUtil> list = ftpUtil.findCollectorList(pager);
+//        datas.put("total", pager.getTotalRow());
+//        datas.put("rows", list);
+//        return datas.toString();
+
+//        FileInputStream hFile = new FileInputStream("E://192.168.2.2"); // 以byte流的方式打开文件
+//        int i = hFile.available(); // 得到文件大小
+//        byte data[] = new byte[i];
+//        hFile.read(data); // 读数据
+//        hFile.close();
+//        response.setContentType("image/*"); // 设置返回的文件类型
+//        OutputStream toClient = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
+//        toClient.write(data); // 输出数据
+//        toClient.close();
+//        return null;
+
+
+//            String path = "/uploads/icture/";//换成自己的
+//            File folder = new File(path);
+//            File temp[] = folder.listFiles();
+//            String[] picNames = new String[temp.length];
+//            for (int i = 0; i < temp.length; i++) {
+//                picNames[i] = temp[i].getName();
+//            }
+//            request.setAttribute("picNames", picNames);
+//            return picNames;
+//    }
+
+    protected ArrayList<String> CalculateGeoServlet(HttpServletRequest req,
+                                                    HttpServletResponse resp, String params) throws ServletException, IOException,
+            MalformedURLException {
+        ArrayList<String> fileList = new ArrayList<String>();
+        fileList = getFiles(params);
+        return fileList;
+    }
+
+    /**
+     * 通过递归得到某一路径下所有的目录及其文件
+     *
+     * @param filePath 文件路径
+     * @return
+     */
+    public static ArrayList<String> getFiles(String filePath) {
+        ArrayList<String> fileList = new ArrayList<String>();
+        File root = new File(filePath);
+        File[] files = root.listFiles();
+        for (File file : files) {
+            if (file.isDirectory()) {
+                /*
+                 * 递归调用
+                 */
+                getFiles(file.getAbsolutePath());
+                fileList.add(file.getAbsolutePath());
+            } else {
+                String picPathStr = file.getAbsolutePath();
+//              String picPathStr = file.getAbsolutePath().replaceAll("\\\\","//");
+                fileList.add(picPathStr);
+            }
+        }
+        for (String str : fileList) {
+//            System.out.println(str);
+
+        }
+        return fileList;
+
     }
 
 
@@ -170,7 +241,7 @@ public class CaptureAction {
 
 
     @RequestMapping("/picture")
-    public String pList() {
+    public String pList(ModelMap model) {
 
 //        @RequestMapping(value="/picture",method= RequestMethod.POST)
 //        @ResponseBody
@@ -184,9 +255,7 @@ public class CaptureAction {
 //                    int width = (int) dimension.getWidth() ;
 //                    int height = (int) dimension.getHeight();
 //                    String imageSize = width + "x" + height;
-//
 //                    json.put("imageSize", imageSize);
-//
 //                    String originalFilename = file.getOriginalFilename(); //文件名称
 //                    String suffix = originalFilename.indexOf(".") != -1 ? originalFilename.substring(
 //                            originalFilename.lastIndexOf("."), originalFilename.length()) : "";
@@ -199,27 +268,19 @@ public class CaptureAction {
 //                    //uuid + .jpg 组成上传FTP文件名
 //                    String uuid = UUID.randomUUID().toString().replaceAll("\\-", "");
 //                    String img_name = new StringBuffer(uuid).append(suffix).toString();
-//
 //                    json.put("img_name", img_name);
-//
 //                    String imgPath = new StringBuffer(tempDir).append(img_name).toString();//文件上传的临时目录
-//
 //                    file.transferTo(new File(imgPath));//把文件放入临时目录
-//
 //                    String img_url = new StringBuffer(path).append(img_name).toString();//前台展示未见的路径
-//
 //                    json.put("img_url",img_url);
-//
 //                }
 //            } catch (Exception e) {
 //                e.printStackTrace();
 //            }
 //            return json.toString();
 //        }}
-
         return "capture/plist";
     }
-
 
 //    <span style="white-space:pre">    </span>
 
@@ -293,9 +354,9 @@ public class CaptureAction {
         return message;
     }
 
-
     @RequestMapping(value = "/toShowPic/{file}/{fileName}/{id}")
-    public ModelAndView toShowPic(HttpServletRequest request, HttpServletResponse response, @PathVariable String file, @PathVariable String fileName, @PathVariable String id) {
+    public ModelAndView toShowPic(HttpServletRequest request, HttpServletResponse response, @PathVariable String
+            file, @PathVariable String fileName, @PathVariable String id) {
         ModelAndView mv = new ModelAndView();
         mv.addObject("id", id);
         mv.addObject("file", file);

@@ -31,11 +31,10 @@ public class BasicData {
     public static CollectorDao collectorDao;
 	 public static SyslogDao logDao;
 
-
     public static ILocksDao ilocksDao;
     public static IKeyssDao ikeyssDao;
 //    public static IAuthorizationDao iauthorizationDao;
-
+    //private static RedisDao redisDao;
 
 
 	   public static SpringUtil getSprintUtil()
@@ -50,7 +49,7 @@ public class BasicData {
            qgorgDao = (QgorgDao) SpringUtil.getObject("qgorgDaoImpl");
            qgdisDao = (QgdisDao) SpringUtil.getObject("qgdisDaoImpl");
 		     logDao=(SyslogDao) SpringUtil.getObject("syslogDaoImpl");
-
+           //redisDao= (RedisDao) SpringUtil.getObject("redisDao");
            ilocksDao = (ILocksDao) SpringUtil.getObject("locksDaoImpl");
            ikeyssDao = (IKeyssDao) SpringUtil.getObject("keyssDaoImpl");
            collectorDao = (CollectorDao) SpringUtil.getObject("collectorDaoImpl");

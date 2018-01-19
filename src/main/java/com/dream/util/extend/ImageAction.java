@@ -19,7 +19,7 @@ public class ImageAction extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //读取本地图片输入流
-        FileInputStream inputStream = new FileInputStream("D:/image/123.jpg");
+        FileInputStream inputStream = new FileInputStream("/up");
         int i = inputStream.available();
         //byte数组用于存放图片字节数据
         byte[] buff = new byte[i];
