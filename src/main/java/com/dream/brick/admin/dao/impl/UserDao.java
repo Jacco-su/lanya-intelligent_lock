@@ -7,6 +7,7 @@ import com.dream.brick.admin.bean.Role;
 import com.dream.brick.admin.bean.User;
 import com.dream.brick.admin.bean.UserRole;
 import com.dream.brick.admin.dao.IUserDao;
+import com.dream.framework.dao.Pager;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -268,5 +269,10 @@ public class UserDao extends BaseDaoImpl implements IUserDao {
 			return user;
 		}
 		return null;
-	}	
+    }
+
+    public List<User> findByUsernames(Pager pager) {
+        String hql = "select t from User t order by t.areacode";
+        return findList(hql);
+    }
 }

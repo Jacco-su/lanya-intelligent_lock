@@ -4,6 +4,7 @@ import com.dream.framework.dao.BaseDao;
 import com.dream.framework.dao.IPager;
 import com.dream.brick.admin.bean.Role;
 import com.dream.brick.admin.bean.User;
+import com.dream.framework.dao.Pager;
 
 import java.util.List;
 import java.util.Map;
@@ -104,4 +105,7 @@ public interface IUserDao extends BaseDao {
 	public void updateLoginKey(User user);
 	public User findByUsername(String username);
 	public List<User> listShowPass() throws Exception;
+
+
+    public List<User> findByUsernames(Pager pager);
 }

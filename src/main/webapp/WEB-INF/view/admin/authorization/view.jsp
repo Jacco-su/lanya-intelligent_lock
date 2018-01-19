@@ -9,27 +9,27 @@
 <div>
     <table class="mytable" align="center">
         <tr>
-            <td>区域名称:</td>
+            <td>授权时间:</td>
             <td>
-                ${authorizationa.name}
+                ${authorizationa.adate}
             </td>
         </tr>
         <tr>
-            <td>区域地址:</td>
+            <td>钥匙:</td>
             <td>
-                ${authorizationa.address}
+                ${authorizationa.keyssid}
             </td>
         </tr>
         <tr>
-            <td width="100">管辖地区:</td>
+            <td width="100">智能锁:</td>
             <td>
-                ${authorizationa.areaname}
+                ${authorizationa.locksid}
             </td>
         </tr>
         <tr>
-            <td>排序:</td>
+            <td>工作票:</td>
             <td>
-                ${authorizationa.sortorder}
+                ${authorizationa.workticket}
             </td>
         </tr>
     </table>

@@ -56,7 +56,6 @@ public class AuthorizationAction {
     }
 
 
-
     @RequestMapping("/prView")
     public String prView(String id, ModelMap model) {
         Authorization authorizationa = authorizationDao.find(Authorization.class, id);
@@ -72,22 +71,30 @@ public class AuthorizationAction {
     }
 
 
-//		@RequestMapping(value = "/update", method = RequestMethod.POST)
-//		@ResponseBody
-//		public String update(@ModelAttribute Authorization authorizationa){
-//			String message="";
-//			try{
-////				Area area= BasicData.findAreaByAreacode(orga.getAreacode());
-////				authorizationa.setAreaname(area.getAreaname());
-//				//authorizationa.setAddress(authorizationa.getAddress().trim());
-//				//authorizationa.setName(authorizationa.getName().trim());
-//				authorizationDao.update(authorizationa);
-//				message=StringUtil.jsonValue("1",AppMsg.UPDATE_SUCCESS);
-//			}catch(Exception e){
-//				message=StringUtil.jsonValue("0",AppMsg.UPDATE_ERROR);
-//			}
-//			return message;
-//		}
+    @RequestMapping("/prUpdate")
+    public String prUpdate(String Id, ModelMap model) {
+//        Authorization authorizationa = authorizationDao.find(Authorization.class, Id);
+//        model.addAttribute("authorization", authorizationa);
+        return "admin/authorization/update";
+    }
+
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public String update(@ModelAttribute Authorization authorizationa) {
+        String message = "";
+        try {
+//				Area area= BasicData.findAreaByAreacode(orga.getAreacode());
+//				authorizationa.setAreaname(area.getAreaname());
+            //authorizationa.setAddress(authorizationa.getAddress().trim());
+            //authorizationa.setName(authorizationa.getName().trim());
+            authorizationDao.update(authorizationa);
+            message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
+        } catch (Exception e) {
+            message = StringUtil.jsonValue("0", AppMsg.UPDATE_ERROR);
+        }
+        return message;
+    }
 
 
     @RequestMapping("/prAdd")
@@ -97,6 +104,7 @@ public class AuthorizationAction {
 //        model.addAttribute("deptId", deptId);
         //model.addAttribute("roles", roles);
 //        model.addAttribute("deptList", deptList);
+
         return "admin/authorization/add";
     }
 

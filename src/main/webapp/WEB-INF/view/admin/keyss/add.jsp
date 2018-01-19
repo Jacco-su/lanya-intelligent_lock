@@ -49,8 +49,8 @@
             <tr>
                 <td width="100">领用人:</td>
                 <td>
-                    <input type="text" name="name" id="username" value="" readonly/><a class="easyui-linkbutton"
-                                                                                       onclick="$('#selectUser').window('open');">选择</a>
+                    <input type="text" name="name" id="username" value="" readonly/> <a class="easyui-linkbutton"
+                                                                                        onclick="$('#selectUser').window('open');">选择</a>
                     <input type="hidden" name="userid" id="usercode" value=""/>
                     <%--<select name="userId" name="userId" style="width:200px;" class="easyui-validatebox" required="true">--%>
                     <%--<option value="">---请选择---</option>--%>

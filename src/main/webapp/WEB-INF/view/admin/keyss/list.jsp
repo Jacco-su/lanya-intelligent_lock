@@ -16,6 +16,9 @@
     <script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
+
+    <%--<script type="text/javascript" src="${basePath}/js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>--%>
+
     <script type="text/javascript">
         $(function () {
             var infolist = $('#infolist');
@@ -158,7 +161,7 @@
                 });
             }
 
-            $('#selectArea').window({
+            $('#selectUser').window({
                 title: '领用人',
                 width: 400,
                 height: 500,
@@ -171,10 +174,10 @@
                 checkbox: false,
                 url: '${basePath}/user/kList',
                 simpleDataModel: true,
-                <%--onBeforeExpand: function (node, param) {--%>
-                <%--$('#tree').tree('options').url = "${basePath}/userinfo/findAreaByParentId?parentId=" + node.id;// change the url--%>
-                <%--return true;--%>
-                <%--}--%>
+                onBeforeExpand: function (node, param) {
+                    $('#tree').tree('options').url = basePath + "/user/listAll";// change the url
+                    return true;
+                }
             });
 
             function refresh() {
@@ -317,12 +320,50 @@
 <%--</div>--%>
 <%--</div>--%>
 <div id="selectUser">
-    <div class="easyui-layout" fit="true">
+    <div class="easyui-layout" fit="true">11
         <a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>
         <div region="center" border="false" style="padding: 10px;">
             <ul id="tree" style="margin-top: 10px;"></ul>
+
+            33
+
+            <%--<select class="easyui-combogrid" style="width:250px" data-options="--%>
+            <%--panelWidth: 500,--%>
+            <%--idField: 'itemid',--%>
+            <%--textField: 'productname',--%>
+            <%--url: ${basePath}/user/list',--%>
+            <%--&lt;%&ndash;'datagrid_data1.json',&ndash;%&gt;--%>
+            <%--method: 'get',--%>
+            <%--columns: [[--%>
+            <%--{field:'id',title:'工号',width:80},--%>
+            <%--{field:'username',title:'姓名',width:120},--%>
+            <%--{field:'phone',title:'手机',width:80,align:'right'},--%>
+            <%--{field:'email',title:'邮箱',width:80,align:'right'},--%>
+            <%--{field:'rdate',title:'注册时间',width:200},--%>
+            <%--&lt;%&ndash;{field:'roles',title:'角色',width:60,align:'center'}&ndash;%&gt;--%>
+            <%--]],--%>
+            <%--fitColumns: true--%>
+            <%--">--%>
+            <%--</select>--%>
+
+            <thead>
+            <tr>
+                <th field="name1" width="50" rowspan="2">Col 1</th>
+                <th field="name2" width="50" rowspan="2">Col 2</th>
+                <th field="name3" width="50" rowspan="2">Col 3</th>
+                <th colspan="3">Details</th>
+            </tr>
+            <tr>
+                <th field="name4" width="50">Col 4</th>
+                <th field="name5" width="50">Col 5</th>
+                <th field="name6" width="50">Col 6</th>
+            </tr>
+            </thead>
+
+
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
+            22
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
             <a class="easyui-linkbutton" onclick="$('#selectUser').window('close');">关闭</a>
         </div>

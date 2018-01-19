@@ -1,378 +1,186 @@
-<%--<%@ page language="java" contentType="text/html; charset=UTF-8"--%>
-<%--pageEncoding="UTF-8" %>--%>
-<%--<%--%>
-<%--String path = request.getContextPath();--%>
-<%--String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";--%>
-<%--response.setHeader("Pragma", "No-Cache");--%>
-<%--response.setHeader("Cache-Control", "No-Cache");--%>
-<%--response.setDateHeader("Expires", 0);--%>
-<%--%>--%>
+<%--using DbService;--%>
+<%--using System;--%>
+<%--using System.Collections.Generic;--%>
+<%--using System.Linq;--%>
+<%--using System.Web;--%>
+<%--using System.Web.Mvc;--%>
+<%--using System.Web.Script.Serialization;--%>
+
+<%--namespace MvcAppEF.Controllers--%>
+<%--{--%>
+<%--public class HomeController : Controller--%>
+<%--{--%>
+<%--public ActionResult Index9()--%>
+<%--{--%>
+<%--return View();--%>
+<%--}--%>
+<%--public ActionResult getData()--%>
+<%--{--%>
+<%--JavaScriptSerializer jsz = new JavaScriptSerializer();--%>
+<%--salesEntities db = new salesEntities();--%>
+<%--int countData = db.T_UserInfo.Count();--%>
+<%--var list = db.T_UserInfo.ToList();--%>
+
+<%--var x = new { total = countData, rows = list };--%>
+
+<%--return Content(jsz.Serialize(x));--%>
+<%--}--%>
+
+<%--public ActionResult getUserInfo(int id)--%>
+<%--{--%>
+<%--JavaScriptSerializer jsz = new JavaScriptSerializer();--%>
+<%--salesEntities db = new salesEntities();--%>
+<%--int countData = db.T_UserInfo.Where(r => r.Id == id).ToList().Count();--%>
+<%--var list = db.T_UserInfo.Where(r => r.Id == id).ToList();--%>
+
+<%--var x = new { total = countData, rows = list };--%>
+
+<%--return Content(jsz.Serialize(x));--%>
+<%--}--%>
+<%--}--%>
+
+
+<%--}--%>
+<%--视图--%>
+
+<%--[csharp] view plain copy--%>
+<%--@{--%>
+<%--Layout = null;--%>
+<%--}--%>
+
+<%--<!DOCTYPE html>--%>
+
 <%--<html>--%>
 <%--<head>--%>
-<%--<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>--%>
-<%--<title>授权记录列表</title>--%>
-<%--<link rel="stylesheet" type="text/css"--%>
-<%--href="${basePath}/js/easyui/themes/default/easyui.css"/>--%>
-<%--<link rel="stylesheet" type="text/css"--%>
-<%--href="${basePath}/js/easyui/themes/icon.css"/>--%>
-<%--<script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>--%>
-<%--<script type="text/javascript" src="${basePath}/js/easyui/jquery.easyui.min.1.2.2.js"></script>--%>
-<%--<script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>--%>
-<%--<script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>--%>
-<%--<script type="text/javascript" src="${basePath}/js/easyui/validate.js"></script>--%>
-<%--<script type="text/javascript">--%>
-<%--var basePath = "${basePath}";--%>
-<%--$(function () {--%>
-<%--//            var deptId = "";--%>
-<%--var infolist = $('#infolist');--%>
-<%--infolist.datagrid({--%>
-<%--title: '授权记录列表',--%>
-<%--iconCls: 'icon-users',--%>
-<%--width: '95%',--%>
-<%--height: 560,--%>
-<%--pageSize: 20,--%>
-<%--pageList: [20, 30, 50, 100],--%>
-<%--nowrap: false,--%>
-<%--striped: true,--%>
-<%--collapsible: false,--%>
-<%--fitColumns: true,--%>
-<%--singleSelect: true,--%>
-<%--url: '${basePath}/authorization/jllist',--%>
-<%--queryParams: {--%>
-<%--//                    'deptId': deptId--%>
-<%--},--%>
-<%--loadMsg: '数据装载中......',--%>
-<%--remoteSort: false,--%>
-<%--onDblClickRow: function (rowIndex, field, value) {--%>
-<%--var rows = infolist.datagrid("getRows");--%>
-<%--var id = rows[rowIndex].id;--%>
-<%--showEdit(id);--%>
-<%--},--%>
-<%--columns: [[--%>
-<%--//                    {--%>
-<%--//                        title: '区域',--%>
-<%--//                        field: 'deptname',--%>
-<%--//                        formatter: function (value, rowData, rowIndx) {--%>
-<%--//                            return rowData.dept.name;--%>
-<%--//                        },--%>
-<%--//                        width: $(this).width() * 0.1,--%>
-<%--//                        align: 'center'--%>
-<%--//                    },--%>
-<%--{--%>
-<%--title: '钥匙',--%>
-<%--field: 'keyssId',--%>
-<%--width: $(this).width() * 0.1,--%>
-<%--rowspan: 2,--%>
-<%--align: 'center'--%>
-<%--}, {--%>
-<%--title: '锁具编号',--%>
-<%--field: 'locksId',--%>
-<%--width: $(this).width() * 0.1,--%>
-<%--rowspan: 2,--%>
-<%--align: 'center'--%>
-<%--}, {--%>
-<%--title: '类型',--%>
-<%--field: 'type',--%>
-<%--width: $(this).width() * 0.1,--%>
-<%--rowspan: 2,--%>
-<%--align: 'center'--%>
-<%--}, {--%>
-<%--title: '使用人',--%>
-<%--field: 'uName',--%>
-<%--width: $(this).width() * 0.1,--%>
-<%--rowspan: 2,--%>
-<%--align: 'center'--%>
-<%--}, {--%>
-<%--title: '起始日期',--%>
-<%--field: 'starttime',--%>
-<%--width: $(this).width() * 0.1,--%>
-<%--rowspan: 2,--%>
-<%--lign: 'center'--%>
-<%--}, {--%>
-<%--title: '起始日期',--%>
-<%--field: 'endtime',--%>
-<%--width: $(this).width() * 0.1,--%>
-<%--rowspan: 2,--%>
-<%--align: 'center'--%>
-<%--}, {--%>
-<%--title: '失效日期',--%>
-<%--field: 'endtime',--%>
-<%--width: $(this).width() * 0.1,--%>
-<%--rowspan: 2,--%>
-<%--align: 'center'--%>
-<%--}, {--%>
-<%--title: '经办人',--%>
-<%--field: 'aName',--%>
-<%--width: $(this).width() * 0.1,--%>
-<%--rowspan: 2,--%>
-<%--align: 'center'--%>
-<%--}, {--%>
-<%--title: '授权日期',--%>
-<%--field: 'aDate',--%>
-<%--width: $(this).width() * 0.1,--%>
-<%--rowspan: 2,--%>
-<%--align: 'center'--%>
-<%--}, {--%>
-<%--title: '工作票',--%>
-<%--field: 'workticket',--%>
-<%--width: $(this).width() * 0.1,--%>
-<%--rowspan: 2,--%>
-<%--align: 'center'--%>
-<%--}--%>
-
-
-<%--//                    {--%>
-<%--//                        title: '角色',--%>
-<%--//                        field: 'roles',--%>
-<%--//                        formatter: function (value, rec) {--%>
-<%--//                            var t = "";--%>
-<%--//                            $.each(value, function (i, v) {--%>
-<%--//                                t += v.name + " ";--%>
-<%--//                            });--%>
-<%--//                            return t;--%>
-<%--//                        },--%>
-<%--//                        width: $(this).width() * 0.2,--%>
-<%--//                        rowspan: 2,--%>
-<%--//                        align: 'center'--%>
-<%--//                    }--%>
-<%--]],--%>
-<%--pagination: true,--%>
-<%--rownumbers: true,--%>
-<%--toolbar: [{--%>
-<%--text: '添加',--%>
-<%--iconCls: 'icon-add',--%>
-<%--handler: add--%>
-<%--}, '-', {--%>
-<%--text: '修改',--%>
-<%--iconCls: 'icon-edit',--%>
-<%--handler: edit--%>
-<%--}, '-', {--%>
-<%--text: '删除',--%>
-<%--iconCls: 'icon-remove',--%>
-<%--handler: del--%>
-<%--}, '-', {--%>
-<%--text: '重置密码',--%>
-<%--iconCls: 'icon-revise',--%>
-<%--handler: initPassword--%>
-<%--}, '-', {--%>
-<%--text: '查询',--%>
-<%--iconCls: 'icon-search',--%>
-<%--handler: search--%>
-<%--}]--%>
-<%--});--%>
-<%--displayMsg();--%>
-
-<%--&lt;%&ndash;function refresh() {&ndash;%&gt;--%>
-<%--&lt;%&ndash;infolist.datagrid({&ndash;%&gt;--%>
-<%--&lt;%&ndash;url: '${basePath}/authorization/jllist',&ndash;%&gt;--%>
-<%--&lt;%&ndash;queryParams: {&ndash;%&gt;--%>
-<%--&lt;%&ndash;//                        'deptId': deptId&ndash;%&gt;--%>
-<%--&lt;%&ndash;},&ndash;%&gt;--%>
-<%--&lt;%&ndash;loadMsg: '数据装载中......'&ndash;%&gt;--%>
-<%--&lt;%&ndash;});&ndash;%&gt;--%>
-<%--&lt;%&ndash;infolist.datagrid("clearSelections");&ndash;%&gt;--%>
-<%--&lt;%&ndash;displayMsg();&ndash;%&gt;--%>
-<%--&lt;%&ndash;}&ndash;%&gt;--%>
-
-<%--function displayMsg() {--%>
-<%--infolist.datagrid('getPager').pagination({--%>
-<%--beforePageText: '第',--%>
-<%--afterPageText: '页，共{pages}页',--%>
-<%--displayMsg: '当前显示从{from}到{to}共{total}记录'--%>
-<%--});--%>
-<%--}--%>
-
-<%--var id;--%>
-<%--var addWin;--%>
-<%--var updateWin;--%>
-
-<%--function getSelect() {--%>
-<%--var select = infolist.datagrid('getSelected');--%>
-<%--if (select) {--%>
-<%--$('#addFrom').window('open');--%>
-<%--} else {--%>
-<%--$.messager.alert('警告', '请选择一行数据', 'warning');--%>
-<%--}--%>
-<%--}--%>
-
-<%--function initPassword() {--%>
-<%--var select = infolist.datagrid('getSelected');--%>
-<%--if (select) {--%>
-<%--$.messager.confirm('警告', '确定要重置密码?', function (f) {--%>
-<%--if (f) {--%>
-<%--$.post("${basePath}/authorization/initPassword", {"id": select.id}, function (json) {--%>
-<%--$.messager.alert('提示', json.message, 'warning');--%>
-<%--}, "json");--%>
-<%--}--%>
-<%--});--%>
-<%--} else {--%>
-<%--$.messager.alert('警告', '请选择一行数据', 'warning');--%>
-<%--}--%>
-<%--}--%>
-
-<%--function save() {--%>
-<%--$('#addForm').form('submit', {--%>
-<%--onSubmit: function () {--%>
-<%--return $(this).form('validate');--%>
-<%--},--%>
-<%--success: function (data) {--%>
-<%--var json = eval("(" + data + ")");--%>
-<%--if (json.result == '1') {--%>
-<%--$.messager.alert('提示', '保存成功', 'warning');--%>
-<%--$.closeWin(addWin);--%>
-<%--refresh();--%>
-<%--} else {--%>
-<%--$.messager.alert('提示', '保存失败', 'warning');--%>
-<%--$.closeWin(addWin);--%>
-<%--refresh();--%>
-<%--}--%>
-
-<%--}--%>
-<%--});--%>
-<%--}--%>
-
-<%--function add() {--%>
-<%--if (deptId != "") {--%>
-<%--addWin = $.createWin({--%>
-<%--title: "用户添加",--%>
-<%--//                        url: basePath + '/authorization/prAdd?deptId=' + deptId,--%>
-<%--height: 550,--%>
-<%--width: 800,--%>
-<%--buttons: [{--%>
-<%--text: '保存',--%>
-<%--iconCls: 'icon-ok',--%>
-<%--handler: save--%>
-<%--}]--%>
-<%--});--%>
-<%--} else {--%>
-<%--$.messager.alert('警告', '请选择一个部门', 'warning');--%>
-<%--}--%>
-<%--}--%>
-
-<%--function edit() {--%>
-<%--var select = infolist.datagrid('getSelected');--%>
-<%--if (select) {--%>
-<%--showEdit(select.id);--%>
-<%--} else {--%>
-<%--$.messager.alert('警告', '请选择一行数据', 'warning');--%>
-<%--}--%>
-<%--}--%>
-
-<%--function showEdit(id) {--%>
-<%--updateWin = $.createWin({--%>
-<%--title: "用户修改",--%>
-<%--url: basePath + '/authorization/prUpdate',--%>
-<%--data: 'id=' + id,--%>
-<%--height: 550,--%>
-<%--width: 800,--%>
-<%--buttons: [{--%>
-<%--text: '修改',--%>
-<%--iconCls: 'icon-ok',--%>
-<%--handler: update--%>
-<%--}]--%>
-<%--});--%>
-<%--}--%>
-
-<%--function update() {--%>
-<%--$('#editForm').form('submit', {--%>
-<%--onSubmit: function () {--%>
-<%--return $(this).form('validate');--%>
-<%--},--%>
-<%--success: function (data) {--%>
-<%--var json = eval("(" + data + ")");--%>
-<%--if (json.result == '1') {--%>
-<%--$.messager.alert('提示', '保存成功', 'warning');--%>
-<%--} else {--%>
-<%--$.messager.alert('提示', '保存失败', 'warning');--%>
-<%--}--%>
-<%--$.closeWin(updateWin);--%>
-<%--infolist.datagrid('reload');--%>
-<%--}--%>
-<%--});--%>
-<%--}--%>
-
-<%--function del() {--%>
-<%--var id = "";--%>
-<%--var selections = infolist.datagrid('getSelections');--%>
-<%--if (selections.length > 0) {--%>
-<%--for (i = 0; i < selections.length; i++) {--%>
-<%--id = id + selections[i].id + ',';--%>
-<%--}--%>
-<%--$.messager.confirm('警告', '确认删除么?', function (f) {--%>
-<%--if (f) {--%>
-<%--$.ajax({--%>
-<%--type: "POST",--%>
-<%--url: basePath + "/authorization/delete",--%>
-<%--data: "ids=" + id,--%>
-<%--dataType: "text",--%>
-<%--cache: false,--%>
-<%--success: function (msg) {--%>
-<%--$.messager.alert('提示', '删除成功!', 'warning');--%>
-<%--infolist.datagrid('reload');--%>
-<%--}--%>
-<%--});--%>
-<%--}--%>
-<%--});--%>
-<%--} else {--%>
-<%--$.messager.alert('警告', '请选择一行数据', 'warning');--%>
-<%--}--%>
-<%--}--%>
-
-<%--function search() {--%>
-<%--addWin = $.createWin({--%>
-<%--title: "查询条件",--%>
-<%--contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr></table>",--%>
-<%--width: 300,--%>
-<%--buttons: [{--%>
-<%--text: '查询',--%>
-<%--iconCls: 'icon-search',--%>
-<%--handler: query--%>
-<%--}]--%>
-<%--});--%>
-<%--}--%>
-
-<%--function query() {--%>
-<%--infolist.datagrid({--%>
-<%--url: basePath + '/authorization/jllist',--%>
-<%--queryParams: {--%>
-<%--'username': $('#authorizationname').val()--%>
-<%--},--%>
-<%--loadMsg: '数据装载中......'--%>
-<%--});--%>
-<%--infolist.datagrid("clearSelections");--%>
-<%--displayMsg();--%>
-<%--$.closeWin(addWin);--%>
-<%--}--%>
-
-<%--//            $('#tree').tree({--%>
-<%--//                checkbox: false,--%>
-<%--//                url: basePath + '/dept/getChildren',--%>
-<%--//                onBeforeExpand: function (node, param) {--%>
-<%--//                    $('#tree').tree('options').url = basePath + "/dept/getChildren?parentId=" + node.id;--%>
-<%--//                },--%>
-<%--//                onClick: function (node) {--%>
-<%--//                    deptId = node.id;--%>
-<%--//                    refresh();--%>
-<%--//                }--%>
-<%--//            });--%>
-
-<%--});--%>
-<%--</script>--%>
+<%--<meta name="viewport" content="width=device-width" />--%>
+<%--<title>Index9</title>--%>
+<%--<script src="~/Scripts/jquery-1.8.2.js"></script>--%>
+<%--<script src="~/jquery-easyui/jquery.easyui.min.js"></script>--%>
+<%--<script src="~/jquery-easyui/jquery.easyui.min.js"></script>--%>
+<%--<script src="~/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>--%>
+<%--<link href="~/jquery-easyui/themes/default/easyui.css" rel="stylesheet" />--%>
+<%--<link href="~/jquery-easyui/themes/icon.css" rel="stylesheet" />--%>
 <%--</head>--%>
 <%--<body>--%>
-<%--<table width="100%" border="0" cellpadding="0" cellspacing="0">--%>
+
+
+<%--<table id="Cse_Bespeak_Log" class="easyui-datagrid" style="width: auto; height: 350px;">--%>
+<%--<thead>--%>
 <%--<tr>--%>
-<%--<td width="12%" valign="top" style="border: 1px solid #99bbe8; border-right: 0;">--%>
-<%--<div style="width: 100%;">--%>
-<%--<div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>--%>
-<%--<ul id="tree" style="margin-top: 10px;  height: 500px; overflow: scroll;">--%>
-<%--</ul>--%>
-<%--</div>--%>
-<%--</td>--%>
-<%--<td valign="top">--%>
-<%--<table id="infolist"></table>--%>
-<%--</td>--%>
+<%--<!--可以详写，也可以简写，详写如：data-options="field:'Id'"，简写如：field="Name"-->--%>
+<%--@*<th data-options="field:'Id'" align="center" width="100" sortable="true">--%>
+<%--编号--%>
+<%--</th>--%>
+<%--<th field="UserName" align="center" width="120" sortable="true">--%>
+<%--用户名--%>
+<%--</th>--%>
+<%--<th field="Name" align="center" width="80" sortable="true">--%>
+<%--姓名--%>
+<%--</th>--%>
+<%--<th field="Age" align="center" width="80" sortable="true">--%>
+<%--年龄--%>
+<%--</th>--%>
+<%--<th field="Email" align="center" width="80" sortable="true">--%>
+<%--邮箱--%>
+<%--</th>*@--%>
+<%--@*<th align="center" width="120px">操作</th>*@--%>
 <%--</tr>--%>
+<%--</thead>--%>
 <%--</table>--%>
+
+<%--<!--这是一个弹出窗口easyui-dialog，我在它里面放了一个datagrid-->--%>
+<%--<div id="dlg" class="easyui-dialog" style="width: 600px; height: auto; padding: 10px 20px"--%>
+<%--data-options="closed:true,buttons:'#dlg-buttons'">--%>
+<%--<table id="datagrid" class="easyui-datagrid" style="width:600px;height:150px">--%>
+<%--<thead>--%>
+<%--<tr>--%>
+<%--<th data-options="field:'Id'" align="center" width="100" sortable="true">--%>
+<%--编号--%>
+<%--</th>--%>
+<%--<th field="UserName" align="center" width="120" sortable="true">--%>
+<%--用户名--%>
+<%--</th>--%>
+<%--<th field="Name" align="center" width="80" sortable="true">--%>
+<%--姓名--%>
+<%--</th>--%>
+<%--<th field="Age" align="center" width="80" sortable="true">--%>
+<%--年龄--%>
+<%--</th>--%>
+<%--<th field="Email" align="center" width="80" sortable="true">--%>
+<%--邮箱--%>
+<%--</th>--%>
+
+<%--</tr>--%>
+<%--</thead>--%>
+<%--</table>--%>
+<%--</div>--%>
+<%--<div id="dlg-buttons">--%>
+<%--<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="saveUser()">保存</a>--%>
+<%--<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="javascript:$('#dlg').dialog('close')">关闭</a>--%>
+<%--</div>--%>
+<%--<input type="button" value="查询详情" onclick="" />--%>
 <%--</body>--%>
 <%--</html>--%>
+<%--<script type="text/javascript">--%>
+<%--$(function () {--%>
+
+
+<%--$("#Cse_Bespeak_Log").datagrid({--%>
+<%--url: "/Home/getData",--%>
+<%--iconCls: "icon-add",--%>
+<%--fitColumns: false,--%>
+<%--loadMsg: "数据加载中......",--%>
+<%--pagination: true,--%>
+<%--rownumbers: true,--%>
+<%--nowrap: false,--%>
+<%--showFooter: true,--%>
+<%--singleSelect: true,--%>
+<%--pageList: [100, 50, 20, 10],--%>
+
+<%--columns: [[--%>
+<%--{--%>
+<%--field: 'Id', title: '编号', width: 50, align: 'center',--%>
+<%--},--%>
+<%--{--%>
+<%--field: 'UserName', title: '用户名', width: 50, align: 'center',--%>
+<%--},--%>
+<%--{--%>
+<%--field: 'Name', title: '姓名', width: 50, align: 'center',--%>
+<%--},--%>
+<%--{--%>
+<%--field: 'opt', title: '操作', width: 100, align: 'center',--%>
+<%--formatter: function (value, row,index) { //参数row表示当前行, 参数index表示当前行的索引值  --%>
+
+<%--//row.Id表示这个button按钮所在的那一行的Id这个字段的值  --%>
+<%--var btn = '<input type="button" id='+index+' value="查询详情"  onclick="return LoadUserInfo('+row.Id+')"/>';--%>
+<%--return btn;--%>
+<%--}--%>
+<%--}]]--%>
+
+<%--})--%>
+
+<%--})--%>
+
+<%--function LoadUserInfo(row) {--%>
+
+<%--/*获取选中行*/--%>
+<%--//var row = $('#Cse_Bespeak_Log').datagrid('getSelected'); //获取选中行    --%>
+
+<%--$("#datagrid").datagrid({--%>
+<%--url: "/Home/getUserInfo?id=" + row,--%>
+<%--iconCls: "icon-add",--%>
+<%--fitColumns: false,--%>
+<%--loadMsg: "数据加载中......",--%>
+<%--pagination: true,--%>
+<%--rownumbers: true,--%>
+<%--nowrap: false,--%>
+<%--showFooter: true,--%>
+<%--singleSelect: true,--%>
+<%--pageList: [100, 50, 20, 10],--%>
+<%--})--%>
+
+
+<%--$('#dlg').window('open');  //弹出这个dialog框  --%>
+<%--};--%>
+
+<%--</script>--%>

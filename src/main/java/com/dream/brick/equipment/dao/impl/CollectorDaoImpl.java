@@ -25,7 +25,7 @@ public class CollectorDaoImpl extends BaseDaoImpl implements CollectorDao {
 //    }
 //
     public List<Collector> findAllCollector() {
-        String hql = "from Collector t order by t.id";
+        String hql = "from Collector";
         return findList(hql);
     }
 //
@@ -39,7 +39,7 @@ public class CollectorDaoImpl extends BaseDaoImpl implements CollectorDao {
 //    }
 
     public List<Collector> findCollectorList(Pager pager) {
-        String hql = "from Collector t order by t.id";
+        String hql = "from Collector";
 
         return query(hql, pager);
     }

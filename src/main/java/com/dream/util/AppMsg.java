@@ -27,6 +27,9 @@ public class AppMsg {
 	
 	public static final String YW_DEPT="\u4E1A\u52A1\u90E8\u95E8";//业务部门
 	public static final String ZH_DEPT="\u7EFC\u5408\u90E8\u95E8";//综合部门
+
+    public static final String REQUEST_SUCCESS = "\u6DFB\u52A0\u6210\u529F";//添加成功
+
 	public static Properties msgprops;
 	public static void loadMessage(){
 		   InputStream is = AppMsg.class.getResourceAsStream("/appmsg.properties");

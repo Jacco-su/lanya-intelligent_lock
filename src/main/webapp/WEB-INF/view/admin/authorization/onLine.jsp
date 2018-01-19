@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/jquery.easyui.min.1.2.2.js"></script>
+    <%--<script type="text/javascript" src="${basePath}/js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>--%>
     <script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
@@ -116,6 +117,27 @@
             var seeWin;
             var updateWin;
 
+            function save() {
+                $('#addForm').form('submit', {
+                    onSubmit: function () {
+                        return $(this).form('validate');
+                    },
+                    success: function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.result == '1') {
+                            $.messager.alert('提示', '保存成功', 'warning');
+                            $.closeWin(addWin);
+                            refresh();
+                        } else {
+                            $.messager.alert('提示', '保存失败', 'warning');
+                            $.closeWin(addWin);
+                            refresh();
+                        }
+
+                    }
+                });
+            }
+
             function add() {
                 addWin = $.createWin({
                     title: "添加",
@@ -130,19 +152,35 @@
                 });
             }
 
-            function save() {
-                $('#addForm').form('submit', {
-                    onSubmit: function () {
-                        return $(this).form('validate');
-                    },
-                    success: function (data) {
-                        var json = eval("(" + data + ")");
-                        $.messager.alert('提示', json.message, 'warning');
-                        $.closeWin(addWin);
-                        refresh();
-                    }
+            function showEdit(id) {
+                updateWin = $.createWin({
+                    title: "添加授权",
+                    url: '${basePath}/authorization/prUpdate',
+                    data: 'id=' + id,
+                    height: 550,
+                    width: 800,
+                    buttons: [{
+                        text: '授权',
+                        iconCls: 'icon-ok',
+                        handler: update
+                    }]
                 });
+
             }
+
+//            function save() {
+//                $('#addForm').form('submit', {
+//                    onSubmit: function () {
+//                        return $(this).form('validate');
+//                    },
+//                    success: function (data) {
+//                        var json = eval("(" + data + ")");
+//                        $.messager.alert('提示', json.message, 'warning');
+//                        $.closeWin(addWin);
+//                        refresh();
+//                    }
+//                });
+//            }
 
             function seedetail() {
                 var select = infolist.datagrid('getSelected');
@@ -164,7 +202,7 @@
                 });
             }
 
-            $('#selectArea').window({
+            $('#selectUser').window({
                 title: '领用人',
                 width: 400,
                 height: 500,
@@ -177,10 +215,10 @@
                 checkbox: false,
                 url: '${basePath}/user/kList',
                 simpleDataModel: true,
-                <%--onBeforeExpand: function (node, param) {--%>
-                <%--$('#tree').tree('options').url = "${basePath}/userinfo/findAreaByParentId?parentId=" + node.id;// change the url--%>
-                <%--return true;--%>
-                <%--}--%>
+                onBeforeExpand: function (node, param) {
+                    $('#tree').tree('options').url = "${basePath}/userinfo/findAreaByParentId?parentId=" + node.id;// change the url
+                    return true;
+                }
             });
 
             function refresh() {
@@ -215,21 +253,7 @@
                 });
             }
 
-            function showEdit(id) {
-                updateWin = $.createWin({
-                    title: "修改",
-                    url: '${basePath}/authorization/prAdd',
-                    data: 'id=' + id,
-                    height: 550,
-                    width: 800,
-                    buttons: [{
-                        text: '修改',
-                        iconCls: 'icon-ok',
-                        handler: update
-                    }]
-                });
 
-            }
 
             function del() {
                 var selected = infolist.datagrid('getSelected');
@@ -294,7 +318,7 @@
 
         function query() {
             infolist.datagrid({
-                url: basePath + '/keyss/list',
+                url: basePath + '/user/list',
                 queryParams: {
                     'username': $('#username').val()
                 },
@@ -310,83 +334,21 @@
 <body>
 <div>
     <table id="infolist">
-        <div class="mytable">
-            <form name="addForm" id="addForm" action="${basePath}/authorization/onLine" method="post">
-                <table>
-                    <tr>
-                        <td>
-                            获取钥匙MAC:
-                        </td>
-                        <td>
-                            <input type=""> <br/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            授权期限:
-                        </td>
-                        <td>
-                            <input type="datetime"> <br/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            授权使用人:
-                        </td>
-                        <td>
-                            <input type=""> <br/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            锁具范围:
-                        </td>
-                        <td>
-                            <input type="text"> <br/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            操作人:
-                        </td>
-                        <td>
-                            <input type="text"> <br/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            工作票:
-                        </td>
-                        <td>
-                            <input type="file" value="ss"> <br/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="button" value="确认授权">
-                        </td>
-                        <td>
-                            <input type="reset" value="重置"><br/>
-                        </td>
-                    </tr>
 
-
-                </table>
-            </form>
-        </div>
     </table>
 </div>
-<div id="selectArea">
+<div id="selectUser">
     <div class="easyui-layout" fit="true">
+        <a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>
         <div region="center" border="false" style="padding: 10px;">
             <ul id="tree" style="margin-top: 10px;"></ul>
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
-            <a class="easyui-linkbutton" onclick="$('#selectArea').window('close');">关闭</a>
+            <a class="easyui-linkbutton" onclick="$('#selectUser').window('close');">关闭</a>
         </div>
     </div>
-
+</div>
 </body>
 </html>
 

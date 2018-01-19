@@ -16,10 +16,12 @@
 		<property name="locations">
 			<list>
 			<value>classpath:hibernate.properties</value>
+                <value>classpath:redis-config.properties</value>
 			</list>
 		</property>
 		<property name="fileEncoding" value="utf-8" />
 	</bean>
 	<import resource="hibernateContext.xml" />
 	<import resource="spring-cache.xml" />
+    <import resource="spring-redis.xml"/>
 </beans>

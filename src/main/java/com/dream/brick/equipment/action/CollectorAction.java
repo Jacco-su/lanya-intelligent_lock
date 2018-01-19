@@ -2,11 +2,8 @@ package com.dream.brick.equipment.action;
 
 
 import com.dream.brick.equipment.bean.Collector;
-import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.QgdisDao;
-import com.dream.brick.listener.BasicData;
-import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.StringUtil;
@@ -22,8 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -44,14 +39,14 @@ public class CollectorAction {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @RequestMapping("/prList")
-    public String prList()
+    public String prList(String collectorId, HttpServletRequest request)
             throws Exception {
         return "admin/collector/list";
     }
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, String qgdisId, Pager pager)
+    public String list(int page, int rows, Pager pager)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
@@ -64,13 +59,12 @@ public class CollectorAction {
 
 
     @RequestMapping("/prAdd")
-    public String prAdd(String qgdisId, ModelMap model, HttpServletRequest request) {
-        String areacode = SessionData.getAreacode(request);
-        //List<Qgdis> qgdisList = BasicData.findQgdisByAreacode(areacode);
-        List<Qgdis> qgdisList = qgdisDao.findDisIdAndName();
-        model.addAttribute("qgdisList", qgdisList);
-        model.addAttribute("qgdisId", qgdisId);
-        return "admin/collector/add";
+    public String prAdd(ModelMap model) {
+
+        // model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findAllQgdis()));
+//        model.addAttribute("qgdisId", qgdisId);
+
+        return "admin/collector/view";
     }
 
 
@@ -157,7 +151,7 @@ public class CollectorAction {
     @RequestMapping("/prView")
     public String prView(String id, ModelMap model) {
         Collector collector = collectorDao.find(Collector.class, id);
-        model.addAttribute("collector", collector);
+        model.addAttribute("collectora", collector);
         return "admin/collector/view";
     }
 

@@ -8,7 +8,11 @@
 
             <tr>
                 <td>姓名:</td>
-                <td><input size="40" class="easyui-validatebox" name="username" required="true" validType="CHS"/></td>
+                <td><input name="dept.id" type="hidden" value="${deptId}"/></input><input size="40"
+                                                                                          class="easyui-validatebox"
+                                                                                          name="username"
+                                                                                          required="true"
+                                                                                          validType="CHS"/></td>
             </tr>
 
 
@@ -47,9 +51,20 @@
                 <td>
                     <input name="roIdList" type="hidden"/>
                     <c:forEach items="${roles}" var="role" varStatus="s">
-                        <span><input name="roIdList" type="checkbox" value="${role.roId}"/>${role.name }</span>
+                        <span><input name="roIdList" type="radio" value="${role.roId}"/>${role.name }</span>
                         <c:if test="${(s.index+1)%3==0}"><br/></c:if>
                     </c:forEach>
+                </td>
+            </tr>
+            <tr>
+                <td>管理区域:</td>
+                <td>
+                    <div class="easyui-accordion" style="width: 500px;" border=false animate=false>
+                        <c:forEach items="${deptList}" var="dept" varStatus="s">
+                            <span><input name="deptIdList" type="checkbox" value="${dept.id}"/>${dept.name }</span>
+                            <c:if test="${(s.index+1)%5==0}"><br/></c:if>
+                        </c:forEach>
+                    </div>
                 </td>
             </tr>
             <%--<tr>--%>

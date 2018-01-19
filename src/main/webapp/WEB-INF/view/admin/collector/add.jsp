@@ -8,6 +8,18 @@
     response.setHeader("Cache-Control", "No-Cache");
     response.setDateHeader("Expires", 0);
 %>
+
+
+<style>
+
+    input:focus {
+        color: rgba(7, 7, 7, 0.99);
+    }
+
+    input:link {
+        color: rgba(80, 76, 78, 0.8);
+    }
+</style>
 <div>
     <form name="addForm" id="addForm" action="${basePath}/collector/add" method="post">
         <table class="mytable" align="center">
@@ -27,13 +39,10 @@
             <tr>
                 <td>所属配电房:</td>
                 <td>
-                    <select name="deptId" name="deptId" style="width:200px;" class="easyui-validatebox"
-                            required="true">
-                        <option value="">---请选择---</option>
-                        <c:forEach items="${deptList}" var="dept" varStatus="s">
-                            <option value="${dept.id}"
-                                    <c:if test="${dept.id eq sedept.id}">selected</c:if>>${dept.name}</option>
-                        </c:forEach>
+
+                    <select id="dissName" name="dis.name" style="width: 220px;">
+
+                        <%--<option value="">---请选择---</option>--%>
                     </select>
                 </td>
             <tr>
@@ -64,3 +73,14 @@
         </table>
     </form>
 </div>
+
+<script>
+    $(function () {
+        var data = '${qgdisList}';
+        data = JSON.parse(data);
+        $('#dissName').empty();
+        for (var i = 0; i < data.length; i++) {
+            $('#dissName').append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
+        }
+    })
+</script>
