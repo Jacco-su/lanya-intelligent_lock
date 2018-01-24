@@ -45,20 +45,20 @@
                 },
                 columns: [[{
                     title: '钥匙编号',
-                    field: 'id',
-                    width: 250,
+                    field: 'keyssCode',
+                    width: 300,
                     align: 'center'
                 },
                     {
                         title: '钥匙名称',
                         field: 'keyssName',
-                        width: 350,
+                        width: 300,
                         align: 'center'
                     },
                     {
                         title: '领用人',
                         field: 'userName',
-                        width: 350,
+                        width: 300,
                         align: 'left'
                     },
 //                {
@@ -73,7 +73,7 @@
                     {
                         title: '领用时间 ',
                         field: 'keyssDate',
-                        width: 200,
+                        width: 250,
                         align: 'left'
                     },
                 ]],
@@ -327,24 +327,6 @@
 
             33
 
-            <%--<select class="easyui-combogrid" style="width:250px" data-options="--%>
-            <%--panelWidth: 500,--%>
-            <%--idField: 'itemid',--%>
-            <%--textField: 'productname',--%>
-            <%--url: ${basePath}/user/list',--%>
-            <%--&lt;%&ndash;'datagrid_data1.json',&ndash;%&gt;--%>
-            <%--method: 'get',--%>
-            <%--columns: [[--%>
-            <%--{field:'id',title:'工号',width:80},--%>
-            <%--{field:'username',title:'姓名',width:120},--%>
-            <%--{field:'phone',title:'手机',width:80,align:'right'},--%>
-            <%--{field:'email',title:'邮箱',width:80,align:'right'},--%>
-            <%--{field:'rdate',title:'注册时间',width:200},--%>
-            <%--&lt;%&ndash;{field:'roles',title:'角色',width:60,align:'center'}&ndash;%&gt;--%>
-            <%--]],--%>
-            <%--fitColumns: true--%>
-            <%--">--%>
-            <%--</select>--%>
 
             <thead>
             <tr>

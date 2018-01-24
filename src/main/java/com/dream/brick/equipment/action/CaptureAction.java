@@ -1,10 +1,10 @@
 package com.dream.brick.equipment.action;
 
 import com.dream.util.extend.FtpUtil;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
@@ -35,8 +32,8 @@ public class CaptureAction {
     public FtpUtil ftpUtil;
 
 
-    @RequestMapping("/icture")
-    public String iList(String id, ModelMap model, String path) {
+//    @RequestMapping("/iList")
+//    public String iList(String id, ModelMap model, String path) {
 
 //                    List list = readFTP.getFileList(path);
 //            if ( ) {
@@ -80,11 +77,11 @@ public class CaptureAction {
 //                request.setAttribute("fileNameMap", fileNameMap);
 
 
-        return "capture/ilist";
-    }
+//        return "capture/ilist";
+//    }
 
 
-    @RequestMapping("/list")
+    @RequestMapping("/icture")
     @ResponseBody
 //    public String list(int page, int rows, Pager pager,HttpServletRequest request, HttpServletResponse response)
 //            throws Exception {
@@ -119,11 +116,13 @@ public class CaptureAction {
 //            return picNames;
 //    }
 
-    protected ArrayList<String> CalculateGeoServlet(HttpServletRequest req,
-                                                    HttpServletResponse resp, String params) throws ServletException, IOException,
+    protected ArrayList<String> CalculateGeoServlet(HttpServletRequest request,
+                                                    HttpServletResponse response, String params) throws ServletException, IOException,
             MalformedURLException {
         ArrayList<String> fileList = new ArrayList<String>();
         fileList = getFiles(params);
+        request.setAttribute("fileList", fileList);
+//        datas.put("rows", fileList);
         return fileList;
     }
 
@@ -133,6 +132,8 @@ public class CaptureAction {
      * @param filePath 文件路径
      * @return
      */
+//    @RequestMapping("/z")
+//    @ResponseBody
     public static ArrayList<String> getFiles(String filePath) {
         ArrayList<String> fileList = new ArrayList<String>();
         File root = new File(filePath);
@@ -150,10 +151,13 @@ public class CaptureAction {
                 fileList.add(picPathStr);
             }
         }
-        for (String str : fileList) {
-//            System.out.println(str);
+//        for (String str : fileList) {
+//          System.out.println(str);
+//
+//
+//        }
 
-        }
+
         return fileList;
 
     }
@@ -322,37 +326,42 @@ public class CaptureAction {
 //        }
 //        return new ResponseEntity<>(picture,he,HttpStatus.OK);
 //    }
-    @RequestMapping(value = "/seekExperts")
-    @ResponseBody
-    public String createFolw(HttpServletRequest request,
-                             HttpServletResponse response, Model model) {
-//         response.setContentType("image/*");
-        FileInputStream fis = null;
-        OutputStream os = null;
-        //消息提示
-        String message = "";
-        try {
-//            File file = this.pictureBox2.Image=Image.FromFile("D:\\001.jpg");;
-            fis = new FileInputStream("uploads/workticket/");
-            os = response.getOutputStream();
-            int count = 0;
-            byte[] buffer = new byte[1024 * 8];
-            while ((count = fis.read(buffer)) != -1) {
-                os.write(buffer, 0, count);
-                os.flush();
-                message = "图片显示！";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            fis.close();
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return message;
-    }
+//    @RequestMapping(value = "/seekExperts")
+//    @ResponseBody
+//    public String createFolw(HttpServletRequest request,
+//                             HttpServletResponse response, Model model) {
+////         response.setContentType("image/*");
+//        FileInputStream fis = null;
+//        OutputStream os = null;
+//        //消息提示
+//        String message = "";
+//        try {
+////            File file = this.pictureBox2.Image=Image.FromFile("D://001.jpg");;
+//            fis = new FileInputStream("uploads/workticket/");
+//            os = response.getOutputStream();
+//            int count = 0;
+//            byte[] buffer = new byte[1024 * 8];
+//            while ((count = fis.read(buffer)) != -1) {
+//                os.write(buffer, 0, count);
+//                os.flush();
+//                message = "图片显示！";
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            fis.close();
+//            os.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return message;
+//    }
+
+
+
+
+
 
     @RequestMapping(value = "/toShowPic/{file}/{fileName}/{id}")
     public ModelAndView toShowPic(HttpServletRequest request, HttpServletResponse response, @PathVariable String
@@ -366,41 +375,48 @@ public class CaptureAction {
     }
 
 
-//    @RequestMapping(value="/showPic/{file}/{fileName}/{id}")
-//    public void showPic(HttpServletRequest request, HttpServletResponse response, @PathVariable String file, @PathVariable String fileName, @PathVariable String id){
-//        String uploadUrl = PropertyUtils.g("upload_reward_rule_path");
-////        String uploadUrl =
-//        byte[] b=new byte[20];
-//        try {
-//            b = BASE64.getBytes(fileName);
-//        } catch (Exception e1) {
-//            e1.printStackTrace();
-//        }
-//        String str = new String(b);
-//        String[] strArr = str.split("/");
+    @RequestMapping(value = "/showPic/{file}/{fileName}/{id}")
+    public void showPic(HttpServletRequest request, HttpServletResponse response, @PathVariable String file, @PathVariable String fileName, @PathVariable String id) {
+        String uploadUrl = PropertyUtils.get("upload_reward_rule_path", "uploads/icturw");
+//        String uploadUrl =
+        byte[] b = new byte[20];
+        try {
+            b = BASE64.getBytes(fileName);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        String str = new String(b);
+        String[] strArr = str.split("/");
+
+        String fileUrl = uploadUrl + "/" + file + "/" + strArr[0] + "." + strArr[1];
+        try {
+            File filePath = new File(fileUrl);
+            if (filePath.exists()) {
+                //读图片
+                FileInputStream inputStream = new FileInputStream(filePath);
+                int available = inputStream.available();
+                byte[] data = new byte[available];
+                inputStream.read(data);
+                inputStream.close();
+                //写图片
+                response.setContentType("image/" + strArr[1]);
+                response.setCharacterEncoding("UTF-8");
+                OutputStream stream = new BufferedOutputStream(response.getOutputStream());
+                stream.write(data);
+                stream.flush();
+                stream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+//    @RequestMapping("/eList")
 //
-//        String fileUrl=uploadUrl+"/"+file+"/"+strArr[0]+"."+strArr[1];
-//        try {
-//            File filePath = new File(fileUrl);
-//            if(filePath.exists()){
-//                //读图片
-//                FileInputStream inputStream = new FileInputStream(filePath);
-//                int available = inputStream.available();
-//                byte[] data = new byte[available];
-//                inputStream.read(data);
-//                inputStream.close();
-//                //写图片
-//                response.setContentType("image/"+strArr[1]);
-//                response.setCharacterEncoding("UTF-8");
-//                OutputStream stream = new BufferedOutputStream(response.getOutputStream());
-//                stream.write(data);
-//                stream.flush();
-//                stream.close();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
+//    public String List(Pager pager){
+//        return "/capture/elist";
 //    }
 
 

@@ -55,7 +55,7 @@
         // 通过 setTimeout 模拟异步加载
         setTimeout(function () {
                 cb({
-                    categories: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
+                    categories: ["003", "004", "007", "009", "005", "006"],
                     data: [5, 20, 36, 10, 10, 20],
 
 
@@ -68,19 +68,19 @@
     //     初始 option
     option = {
         title: {
-            text: '特性示例：渐变色 阴影 点击缩放',
-            subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom'
+            text: '锁具开闭统计',
+            subtext: 'Feature Sample: '
         },
         tooltip: {},
         legend: {
-            data: ['销量']
+            data: ['次数']
         },
         xAxis: {
             data: [],
             axisLabel: {
                 inside: true,
                 textStyle: {
-                    color: '#fff'
+                    color: '#b13a38'
                 }
             },
             axisTick: {
@@ -100,7 +100,7 @@
             },
             axisLabel: {
                 textStyle: {
-//                    color: '#999'
+                    color: '#538d99'
                 }
             }
         },
@@ -114,7 +114,7 @@
                 name: '月季',
                 type: 'bar',
                 itemStyle: {
-                    normal: {color: 'rgba(0,0,0,0.05)'}
+                    normal: {color: 'rgba(0,0,0,0.5)'}
                 },
                 barGap: '-100%',
                 barCategoryGap: '40%',

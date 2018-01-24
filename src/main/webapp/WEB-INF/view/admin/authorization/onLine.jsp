@@ -305,7 +305,7 @@
         function search() {
             addWin = $.createWin({
                 title: "查询条件",
-                contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr><tr><td>钥匙名称：</td><td><input id=keyssname /></td></tr></table>",
+                contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr></table>",
 
                 width: 300,
                 buttons: [{

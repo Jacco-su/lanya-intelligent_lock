@@ -9,30 +9,27 @@
 <div>
     <table class="mytable" align="center">
         <tr>
-            <td>智能锁编号:</td>
-            <td>${locks.id}</td>
-        </tr>
-        <tr>
-            <td>识别码:</td>
+            <td>:</td>
             <td>
-                ${locks.lockCode}
+                ${fileList}
             </td>
         </tr>
         <tr>
-            <td width="100">安装地点:</td>
+            <td>:</td>
             <td>
-                ${locks.qgdis}
+                ${authorizationa.keyssid}
             </td>
         </tr>
         <tr>
-            <td width="100">安装时间:</td>
+            <td width="100">:</td>
             <td>
-                ${locks.lockDate}
+                ${authorizationa.locksid}
             </td>
         </tr>
         <tr>
-            <td>排序:</td>
-            <td>${locks.sortorder}
+            <td>:</td>
+            <td>
+                ${authorizationa.workticket}
             </td>
         </tr>
     </table>

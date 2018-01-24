@@ -1,12 +1,10 @@
 package com.dream.brick.equipment.action;
 
-import com.alibaba.fastjson.JSON;
 import com.dream.brick.equipment.bean.Locks;
 import com.dream.brick.equipment.dao.ILocksDao;
 import com.dream.brick.equipment.dao.QgdisDao;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
-import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,7 +54,7 @@ public class LocksAction {
 
     @RequestMapping("/prAdd")
     public String prAdd(ModelMap modelMap) {
-        modelMap.addAttribute("dissList",JSON.toJSONString(disDao.findAllQgdis()));
+//        modelMap.addAttribute("dissList",JSON.toJSONString(disDao.findAllQgdis()));
         return "admin/locks/add";
     }
 
@@ -66,9 +62,9 @@ public class LocksAction {
     @ResponseBody
     public String daa(@ModelAttribute Locks locks) {
         String message = "";
-        locks.setLockNum(locks.getLockNum());
-        locks.setLockCode(locks.getLockCode());
-        locks.setLockDate(FormatDate.getYMdHHmmss());
+//        locks.setLockNum(locks.getLockNum());
+//        locks.setLockCode(locks.getLockCode());
+//        locks.setLockDate(FormatDate.getYMdHHmmss());
         try {
             ilocksDao.save(locks);
             message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);

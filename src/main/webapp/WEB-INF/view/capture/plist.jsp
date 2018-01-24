@@ -99,17 +99,17 @@
             </div>
         </td>
         <td>
-            2访问图片静态资源：<br>
+            2<img alt="image" src="/capture/seekExperts"><br>
         </td>
     </tr>
     <tr>
         <td>
-            3<img border=0 src="downPhoto.do?fileId=${fileList}">
+            3<img border=0 src="downPhoto.do?fileId=${"fileList"}">
         </td>
     </tr>
     <tr>
         <td>
-            4访问FTP
+            4访问FTP <img src=""/>
 
         </td>
     </tr>
@@ -118,7 +118,7 @@
             5<img src=”ftp://sdzdz:'hlxx@2017'@218.28.166.165:19999/zdzjpg/”>
         </td>
         <td>
-            6 ${toClient}
+            6 ${"fileList"}
         </td>
         <td>
             <img src="${src}">

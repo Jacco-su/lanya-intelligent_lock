@@ -29,19 +29,20 @@
         <table class="mytable" align="center">
             <tr>
                 <td>钥匙编号:</td>
-                <td><input name="name" value="" class="easyui-validatebox" required="true"/></td>
+                <td><input name="keyssCode" id="keyssCode" value="" class="easyui-validatebox" required="true"/></td>
             </tr>
 
             <tr>
                 <td>自定义名称:</td>
                 <td>
-                    <input name="cdate" class="easyui-validatebox" value="" required="true"/>
+                    <input name="keyssName" class="easyui-validatebox" value="" required="true"/>
                 </td>
             </tr>
             <tr>
                 <td>钥匙MAC:</td>
                 <td>
-                    <input name="cip" value="点击获取" class="easyui-validatebox" onclick="$('#selectArea').window('open');"
+                    <input name="keyssMAC" value="点击获取" class="easyui-validatebox"
+                           onclick="$('#selectArea').window('open');"
                            required="true"/>
                 </td>
             </tr>
@@ -49,8 +50,8 @@
             <tr>
                 <td width="100">领用人:</td>
                 <td>
-                    <input type="text" name="name" id="username" value="" readonly/> <a class="easyui-linkbutton"
-                                                                                        onclick="$('#selectUser').window('open');">选择</a>
+                    <input type="text" name="userName" id="userName" value="" readonly/> <a class="easyui-linkbutton"
+                                                                                            onclick="$('#selectUser').window('open');">选择</a>
                     <input type="hidden" name="userid" id="usercode" value=""/>
                     <%--<select name="userId" name="userId" style="width:200px;" class="easyui-validatebox" required="true">--%>
                     <%--<option value="">---请选择---</option>--%>

@@ -3,6 +3,9 @@ package com.dream.brick.equipment.action;
 import com.dream.brick.equipment.bean.Keyss;
 import com.dream.brick.equipment.dao.IKeyssDao;
 import com.dream.framework.dao.Pager;
+import com.dream.util.AppMsg;
+import com.dream.util.FormatDate;
+import com.dream.util.StringUtil;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -59,10 +62,16 @@ public class KeyssAction {
     public String add(@ModelAttribute Keyss keyss) {
         String message = "";
         // Keyss keyss = BasicData.findKeyssByUserName(disa.getUserName());
-        ikeyssDao.save(keyss);
 
-
-        return "success";
+        try {
+            keyss.setKeyssDate(FormatDate.getYMdHHmmss());
+            ikeyssDao.save(keyss);
+            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+        }
+        return message;
     }
 
 

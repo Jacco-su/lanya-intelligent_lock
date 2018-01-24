@@ -24,7 +24,7 @@
             var deptId = "";
             var infolist = $('#infolist');
             infolist.datagrid( {
-                title : '配电房列表',
+                title: '站点列表',
                 iconCls : 'icon-users',
                 width : '95%',
                 height : 560,
@@ -57,21 +57,21 @@
                         align : 'center'
                     },
                     {
-                        title : '配电房编号',
+                        title: '站点编号',
                         field : 'id',
                         width : $(this).width() * 0.1,
                         rowspan : 2,
                         align : 'center'
                     },
                     {
-                        title : '配电房名称',
+                        title: '站点名称',
                         field : 'name',
                         width : $(this).width() * 0.1,
                         rowspan : 2,
                         align : 'center'
                     },
                     {
-                        title : '配电房地址',
+                        title: '站点地址',
                         field : 'address',
                         width : $(this).width() * 0.1,
                         rowspan : 2,
@@ -160,7 +160,7 @@
             function add() {
                 if (deptId != "") {
                     addWin = $.createWin( {
-                        title : "配电房添加",
+                        title: "站点添加",
                         url : basePath+'/disa/prAdd?deptId='+deptId,
                         height : 550,
                         width : 800,
@@ -184,7 +184,7 @@
             }
             function showEdit(id){
                 updateWin = $.createWin( {
-                    title : "配电房修改",
+                    title: "站点修改",
                     url : basePath+'/disa/prUpdate',
                     data : 'id=' +id,
                     height : 550,
@@ -239,7 +239,7 @@
             function search(){
                 addWin = $.createWin( {
                     title : "查询条件",
-                    contents:"<table style='font-size:12px;'><tr><td>配电房：</td><td><input id='dissName' /></td></tr></table>",
+                    contents: "<table style='font-size:12px;'><tr><td>站点：</td><td><input id='dissName' /></td></tr></table>",
                     width : 300,
                     buttons : [ {
                         text : '查询',
@@ -279,7 +279,7 @@
 <body>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
     <tr>
-        <td width="20%" valign="top"
+        <td width="12%" valign="top"
             style="border: 1px solid #99bbe8; border-right: 0;">
             <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
             <ul id="tree" style="margin-top: 10px;"></ul>
