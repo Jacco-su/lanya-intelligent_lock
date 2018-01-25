@@ -26,10 +26,10 @@
      *获取图片文件数组
      */
     function getPicFileList() {
-        var params = "${basePath}/uploads/ictures";
+        var params = "E://192.168.2.2";
         $.ajax({
             //此处使用的是自己封装的JAVA类
-            url: Config.hostUrl + "/capture/icture",
+            url: "${basePath}/capture/icture",
             type: "POST",
             data: {params: params},//图片文件夹路径作为参数传入java类
             success: function (data) {

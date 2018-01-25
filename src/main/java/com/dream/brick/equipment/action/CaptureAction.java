@@ -1,5 +1,6 @@
 package com.dream.brick.equipment.action;
 
+import com.dream.framework.dao.Pager;
 import com.dream.util.extend.FtpUtil;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
@@ -18,6 +19,8 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
+import static javax.xml.crypto.dsig.Transform.BASE64;
+
 
 @Controller
 @Scope("prototype")
@@ -32,8 +35,8 @@ public class CaptureAction {
     public FtpUtil ftpUtil;
 
 
-//    @RequestMapping("/iList")
-//    public String iList(String id, ModelMap model, String path) {
+    @RequestMapping("/iList")
+    public String iList(String id, ModelMap model, String path) {
 
 //                    List list = readFTP.getFileList(path);
 //            if ( ) {
@@ -77,8 +80,8 @@ public class CaptureAction {
 //                request.setAttribute("fileNameMap", fileNameMap);
 
 
-//        return "capture/ilist";
-//    }
+        return "capture/ilist";
+    }
 
 
     @RequestMapping("/icture")
@@ -370,14 +373,14 @@ public class CaptureAction {
         mv.addObject("id", id);
         mv.addObject("file", file);
         mv.addObject("fileName", fileName);
-        mv.setViewName("/pbo/showPic");
+        mv.setViewName("/capture/qlist");
         return mv;
     }
 
 
     @RequestMapping(value = "/showPic/{file}/{fileName}/{id}")
     public void showPic(HttpServletRequest request, HttpServletResponse response, @PathVariable String file, @PathVariable String fileName, @PathVariable String id) {
-        String uploadUrl = PropertyUtils.get("upload_reward_rule_path", "uploads/icturw");
+        String uploadUrl = String.valueOf(PropertyUtils.getPropertyDescriptors("upload_reward_rule_path"));
 //        String uploadUrl =
         byte[] b = new byte[20];
         try {
@@ -413,11 +416,11 @@ public class CaptureAction {
     }
 
 
-//    @RequestMapping("/eList")
-//
-//    public String List(Pager pager){
-//        return "/capture/elist";
-//    }
+    @RequestMapping("/eList")
+
+    public String List(Pager pager) {
+        return "/capture/elist";
+    }
 
 
 }

@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
 	 <script type="text/javascript">
 	      function goLogin(){
-					    window.location="<%=path %>/log/login";
+              window.location = "<%=path%>/log/login";
 	      }
 	</script>
   </head>
