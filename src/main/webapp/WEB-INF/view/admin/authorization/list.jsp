@@ -117,7 +117,7 @@
                         align: 'center'
                     }, {
                         title: '工作票',
-                        field: 'workticket',
+                        field: 'workticket ',
                         width: $(this).width() * 0.1,
 //                        rowspan: 2,
 //                        align: 'center',

@@ -113,7 +113,7 @@
 	border-top:1px dotted #fff;
 }
 .datagrid-header td.datagrid-header-over{
-	background:#EBF3FD;
+    background: #f6f6fa;
 }
 .datagrid-header .datagrid-cell{
 	margin:0;

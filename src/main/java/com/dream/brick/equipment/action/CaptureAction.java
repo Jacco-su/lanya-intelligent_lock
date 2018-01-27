@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
@@ -36,6 +35,7 @@ public class CaptureAction {
 
 
     @RequestMapping("/iList")
+
     public String iList(String id, ModelMap model, String path) {
 
 //                    List list = readFTP.getFileList(path);
@@ -85,7 +85,7 @@ public class CaptureAction {
 
 
     @RequestMapping("/icture")
-    @ResponseBody
+//    @ResponseBody
 //    public String list(int page, int rows, Pager pager,HttpServletRequest request, HttpServletResponse response)
 //            throws Exception {
 //        pager.setCurrentPage(page);
@@ -126,6 +126,8 @@ public class CaptureAction {
         fileList = getFiles(params);
         request.setAttribute("fileList", fileList);
 //        datas.put("rows", fileList);
+        response.sendRedirect("view/capture/ilist.jsp");
+        request.getRequestDispatcher("ilist.jsp").forward(request, response);
         return fileList;
     }
 

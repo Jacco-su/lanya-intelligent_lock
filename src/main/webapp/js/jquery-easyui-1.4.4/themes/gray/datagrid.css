@@ -52,8 +52,8 @@
 .datagrid-btn-separator {
   float: left;
   height: 24px;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #fff;
+    border-left: 1px solid #999999;
+    border-right: 1px solid #cccccc;
   margin: 2px 1px;
 }
 .datagrid .datagrid-pager {
@@ -214,8 +214,8 @@
 }
 .datagrid-header,
 .datagrid-td-rownumber {
-  background-color: #fafafa;
-  background: -webkit-linear-gradient(top,#fdfdfd 0,#f5f5f5 100%);
+    background-color: #f3f3f3;
+    background: -webkit-linear-gradient(top, #f3f3f3 0, #f0f0f0 100%);
   background: -moz-linear-gradient(top,#fdfdfd 0,#f5f5f5 100%);
   background: -o-linear-gradient(top,#fdfdfd 0,#f5f5f5 100%);
   background: linear-gradient(to bottom,#fdfdfd 0,#f5f5f5 100%);
@@ -226,7 +226,7 @@
   color: #000000;
 }
 .datagrid-resize-proxy {
-  background: #bfbfbf;
+    background: #b9b9b9;
 }
 .datagrid-mask {
   background: #ccc;

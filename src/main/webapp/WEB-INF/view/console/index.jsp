@@ -28,7 +28,13 @@ request.setAttribute("basePath",path);
 <Style>
 	#css3menu li{ float:left; list-style-type:none; width:85px;height:29px;margin-left:15px; bottom: 0;}
 	#css3menu li a{	color:#fff;  font-size: 12px;background:url(${basePath}/images/login2/index2_14.gif) left no-repeat; width: 85px; height: 29px; margin:0px;padding-top:8px;display:block;text-align: center;text-decoration:none;outline: none;}
-	#css3menu li a.active{color:#fff;background:url(${basePath}/images/login2/index2_12.gif) left  no-repeat;text-decoration:none;outline: none;}
+
+	#css3menu li a.active {
+		color: #4b93ff;
+		background: url(${basePath}/images/login2/index2_12.gif) left no-repeat;
+		text-decoration: none;
+		outline: none;
+	}
 </style>
     <script type="text/javascript">
 		function appInfo(){
@@ -213,7 +219,7 @@ request.setAttribute("basePath",path);
         }
         
         function personIndex(){
-        				$("#msgcount").html("<a href='javascript:void(0)'  style='color:#FFFFFF;font-size:15px;'>消息查看中……</a>");
+            $("#msgcount").html("<a href='javascript:void(0)'  style='color:#cff7ff;font-size:15px;'>消息查看中……</a>");
  	      				addTab('新消息','${basePath}/needtodo/showNewmsg','');
          }
         function userCenter(){

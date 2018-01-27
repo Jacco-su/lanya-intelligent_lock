@@ -6,6 +6,10 @@
     response.setHeader("Cache-Control", "No-Cache");
     response.setDateHeader("Expires", 0);
 %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
 <%--<script type="text/javascript" src="${basePath}/resources/uploadify/jquery.uploadify.min.js"></script>--%>
 <%--<link rel="stylesheet" type="text/css" href="${basePath}/resources/uploadify/uploadify.css" />--%>
 <%--<script type="text/javascript" src="${basePath}/resources/js/jquery-1.8.2.min.js"></script>--%>
@@ -13,20 +17,15 @@
 <head>
     <title>抓拍图像</title>
     <script type="text/javascript">
-        //    <code class="hljs javascript">
-
-
-        //    </code>
     </script>
 </head>
 <body>
-
 <script>
     /**
      *获取图片文件数组
      */
     function getPicFileList() {
-        var params = "E://192.168.2.2";
+        var params = "/uploads";
         $.ajax({
             //此处使用的是自己封装的JAVA类
             url: "${basePath}/capture/icture",
@@ -48,7 +47,6 @@
             }
         });
     }
-
     /**
      * 加载图片，将图片拼成html代码
      * @param SJ_CODE 事件编号
@@ -65,10 +63,9 @@
             pichtml += html1;
             //scrollPic();
         }
-//    showPicDetail(pichtml);//展示图片（此代码省略,直接给个p或者弹窗）
+        showPicDetail(pichtml);//展示图片（此代码省略,直接给个p或者弹窗）
         document.write(pichtml);
     }
-
     /**
      * 按比例缩小图片
      * @param maxWidth
@@ -105,15 +102,11 @@
         objImg.width = w;
     }
 
-    //    function ll() {
-    //        //弹出一个对话框
-    //        alert("提示信息！"+ showPicDetail(pichtml));
-    //
+    //    function showPicDetail(pichtml){
+    //        alert("提示信息！"+ pichtml);
+    //        out.println("Your IP address is " + pichtml);
     //    }
-
-
 </script>
-
 
 <p>
     <%--<%--%>
@@ -122,8 +115,18 @@
     <%--<%--%>
     <%--out.println("Your IP address is " + CaptureAction.getFiles("E://192.168.2.2"));--%>
     <%--%>--%>
-    图片: <img src="" alt="">
+    <%--<%--%>
+    <%--out.println("Your IP address is " + showPicDetail(pichtml));--%>
+    <%--%>--%>
 
+
+<pre name="code" class="java">
+    <%
+        String test[] = (String[]) request.getAttribute("fileList");
+        out.print(test);
+    %>
+    图片: <img src="<%=test%>" alt="">
+</pre>
     <%--<%String s=application.getAttribute("fileList").toString();%>--%>
     <%--<img src="<%=s%>">--%>
 
@@ -140,9 +143,6 @@
 <%--<img alt="image" src="capture/seekExperts">--%>
 <%--<input type="button" value="查看" onclick="getPicFileList()">--%>
 
-<script>
-
-</script>
 
 </body>
 </html>
