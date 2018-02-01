@@ -13,9 +13,13 @@
             <td>${collectora.id}</td>
         </tr>
         <tr>
+            <td>采集器ID</td>
+            <td>${collectora.cid}</td>
+        </tr>
+        <tr>
             <td>所属配电房:</td>
             <td>
-                ${collectora.dis}
+                ${collectora.disName}
             </td>
         </tr>
         <tr>
@@ -24,10 +28,14 @@
                 ${collectora.cip}
             </td>
         </tr>
+        <%--<tr>--%>
+        <%--<td>排序:</td>--%>
+        <%--<td>${collectora.}--%>
+        <%--</td>--%>
+        <%--</tr>--%>
         <tr>
-            <td>排序:</td>
-            <td>${collectora.sortorder}
-            </td>
+            <td>添加时间</td>
+            <td>${collectora.cdate}</td>
         </tr>
     </table>
 </div>

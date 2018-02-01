@@ -20,6 +20,7 @@
     <%--<script type="text/javascript" src="${basePath}/js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>--%>
 
     <script type="text/javascript">
+        var basePath = "${basePath}";
         $(function () {
             var infolist = $('#infolist');
             infolist.datagrid({
@@ -46,19 +47,25 @@
                 columns: [[{
                     title: '钥匙编号',
                     field: 'keyssCode',
-                    width: 300,
+                    width: 350,
                     align: 'center'
                 },
                     {
                         title: '钥匙名称',
                         field: 'keyssName',
+                        width: 250,
+                        align: 'center'
+                    },
+                    {
+                        title: '钥匙MAC',
+                        field: 'keyssMAC',
                         width: 300,
                         align: 'center'
                     },
                     {
                         title: '领用人',
                         field: 'userName',
-                        width: 300,
+                        width: 200,
                         align: 'left'
                     },
 //                {
@@ -250,7 +257,7 @@
         function setToarea() {
             var id = "";
             var show = "";
-            fullname = ""
+            fullname = "";
             var selections = $('#tree').tree('getSelected');
             if (selections) {
                 id = selections.id;
@@ -289,17 +296,100 @@
         }
 
         function query() {
-            infolist.datagrid({
+            infoulist.datagrid({
                 url: basePath + '/user/list',
                 queryParams: {
                     'username': $('#username').val()
                 },
                 loadMsg: '数据装载中......'
             });
-            infolist.datagrid("clearSelections");
+            infoulist.datagrid("clearSelections");
             displayMsg();
             $.closeWin(addWin);
         }
+
+        <%--function user () {--%>
+        <%--var deptId = "";--%>
+        <%--var infoulist = $('#user');--%>
+        <%--infoulist.datagrid({--%>
+        <%--title: '使用人列表',--%>
+        <%--iconCls: 'icon-users',--%>
+        <%--width: '56%',--%>
+        <%--height: 360,--%>
+        <%--pageSize: 20,--%>
+        <%--pageList: [20, 30, 50, 100],--%>
+        <%--nowrap: false,--%>
+        <%--striped: true,--%>
+        <%--collapsible: false,--%>
+        <%--fitColumns: true,--%>
+        <%--singleSelect: true,--%>
+        <%--url: '${basePath}/user/list',--%>
+        <%--queryParams: {--%>
+        <%--'deptId': deptId--%>
+        <%--},--%>
+        <%--loadMsg: '数据装载中......',--%>
+        <%--remoteSort: false,--%>
+        <%--onDblClickRow: function (rowIndex, field, value) {--%>
+        <%--var rows = infoulist.datagrid("getRows");--%>
+        <%--var id = rows[rowIndex].id;--%>
+        <%--showEdit(id);--%>
+        <%--},--%>
+        <%--columns: [[--%>
+        <%--{--%>
+        <%--title: '区域',--%>
+        <%--field: 'deptname',--%>
+        <%--formatter: function (value, rowData, rowIndx) {--%>
+        <%--return rowData.dept.name;--%>
+        <%--},--%>
+        <%--width: $(this).width() * 0.1,--%>
+        <%--align: 'center'--%>
+        <%--},--%>
+        <%--{--%>
+        <%--title: '工号',--%>
+        <%--field: 'id',--%>
+        <%--width: $(this).width() * 0.1,--%>
+        <%--rowspan: 2,--%>
+        <%--align: 'center'--%>
+        <%--}, {--%>
+        <%--title: '用户名',--%>
+        <%--field: 'username',--%>
+        <%--width: $(this).width() * 0.1,--%>
+        <%--rowspan: 2,--%>
+        <%--align: 'center'--%>
+        <%--}, {--%>
+        <%--title: '手机',--%>
+        <%--field: 'phone',--%>
+        <%--width: $(this).width() * 0.1,--%>
+        <%--rowspan: 2,--%>
+        <%--align: 'center'--%>
+        <%--}, {--%>
+        <%--title: '邮箱',--%>
+        <%--field: 'email',--%>
+        <%--width: $(this).width() * 0.1,--%>
+        <%--rowspan: 2,--%>
+        <%--align: 'center'--%>
+        <%--}, {--%>
+        <%--title: '注册时间',--%>
+        <%--field: 'rdate',--%>
+        <%--width: $(this).width() * 0.1,--%>
+        <%--rowspan: 2,--%>
+        <%--align: 'center'--%>
+        <%--}, {--%>
+        <%--title: '角色',--%>
+        <%--field: 'roles',--%>
+        <%--formatter: function (value, rec) {--%>
+        <%--var t = "";--%>
+        <%--$.each(value, function (i, v) {--%>
+        <%--t += v.name + " ";--%>
+        <%--});--%>
+        <%--return t;--%>
+        <%--},--%>
+        <%--width: $(this).width() * 0.2,--%>
+        <%--rowspan: 2,--%>
+        <%--align: 'center'--%>
+        <%--}]],--%>
+        <%--]--%>
+        <%--};--%>
 
 
     </script>
@@ -322,11 +412,11 @@
 <div id="selectUser">
     <div class="easyui-layout" fit="true">11
         <a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>
-        <div region="center" border="false" style="padding: 10px;">
+        <table id="users"></table>
+        <div id="user" region="center" border="false" style="padding: 10px;">
             <ul id="tree" style="margin-top: 10px;"></ul>
 
             33
-
 
             <thead>
             <tr>
@@ -345,7 +435,7 @@
 
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
-            22
+
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
             <a class="easyui-linkbutton" onclick="$('#selectUser').window('close');">关闭</a>
         </div>

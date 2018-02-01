@@ -186,19 +186,21 @@
                         text: '详情',
                         iconCls: 'icon-view',
                         handler: seedetail
-                    }, '-', {
-                        iconCls: "icon-add",
-                        text: "添加",
-                        handler: add
-                    }, '-', {
-                        text: '修改',
-                        iconCls: 'icon-edit',
-                        handler: edit
-                    }, '-', {
-                        text: '删除',
-                        iconCls: 'icon-remove',
-                        handler: del
-                    }, {
+                    },
+//                    '-', {
+//                        iconCls: "icon-add",
+//                        text: "添加",
+//                        handler: add
+//                    }, '-', {
+//                        text: '修改',
+//                        iconCls: 'icon-edit',
+//                        handler: edit
+//                    }, '-', {
+//                        text: '删除',
+//                        iconCls: 'icon-remove',
+//                        handler: del
+//                    },
+                    {
                         iconCls: "icon-add",
                         text: "票",
                         handler: workticket

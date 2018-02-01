@@ -113,6 +113,7 @@
                 });
             }
 
+            var id;
             var addWin;
             var seeWin;
             var updateWin;
@@ -272,8 +273,65 @@
                     $.messager.alert('警告', '未选中任何数据', 'warning');
                 }
             }
+
+            function search() {
+                addWin = $.createWin({
+                    title: "查询条件",
+                    contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id='username'/></td></tr></table>",
+
+                    width: 300,
+                    buttons: [{
+                        text: '查询',
+                        iconCls: 'icon-search',
+                        handler: query
+                    }]
+                });
+            }
+
+            function query() {
+                infolist.datagrid({
+                    url: basePath + '/keyss/list',
+                    queryParams: {
+                        'userName': $('#username').val()
+                    },
+                    loadMsg: '数据装载中......'
+                });
+                infolist.datagrid("clearSelections");
+                displayMsg();
+                $.closeWin(addWin);
+            }
+
+            function setToarea() {
+                var id = "";
+                var show = "";
+                fullname = ""
+                var selections = $('#tree').tree('getSelected');
+                if (selections) {
+                    id = selections.id;
+                    show = selections.attributes.username;
+                    $("#usercode").val(id);
+                    getUsername(selections);
+                    fullname = fullname.substring(0, fullname.length - 1);
+                    $("#username").val(fullname);
+                }
+                $('#selectUser').window('close');
+            }
+
+            var fullname = "";
+
+            function getUsername(node) {
+                fullname = node.text + " " + fullname;
+                if (node.attributes.parentcode == 0) {
+                    return;
+                }
+                var abc = $('#tree').tree('getParent', node.target);
+                getAreaname(abc);
+            }
+
         });
 
+
+        //        ===
         function setToarea() {
             var id = "";
             var show = "";
@@ -302,32 +360,7 @@
         }
 
 
-        function search() {
-            addWin = $.createWin({
-                title: "查询条件",
-                contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr></table>",
 
-                width: 300,
-                buttons: [{
-                    text: '查询',
-                    iconCls: 'icon-search',
-                    handler: query
-                }]
-            });
-        }
-
-        function query() {
-            infolist.datagrid({
-                url: basePath + '/user/list',
-                queryParams: {
-                    'username': $('#username').val()
-                },
-                loadMsg: '数据装载中......'
-            });
-            infolist.datagrid("clearSelections");
-            displayMsg();
-            $.closeWin(addWin);
-        }
 
     </script>
 </head>
@@ -339,7 +372,7 @@
 </div>
 <div id="selectUser">
     <div class="easyui-layout" fit="true">
-        <a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>
+        <a class="easyui-linkbutton" icon="" onclick="search();">查询</a>
         <div region="center" border="false" style="padding: 10px;">
             <ul id="tree" style="margin-top: 10px;"></ul>
         </div>

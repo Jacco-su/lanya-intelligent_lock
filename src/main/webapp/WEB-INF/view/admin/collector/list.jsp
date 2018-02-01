@@ -48,6 +48,11 @@
                 columns: [[{
                     title: '采集器编号',
                     field: 'id',
+                    width: $(this).width() * 0.1,
+                    align: 'center'
+                }, {
+                    title: '采集器ID',
+                    field: 'cid',
                     width: $(this).width() * 0.2,
                     align: 'center'
                 },
@@ -69,7 +74,7 @@
                         formatter: function (value, rowData, rowIndx) {
                             return rowData.dis.name;
                         },
-                        width: $(this).width() * 0.1,
+                        width: $(this).width() * 0.2,
                         align: 'center'
                     },
                     {

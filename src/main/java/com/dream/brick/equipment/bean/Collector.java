@@ -1,9 +1,6 @@
 package com.dream.brick.equipment.bean;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * 采集器 数据库防问实体 类
@@ -19,6 +16,7 @@ public class Collector {
      */
     private static final long serialVersionUID = 4725135016331954412L;
     private String id;
+    private String ccode; //采集器ID
     private String cip;// 采集器IP地址
     //    private String disId;// 所在配电房
     private Qgdis disName; // 所在配电房名称
@@ -39,6 +37,14 @@ public class Collector {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCcode() {
+        return ccode;
+    }
+
+    public void setCcode(String ccode) {
+        this.ccode = ccode;
     }
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -96,4 +102,5 @@ public class Collector {
 //    public void setCollectorDiss(String collectorDiss) {
 //        this.collectorDiss = collectorDiss;
 //    }
+
 }

@@ -1,6 +1,8 @@
 package com.dream.brick.equipment.action;
 
+import com.alibaba.fastjson.JSON;
 import com.dream.brick.equipment.bean.Keyss;
+import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.IKeyssDao;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
@@ -9,6 +11,7 @@ import com.dream.util.StringUtil;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +33,8 @@ public class KeyssAction {
 
     @Resource
     private IKeyssDao ikeyssDao;
+    @Resource
+    private CollectorDao collectorDao;
 
 
     @RequestMapping("/prList")
@@ -53,7 +58,8 @@ public class KeyssAction {
 
 
     @RequestMapping("/prAdd")
-    public String prAdd() {
+    public String prAdd(ModelMap modelMap) {
+        modelMap.addAttribute("collectorList", JSON.toJSONString(collectorDao.findAllCollector()));
         return "admin/keyss/add";
     }
 

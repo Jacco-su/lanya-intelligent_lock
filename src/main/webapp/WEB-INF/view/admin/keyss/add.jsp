@@ -8,13 +8,61 @@
 %>
 
 <script type="text/javascript">
+    $(function () {
+        var data = '${collectorList}';
+        data = JSON.parse(data);
+        $('#cid').empty();
+        for (var i = 0; i < data.length; i++) {
+            $('#cid').append("<option value='" + data[i].ccode + "'>" + data[i].ccode + "</option>");
+        }
+    });
+
+    function getMVC() {
+//        System.out.println(System.currentTimeMillis());
+//        //连接本地的 Redis 服务
+//        Jedis jedis = new Jedis("192.168.1.120", 6379);
+        var ccode = $("#cid").val();
+        var quest = ccode + '$13';
+
+        $.ajax({
+            //此处使用的是自己封装的JAVA类
+//            http://localhost:8080/redis/set?key=xxx&value=niaws74123&call_id=1517282489050&token=12&app_sign=123&SecurityKey=123
+            url: "${basePath}/redis/get",
+            type: "POST",
+            data: {"key": quest},
+            success: function (data) {
+                if (!data.length) {
+                    outerWidth(date);
+                    return data;
+                } else {
+                    //获取到的图片数组处理逻辑方法
+                    document.getElementById("keyssMVC").innerHTML = "";
+                    $('#keyssMAC').value();
+                    out(data);
+                }
+            },
+            error: function (e) {
+                console.log(e);
+                console.log("获取文件list数组失败，请检查接口服务");
+            }//获取文件list数组失败
+        });
+
+
+        out('1');
+        return data;
+
+    }
+
+    //    success：function（data）{
+    ////在这里写你的业务代码，处理页面效果。
+    //    }
+    //    $.get("/api/get",success:function(json){
+    //        alert(json);
+    //    });
 
 </script>
 
-
 <style>
-
-
     input:focus {
         color: rgba(7, 7, 7, 0.99);
     }
@@ -39,11 +87,21 @@
                 </td>
             </tr>
             <tr>
+                <td>采集器ID:</td>
+                <td>
+
+                    <select id="cid" name="collector.id" style="width: 200px;"></select>
+                </td>
+            </tr>
+            <tr>
                 <td>钥匙MAC:</td>
                 <td>
-                    <input name="keyssMAC" value="点击获取" class="easyui-validatebox"
-                           onclick="$('#selectArea').window('open');"
+                    <input id="keyssMAC" type="text" name="keyssMAC" value="" class="easyui-validatebox"
+                           onclick="getMVC()"
                            required="true"/>
+                    <a class="easyui-linkbutton"
+                       onclick="getMVC()">获取</a>
+                    <input type="hidden" name="keyssMAC" id="keysMAC" value=""/>
                 </td>
             </tr>
 
@@ -61,6 +119,8 @@
                     <%--</c:forEach>--%>
                     <%--</select>--%>
                     <%--<a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>--%>
+
+
                 </td>
 
             </tr>

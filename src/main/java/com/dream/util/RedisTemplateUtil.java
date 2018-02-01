@@ -33,6 +33,11 @@ public class RedisTemplateUtil {
         listOperations.leftPush(key, value);
     }
 
+    public void setList(String key, String value) {
+        ListOperations listOperations = redisTemplate.opsForList();
+        listOperations.leftPush(key, value);
+//        listOperations.l
+    }
     public Object getList(String key) {
         return redisTemplate.opsForList().leftPop(key);
     }

@@ -30,7 +30,7 @@
             //此处使用的是自己封装的JAVA类
             url: "${basePath}/capture/icture",
             type: "POST",
-            data: {params: params},//图片文件夹路径作为参数传入java类
+            data: {"params": params},//图片文件夹路径作为参数传入java类
             success: function (data) {
                 if (!data.length) {
                     alert("您还没有截图，无法查看图片！");
