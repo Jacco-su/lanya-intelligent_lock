@@ -1,12 +1,8 @@
 package com.dream.brick.equipment.action;
 
 
-import com.dream.brick.admin.bean.Department;
 import com.dream.brick.equipment.bean.Qgdis;
-import com.dream.brick.equipment.bean.Qgorg;
 import com.dream.brick.equipment.dao.QgdisDao;
-import com.dream.brick.listener.BasicData;
-import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
@@ -24,9 +20,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static com.dream.brick.listener.BasicData.deptDao;
 import static com.dream.brick.listener.BasicData.qgdisDao;
-import static com.dream.brick.listener.BasicData.qgorgDao;
 
 //import com.dream.brick.equipment.bean.Qgorg;
 

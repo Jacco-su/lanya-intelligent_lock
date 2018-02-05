@@ -32,4 +32,8 @@ public class AuthorizationDaoImpl extends BaseDaoImpl implements IAuthorizationD
         return query(hql, pager);
 
     }
+
+    public List<Authorization> findListDisa(String disa){
+        return findList("from Qgdis where deptId="+disa);
+    }
 }

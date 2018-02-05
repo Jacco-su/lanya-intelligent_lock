@@ -22,7 +22,7 @@
 //        //连接本地的 Redis 服务
 //        Jedis jedis = new Jedis("192.168.1.120", 6379);
         var ccode = $("#cid").val();
-        var quest = ccode + '$13';
+        var quest = ccode + ':13';
 
         $.ajax({
             //此处使用的是自己封装的JAVA类
@@ -32,13 +32,10 @@
             data: {"key": quest},
             success: function (data) {
                 if (!data.length) {
-                    outerWidth(date);
                     return data;
                 } else {
-                    //获取到的图片数组处理逻辑方法
                     document.getElementById("keyssMVC").innerHTML = "";
                     $('#keyssMAC').value();
-                    out(data);
                 }
             },
             error: function (e) {
@@ -46,9 +43,6 @@
                 console.log("获取文件list数组失败，请检查接口服务");
             }//获取文件list数组失败
         });
-
-
-        out('1');
         return data;
 
     }

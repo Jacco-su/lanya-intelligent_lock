@@ -66,6 +66,8 @@ public class RedisTemplateUtil {
         redisTemplate.delete(key);
     }
 
+
+
 //    public void clearAll(){
 //        redisTemplate.multi();
 //    }

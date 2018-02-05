@@ -1,10 +1,12 @@
 package com.dream.brick.equipment.action;
 
 
+import com.alibaba.fastjson.JSON;
 import com.dream.brick.equipment.bean.Authorization;
 
 import com.dream.brick.equipment.dao.IAuthorizationDao;
 
+import com.dream.brick.equipment.dao.QgdisDao;
 import com.dream.brick.listener.BasicData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
@@ -34,6 +36,9 @@ public class AuthorizationAction {
     @Resource
     private IAuthorizationDao authorizationDao;
 
+    @Resource
+    private QgdisDao disDao;
+
     @RequestMapping("/prList")
     public String prList(String authorizationId, HttpServletRequest request)
             throws Exception {
@@ -62,7 +67,11 @@ public class AuthorizationAction {
         model.addAttribute("authorizationa", authorizationa);
         return "admin/authorization/view";
     }
+    @RequestMapping("/prViewAuth")
+    public String prViewAuth( ModelMap model) {
 
+        return "admin/authorization/authList";
+    }
     @RequestMapping("/workView")
     public String workView(String id, ModelMap model) {
         Authorization authorizationa = authorizationDao.find(Authorization.class, id);
@@ -129,5 +138,20 @@ public class AuthorizationAction {
     @ResponseBody
     public String offLine(int page, int rows, String authorizationId, String uName, Pager pager) throws Exception {
         return null;
+    }
+    @RequestMapping("/distribution")
+    @ResponseBody
+    public String getDistributionAction(String disaId){
+        return JSON.toJSONString(authorizationDao.findListDisa(disaId));
+    }
+    @RequestMapping("/user")
+    @ResponseBody
+    public String getUserAction(String disaId){
+        return JSON.toJSONString(authorizationDao.findList("from User where deptId="+disaId));
+    }
+    @RequestMapping("/disa/collector")
+    @ResponseBody
+    public String getCollectorAction(String disaId){
+        return JSON.toJSONString(authorizationDao.findList("from Collector where disId="+disaId));
     }
 }
