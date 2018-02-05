@@ -157,8 +157,12 @@ a:hover{ color:Red; text-decoration:underline;}
     background-position: -280px -140px;
 }
 
-.icon-collector {
+.icon-collectore {
     background-position: -340px -220px;
+}
+
+.icon-collector {
+    background-position: -200px -460px;
 }
 
 .icon-users {

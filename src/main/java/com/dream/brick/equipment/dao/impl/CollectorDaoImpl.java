@@ -1,7 +1,6 @@
 package com.dream.brick.equipment.dao.impl;
 
 import com.dream.brick.equipment.bean.Collector;
-import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.framework.dao.BaseDaoImpl;
 import com.dream.framework.dao.Pager;
@@ -33,10 +32,10 @@ public class CollectorDaoImpl extends BaseDaoImpl implements CollectorDao {
 //        return (Qgdis) find(Qgdis.class, disId);
 //    }
 //
-//    public List<Collector> findCollectorByQgdisid(String disId) {
-//        String hql = "from Collector t  order by t.sortorder";
-//        return findList(hql);
-//    }
+public List<Collector> findCollectorByQgdisid(String disId) {
+    String hql = "from Collector t ";
+    return findList(hql);
+}
 
     public List<Collector> findCollectorList(Pager pager) {
         String hql = "from Collector";

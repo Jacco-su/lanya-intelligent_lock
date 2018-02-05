@@ -65,6 +65,7 @@ public class KeyssAction {
 
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
     public String add(@ModelAttribute Keyss keyss) {
         String message = "";
         // Keyss keyss = BasicData.findKeyssByUserName(disa.getUserName());
@@ -81,16 +82,56 @@ public class KeyssAction {
     }
 
 
-//    @RequestMapping
-//    public String delete(String id) {
-//        String mess
-//
-//
-//
-//
-//
-//        return null;
-//    }
+    @RequestMapping("/prUpdate")
+    public String Update(String id, ModelMap modelMap) {
+        Keyss keyss = ikeyssDao.find(Keyss.class, id);
+        modelMap.addAttribute("keyss", keyss);
+        return "admin/keyss/update";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public String update(@ModelAttribute Keyss keyss) {
+        String message = "";
+        try {
+
+            keyss.setKeyssName(keyss.getKeyssName());
+            keyss.setUserName(keyss.getUserName().trim());
+            keyss.setKeyssDate(keyss.getKeyssDate().trim());
+            collectorDao.update(keyss);
+            message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = StringUtil.jsonValue("0", AppMsg.UPDATE_ERROR);
+        }
+        return message;
+    }
+
+
+    @RequestMapping("/prView")
+    public String View(String id, ModelMap modelMap) {
+        Keyss keyss = ikeyssDao.find(Keyss.class, id);
+        modelMap.addAttribute("keyss", keyss);
+        return "admin/keyss/view";
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public String delete(String id) {
+        String message = "";
+        try {
+            Keyss keyss = ikeyssDao.find(Keyss.class, id);
+            ikeyssDao.delete(keyss);
+            message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            message = StringUtil.jsonValue("0", AppMsg.DEL_ERROR);
+        }
+
+        return message;
+    }
+
 
 
 }

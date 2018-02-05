@@ -2,11 +2,12 @@ package com.dream.brick.equipment.action;
 
 
 import com.alibaba.fastjson.JSON;
-import com.dream.brick.equipment.bean.Collector;
+import com.dream.brick.equipment.bean.Collectore;
 import com.dream.brick.equipment.dao.CollectorDao;
-import com.dream.brick.equipment.dao.QgdisDao;
+import com.dream.brick.equipment.dao.CollectoreDao;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
+import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -28,22 +28,23 @@ import java.util.List;
  */
 @Controller
 @Scope("prototype")
-@RequestMapping("/collector")
+@RequestMapping("/collectore")
 
-public class CollectorAction {
+public class CollectoreAction {
 
 
+    @Resource
+    private CollectoreDao collectoreDao;
     @Resource
     private CollectorDao collectorDao;
 
-    @Resource
-    private QgdisDao qgdisDao;
+    //    private QgdisDao qgdisDao;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @RequestMapping("/prList")
-    public String prList(String collectorId, HttpServletRequest request)
+    public String prList()
             throws Exception {
-        return "admin/collector/list";
+        return "admin/collectore/list";
     }
 
     @RequestMapping("/list")
@@ -53,7 +54,7 @@ public class CollectorAction {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        List<Collector> list = collectorDao.findCollectorList(pager);
+        List<Collectore> list = collectoreDao.findCollectoreList(pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
@@ -61,53 +62,67 @@ public class CollectorAction {
 
 
     @RequestMapping("/prAdd")
-    public String prAdd(ModelMap model) {
-        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findAllQgdis()));
-        return "admin/collector/add";
+    public String prAdd(ModelMap modelMap) {
+        modelMap.addAttribute("collectorList", JSON.toJSONString(collectorDao.findAllCollector()));
+//        model.addAttribute("collectoreId", collectoreId);
+        return "admin/collectore/add";
     }
+
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(@ModelAttribute Collector collector, String[] disIdList) {
+    public String add(@ModelAttribute Collectore collectorea) {
         String message = "";
+
+        try {
+            collectorea.setCeDate(FormatDate.getYMdHHmmss());
+//                collectorea.setCeCode(collectorea.getCeCode());
+            collectoreDao.addCollectore(collectorea);
+            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+        }
+        return message;
+    }
+
 //            try{
 //                Area area= BasicData.findAreaByAreacode(disa.getAreacode());
 
-//                disa.setAreaname(area.getAreaname());
-//                disa.setAddress(disa.getAddress().trim());
-//                disDao.save(disa);
+//                data.setAreaname(area.getAreaname());
+//                data.setAddress(disa.getAddress().trim());
+//                collctoreDao.save(disa);
 //                message= StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
 //            }catch(Exception e){
 //                message=StringUtil.jsonValue("0",AppMsg.ADD_ERROR);
 //            }
 //            try {
-//                Qgdis qgdis = BasicData.findAreaByAreacode(collector.getDis());
-//                return collectorDao.findCollectorByQgdisid(qgdisId);
-//                collector.setCcode(collector.getAreaname());
-//                collector.setAddress(collector.getAddress().trim());
-//                collector.setLock(collector.getLock());
-//                collectorDao.save(collector);
+//                Area area = BasicData.findAreaByAreacode(disa.getAreacode());
+//                return qgdisDao.findQgdisByAreacode(areacode);
+//                disa.setAreaname(area.getAreaname());
+//                disa.setAddress(disa.getAddress().trim());
+    //disa.setLock(disa.getLock());
+//                disDao.save(disa);
 //                message= StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
 //             }catch(Exception e){
 //                message=StringUtil.jsonValue("0",AppMsg.ADD_ERROR);
 //            }
-//        collector.setId("1");
-//        collector.setCip(collector.getCip());
-//        collector.setCdate(sdf.format(new Date().getTime()));
-//        //initRolea(collector, disIdList);
+//        data.setId("1");
+//        collectore.setCip(collectore.getCip());
+//        collectore.setCdate(sdf.format(new Date().getTime()));
+//        //initRolea(collectore, disIdList);
 //
 //        try {
-//            collectorDao.save(collector);
-//            //collectorDao.addCollector(collector);
+//            collectoreDao.save(collectore);
+//            //collectoreDao.addCollectore(collectore);
 //            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
 //        } catch (Exception e) {
 //            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
 //        }
 
-        return message;
-    }
+
 //
-//    public void initRolea(Collector collector, String[] disIdList) {
+//    public void initRolea(Collectore collectore, String[] disIdList) {
 ////        if(list==null){
 ////            list=new String[0];
 ////        }
@@ -135,66 +150,60 @@ public class CollectorAction {
 //        if (disIds.length() > 0) {
 //            disIds = disIds.substring(0, disIds.length() - 1);
 //        }
-//        collector.setCollectorDiss(disIds);
+//        collectore.setCollectoreDiss(disIds);
 //    }
 
 
     @RequestMapping("/prUpdate")
     public String prUpdate(String id, ModelMap model) {
-        Collector collector = collectorDao.find(Collector.class, id);
-        model.addAttribute("collectora", collector);
-        return "admin/collector/update";
+        Collectore collectore = collectoreDao.find(Collectore.class, id);
+        model.addAttribute("collectore", collectore);
+        return "admin/collectore/update";
     }
 
     @RequestMapping("/prView")
     public String prView(String id, ModelMap model) {
-        Collector collector = collectorDao.find(Collector.class, id);
-        model.addAttribute("collectora", collector);
-        return "admin/collector/view";
+        Collectore collectore = collectoreDao.find(Collectore.class, id);
+        model.addAttribute("collectorea", collectore);
+        return "admin/collectore/view";
     }
 
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    @ResponseBody
-    public String update(@ModelAttribute Collector collector) {
-        String message = "";
-        try {
-//                Qgdis qgdis= BasicData.findAreaByAreacode(collector.getAreacode());
-//                collector.setAreaname(qgdis.getAreaname());
-//                Qgdis qgdis= BasicData.findQgdsiById(collector.getDis().getId());
-//                collector.setDis(qgdis.getName());
-//                Qgdis qgdis = BasicData.findCollectorByQgdisId(collector.getDis().getId());
-//                collector.setDis();
+//    @RequestMapping(value = "/update", method = RequestMethod.POST)
+//    @ResponseBody
+//    public String update(@ModelAttribute Collectore collectore) {
+//        String message = "";
+//            try{
+//                Collector collector= BasicData.findAreaByAreacode(collectore.getAreacode());
+//                collectore.setAreaname(collector.getAreaname());
+//                collectore.setAddress(collectore.getAddress().trim());
+//                collectore.setName(collectore.getName().trim());
+//                collectoreDao.update(collectore);
+//                message=StringUtil.jsonValue("1",AppMsg.UPDATE_SUCCESS);
+//            }catch(Exception e){
+//                message=StringUtil.jsonValue("0",AppMsg.UPDATE_ERROR);
+//            }
+//
+//        return message;
+//    }
 
-
-            collector.setCcode(collector.getCcode().trim());
-            collector.setCip(collector.getCip().trim());
-//                collector.setDis(collector.getDis().g.trim());
-            collectorDao.update(collector);
-            message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
-        } catch (Exception e) {
-            message = StringUtil.jsonValue("0", AppMsg.UPDATE_ERROR);
-        }
-        return message;
-    }
-
-
-    @RequestMapping("/delete")
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public String delete(String id) {
         String message = "";
-//        String hql = "select count(*) from locks t where t.collectorId=?";
-//        int count = collectorDao.getResultNumber(hql, id);
+//        String hql = "select count(*) from locks t where t.collectoreId=?";
+//        int count = collectoreDao.getResultNumber(hql, id);
 //        if (count > 0) {
-//            message = StringUtil.jsonValue("0", AppMsg.getMessage("collector101"));
-//            //101该采集器有控制器，不允许删除
+//            message = StringUtil.jsonValue("0", AppMsg.getMessage("collectore101"));
+//            //101该配电房拥有智能锁，不允许删除
 //            return message;
 //        }
         try {
-            Collector collector = collectorDao.find(Collector.class, id);
-            collectorDao.delete(collector);
+            Collectore collectore = collectoreDao.find(Collectore.class, id);
+            collectoreDao.delete(collectore);
             message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);
         } catch (Exception e) {
+            e.printStackTrace();
             message = StringUtil.jsonValue("0", AppMsg.DEL_ERROR);
         }
         return message;

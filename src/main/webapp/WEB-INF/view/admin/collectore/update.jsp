@@ -9,32 +9,32 @@
 
 <%--/**   修改*/--%>
 <div>
-    <form name="editForm" id="editForm" action="${basePath}/collector/prUpdate" method="post">
+    <form name="editForm" id="editForm" action="${basePath}/collectore/prUpdate" method="post">
         <table class="mytable" align="center">
             <tr>
                 <td>采集器ID:</td>
                 <td>
-                    <input type="hidden" name="cid" value="${collectora.id}"/>
-                    <input name="name" value="${collectora.ccode}" class="easyui-validatebox" required="true"/></td>
+                    <input type="hidden" name="cid" value="${collectore.ceCode}"/>
+                    <input name="name" value="${collectore.cid}" class="easyui-validatebox" required="true"/></td>
             </tr>
 
             <tr>
-                <td width="100">所属配电房</td>
+                <td width="100">所属智能采集器</td>
                 <td>
-                    <input type="text" name="disame" id="areaname" value="${collectora.dis}" readonly/><a
+                    <input type="text" name="disame" id="areaname" value="${collectore.collertor}" readonly/><a
                         class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>
-                    <%--<input type="hidden" name="discode" id="discode" value="${collector.dis}"/>--%>
+                    <input type="hidden" name="discode" id="discode" value="${collectore.collector}"/>
                 </td>
             </tr>
             <tr>
-                <td>IP地址:</td>
+                <td>MAC地址:</td>
                 <td>
-                    <input name="cip" value="${collectora.cip}" class="easyui-validatebox" required="true"/>
+                    <input name="cip" value="${collectore.ceMAC}" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
             <tr>
                 <td>日期:</td>
-                <td><input name="cdate" value="${collectora.cdate}" class="easyui-validatebox" required="true"/>
+                <td><input name="cdate" value="${collectore.ceDate}" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
         </table>

@@ -35,6 +35,7 @@ public class BasicData {
     public static IKeyssDao ikeyssDao;
 //    public static IAuthorizationDao iauthorizationDao;
     //private static RedisDao redisDao;
+public static CollectoreDao collectoreDao;
 
 
 	   public static SpringUtil getSprintUtil()
@@ -53,6 +54,7 @@ public class BasicData {
            ilocksDao = (ILocksDao) SpringUtil.getObject("locksDaoImpl");
            ikeyssDao = (IKeyssDao) SpringUtil.getObject("keyssDaoImpl");
            collectorDao = (CollectorDao) SpringUtil.getObject("collectorDaoImpl");
+           collectoreDao = (CollectoreDao) SpringUtil.getObject("collectoreDaoImpl");
 //               iauthorizationDao = (IAuthorizationDao) SpringUtil.getObject("authorizationDapImpl");
 	   }
 	   /**
@@ -110,6 +112,10 @@ public class BasicData {
         return collectorDao.findAllCollector();
     }
 
+    public static List<Collectore> findAllCollectore() {
+        return collectoreDao.findAllCollectore();
+    }
+
     public static List<Locks> findAllLocks() {
         return ilocksDao.findAllLocks();
     }
@@ -138,9 +144,15 @@ public class BasicData {
         return (Qgdis) qgdisDao.find(Qgdis.class, id);
     }
 
-//    public static List<Collector> findCollectorByQgdisid(String disId) {
-//        return collectorDao.findCollectorByQgdisid(disId);
-//    }
+    public static List<Collector> findCollectorByQgdisId(String disId) {
+        return collectorDao.findCollectorByQgdisid(disId);
+    }
+//	public static Collector findCollectorByCollectordisId(String areacode){
+//		return qgorgDao.findAreaByAreacode(areacode);
+//	}
+//	public static Collector findCollectorById(String id) {
+//		return (Collector) collectoreDao.find(Collector.class, id);
+//	}
 
 //    public static Collector findCollectorById(String id) {
 //        return (Collector) collectorDao.find(Collector.class, id);

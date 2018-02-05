@@ -17,7 +17,7 @@
         }
     });
 
-    function getMVC() {
+    function getMAC() {
 //        System.out.println(System.currentTimeMillis());
 //        //连接本地的 Redis 服务
 //        Jedis jedis = new Jedis("192.168.1.120", 6379);
@@ -48,7 +48,6 @@
         });
 
 
-        out('1');
         return data;
 
     }
@@ -77,7 +76,11 @@
         <table class="mytable" align="center">
             <tr>
                 <td>钥匙编号:</td>
-                <td><input name="keyssCode" id="keyssCode" value="" class="easyui-validatebox" required="true"/></td>
+                <td><input name="keyssCode" id="keyssCode" value="" class="easyui-validatebox" style="width: 200px;"
+                           required="true"/>
+                    <a class="easyui-linkbutton"
+                       onclick="getMAC()">获取</a>
+                </td>
             </tr>
 
             <tr>
@@ -86,13 +89,13 @@
                     <input name="keyssName" class="easyui-validatebox" value="" required="true"/>
                 </td>
             </tr>
-            <tr>
-                <td>采集器ID:</td>
-                <td>
+            <%--<tr>--%>
+            <%--<td>采集器ID:</td>--%>
+            <%--<td>--%>
 
-                    <select id="cid" name="collector.id" style="width: 200px;"></select>
-                </td>
-            </tr>
+            <%--<select id="cid" name="collector.id" style="width: 200px;"></select>--%>
+            <%--</td>--%>
+            <%--</tr>--%>
             <tr>
                 <td>钥匙MAC:</td>
                 <td>
@@ -101,15 +104,15 @@
                            required="true"/>
                     <a class="easyui-linkbutton"
                        onclick="getMVC()">获取</a>
-                    <input type="hidden" name="keyssMAC" id="keysMAC" value=""/>
+                    <%--<input type="hidden" name="keyssMAC" id="keysMAC" value=""/>--%>
                 </td>
             </tr>
 
             <tr>
                 <td width="100">领用人:</td>
                 <td>
-                    <input type="text" name="userName" id="userName" value="" readonly/> <a class="easyui-linkbutton"
-                                                                                            onclick="$('#selectUser').window('open');">选择</a>
+                    <input type="text" name="userName" id="userName" value=""/>
+                    <a class="easyui-linkbutton" onclick="$('#selectUser').window('open');">选择</a>
                     <input type="hidden" name="userid" id="usercode" value=""/>
                     <%--<select name="userId" name="userId" style="width:200px;" class="easyui-validatebox" required="true">--%>
                     <%--<option value="">---请选择---</option>--%>

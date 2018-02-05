@@ -10,21 +10,21 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "t_collector")
-public class Collector {
+public class Collector implements java.io.Serializable {
     /**
      *
      */
-    private static final long serialVersionUID = 4725135016331954412L;
+
     private String id;
     private String ccode; //采集器ID
     private String cip;// 采集器IP地址
     //    private String disId;// 所在配电房
-    private Qgdis disName; // 所在配电房名称
+//    private Qgdis disName; // 所在配电房名称
     private Qgdis dis;
     // private String collectorDiss;
     private String cdate;// 日期
 
-    private int sortorder;// 采集器显示顺序
+//    private int sortorder;// 采集器显示顺序
 
     // private Set<Employee> emps = new HashSet<>();
     // private List<Qgdis> dis=new ArrayList<Qgdis>();
@@ -47,15 +47,6 @@ public class Collector {
         this.ccode = ccode;
     }
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "disId", nullable = false, updatable = true)
-    public Qgdis getDis() {
-        return dis;
-    }
-
-    public void setDis(Qgdis dis) {
-        this.dis = dis;
-    }
 
 
 //    @ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -102,5 +93,14 @@ public class Collector {
 //    public void setCollectorDiss(String collectorDiss) {
 //        this.collectorDiss = collectorDiss;
 //    }
+@ManyToOne(optional = false, fetch = FetchType.EAGER)
+@JoinColumn(name = "disId", nullable = false, updatable = true)
+public Qgdis getDis() {
+    return dis;
+}
+
+    public void setDis(Qgdis dis) {
+        this.dis = dis;
+    }
 
 }

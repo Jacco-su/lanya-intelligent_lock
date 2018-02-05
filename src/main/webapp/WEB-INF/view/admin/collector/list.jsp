@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>采集器信息</title>
+    <title>智能采集器信息</title>
     <link rel="stylesheet" type="text/css" href="${basePath}/css/mainframe.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
@@ -19,246 +19,259 @@
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
     <script type="text/javascript">
-        $(function () {
-            var infolist = $('#infolist');
-            infolist.datagrid({
-                title: '采集器列表',
-                iconCls: 'icon-collector',
-                width: '95%',
-                height: 500,
-                pageSize: 20,
-                pageList: [20, 30, 50, 100],
-                nowrap: false,
-                striped: true,
-                collapsible: false,
-                fitColumns: true,
+        var basePath = ${basePath}
+            $(function () {
+                var infolist = $('#infolist');
+                infolist.datagrid({
+                    title: '采集器列表',
+                    iconCls: 'icon-collector',
+                    width: '95%',
+                    height: 500,
+                    pageSize: 20,
+                    pageList: [20, 30, 50, 100],
+                    nowrap: false,
+                    striped: true,
+                    collapsible: false,
+                    fitColumns: true,
 
-                url: '${basePath}/collector/list',
-                queryParams: {
-                    // 'disId': disId
-                },
-                loadMsg: '数据装载中......',
-                remoteSort: false,
-                singleSelect: true,
-                onDblClickRow: function (rowIndex, field, value) {
-                    var rows = infolist.datagrid("getRows");
-                    var id = rows[rowIndex].id;
-                    detail(id);
-                },
-                columns: [[{
-                    title: '采集器编号',
-                    field: 'id',
-                    width: $(this).width() * 0.1,
-                    align: 'center'
-                }, {
-                    title: '采集器ID',
-                    field: 'cid',
-                    width: $(this).width() * 0.2,
-                    align: 'center'
-                },
-                    {
-                        title: 'IP地址',
-                        field: 'cip',
+                    url: '${basePath}/collector/list',
+                    queryParams: {
+                        // 'disId': disId
+                    },
+                    loadMsg: '数据装载中......',
+                    remoteSort: false,
+                    singleSelect: true,
+                    onDblClickRow: function (rowIndex, field, value) {
+                        var rows = infolist.datagrid("getRows");
+                        var id = rows[rowIndex].id;
+                        detail(id);
+                    },
+                    columns: [[{
+                        title: '采集器编号',
+                        field: 'id',
+                        width: $(this).width() * 0.1,
+                        align: 'center'
+                    }, {
+                        title: '采集器ID',
+                        field: 'ccode',
                         width: $(this).width() * 0.2,
                         align: 'center'
                     },
-//                    {
-//                        title: '配电房',
-//                        field: 'disId',
-//                        width: $(this).width() * 0.2,
-//                        align: 'left'
-//                    },
-                    {
-                        title: '所属配电房',
-                        field: 'dissName',
-                        formatter: function (value, rowData, rowIndx) {
-                            return rowData.dis.name;
+                        {
+                            title: '所属配电房',
+                            field: 'dissName',
+                            formatter: function (value, rowData, rowIndx) {
+                                return rowData.dis.name;
+                            },
+                            width: $(this).width() * 0.2,
+                            align: 'center'
                         },
-                        width: $(this).width() * 0.2,
-                        align: 'center'
-                    },
-                    {
-                        title: '添加日期 ',
-                        field: 'cdate',
-                        width: $(this).width() * 0.2,
-                        align: 'left',
+                        {
+                            title: '添加日期 ',
+                            field: 'cdate',
+                            width: $(this).width() * 0.2,
+                            align: 'left',
 //                        formatter:function(date)
 //                        { /* 调用函数显示时间 */
 ////                            SimpleDateFormat c = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 //                            return format(date);
 //
 //                        }
-                    },
-                ]],
-                pagination: true,
-                rownumbers: true,
-                toolbar: [
-                    {
-                        text: '详情',
-                        iconCls: 'icon-view',
-                        handler: seedetail
-                    },
-                    {
-                        iconCls: "icon-add",
-                        text: "添加",
-                        handler: add
-                    }, '-', {
-                        text: '修改',
-                        iconCls: 'icon-edit',
-                        handler: edit
-                    }, '-', {
-                        text: '删除',
-                        iconCls: 'icon-remove',
-                        handler: del
-                    }]
-            });
-            displayMsg();
-
-            function displayMsg() {
-                infolist.datagrid('getPager').pagination({
-                    beforePageText: '第',
-                    afterPageText: '页，共{pages}页',
-                    displayMsg: '当前显示从{from}到{to}共{total}记录'
+                        },
+                    ]],
+                    pagination: true,
+                    rownumbers: true,
+                    toolbar: [
+                        {
+                            text: '详情',
+                            iconCls: 'icon-view',
+                            handler: seedetail
+                        },
+                        {
+                            iconCls: "icon-add",
+                            text: "添加",
+                            handler: add
+                        },
+//                    '-', {
+//                        text: '修改',
+//                        iconCls: 'icon-edit',
+//                        handler: edit
+//                    },
+                        '-', {
+                            text: '删除',
+                            iconCls: 'icon-remove',
+                            handler: del
+                        }]
                 });
-            }
-
-            var addWin;
-            var seeWin;
-            var updateWin;
-
-            function add() {
-                addWin = $.createWin({
-                    title: "添加",
-                    url: '${basePath}/collector/prAdd',
-                    height: 350,
-                    width: 800,
-                    buttons: [{
-                        text: '保存',
-                        iconCls: 'icon-ok',
-                        handler: save
-                    }]
-                });
-            }
-
-            function save() {
-                $('#addForm').form('submit', {
-                    onSubmit: function () {
-                        return $(this).form('validate');
-                    },
-                    success: function (data) {
-                        var json = eval("(" + data + ")");
-                        $.messager.alert('提示', json.message, 'warning');
-                        $.closeWin(addWin);
-                        refresh();
-                    }
-                });
-            }
-
-            function seedetail() {
-                var select = infolist.datagrid('getSelected');
-                if (select) {
-                    detail(select.id);
-                } else {
-                    $.messager.alert('警告', '请选择一行数据', 'warning');
-                }
-            }
-
-            function detail(id) {
-                seeWin = $.createWin({
-                    title: "详情",
-                    url: '${basePath}/collector/prView',
-                    data: 'id=' + id,
-                    height: 550,
-                    width: 800,
-                    buttons: []
-                });
-            }
-
-            $('#selectArea').window({
-                title: '安装区域选择',
-                width: 400,
-                height: 500,
-                closed: true,
-                modal: true
-            });
-
-
-            $('#tree').tree({
-                checkbox: false,
-                url: '${basePath}/dept/getChildren',
-                simpleDataModel: true,
-                onBeforeExpand: function (node, param) {
-                    $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId=" + node.id;// change the url
-                    return true;
-                }
-            });
-
-            function refresh() {
-                infolist.datagrid("clearSelections");
-                infolist.datagrid("reload");
                 displayMsg();
-            }
 
-            function edit() {
-                var select = infolist.datagrid('getSelected');
-                if (select) {
-                    showEdit(select.id);
-                } else {
-                    $.messager.alert('警告', '请选择一行数据', 'warning');
+                function displayMsg() {
+                    infolist.datagrid('getPager').pagination({
+                        beforePageText: '第',
+                        afterPageText: '页，共{pages}页',
+                        displayMsg: '当前显示从{from}到{to}共{total}记录'
+                    });
                 }
-            }
 
-            function update() {
-                $('#editForm').form('submit', {
-                    onSubmit: function () {
-                        var v = $(this).form('validate');
-                        if (v) {
-                        }
-                        return v;
-                    },
-                    success: function (data) {
-                        var json = eval("(" + data + ")");
-                        $.messager.alert('提示', json.message, 'warning');
-                        $.closeWin(updateWin);
-                        refresh();
-                    }
-                });
-            }
+                var addWin;
+                var seeWin;
+                var updateWin;
 
-            function showEdit(id) {
-                updateWin = $.createWin({
-                    title: "修改",
-                    url: '${basePath}/collector/prUpdate',
-                    data: 'id=' + id,
-                    height: 550,
-                    width: 800,
-                    buttons: [{
-                        text: '修改',
-                        iconCls: 'icon-ok',
-                        handler: update
-                    }]
-                });
+                function add() {
+                    addWin = $.createWin({
+                        title: "添加",
+                        url: '${basePath}/collector/prAdd',
+                        height: 350,
+                        width: 800,
+                        buttons: [{
+                            text: '保存',
+                            iconCls: 'icon-ok',
+                            handler: save
+                        }]
+                    });
+                }
 
-            }
-
-            function del() {
-                var selected = infolist.datagrid('getSelected');
-                if (selected) {
-                    $.messager.confirm('警告', '确定要删除么?', function (f) {
-                        if (f) {
-                            $.post("${basePath}/collector/delete", {"id": selected.id}, function (json) {
-                                $.messager.alert('提示', json.message);
-                                if (json.result == 1) {
-                                    infolist.datagrid('reload');
-                                }
-                            }, "json");
+                function save() {
+                    $('#addForm').form('submit', {
+                        onSubmit: function () {
+                            return $(this).form('validate');
+                        },
+                        success: function (data) {
+                            var json = eval("(" + data + ")");
+                            $.messager.alert('提示', json.message, 'warning');
+                            $.closeWin(addWin);
+                            refresh();
                         }
                     });
-                } else {
-                    $.messager.alert('警告', '未选中任何数据', 'warning');
                 }
-            }
-        });
+
+                function seedetail() {
+                    var select = infolist.datagrid('getSelected');
+                    if (select) {
+                        detail(select.id);
+                    } else {
+                        $.messager.alert('警告', '请选择一行数据', 'warning');
+                    }
+                }
+
+                function detail(id) {
+                    seeWin = $.createWin({
+                        title: "详情",
+                        url: '${basePath}/collector/prView',
+                        data: 'id=' + id,
+                        height: 550,
+                        width: 800,
+                        buttons: []
+                    });
+                }
+
+                $('#selectArea').window({
+                    title: '安装区域选择',
+                    width: 400,
+                    height: 500,
+                    closed: true,
+                    modal: true
+                });
+
+
+                $('#tree').tree({
+                    checkbox: false,
+                    url: '${basePath}/dept/getChildren',
+                    simpleDataModel: true,
+                    onBeforeExpand: function (node, param) {
+                        $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId=" + node.id;// change the url
+                        return true;
+                    }
+                });
+
+                function refresh() {
+                    infolist.datagrid("clearSelections");
+                    infolist.datagrid("reload");
+                    displayMsg();
+                }
+
+                function edit() {
+                    var select = infolist.datagrid('getSelected');
+                    if (select) {
+                        showEdit(select.id);
+                    } else {
+                        $.messager.alert('警告', '请选择一行数据', 'warning');
+                    }
+                }
+
+                function update() {
+                    $('#editForm').form('submit', {
+                        onSubmit: function () {
+                            var v = $(this).form('validate');
+                            if (v) {
+                            }
+                            return v;
+                        },
+                        success: function (data) {
+                            var json = eval("(" + data + ")");
+                            $.messager.alert('提示', json.message, 'warning');
+                            $.closeWin(updateWin);
+                            refresh();
+                        }
+                    });
+                }
+
+                function showEdit(id) {
+                    updateWin = $.createWin({
+                        title: "修改",
+                        url: '${basePath}/collector/prUpdate',
+                        data: 'id=' + id,
+                        height: 550,
+                        width: 800,
+                        buttons: [{
+                            text: '修改',
+                            iconCls: 'icon-ok',
+                            handler: update
+                        }]
+                    });
+                }
+
+                <%--function del() {--%>
+                <%--var selected = infolist.datagrid('getSelected');--%>
+                <%--if (selected) {--%>
+                <%--$.messager.confirm('警告', '确定要删除么?', function (f) {--%>
+                <%--if (f) {--%>
+                <%--$.post("${basePath}/collector/delete", {"id": selected.id}, function (json) {--%>
+                <%--$.messager.alert('提示', json.message);--%>
+                <%--if (json.result == 1) {--%>
+                <%--infolist.datagrid('reload');--%>
+                <%--}--%>
+                <%--}, "json");--%>
+                <%--}--%>
+                <%--});--%>
+                <%--} else {--%>
+                <%--$.messager.alert('警告', '未选中任何数据', 'warning');--%>
+                <%--}--%>
+                <%--}--%>
+
+                function del() {
+                    var select = infolist.datagrid('getSelected');
+                    if (select) {
+                        $.messager.confirm('警告', '确认删除么?', function (f) {
+                            if (f) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: basePath + "/collector/delete",
+                                    data: "id=" + select.id,
+                                    dataType: "text",
+                                    cache: false,
+                                    success: function (msg) {
+                                        $.messager.alert('提示', '删除成功!', 'warning');
+                                        infolist.datagrid('reload');
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        $.messager.alert('警告', '请选择一行数据', 'warning');
+                    }
+                }
+            });
 
         function setToarea() {
             var id = "";

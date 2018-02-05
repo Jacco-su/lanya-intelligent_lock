@@ -10,7 +10,7 @@
     <table class="mytable" align="center">
         <tr>
             <td>钥匙编号:</td>
-            <td>${keyss.id}</td>
+            <td>${keyss.keyssCode}</td>
         </tr>
         <tr>
             <td>自定义名称:</td>
@@ -24,12 +24,12 @@
                 ${keyss.keyssMAC}
             </td>
         </tr>
-        <tr>
-            <td width="100">领用人:</td>
-            <td>
-                ${keyss.userName}
-            </td>
-        </tr>
+        <%--<tr>--%>
+        <%--<td width="100">领用人:</td>--%>
+        <%--<td>--%>
+        <%--${keyss.userName}--%>
+        <%--</td>--%>
+        <%--</tr>--%>
         <tr>
             <td>领用时间:</td>
             <td>${keyss.keyssDate}

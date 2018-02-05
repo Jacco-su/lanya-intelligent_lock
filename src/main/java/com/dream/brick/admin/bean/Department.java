@@ -57,7 +57,6 @@ public class Department implements java.io.Serializable{
 //	@GenericGenerator(name = "systemUUID", strategy = "uuid")
 //	@GeneratedValue(generator = "systemUUID")
 	@Id
-
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public String getId() {
 		return id;

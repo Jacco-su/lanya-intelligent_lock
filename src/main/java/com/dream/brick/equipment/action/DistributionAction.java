@@ -1,12 +1,8 @@
 package com.dream.brick.equipment.action;
 
 
-import com.dream.brick.admin.bean.Department;
 import com.dream.brick.equipment.bean.Qgdis;
-import com.dream.brick.equipment.bean.Qgorg;
 import com.dream.brick.equipment.dao.QgdisDao;
-import com.dream.brick.listener.BasicData;
-import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
@@ -24,14 +20,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static com.dream.brick.listener.BasicData.deptDao;
 import static com.dream.brick.listener.BasicData.qgdisDao;
-import static com.dream.brick.listener.BasicData.qgorgDao;
 
 //import com.dream.brick.equipment.bean.Qgorg;
 
 /**
- * 配电房 操作实现类
+ * 站点 操作实现类
  */
 @Controller
 @Scope("prototype")
@@ -52,19 +46,19 @@ public class DistributionAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows,String deptId, String dissName, Pager pager)
+    public String list(int page, int rows, String deptId, String dissName, Pager pager)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        List<Qgdis> list = disDao.findQgdisList(deptId,dissName,pager);
+        List<Qgdis> list = disDao.findQgdisList(deptId, dissName, pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
     }
 
     @RequestMapping("/prAdd")
-    public String prAdd(String deptId,ModelMap model) {
+    public String prAdd(String deptId, ModelMap model) {
         model.addAttribute("deptId", deptId);
         return "admin/diss/add";
     }
@@ -73,16 +67,17 @@ public class DistributionAction {
     @ResponseBody
     public String add(@ModelAttribute Qgdis disa) {
         String message = "";
-        try{
+        try {
             disa.setCreateTime(FormatDate.getYMdHHmmss());
             disDao.addDis(disa);
-            message=StringUtil.jsonValue("1",AppMsg.ADD_SUCCESS);
-        }catch(Exception e){
+            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
-            message=StringUtil.jsonValue("0",AppMsg.ADD_ERROR);
+            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
         }
         return message;
     }
+
     @RequestMapping("/prUpdate")
     public String prUpdate(String id, ModelMap model) {
         Qgdis qgdis = qgdisDao.find(Qgdis.class, id);
@@ -106,6 +101,7 @@ public class DistributionAction {
         try {
             disa.setAddress(disa.getAddress().trim());
             disa.setName(disa.getName().trim());
+            disa.setCreateTime(disa.getCreateTime());
             disDao.update(disa);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {
@@ -118,14 +114,14 @@ public class DistributionAction {
     @ResponseBody
     public String delete(String id) {
         String message = "";
-        String hql = "from Locks t where t.dissId=?";
+//        String hql = "from Locks t where t.id=?";
         try {
-            int count = disDao.getResultNumber(hql, id);
-            if (count > 0) {
-                message = StringUtil.jsonValue("0", AppMsg.getMessage("disa101"));
-                //101该配电房拥有智能锁，不允许删除
-                return message;
-            }
+//            int count = disDao.getResultNumber(hql, id);
+//            if (count > 0) {
+//                message = StringUtil.jsonValue("0", AppMsg.getMessage("disa101"));
+//                //101该配电房拥有智能锁，不允许删除
+//                return message;
+//            }
             Qgdis disa = disDao.find(Qgdis.class, id);
             disDao.delete(disa);
             message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);

@@ -82,7 +82,7 @@
                         field: 'keyssDate',
                         width: 250,
                         align: 'left'
-                    },
+                    }
                 ]],
                 pagination: true,
                 rownumbers: true,
@@ -119,6 +119,7 @@
             var addWin;
             var seeWin;
             var updateWin;
+            var seeuWin;
 
             function add() {
                 addWin = $.createWin({
@@ -170,7 +171,7 @@
 
             $('#selectUser').window({
                 title: '领用人',
-                width: 400,
+                width: 800,
                 height: 500,
                 closed: true,
                 modal: true
@@ -252,144 +253,177 @@
                     $.messager.alert('警告', '未选中任何数据', 'warning');
                 }
             }
-        });
 
-        function setToarea() {
-            var id = "";
-            var show = "";
-            fullname = "";
-            var selections = $('#tree').tree('getSelected');
-            if (selections) {
-                id = selections.id;
-                show = selections.attributes.username;
-                $("#usercode").val(id);
-                getUsername(selections);
-                fullname = fullname.substring(0, fullname.length - 1);
-                $("#username").val(fullname);
+
+//----------------------------------------------
+            function search() {
+                addWin = $.createWin({
+                    title: "查询条件",
+                    contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr></table>",
+                    width: 300,
+                    buttons: [{
+                        text: '查询',
+                        iconCls: 'icon-search',
+                        handler: uquery
+                    }]
+                });
             }
-            $('#selectUser').window('close');
-        }
 
-        var fullname = "";
-
-        function getUsername(node) {
-            fullname = node.text + " " + fullname;
-            if (node.attributes.parentcode == 0) {
-                return;
+            function uquery() {
+                infoulist.datagrid({
+                    url: basePath + '/user/list',
+                    queryParams: {
+                        'username': $('#username').val()
+                    },
+                    loadMsg: '数据装载中......'
+                });
+                infoulist.datagrid("clearSelections");
+                displayMsg();
+                $.closeWin(seeuWin);
             }
-            var abc = $('#tree').tree('getParent', node.target);
-            getAreaname(abc);
-        }
 
 
-        function search() {
-            addWin = $.createWin({
-                title: "查询条件",
-                contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr></table>",
-                width: 300,
-                buttons: [{
-                    text: '查询',
-                    iconCls: 'icon-search',
-                    handler: query
-                }]
-            });
-        }
-
-        function query() {
-            infoulist.datagrid({
+            $('#infoulist').tree({
+                checkbox: false,
                 url: basePath + '/user/list',
-                queryParams: {
-                    'username': $('#username').val()
+                onBeforeExpand: function (node, param) {
+                    $('#tree').tree('options').url = basePath + "/dept/getChildren?parentId=" + node.id;
                 },
-                loadMsg: '数据装载中......'
+                onClick: function (node) {
+                    deptId = node.id;
+                    refresh();
+                }
             });
-            infoulist.datagrid("clearSelections");
-            displayMsg();
-            $.closeWin(addWin);
-        }
 
-        <%--function user () {--%>
-        <%--var deptId = "";--%>
-        <%--var infoulist = $('#user');--%>
-        <%--infoulist.datagrid({--%>
-        <%--title: '使用人列表',--%>
-        <%--iconCls: 'icon-users',--%>
-        <%--width: '56%',--%>
-        <%--height: 360,--%>
-        <%--pageSize: 20,--%>
-        <%--pageList: [20, 30, 50, 100],--%>
-        <%--nowrap: false,--%>
-        <%--striped: true,--%>
-        <%--collapsible: false,--%>
-        <%--fitColumns: true,--%>
-        <%--singleSelect: true,--%>
-        <%--url: '${basePath}/user/list',--%>
-        <%--queryParams: {--%>
-        <%--'deptId': deptId--%>
-        <%--},--%>
-        <%--loadMsg: '数据装载中......',--%>
-        <%--remoteSort: false,--%>
-        <%--onDblClickRow: function (rowIndex, field, value) {--%>
-        <%--var rows = infoulist.datagrid("getRows");--%>
-        <%--var id = rows[rowIndex].id;--%>
-        <%--showEdit(id);--%>
-        <%--},--%>
-        <%--columns: [[--%>
-        <%--{--%>
-        <%--title: '区域',--%>
-        <%--field: 'deptname',--%>
-        <%--formatter: function (value, rowData, rowIndx) {--%>
-        <%--return rowData.dept.name;--%>
-        <%--},--%>
-        <%--width: $(this).width() * 0.1,--%>
-        <%--align: 'center'--%>
-        <%--},--%>
-        <%--{--%>
-        <%--title: '工号',--%>
-        <%--field: 'id',--%>
-        <%--width: $(this).width() * 0.1,--%>
-        <%--rowspan: 2,--%>
-        <%--align: 'center'--%>
-        <%--}, {--%>
-        <%--title: '用户名',--%>
-        <%--field: 'username',--%>
-        <%--width: $(this).width() * 0.1,--%>
-        <%--rowspan: 2,--%>
-        <%--align: 'center'--%>
-        <%--}, {--%>
-        <%--title: '手机',--%>
-        <%--field: 'phone',--%>
-        <%--width: $(this).width() * 0.1,--%>
-        <%--rowspan: 2,--%>
-        <%--align: 'center'--%>
-        <%--}, {--%>
-        <%--title: '邮箱',--%>
-        <%--field: 'email',--%>
-        <%--width: $(this).width() * 0.1,--%>
-        <%--rowspan: 2,--%>
-        <%--align: 'center'--%>
-        <%--}, {--%>
-        <%--title: '注册时间',--%>
-        <%--field: 'rdate',--%>
-        <%--width: $(this).width() * 0.1,--%>
-        <%--rowspan: 2,--%>
-        <%--align: 'center'--%>
-        <%--}, {--%>
-        <%--title: '角色',--%>
-        <%--field: 'roles',--%>
-        <%--formatter: function (value, rec) {--%>
-        <%--var t = "";--%>
-        <%--$.each(value, function (i, v) {--%>
-        <%--t += v.name + " ";--%>
-        <%--});--%>
-        <%--return t;--%>
-        <%--},--%>
-        <%--width: $(this).width() * 0.2,--%>
-        <%--rowspan: 2,--%>
-        <%--align: 'center'--%>
-        <%--}]],--%>
-        <%--]--%>
-        <%--};--%>
+            function query() {
+                infoulist.datagrid({
+                    url: basePath + '/user/list',
+                    queryParams: {
+                        'username': $('#username').val()
+                    },
+                    loadMsg: '数据装载中......'
+                });
+                infoulist.datagrid("clearSelections");
+                displayMsg();
+                $.closeWin(seeuWin);
+            };
+
+
+            $(function () {
+                var deptId = "";
+                var infoulist = $('#infoulist');
+                infoulist.datagrid({
+                    title: '使用人列表',
+                    iconCls: 'icon-users',
+                    width: '56%',
+                    height: 360,
+                    pageSize: 20,
+                    pageList: [20, 30, 50, 100],
+                    nowrap: false,
+                    striped: true,
+                    collapsible: false,
+                    fitColumns: true,
+                    singleSelect: true,
+                    url: '${basePath}/user/list',
+                    queryParams: {
+//                        'deptId': deptId
+                    },
+                    loadMsg: '数据装载中......',
+                    remoteSort: false,
+                    onDblClickRow: function (rowIndex, field, value) {
+                        var rows = infoulist.datagrid("getRows");
+                        var id = rows[rowIndex].id;
+                        showEdit(id);
+                    },
+                    columns: [[
+                        {
+                            title: '区域',
+                            field: 'deptname',
+                            formatter: function (value, rowData, rowIndx) {
+                                return rowData.dept.name;
+                            },
+                            width: $(this).width() * 0.1,
+                            align: 'center'
+                        },
+                        {
+                            title: '工号',
+                            field: 'id',
+                            width: $(this).width() * 0.1,
+                            rowspan: 2,
+                            align: 'center'
+                        }, {
+                            title: '用户名',
+                            field: 'username',
+                            width: $(this).width() * 0.1,
+                            rowspan: 2,
+                            align: 'center'
+                        }, {
+                            title: '手机',
+                            field: 'phone',
+                            width: $(this).width() * 0.1,
+                            rowspan: 2,
+                            align: 'center'
+                        }, {
+                            title: '邮箱',
+                            field: 'email',
+                            width: $(this).width() * 0.1,
+                            rowspan: 2,
+                            align: 'center'
+                        }, {
+                            title: '注册时间',
+                            field: 'rdate',
+                            width: $(this).width() * 0.1,
+                            rowspan: 2,
+                            align: 'center'
+                        }, {
+                            title: '角色',
+                            field: 'roles',
+                            formatter: function (value, rec) {
+                                var t = "";
+                                $.each(value, function (i, v) {
+                                    t += v.name + " ";
+                                });
+                                return t;
+                            },
+                            width: $(this).width() * 0.2,
+                            rowspan: 2,
+                            align: 'center'
+                        }
+                    ]]
+                })
+            })
+
+
+//**********************************************
+
+            function setToarea() {
+                var id = "";
+                var show = "";
+                fullname = "";
+                var selections = $('#infoulist').tree('getUsername');
+                if (selections) {
+                    id = selections.id;
+                    show = selections.attributes.username;
+                    $("#usercode").val(id);
+                    getUsername(selections);
+                    fullname = fullname.substring(0, fullname.length - 1);
+                    $("#username").val(fullname);
+                }
+                $('#selectUser').window('close');
+            }
+
+            var fullname = "";
+
+            function getUsername(node) {
+                fullname = node.text + " " + fullname;
+                if (node.attributes.parentcode == 0) {
+                    return;
+                }
+                var abc = $('#tree').tree('getParent', node.target);
+                getAreaname(abc);
+            }
+
+        });
 
 
     </script>
@@ -414,24 +448,8 @@
         <a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>
         <table id="users"></table>
         <div id="user" region="center" border="false" style="padding: 10px;">
-            <ul id="tree" style="margin-top: 10px;"></ul>
-
-            33
-
-            <thead>
-            <tr>
-                <th field="name1" width="50" rowspan="2">Col 1</th>
-                <th field="name2" width="50" rowspan="2">Col 2</th>
-                <th field="name3" width="50" rowspan="2">Col 3</th>
-                <th colspan="3">Details</th>
-            </tr>
-            <tr>
-                <th field="name4" width="50">Col 4</th>
-                <th field="name5" width="50">Col 5</th>
-                <th field="name6" width="50">Col 6</th>
-            </tr>
-            </thead>
-
+            <%--<ul id="tree" style="margin-top: 10px;"></ul>--%>
+            <table id="infoulist"></table>
 
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">

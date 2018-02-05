@@ -9,18 +9,18 @@
 
 <%--/**   修改*/--%>
 <div>
-    <form name="editForm" id="editForm" action="${basePath}/keyss/update" method="post">
+    <form name="editForm" id="editForm" action="${basePath}/keyss/prUpdate" method="post">
         <table class="mytable" align="center">
             <tr>
                 <td>钥匙编号:</td>
                 <td><input type="hidden" name="id" value="${keyss.id}"/>
-                    <input name="name" value="${keyss.name }" class="easyui-validatebox" required="true"/></td>
+                    <input name="name" value="${keyss.keyssCode}" class="easyui-validatebox" required="true"/></td>
             </tr>
 
             <tr>
                 <td>自定义名称:</td>
                 <td>
-                    <input name="cip" value="${keyss.userName}" class="easyui-validatebox" required="true"/>
+                    <input name="cip" value="${keyss.keyssName}" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
             <tr>

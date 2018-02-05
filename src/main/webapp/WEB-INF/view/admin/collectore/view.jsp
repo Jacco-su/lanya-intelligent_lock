@@ -9,33 +9,28 @@
 <div>
     <table class="mytable" align="center">
         <tr>
-            <td>采集器编号:</td>
-            <td>${collectora.id}</td>
+            <td>控制器编号:</td>
+            <td>${collectorea.ceCode}</td>
         </tr>
         <tr>
-            <td>采集器ID</td>
-            <td>${collectora.ccode}</td>
-        </tr>
-        <tr>
-            <td>所属配电房:</td>
-            <td>
-                ${collectora.dis.name}
-            </td>
-        </tr>
-        <tr>
-            <td width="100">IP地址:</td>
-            <td>
-                ${collectora.cip}
-            </td>
+            <td>控制器ID</td>
+            <td>${collectorea.ceMAC}</td>
         </tr>
         <%--<tr>--%>
+        <%--<td>所属配电房:</td>--%>
+        <%--<td>--%>
+        <%--${collectorea.}--%>
+        <%--</td>--%>
+        <%--</tr>--%>
+
+        <%--<tr>--%>
         <%--<td>排序:</td>--%>
-        <%--<td>${collectora.}--%>
+        <%--<td>${collectorea.}--%>
         <%--</td>--%>
         <%--</tr>--%>
         <tr>
             <td>添加时间</td>
-            <td>${collectora.cdate}</td>
+            <td>${collectorea.ceDate}</td>
         </tr>
     </table>
 </div>

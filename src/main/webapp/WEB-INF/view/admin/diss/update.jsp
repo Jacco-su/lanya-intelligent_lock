@@ -20,7 +20,17 @@
             <tr>
                 <td>所在地址:</td>
                 <td>
-                    <textarea name="address" class="easyui-validatebox" id="address" cols="30" rows="10"required="true">${qgdis.address}</textarea>
+                    <textarea name="address" class="easyui-validatebox" id="address" cols="30" rows="2"
+                              required="true">${qgdis.address}</textarea>
+                    <%--<input name="address" class="easyui-validatebox" id="addres" cols="30" rows="10" value="${qgdis.address}" required="true">></input>--%>
+                </td>
+            </tr>
+            <tr>
+                <td>添加时间:</td>
+                <td>
+
+                    <input name="time" class="easyui-validatebox" id="time" cols="30" rows="10"
+                           value="${qgdis.createTime}" required="true"/>
                 </td>
             </tr>
         </table>
