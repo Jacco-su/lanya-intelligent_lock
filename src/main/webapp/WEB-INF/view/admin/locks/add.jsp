@@ -23,10 +23,23 @@
     <form name="addForm" id="addForm" action="${basePath}/locks/add" method="post">
         <table class="mytable" align="center">
             <tr>
+                <td width="100">门锁编号:</td>
+                <td>
+                    <input id="lockNum" name="lockNum" style="width: 220px;"/>
+            </tr>
+            <tr>
+                <td width="100">门锁识别码:</td>
+                <td>
+                    <input id="lockCode" name="lockCode" style="width: 220px;"/>
+                    <a class="easyui-linkbutton"
+                       onclick="getLockCode()">获取</a>
+            </tr>
+            <tr>
                 <td width="100">选择配电房:</td>
                 <td>
-                    <select id="dissName" name="qgdis.name" style="width: 220px;"></select>
+                    <select id="dissName" name="qgdis.id" style="width: 220px;"></select>
             </tr>
+
             <tr>
                 <td width="100">添加时间:</td>
                 <td>

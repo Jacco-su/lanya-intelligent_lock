@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -64,26 +65,54 @@ public class LocksAction {
     @ResponseBody
     public String daa(@ModelAttribute Locks locks) {
         String message = "";
-        locks.setLockNum(locks.getLockNum());
-        locks.setLockCode(locks.getLockCode());
+//        locks.setLockNum(locks.getLockNum());
+//        locks.setLockCode(locks.getLockCode());
+        //locks.setQgdis();
         locks.setLockDate(FormatDate.getYMdHHmmss());
         try {
             ilocksDao.save(locks);
             message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {
+            e.printStackTrace();
             message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
         }
         return message;
     }
 
 
+    @RequestMapping("/prUpdate")
+    public String prUpdate(String id, ModelMap model) {
+        Locks lockss = ilocksDao.find(Locks.class, id);
+        model.addAttribute("locks", lockss);
+        return "admin/locks/update";
+    }
 
-
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public String update(@ModelAttribute Locks locks) {
+        String message = "";
+        try {
+//            Qgdis qgdis= BasicData.findAreaByAreacode(locks.getDissId());
+            locks.setLockNum(locks.getLockNum());
+            locks.setAddress(locks.getAddress().trim());
+            locks.setLockDate(locks.getLockDate().trim());
+            ilocksDao.update(locks);
+            message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
+        } catch (Exception e) {
+            message = StringUtil.jsonValue("0", AppMsg.UPDATE_ERROR);
+        }
+        return message;
+    }
 
     @RequestMapping("/prView")
     public String prView(String id, ModelMap model) {
-        Locks lockss = ilocksDao.find(Locks.class, id);
-        model.addAttribute("locks", lockss);
+        try {
+            //ilocksDao.
+            Locks lockss = ilocksDao.find(Locks.class, id);
+            model.addAttribute("locks", lockss);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "admin/locks/view";
     }
 
@@ -92,18 +121,19 @@ public class LocksAction {
     @ResponseBody
     public String delete(String id) {
         String message = "";
-        String hql = "select count(*) from Lock t where t.locksId=?";
-        int count = ilocksDao.getResultNumber(hql, id);
-        if (count > 0) {
-            message = StringUtil.jsonValue("0", AppMsg.getMessage("locks101"));
-            //101该配电房拥有智能锁，不允许删除
-            return message;
-        }
+//        String hql = "select count(*) from Lock t where t.locksId=?";
+//        int count = ilocksDao.getResultNumber(hql, id);
+//        if (count > 0) {
+//            message = StringUtil.jsonValue("0", AppMsg.getMessage("locks101"));
+//            //101该配电房拥有智能锁，不允许删除
+//            return message;
+//        }
         try {
-            Locks collector = ilocksDao.find(Locks.class, id);
-            ilocksDao.delete(collector);
+            Locks locks = ilocksDao.find(Locks.class, id);
+            ilocksDao.delete(locks);
             message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);
         } catch (Exception e) {
+            e.printStackTrace();
             message = StringUtil.jsonValue("0", AppMsg.DEL_ERROR);
         }
         return message;

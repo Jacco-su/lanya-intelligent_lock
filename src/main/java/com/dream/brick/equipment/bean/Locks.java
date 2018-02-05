@@ -2,20 +2,22 @@ package com.dream.brick.equipment.bean;
 
 
 import javax.persistence.*;
-import java.util.Date;
+import java.io.Serializable;
 
 /**
  * 智能门锁实体类
  */
 @Entity
 @Table(name = "t_locks")
-public class Locks {
+public class Locks implements Serializable {
 
-    private Integer id;         //锁id 编号
+    private String id;         //锁id 编号
     private String lockNum;     //锁编号
     private String lockCode;       //锁识别码
     private String lockDate;      //安装时间
     private Qgdis qgdis;
+
+    //    private String dissId;
     private String address;//详细地址
     /**
      * 常显
@@ -25,11 +27,11 @@ public class Locks {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -82,4 +84,16 @@ public class Locks {
     public void setQgdis(Qgdis qgdis) {
         this.qgdis = qgdis;
     }
+
+//    public String getDissId() {
+//        return dissId;
+//    }
+//
+//    public void setDissId(String dissId) {
+//        this.dissId = dissId;
+//    }
+
+
 }
+
+

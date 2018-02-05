@@ -10,13 +10,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "t_keyss")
 
-public class Keyss {
+public class Keyss implements java.io.Serializable {
 
-    private Integer id;             //蓝牙钥匙id 编号
+    private String id;             //蓝牙钥匙id 编号
     private String keyssCode;
     private String keyssName;       //钥匙自定义名称
     private String keyssMAC;       //蓝牙钥匙MAC地址
     private String userName;    //领用人名字
+    //    private User user;
     private String keyssDate;         //领用时间
     private Integer sortorder;            //排序
     /**
@@ -28,11 +29,11 @@ public class Keyss {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

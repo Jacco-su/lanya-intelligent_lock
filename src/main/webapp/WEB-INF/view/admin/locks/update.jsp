@@ -9,17 +9,18 @@
 
 <%--/**   修改*/--%>
 <div>
-    <form name="editForm" id="editForm" action="${basePath}/locks/update" method="post">
+    <form name="editForm" id="editForm" action="${basePath}/locks/prUpdate" method="post">
         <table class="mytable" align="center">
             <tr>
                 <td>智能锁编号:</td>
-                <td><input type="hidden" name="id" value="${lock.id}"/>
-                    <input name="name" value="${lock.name }" class="easyui-validatebox" required="true"/></td>
+                <td><input type="hidden" name="id" value="${locks.id}"/>
+                    <input name="lockNum" value="${locks.lockNum}" class="easyui-validatebox" required="true"/></td>
+
             </tr>
             <tr>
                 <td>识别码:</td>
                 <td>
-                    <span name="cip" value="${lock.lockCode}" class="easyui-validatebox" required="true"/>
+                    <input name="locksCode" value="${locks.lockCode}" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
 
@@ -27,15 +28,16 @@
             <tr>
                 <td width="100">所属配电房:</td>
                 <td>
-                    <input type="text" name="disame" id="areaname" value="${collectora.areaname}" readonly/><a
+                    <input type="text" name="disame" id="areaname" value="${locks.qgdis.id}" readonly/><a
                         class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>
-                    <input type="hidden" name="discode" id="discode" value="${collectora.areacode}"/>
+                    <input type="hidden" name="discode" id="discode" value="${locks.qgdis}"/>
+
                 </td>
             </tr>
 
             <tr>
                 <td>日期:</td>
-                <td><input name="cdate" value="${collectora.cdate}" class="easyui-validatebox" required="true"/>
+                <td><input name="cdate" value="${locks.lockDate}" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
         </table>

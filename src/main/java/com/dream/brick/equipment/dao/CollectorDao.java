@@ -1,7 +1,6 @@
 package com.dream.brick.equipment.dao;
 
 import com.dream.brick.equipment.bean.Collector;
-import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.framework.dao.BaseDao;
 import com.dream.framework.dao.Pager;
 
@@ -18,7 +17,7 @@ public interface CollectorDao extends BaseDao {
 //
 //    public Qgdis findQgdisByAreacode(String qgdisid);
 //
-//    public List<Collector> findCollectorByQgdisid(String disId);
+public List<Collector> findCollectorByQgdisid(String disId);
 
     public List<Collector> findCollectorList(Pager pager);
 

@@ -4,11 +4,13 @@
     response.setHeader("Pragma", "No-Cache");
     response.setHeader("Cache-Control", "No-Cache");
     response.setDateHeader("Expires", 0);
+    response.setContentType("text/html;charset=UTF-8");
 %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>智能锁信息</title>
+    <title>蓝牙控制器信息</title>
+    <link rel="stylesheet" type="text/css" href="${basePath}/css/mainframe.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
@@ -16,14 +18,12 @@
     <script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
-    <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
     <script type="text/javascript">
-        var basePath = "${basePath}";
         $(function () {
             var infolist = $('#infolist');
             infolist.datagrid({
-                title: '智能锁列表',
-                iconCls: 'icon-us-=-ers',
+                title: '控制器列表',
+                iconCls: 'icon-collectore',
                 width: '95%',
                 height: 500,
                 pageSize: 20,
@@ -32,8 +32,11 @@
                 striped: true,
                 collapsible: false,
                 fitColumns: true,
-                url: '${basePath}/locks/list',
-                queryParams: {},
+
+                url: '${basePath}/collectore/list',
+                queryParams: {
+                    // 'disId': disId
+                },
                 loadMsg: '数据装载中......',
                 remoteSort: false,
                 singleSelect: true,
@@ -42,39 +45,36 @@
                     var id = rows[rowIndex].id;
                     detail(id);
                 },
-                columns: [[
-                    {
-                    title: '智能锁编号',
-                    field: 'id',
-                    width: 250,
+                columns: [[{
+                    title: '控制器MAC地址',
+                    field: 'ceMAC',
+                    width: $(this).width() * 0.2,
                     align: 'center'
-                  },
-                {
-                    title: '识别码',
-                    field: 'lockCode',
-                    width: 250,
+                }, {
+                    title: '采集器ID',
+                    field: 'ceCode',
+                    width: $(this).width() * 0.1,
                     align: 'center'
                 },
-                {
-                    title : '所属配电房',
-                    field : 'dissName',
-                    formatter : function(value,rowData,rowIndx) {
-                        return rowData.qgdis.name;
-                    },
-                    width : $(this).width() * 0.1,
-                    align : 'center'
-                },
+//                    {
+//                        title: '所属配电房',
+//                        field: 'ccode',
+//                        formatter: function (value, rowData, rowIndx) {
+//                            return rowData.dis.name;
+//                        },
+//                        width: $(this).width() * 0.2,
+//                        align: 'center'
+//                    },
                     {
-                        title: '地址',
-                        field: 'address',
-                        width: 250,
-                        align: 'center'
-                    },
-                    {
-                        title: '添加时间',
-                        field: 'lockDate',
-                        width: 200,
-                        align: 'left'
+                        title: '添加日期 ',
+                        field: 'ceDate',
+                        width: $(this).width() * 0.2,
+                        align: 'left',
+//                        formatter:function(date)
+//                        { /* 调用函数显示时间 */
+////                            SimpleDateFormat c = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+//                            return format(date);
+//                        }
                     },
                 ]],
                 pagination: true,
@@ -89,11 +89,13 @@
                         iconCls: "icon-add",
                         text: "添加",
                         handler: add
-                    }, '-', {
-                        text: '修改',
-                        iconCls: 'icon-edit',
-                        handler: edit
-                    }, '-', {
+                    },
+//                    '-', {
+//                        text: '修改',
+//                        iconCls: 'icon-edit',
+//                        handler: edit
+//                    },
+                    '-', {
                         text: '删除',
                         iconCls: 'icon-remove',
                         handler: del
@@ -116,7 +118,7 @@
             function add() {
                 addWin = $.createWin({
                     title: "添加",
-                    url: '${basePath}/locks/prAdd',
+                    url: '${basePath}/collectore/prAdd',
                     height: 350,
                     width: 800,
                     buttons: [{
@@ -153,29 +155,29 @@
             function detail(id) {
                 seeWin = $.createWin({
                     title: "详情",
-                    url: '${basePath}/locks/prView',
+                    url: '${basePath}/collectore/prView',
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
                     buttons: []
                 });
             }
-            $('#selectDept').window({
+
+            $('#selectArea').window({
                 title: '安装区域选择',
                 width: 400,
                 height: 500,
                 closed: true,
                 modal: true
             });
+
+
             $('#tree').tree({
                 checkbox: false,
-                <%--url: '${basePath}/areainfo/findAreaByCode',--%>
                 url: '${basePath}/dept/getChildren',
                 simpleDataModel: true,
                 onBeforeExpand: function (node, param) {
-                    $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId="
-                        + node.id;
-                    <%--$('#tree').tree('options').url = "${basePath}/deptinfo/findDeptByParentId?parentId=" + node.id;// change the url--%>
+                    $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId=" + node.id;// change the url
                     return true;
                 }
             });
@@ -215,7 +217,7 @@
             function showEdit(id) {
                 updateWin = $.createWin({
                     title: "修改",
-                    url: basePath + '/locks/prUpdate',
+                    url: '${basePath}/collectore/prUpdate',
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
@@ -233,12 +235,14 @@
                 if (selected) {
                     $.messager.confirm('警告', '确定要删除么?', function (f) {
                         if (f) {
-                            $.post("${basePath}/locks/delete", {"id": selected.id}, function (json) {
-                                $.messager.alert('提示', json.message);
-                                if (json.result == 1) {
-                                    infolist.datagrid('reload');
-                                }
-                            }, "json");
+                            $.post("${basePath}/collectore/delete",
+                                {"id": selected.id},
+                                function (json) {
+                                    $.messager.alert('提示', json.message);
+                                    if (json.result == 1) {
+                                        infolist.datagrid('reload');
+                                    }
+                                }, "json");
                         }
                     });
                 } else {
@@ -247,10 +251,7 @@
             }
         });
 
-
-        //        -----
-
-        function setTodept() {
+        function setToarea() {
             var id = "";
             var show = "";
             fullname = ""
@@ -258,7 +259,7 @@
             if (selections) {
                 id = selections.id;
                 show = selections.attributes.deptname;
-                $("#deptid").val(id);
+                $("#areacode").val(id);
                 getDisname(selections);
                 fullname = fullname.substring(0, fullname.length - 1);
                 $("#deptid").val(fullname);
@@ -269,28 +270,39 @@
         var fullname = "";
 
         function getDisname(node) {
-            if (node == null) return;					//改动 控制树显示
             fullname = node.text + " " + fullname;
-            if (node.attributes.parentId == 0) {
+            if (node.attributes.parentcode == 0) {
                 return;
             }
             var abc = $('#tree').tree('getParent', node.target);
             getDisname(abc);
         }
+
+        function query() {
+            var queryParams = infolist.datagrid('options').queryParams;
+            queryParams.queryWord = $('#qq').val();
+            infolist.datagrid({
+                url: 'easyQuery.action'
+            });
+            displayMsg();
+            $('#query').window('close');
+        }
+
+
     </script>
 </head>
 <body>
 <div>
     <table id="infolist"></table>
 </div>
-<div id="selectDept">
+<div id="selectCt">
     <div class="easyui-layout" fit="true">
         <div region="center" border="false" style="padding: 10px;">
             <ul id="tree" style="margin-top: 10px;"></ul>
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
-            <a class="easyui-linkbutton" icon="icon-ok" onclick="setTodept();">确定</a>
-            <a class="easyui-linkbutton" onclick="$('#selectDept').window('close');">关闭</a>
+            <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
+            <a class="easyui-linkbutton" onclick="$('#selectCt').window('close');">关闭</a>
         </div>
     </div>
 </div>

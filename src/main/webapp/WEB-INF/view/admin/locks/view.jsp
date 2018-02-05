@@ -10,7 +10,7 @@
     <table class="mytable" align="center">
         <tr>
             <td>智能锁编号:</td>
-            <td>${locks.id}</td>
+            <td>${locks.lockNum}</td>
         </tr>
         <tr>
             <td>识别码:</td>
@@ -19,9 +19,9 @@
             </td>
         </tr>
         <tr>
-            <td width="100">安装地点:</td>
+            <td width="100">所属配电房:</td>
             <td>
-                ${locks.qgdis}
+                ${locks.qgdis.name}
             </td>
         </tr>
         <tr>
@@ -30,10 +30,10 @@
                 ${locks.lockDate}
             </td>
         </tr>
-        <tr>
-            <td>排序:</td>
-            <td>${locks.sortorder}
-            </td>
-        </tr>
+        <%--<tr>--%>
+        <%--<td>是否可用:</td>--%>
+        <%--<td>${locks.address}--%>
+        <%--</td>--%>
+        <%--</tr>--%>
     </table>
 </div>
