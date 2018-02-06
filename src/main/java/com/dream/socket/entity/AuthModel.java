@@ -219,7 +219,7 @@ public class AuthModel {
 	 * @return
 	 * @throws
 	 */
-	public  static int [] AuthorizationKey(byte[] userCode,byte[] lockCode,String macAddress){
+	public  static int [] AuthorizationKey(byte[] userCode,byte[] lockCode,String macAddress,String startDate,String endDate){
 		int[] arrayOfInt = new int[64];
 		for (int i = 0; i < 4; i++) {
 			arrayOfInt[i] =  userCode[i];
@@ -231,17 +231,17 @@ public class AuthModel {
 		}
 		i = 0;
 		while (i < 14) {
-			arrayOfInt[(i + 20)] =DateUtil.formatDateYmdhms(new Date()).charAt(i);
+			arrayOfInt[(i + 20)] =startDate.charAt(i);
 			i += 1;
 		}
 		i = 0;
 		while (i < 14) {
-			arrayOfInt[(i + 34)] =DateUtil.nextYearDate().charAt(i);
+			arrayOfInt[(i + 34)] =endDate.charAt(i);
 			i += 1;
 		}
 		i = 0;
 		while (i < 14) {
-			arrayOfInt[(i + 48)] =  DateUtil.formatDateYmdhms(new Date()).charAt(i);
+			arrayOfInt[(i + 48)] =  startDate.charAt(i);
 			i += 1;
 		}
 		try {

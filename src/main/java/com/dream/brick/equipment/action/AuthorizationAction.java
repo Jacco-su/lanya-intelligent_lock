@@ -159,7 +159,7 @@ public class AuthorizationAction {
     @RequestMapping("collector/collectore")
     @ResponseBody
     public String getCollectoreAction(String collectorId){
-        return JSON.toJSONString(authorizationDao.findList("from Collectore where ceCode="+collectorId));
+        return JSON.toJSONString(authorizationDao.findList("from Collectore where cid="+collectorId));
     }
 
     @RequestMapping("/keys")
