@@ -1,6 +1,8 @@
 package com.dream.brick.equipment.bean;
 
 
+import com.dream.brick.admin.bean.User;
+
 import javax.persistence.*;
 
 /**
@@ -10,25 +12,26 @@ import javax.persistence.*;
 @Entity
 @Table(name = "t_keyss")
 
-public class Keyss implements java.io.Serializable {
+public class Keyss {
 
     private String id;             //蓝牙钥匙id 编号
     private String keyssCode;
     private String keyssName;       //钥匙自定义名称
     private String keyssMAC;       //蓝牙钥匙MAC地址
     private String userName;    //领用人名字
-    //    private User user;
+
     private String keyssDate;         //领用时间
-    private Integer sortorder;            //排序
+    private String sortorder;            //排序
     /**
      * 常显
      */
     private int alwaysShow;
 
+    private User user;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     public String getId() {
         return id;
     }
@@ -77,11 +80,11 @@ public class Keyss implements java.io.Serializable {
         this.keyssDate = keyssDate;
     }
 
-    public Integer getSortorder() {
+    public String getSortorder() {
         return sortorder;
     }
 
-    public void setSortorder(Integer sortorder) {
+    public void setSortorder(String sortorder) {
         this.sortorder = sortorder;
     }
 
@@ -92,4 +95,16 @@ public class Keyss implements java.io.Serializable {
     public void setAlwaysShow(int alwaysShow) {
         this.alwaysShow = alwaysShow;
     }
+
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId", nullable = false, updatable = true)
+    public User getCollector() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

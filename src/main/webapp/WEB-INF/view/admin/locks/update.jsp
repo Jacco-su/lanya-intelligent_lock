@@ -32,8 +32,9 @@
                 <td width="100">所属站点:</td>
                 <td>
                     <input type="hidden" name="qgdis.id" id="discode" value="${locks.qgdis.id}"/>
-                    <input type="text" name="qgdis.name" id="areaname" value="${locks.qgdis.name}" readonly/><a
-                        class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>
+                    <input type="text" name="qgdis.name" id="areaname" value="${locks.qgdis.name}" readonly/>
+                    <%--<a--%>
+                    <%--class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>--%>
 
 
                 </td>

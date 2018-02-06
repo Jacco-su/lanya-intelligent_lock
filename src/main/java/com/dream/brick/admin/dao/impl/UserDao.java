@@ -272,12 +272,12 @@ public class UserDao extends BaseDaoImpl implements IUserDao {
     }
 
     public List<User> findByUsernames(Pager pager) {
-        String hql = "select t from User t order by t.areacode";
+        String hql = "select t from User t ";
         return findList(hql);
     }
 
     public List<User> findAllUser() {
-        String hql = "select t from User t order by t.areacode";
+        String hql = "select t from User t ";
         return findList(hql);
     }
 
