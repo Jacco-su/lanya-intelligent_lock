@@ -10,7 +10,7 @@
     <form name="addForm" id="addForm" action="${basePath}/disa/add" method="post">
         <table class="mytable" align="center">
             <tr>
-                <td>配电房名称:</td>
+                <td>站点名称:</td>
                 <td><input name="name" value="" class="easyui-validatebox" required="true"/></td>
             </tr>
 

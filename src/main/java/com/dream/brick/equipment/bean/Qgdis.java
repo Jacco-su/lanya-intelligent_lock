@@ -5,7 +5,7 @@ import com.dream.brick.admin.bean.Department;
 import javax.persistence.*;
 
 /**
- * 配电房 数据库防问实体 类
+ * 站点 数据库防问实体 类
  *
  * @author
  * @date 2017-12-05
@@ -18,8 +18,8 @@ public class Qgdis implements java.io.Serializable {
      */
     private static final long serialVersionUID = 4725135016331954412L;
     private String id;
-    private String name;// 配电房名称
-    private String address;// 配电房地址
+    private String name;// 站点名称
+    private String address;// 站点地址
     /**
      * 部门
      */

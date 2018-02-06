@@ -45,7 +45,7 @@
                 columns: [[
                     {
                     title: '智能锁编号',
-                    field: 'id',
+                        field: 'lockNum',
                     width: 250,
                     align: 'center'
                   },
@@ -56,7 +56,7 @@
                     align: 'center'
                 },
                 {
-                    title : '所属配电房',
+                    title: '所属站点',
                     field : 'dissName',
                     formatter : function(value,rowData,rowIndx) {
                         return rowData.qgdis.name;
@@ -67,13 +67,13 @@
                     {
                         title: '地址',
                         field: 'address',
-                        width: 250,
+                        width: 200,
                         align: 'center'
                     },
                     {
                         title: '添加时间',
                         field: 'lockDate',
-                        width: 200,
+                        width: 150,
                         align: 'left'
                     },
                 ]],

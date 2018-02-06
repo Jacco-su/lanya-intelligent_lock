@@ -10,7 +10,7 @@
     <form name="editForm" id="editForm" action="${basePath}/disa/update" method="post">
         <table class="mytable" align="center">
             <tr>
-                <td>配电房名称:</td>
+                <td>站点名称:</td>
                 <td>
                     <input  name="id" type="hidden" value="${qgdis.id}"/>
                     <input  name="dept.id" type="hidden" value="${qgdis.dept.id}"/>
@@ -25,14 +25,14 @@
                     <%--<input name="address" class="easyui-validatebox" id="addres" cols="30" rows="10" value="${qgdis.address}" required="true">></input>--%>
                 </td>
             </tr>
-            <tr>
-                <td>添加时间:</td>
-                <td>
+            <%--<tr>--%>
+            <%--<td>修改时间:</td>--%>
+            <%--<td>--%>
 
-                    <input name="time" class="easyui-validatebox" id="time" cols="30" rows="10"
-                           value="${qgdis.createTime}" required="true"/>
-                </td>
-            </tr>
+            <%--<input name="time" class="easyui-validatebox" id="time" cols="30" rows="10"--%>
+            <%--value="${qgdis.createTime}" required="true"/>--%>
+            <%--</td>--%>
+            <%--</tr>--%>
         </table>
     </form>
 </div>

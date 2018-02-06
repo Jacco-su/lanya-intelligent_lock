@@ -23,19 +23,20 @@
 <div>
     <form name="addForm" id="addForm" action="${basePath}/collectore/add" method="post">
         <table class="mytable" align="center">
-            <%--<tr>--%>
-            <%--<td>采集器编号:</td>--%>
-            <%--<td><input name="ceCode" value="" class=""/></td>--%>
-            <%--</tr>--%>
+
             <tr>
                 <td>采集器ID:</td>
                 <td>
                     <%--<input name="ceCode"  class="easyui-validatebox" required="true"/>--%>
                     <%--<a class="easyui-linkbutton" onclick="getID()">选择</a>--%>
-                    <select id="ccode" name="collector.id" class="easyui-validatebox" required="true"
+                    <select id="ccode" name="ceCode" class="easyui-validatebox" required="true"
                             style="width: 150px"></select>
-                    <select id="dissName" name="qgdis.id" style="width: 220px;"></select>
+                    <%--<select id="dissName" name="qgdis.id" style="width: 220px;"></select>--%>
                 </td>
+            </tr>
+            <tr>
+                <td>控制器名称:</td>
+                <td><input name="cename" value="" class=""/></td>
             </tr>
             <tr>
                 <td>MAC地址:</td>
@@ -47,7 +48,7 @@
             </tr>
 
             <%--<tr>--%>
-            <%--<td >所属配电房:</td>--%>
+            <%--<td >所属站点:</td>--%>
             <%--<td>--%>
             <%--<input type="text" name="name" id="areaname" value="" readonly/><a class="easyui-linkbutton"--%>
             <%--onclick="$('#selectArea').window('open');">选择</a>--%>
@@ -81,7 +82,7 @@
         data = JSON.parse(data);
         $('#ccode').empty();
         for (var i = 0; i < data.length; i++) {
-            $('#ccode').append("<option value='" + data[i].id + "'>" + data[i].class + "</option>");
+            $('#ccode').append("<option value='" + data[i].ccode + "'>" + data[i].ccode + "</option>");
         }
     })
 </script>

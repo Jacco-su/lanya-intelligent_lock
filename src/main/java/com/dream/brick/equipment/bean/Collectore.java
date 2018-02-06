@@ -1,7 +1,6 @@
 package com.dream.brick.equipment.bean;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * 采集器 数据库防问实体 类
@@ -11,7 +10,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "t_collectore")
-public class Collectore implements Serializable {
+public class Collectore {
     /**
      *
      */
@@ -19,7 +18,9 @@ public class Collectore implements Serializable {
     private String id;
     private String ceCode; //控制器ID
     private String ceMAC;// 控制器蓝牙地址
-    //    private String disId;// 所在配电房
+    //        private String disId;// 所在站点
+    private String cid;
+    private String cename;  //控制器名称
 
     private Collector collector;      // 所在采集器
 
@@ -55,13 +56,13 @@ public class Collectore implements Serializable {
         this.ceMAC = ceMAC;
     }
 
-//    public Qgdis getDis() {
-//        return dis;
-//    }
-//
-//    public void setDis(Qgdis dis) {
-//        this.dis = dis;
-//    }
+    public String getCename() {
+        return cename;
+    }
+
+    public void setCename(String cename) {
+        this.cename = cename;
+    }
 
     public String getCeDate() {
         return ceDate;

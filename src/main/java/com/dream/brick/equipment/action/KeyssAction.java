@@ -1,6 +1,7 @@
 package com.dream.brick.equipment.action;
 
 import com.alibaba.fastjson.JSON;
+import com.dream.brick.admin.dao.impl.UserDao;
 import com.dream.brick.equipment.bean.Keyss;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.IKeyssDao;
@@ -35,6 +36,8 @@ public class KeyssAction {
     private IKeyssDao ikeyssDao;
     @Resource
     private CollectorDao collectorDao;
+    @Resource
+    private UserDao userDao;
 
 
     @RequestMapping("/prList")
@@ -59,12 +62,13 @@ public class KeyssAction {
 
     @RequestMapping("/prAdd")
     public String prAdd(ModelMap modelMap) {
-        modelMap.addAttribute("collectorList", JSON.toJSONString(collectorDao.findAllCollector()));
+//        modelMap.addAttribute("collectorList", JSON.toJSONString(collectorDao.findAllCollector()));
+        modelMap.addAttribute("usersList", JSON.toJSONString(userDao.findAllUser()));
         return "admin/keyss/add";
     }
 
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add")
     @ResponseBody
     public String add(@ModelAttribute Keyss keyss) {
         String message = "";
@@ -95,9 +99,9 @@ public class KeyssAction {
         String message = "";
         try {
 
-            keyss.setKeyssName(keyss.getKeyssName());
-            keyss.setUserName(keyss.getUserName().trim());
-            keyss.setKeyssDate(keyss.getKeyssDate().trim());
+//            keyss.setKeyssName(keyss.getKeyssName().trim());
+//            keyss.setUserName(keyss.getUserName().trim());
+//            keyss.setKeyssDate(keyss.getKeyssDate().trim());
             collectorDao.update(keyss);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {
@@ -106,7 +110,6 @@ public class KeyssAction {
         }
         return message;
     }
-
 
     @RequestMapping("/prView")
     public String View(String id, ModelMap modelMap) {

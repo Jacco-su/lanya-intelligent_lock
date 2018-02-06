@@ -35,7 +35,7 @@
                        onclick="getLockCode()">获取</a>
             </tr>
             <tr>
-                <td width="100">选择配电房:</td>
+                <td width="100">选择站点:</td>
                 <td>
                     <select id="dissName" name="qgdis.id" style="width: 220px;"></select>
             </tr>
@@ -49,7 +49,8 @@
             <tr>
                 <td width="100">详细地址:</td>
                 <td>
-                    <textarea name="address" class="easyui-validatebox" id="address" cols="30" rows="10"required="true"></textarea>
+                    <textarea name="address" class="easyui-validatebox" id="address" cols="30" rows="3"
+                              required="true"></textarea>
             </tr>
 
         </table>

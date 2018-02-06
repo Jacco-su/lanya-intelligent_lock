@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "t_collector")
-public class Collector implements java.io.Serializable {
+public class Collector {
     /**
      *
      */
@@ -18,8 +18,8 @@ public class Collector implements java.io.Serializable {
     private String id;
     private String ccode; //采集器ID
     private String cip;// 采集器IP地址
-    //    private String disId;// 所在配电房
-//    private Qgdis disName; // 所在配电房名称
+    //    private String disId;// 所在站点
+//    private Qgdis disName; // 所在站点名称
     private Qgdis dis;
     // private String collectorDiss;
     private String cdate;// 日期

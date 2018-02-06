@@ -58,7 +58,7 @@
                         align: 'center'
                     },
                         {
-                            title: '所属配电房',
+                            title: '所属站点',
                             field: 'dissName',
                             formatter: function (value, rowData, rowIndx) {
                                 return rowData.dis.name;
@@ -256,7 +256,7 @@
                             if (f) {
                                 $.ajax({
                                     type: "POST",
-                                    url: basePath + "/collector/delete",
+                                    url: "${basePath}/collector/delete",
                                     data: "id=" + select.id,
                                     dataType: "text",
                                     cache: false,

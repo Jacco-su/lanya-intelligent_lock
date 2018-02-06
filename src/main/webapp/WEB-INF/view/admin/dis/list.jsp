@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>配电房信息</title>
+    <title>站点信息</title>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
@@ -20,7 +20,7 @@
         $(function () {
             var infolist = $('#infolist');
             infolist.datagrid({
-                title: '配电房列表',
+                title: '站点列表',
                 iconCls: 'icon-users',
                 width: '95%',
                 height: 500,
@@ -48,7 +48,7 @@
                         align: 'left'
                     },
                     {
-                        title: '配电房名称',
+                        title: '站点名称',
                         field: 'name',
                         width: 250,
                         align: 'center'

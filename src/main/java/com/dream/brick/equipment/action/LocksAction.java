@@ -93,9 +93,11 @@ public class LocksAction {
         String message = "";
         try {
 //            Qgdis qgdis= BasicData.findAreaByAreacode(locks.getDissId());
-            locks.setLockNum(locks.getLockNum());
-            locks.setAddress(locks.getAddress().trim());
-            locks.setLockDate(locks.getLockDate().trim());
+            //locks.setLockNum(locks.getLockNum().trim());
+            //locks.setLockCode(locks.getLockCode().trim());
+//            locks.setAddress(locks.getAddress().trim());
+//            locks.setLockDate(locks.getLockDate().trim());
+            locks.setLockDate(FormatDate.getYMdHHmmss().trim());
             ilocksDao.update(locks);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {
@@ -125,7 +127,7 @@ public class LocksAction {
 //        int count = ilocksDao.getResultNumber(hql, id);
 //        if (count > 0) {
 //            message = StringUtil.jsonValue("0", AppMsg.getMessage("locks101"));
-//            //101该配电房拥有智能锁，不允许删除
+//            //101该站点拥有智能锁，不允许删除
 //            return message;
 //        }
         try {

@@ -187,7 +187,7 @@ public class CollectoreAction {
 //        return message;
 //    }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete")
     @ResponseBody
     public String delete(String id) {
         String message = "";
@@ -195,7 +195,7 @@ public class CollectoreAction {
 //        int count = collectoreDao.getResultNumber(hql, id);
 //        if (count > 0) {
 //            message = StringUtil.jsonValue("0", AppMsg.getMessage("collectore101"));
-//            //101该配电房拥有智能锁，不允许删除
+//            //101该站点拥有智能锁，不允许删除
 //            return message;
 //        }
         try {
@@ -203,7 +203,7 @@ public class CollectoreAction {
             collectoreDao.delete(collectore);
             message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             message = StringUtil.jsonValue("0", AppMsg.DEL_ERROR);
         }
         return message;
