@@ -6,6 +6,7 @@ import com.dream.brick.equipment.bean.Authorization;
 
 import com.dream.brick.equipment.dao.IAuthorizationDao;
 
+import com.dream.brick.equipment.dao.IKeyssDao;
 import com.dream.brick.equipment.dao.QgdisDao;
 import com.dream.brick.listener.BasicData;
 import com.dream.framework.dao.Pager;
@@ -35,7 +36,8 @@ import java.util.List;
 public class AuthorizationAction {
     @Resource
     private IAuthorizationDao authorizationDao;
-
+    @Resource
+    private IKeyssDao ikeyssDao;
     @Resource
     private QgdisDao disDao;
 
@@ -153,5 +155,22 @@ public class AuthorizationAction {
     @ResponseBody
     public String getCollectorAction(String disaId){
         return JSON.toJSONString(authorizationDao.findList("from Collector where disId="+disaId));
+    }
+    @RequestMapping("collector/collectore")
+    @ResponseBody
+    public String getCollectoreAction(String collectorId){
+        return JSON.toJSONString(authorizationDao.findList("from Collectore where ceCode="+collectorId));
+    }
+
+    @RequestMapping("/keys")
+    @ResponseBody
+    public String getKeysAction(){
+        return JSON.toJSONString(ikeyssDao.findAllKeyss());
+    }
+
+    @RequestMapping("/disa/locks")
+    @ResponseBody
+    public String getLocksAction(String disaId) {
+        return JSON.toJSONString(authorizationDao.findList("from Locks where dissId=" + disaId));
     }
 }

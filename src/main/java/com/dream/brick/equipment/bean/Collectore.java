@@ -72,15 +72,6 @@ public class Collectore implements Serializable {
     }
 
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "cId", nullable = false, updatable = true)
-    public Collector getCollector() {
-        return collector;
-    }
-
-    public void setCollector(Collector collector) {
-        this.collector = collector;
-    }
 
 
 //    public int getSortorder() {
