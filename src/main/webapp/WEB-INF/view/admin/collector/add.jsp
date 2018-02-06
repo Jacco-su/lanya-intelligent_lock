@@ -43,14 +43,13 @@
             </tr>
 
             <tr>
-                <td width="100">所属配电房:</td>
+                <td width="100">所属站点:</td>
                 <td>
-                    <select id="dissname" name="dis.name" style="width:200px;"></select>
+                    <select id="dissname" name="dis.id" style="width:200px;"></select>
 
                     <%--<input type="hidden" name="areacode" id="areacode" value=""/>--%>
                 </td>
             </tr>
-
         </table>
     </form>
 </div>

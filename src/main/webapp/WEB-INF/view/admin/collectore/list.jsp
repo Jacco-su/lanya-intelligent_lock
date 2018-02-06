@@ -46,6 +46,11 @@
                     detail(id);
                 },
                 columns: [[{
+                    title: '控制器名称',
+                    field: 'cename',
+                    width: $(this).width() * 0.1,
+                    align: 'center'
+                }, {
                     title: '控制器MAC地址',
                     field: 'ceMAC',
                     width: $(this).width() * 0.2,
@@ -57,7 +62,7 @@
                     align: 'center'
                 },
 //                    {
-//                        title: '所属配电房',
+//                        title: '所属站点',
 //                        field: 'ccode',
 //                        formatter: function (value, rowData, rowIndx) {
 //                            return rowData.dis.name;

@@ -12,7 +12,7 @@
     <form name="editForm" id="editForm" action="${basePath}/disa/update" method="post">
         <table class="mytable" align="center">
             <tr>
-                <td>配电房名称:</td>
+                <td>站点名称:</td>
                 <td><input type="hidden" name="id" value="${disa.id}"/>
                     <input name="name" value="${disa.name }" class="easyui-validatebox" required="true"/></td>
             </tr>

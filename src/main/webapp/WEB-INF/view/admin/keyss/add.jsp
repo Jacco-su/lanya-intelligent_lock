@@ -8,14 +8,24 @@
 %>
 
 <script type="text/javascript">
+    <%--$(function () {--%>
+    <%--var data = '${collectorList}';--%>
+    <%--data = JSON.parse(data);--%>
+    <%--$('#cid').empty();--%>
+    <%--for (var i = 0; i < data.length; i++) {--%>
+    <%--$('#cid').append("<option value='" + data[i].ccode + "'>" + data[i].ccode + "</option>");--%>
+    <%--}--%>
+    <%--});--%>
+
     $(function () {
-        var data = '${collectorList}';
+        var data = '${usersList}';
         data = JSON.parse(data);
-        $('#cid').empty();
+        $('#usersname').empty();
         for (var i = 0; i < data.length; i++) {
-            $('#cid').append("<option value='" + data[i].ccode + "'>" + data[i].ccode + "</option>");
+            $('#usersname').append("<option value='" + data[i].username + "'>" + data[i].username + "</option>");
         }
     });
+
 
     function getMVC() {
 //        System.out.println(System.currentTimeMillis());
@@ -43,7 +53,6 @@
                 console.log("获取文件list数组失败，请检查接口服务");
             }//获取文件list数组失败
         });
-        return data;
 
     }
 
@@ -54,7 +63,9 @@
     //        alert(json);
     //    });
 
+
 </script>
+
 
 <style>
     input:focus {
@@ -80,13 +91,13 @@
                     <input name="keyssName" class="easyui-validatebox" value="" required="true"/>
                 </td>
             </tr>
-            <tr>
-                <td>采集器ID:</td>
-                <td>
+            <%--<tr>--%>
+            <%--<td>采集器ID:</td>--%>
+            <%--<td>--%>
 
-                    <select id="cid" name="collector.id" style="width: 200px;"></select>
-                </td>
-            </tr>
+            <%--<select id="cid" name="collector.id" style="width: 200px;"></select>--%>
+            <%--</td>--%>
+            <%--</tr>--%>
             <tr>
                 <td>钥匙MAC:</td>
                 <td>
@@ -102,10 +113,12 @@
             <tr>
                 <td width="100">领用人:</td>
                 <td>
-                    <input type="text" name="userName" id="userName" value="" readonly/> <a class="easyui-linkbutton"
-                                                                                            onclick="$('#selectUser').window('open');">选择</a>
-                    <input type="hidden" name="userid" id="usercode" value=""/>
-                    <%--<select name="userId" name="userId" style="width:200px;" class="easyui-validatebox" required="true">--%>
+                    <%--<input type="text" name="userName" id="userName" value="" />--%>
+                    <%--<a class="easyui-linkbutton" onclick="$('#selectUser').window('open');">选择</a>--%>
+                    <%--<input type="hidden" name="userid" id="usercode" value=""/>--%>
+
+                    <select id="usersname" name="user.name" style="width:200px;" class="easyui-validatebox"
+                            required="true">
                     <%--<option value="">---请选择---</option>--%>
                     <%--<c:forEach items="${userList}" var="user" varStatus="s">--%>
                     <%--<option value="${user.id}"--%>
@@ -113,7 +126,6 @@
                     <%--</c:forEach>--%>
                     <%--</select>--%>
                     <%--<a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>--%>
-
 
                 </td>
 
@@ -130,3 +142,6 @@
 
     </table>
 </div>
+<script>
+
+</script>

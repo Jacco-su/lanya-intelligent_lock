@@ -7,6 +7,7 @@ import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.QgdisDao;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
+import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -68,45 +69,20 @@ public class CollectorAction {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(@ModelAttribute Collector collector, String[] disIdList) {
+    public String add(@ModelAttribute Collector collector) {
         String message = "";
-//            try{
-//                Area area= BasicData.findAreaByAreacode(disa.getAreacode());
 
-//                disa.setAreaname(area.getAreaname());
-//                disa.setAddress(disa.getAddress().trim());
-//                disDao.save(disa);
-//                message= StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
-//            }catch(Exception e){
-//                message=StringUtil.jsonValue("0",AppMsg.ADD_ERROR);
-//            }
-//            try {
-//                Qgdis qgdis = BasicData.findAreaByAreacode(collector.getDis());
-//                return collectorDao.findCollectorByQgdisid(qgdisId);
-//                collector.setCcode(collector.getAreaname());
-//                collector.setAddress(collector.getAddress().trim());
-//                collector.setLock(collector.getLock());
-//                collectorDao.save(collector);
-//                message= StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
-//             }catch(Exception e){
-//                message=StringUtil.jsonValue("0",AppMsg.ADD_ERROR);
-//            }
-//        collector.setId("1");
-//        collector.setCip(collector.getCip());
-//        collector.setCdate(sdf.format(new Date().getTime()));
-//        //initRolea(collector, disIdList);
-//
-//        try {
-//            collectorDao.save(collector);
-//            //collectorDao.addCollector(collector);
-//            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
-//        } catch (Exception e) {
-//            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
-//        }
-
+        try {
+            collector.setCdate(FormatDate.getYMdHHmmss());
+            collectorDao.save(collector);
+            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+        }
         return message;
     }
-//
+
 //    public void initRolea(Collector collector, String[] disIdList) {
 ////        if(list==null){
 ////            list=new String[0];
@@ -183,7 +159,7 @@ public class CollectorAction {
     @ResponseBody
     public String delete(String id) {
         String message = "";
-//        String hql = "select count(*) from locks t where t.collectorId=?";
+//        String hql = "select count(*) from collectore t where t.collectoreId=?";
 //        int count = collectorDao.getResultNumber(hql, id);
 //        if (count > 0) {
 //            message = StringUtil.jsonValue("0", AppMsg.getMessage("collector101"));

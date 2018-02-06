@@ -101,7 +101,7 @@ public class DistributionAction {
         try {
             disa.setAddress(disa.getAddress().trim());
             disa.setName(disa.getName().trim());
-            disa.setCreateTime(disa.getCreateTime());
+//            disa.setCreateTime(disa.getCreateTime());
             disDao.update(disa);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {
@@ -119,7 +119,7 @@ public class DistributionAction {
 //            int count = disDao.getResultNumber(hql, id);
 //            if (count > 0) {
 //                message = StringUtil.jsonValue("0", AppMsg.getMessage("disa101"));
-//                //101该配电房拥有智能锁，不允许删除
+//                //101该站点拥有智能锁，不允许删除
 //                return message;
 //            }
             Qgdis disa = disDao.find(Qgdis.class, id);

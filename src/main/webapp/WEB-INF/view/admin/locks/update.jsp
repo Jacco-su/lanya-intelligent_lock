@@ -9,35 +9,47 @@
 
 <%--/**   修改*/--%>
 <div>
-    <form name="editForm" id="editForm" action="${basePath}/locks/prUpdate" method="post">
+    <form name="editForm" id="editForm" action="${basePath}/locks/update" method="post">
         <table class="mytable" align="center">
             <tr>
                 <td>智能锁编号:</td>
                 <td><input type="hidden" name="id" value="${locks.id}"/>
-                    <input name="lockNum" value="${locks.lockNum}" class="easyui-validatebox" required="true"/></td>
+                    <input name="dept.id" type="hidden" value="${locks.qgdis.id}"/>
+                    <input name="lockNum" value="${locks.lockNum}" class="easyui-validatebox" required="true"/>
 
+
+                </td>
             </tr>
             <tr>
                 <td>识别码:</td>
                 <td>
-                    <input name="locksCode" value="${locks.lockCode}" class="easyui-validatebox" required="true"/>
+                    <input name="lockCode" value="${locks.lockCode}" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
 
 
             <tr>
-                <td width="100">所属配电房:</td>
+                <td width="100">所属站点:</td>
                 <td>
-                    <input type="text" name="disame" id="areaname" value="${locks.qgdis.id}" readonly/><a
+                    <input type="hidden" name="qgdis.id" id="discode" value="${locks.qgdis.id}"/>
+                    <input type="text" name="qgdis.name" id="areaname" value="${locks.qgdis.name}" readonly/><a
                         class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>
-                    <input type="hidden" name="discode" id="discode" value="${locks.qgdis}"/>
 
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    详细地址:
+                </td>
+                <td>
+                    <input name="address" value="${locks.address}">
                 </td>
             </tr>
 
             <tr>
                 <td>日期:</td>
-                <td><input name="cdate" value="${locks.lockDate}" class="easyui-validatebox" required="true"/>
+                <td><input name="lockDate" value="${locks.lockDate}" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
         </table>

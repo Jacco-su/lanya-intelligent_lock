@@ -275,4 +275,10 @@ public class UserDao extends BaseDaoImpl implements IUserDao {
         String hql = "select t from User t order by t.areacode";
         return findList(hql);
     }
+
+    public List<User> findAllUser() {
+        String hql = "select t from User t order by t.areacode";
+        return findList(hql);
+    }
+
 }

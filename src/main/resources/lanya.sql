@@ -3407,8 +3407,8 @@ CREATE TABLE `t_operation` (
 -- ----------------------------
 DROP TABLE IF EXISTS `t_qgdis`;
 CREATE TABLE `t_qgdis` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '配电房ID 及编号',
-  `name` varchar(255) DEFAULT NULL COMMENT '配电房名称',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '站点ID 及编号',
+  `name` varchar(255) DEFAULT NULL COMMENT '站点名称',
   `deptId` int(11) DEFAULT NULL,
   `address` varchar(255) NOT NULL,
   `createTime` varchar(20) DEFAULT NULL,

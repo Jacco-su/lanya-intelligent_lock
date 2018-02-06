@@ -19,7 +19,7 @@
             </td>
         </tr>
         <tr>
-            <td width="100">所属配电房:</td>
+            <td width="100">所属站点:</td>
             <td>
                 ${locks.qgdis.name}
             </td>

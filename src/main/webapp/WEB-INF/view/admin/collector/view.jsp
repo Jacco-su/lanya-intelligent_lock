@@ -17,7 +17,7 @@
             <td>${collectora.ccode}</td>
         </tr>
         <tr>
-            <td>所属配电房:</td>
+            <td>所属站点:</td>
             <td>
                 ${collectora.dis.name}
             </td>

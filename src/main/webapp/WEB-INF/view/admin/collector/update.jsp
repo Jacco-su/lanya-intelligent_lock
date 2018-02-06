@@ -19,7 +19,7 @@
             </tr>
 
             <tr>
-                <td width="100">所属配电房</td>
+                <td width="100">所属站点</td>
                 <td>
                     <input type="text" name="disame" id="areaname" value="${collectora.dis}" readonly/><a
                         class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>

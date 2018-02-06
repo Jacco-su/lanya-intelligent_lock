@@ -9,7 +9,7 @@
 <div>
     <table class="mytable" align="center">
         <tr>
-            <td>配电房名称:</td>
+            <td>站点名称:</td>
             u
             <td>${disa.name}</td>
         </tr>
