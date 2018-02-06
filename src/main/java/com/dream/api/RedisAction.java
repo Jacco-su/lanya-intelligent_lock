@@ -65,7 +65,7 @@ public class RedisAction {
         System.out.println(dataProtocol.toString());
          redisTemplateUtil.setList("lanya-lite", dataProtocol.toString());
         try {
-            Thread.sleep(5000);
+            Thread.sleep(8000);
             Object o = redisTemplateUtil.get(dataProtocol.toString());
             if (o == null) {
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
