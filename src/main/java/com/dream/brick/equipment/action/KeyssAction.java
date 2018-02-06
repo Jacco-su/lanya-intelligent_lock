@@ -85,11 +85,11 @@ public class KeyssAction {
         return message;
     }
 
-
     @RequestMapping("/prUpdate")
     public String Update(String id, ModelMap modelMap) {
         Keyss keyss = ikeyssDao.find(Keyss.class, id);
         modelMap.addAttribute("keyss", keyss);
+        modelMap.addAttribute("userList", JSON.toJSONString(userDao.findAllUser()));
         return "admin/keyss/update";
     }
 
@@ -102,7 +102,7 @@ public class KeyssAction {
 //            keyss.setKeyssName(keyss.getKeyssName().trim());
 //            keyss.setUserName(keyss.getUserName().trim());
 //            keyss.setKeyssDate(keyss.getKeyssDate().trim());
-            collectorDao.update(keyss);
+            ikeyssDao.update(keyss);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

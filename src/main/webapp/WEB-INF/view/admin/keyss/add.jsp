@@ -20,9 +20,9 @@
     $(function () {
         var data = '${usersList}';
         data = JSON.parse(data);
-        $('#usersname').empty();
+        $('#username').empty();
         for (var i = 0; i < data.length; i++) {
-            $('#usersname').append("<option value='" + data[i].username + "'>" + data[i].username + "</option>");
+            $('#username').append("<option value='" + data[i].username + "'>" + data[i].username + "</option>");
         }
     });
 
@@ -117,9 +117,9 @@
                     <%--<a class="easyui-linkbutton" onclick="$('#selectUser').window('open');">选择</a>--%>
                     <%--<input type="hidden" name="userid" id="usercode" value=""/>--%>
 
-                    <select id="usersname" name="user.name" style="width:200px;" class="easyui-validatebox"
-                            required="true">
-                    <%--<option value="">---请选择---</option>--%>
+                    <select id="username" name="userName" style="width:150px;">
+
+                        <%--<option value="">---请选择---</option>--%>
                     <%--<c:forEach items="${userList}" var="user" varStatus="s">--%>
                     <%--<option value="${user.id}"--%>
                     <%--<c:if test="${user.id eq seuser.id}">selected</c:if>>${user.name}</option>--%>
@@ -142,6 +142,3 @@
 
     </table>
 </div>
-<script>
-
-</script>

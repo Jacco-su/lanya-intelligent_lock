@@ -203,7 +203,7 @@ public class CollectoreAction {
             collectoreDao.delete(collectore);
             message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             message = StringUtil.jsonValue("0", AppMsg.DEL_ERROR);
         }
         return message;
