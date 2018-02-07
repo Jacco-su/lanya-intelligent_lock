@@ -1,13 +1,15 @@
 package com.dream.api;
 
-import com.alibaba.fastjson.JSON;
+import com.dream.brick.equipment.bean.Authorization;
+import com.dream.brick.equipment.dao.IAuthorizationDao;
 import com.dream.brick.listener.SessionData;
 import com.dream.socket.entity.AuthModel;
 import com.dream.socket.entity.DataProtocol;
-import com.dream.socket.entity.JsonDataProtocol;
 import com.dream.socket.utils.ByteUtil;
 import com.dream.socket.utils.Constants;
+import com.dream.socket.utils.DateUtil;
 import com.dream.util.AppMsg;
+import com.dream.util.FormatDate;
 import com.dream.util.RedisTemplateUtil;
 import com.dream.util.StringUtil;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,8 @@ public class RedisAction {
     @Resource
     private RedisTemplate redisTemplate;
     private RedisTemplateUtil redisTemplateUtil = null;
-
+    @Resource
+    private IAuthorizationDao authorizationDao;
 
     @RequestMapping(value = "/get", method = {RequestMethod.POST})
     @ResponseBody
@@ -73,6 +75,20 @@ public class RedisAction {
             if (o == null) {
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
             } else {
+                if("5".equals(keys[1])){
+                    if("成功".equals(o.toString())){
+                        Authorization authorization=new Authorization();
+                        authorization.setType("client");
+                        authorization.setLocksid(keys[4]);
+                        authorization.setKeyssid(keys[3]);
+                        authorization.setAid(SessionData.getAdminId(request));
+                        authorization.setUid(keys[7]);
+                        authorization.setStarttime(FormatDate.getYMdHHmmss(keys[5]));
+                        authorization.setEndtime(FormatDate.getYMdHHmmss(keys[6]));
+                        authorization.setAdate(FormatDate.getYMdHHmmss());
+                        authorizationDao.save(authorization);
+                    }
+                }
                 return  StringUtil.jsonValue("1", o.toString());
             }
         } catch (InterruptedException e) {

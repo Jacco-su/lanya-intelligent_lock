@@ -1,5 +1,6 @@
 package com.dream.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -182,6 +183,17 @@ public class FormatDate {
 		Calendar cd = Calendar.getInstance();
 		cd.add(Calendar.MONTH, n);//增加一个月
 		return sdfyM.format(cd.getTime());
+	}
+	/**
+	 * 获取时分秒 如 2015-05-01 11:20:32
+	 * **/
+	public static Date getYMdHHmmss(String date) {
+		try {
+			return sdfHHmmss.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	public static void main(String[] args){
 		System.out.println(FormatDate.getYMdHHmmss());

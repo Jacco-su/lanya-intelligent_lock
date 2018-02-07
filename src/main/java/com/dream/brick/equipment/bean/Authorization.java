@@ -12,7 +12,7 @@ import java.util.Date;
 public class Authorization implements java.io.Serializable {
     private static final long serialVersionUID = 4725135016331954412L;
     private String id;
-    private String starttime;   //起始时间
+    private Date starttime;   //起始时间
     private Date endtime;       //失效时间
     private String keyssid; //授权钥匙id
     private String locksid;   //开锁Id
@@ -33,11 +33,11 @@ public class Authorization implements java.io.Serializable {
         this.id = id;
     }
 
-    public String getStarttime() {
+    public Date getStarttime() {
         return starttime;
     }
 
-    public void setStarttime(String starttime) {
+    public void setStarttime(Date starttime) {
         this.starttime = starttime;
     }
 
