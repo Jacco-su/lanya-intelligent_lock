@@ -18,7 +18,6 @@ public class Keyss {
     private String keyssCode;
     private String keyssName;       //钥匙自定义名称
     private String keyssMAC;       //蓝牙钥匙MAC地址
-    private String userName;    //领用人名字
 
     private String keyssDate;         //领用时间
     private String sortorder;            //排序
@@ -64,13 +63,6 @@ public class Keyss {
         this.keyssMAC = kryssMAC;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public String getKeyssDate() {
         return keyssDate;
@@ -99,7 +91,7 @@ public class Keyss {
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", nullable = false, updatable = true)
-    public User getCollector() {
+    public User getUser() {
         return user;
     }
 

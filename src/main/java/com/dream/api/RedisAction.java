@@ -43,6 +43,7 @@ public class RedisAction {
             ////采集器id:指令字:控制器mac地址:钥匙mac地址
            authModel=new AuthModel(new byte[]{12},AuthModel.toData(12,14),Constants.LOCK_KEY).toString();//校时成功
         }else if("5".equals(keys[1])){
+            //开始授权
             //采集器id:指令字:控制器mac地址:钥匙mac地址:锁识别号:开始日期:结束日期
             authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray("01010101"),ByteUtil.hexStrToByteArray(keys[4]),keys[2],keys[5],keys[6]),Constants.LOCK_KEY).toString();//
         }else if("1".equals(keys[1])){
@@ -52,6 +53,8 @@ public class RedisAction {
         }else if("2".equals(keys[1])){
             //初始化锁      key=0000000002,2,DF:98,
            authModel=new AuthModel(new byte[]{2},AuthModel.toData(2,10),Constants.KEY).toString();
+        }else if("13".equals(keys[1])){
+
         }
 
         String macAddess=keys[2].replace(":","");
