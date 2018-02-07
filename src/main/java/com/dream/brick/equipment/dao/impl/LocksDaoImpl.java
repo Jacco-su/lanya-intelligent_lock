@@ -33,4 +33,6 @@ public class LocksDaoImpl extends BaseDaoImpl implements ILocksDao {
         String hql = "from Locks";
         return query(hql, pager);
     }
+
+
 }

@@ -62,21 +62,21 @@
                         width: 300,
                         align: 'center'
                     },
+//                    {
+//                        title: '领用人',
+//                        field: 'userName',
+//                        width: 200,
+//                        align: 'left'
+//                    },
                     {
                         title: '领用人',
-                        field: 'userName',
-                        width: 200,
-                        align: 'left'
+                        field: 'userNume',
+                        formatter: function (value, rowData, rowIndx) {
+                            return rowData.username;
+                        },
+                        width: $(this).width() * 0.1,
+                        align: 'center'
                     },
-//                {
-//                    title : '领用人',
-//                    field : 'userNume',
-//                    formatter : function(value,rowData,rowIndx) {
-//                        return rowData.username;
-//                    },
-//                    width : $(this).width() * 0.1,
-//                    align : 'center'
-//                },
                     {
                         title: '领用时间 ',
                         field: 'keyssDate',
@@ -396,31 +396,31 @@
 
 //**********************************************
 
-            function setToarea() {
-                var id = "";
-                var show = "";
-                fullname = "";
-                var selections = $('#infoulist').tree('getUsername');
-                if (selections) {
-                    id = selections.id;
-                    show = selections.attributes.username;
-                    $("#usercode").val(id);
-                    getUsername(selections);
-                    fullname = fullname.substring(0, fullname.length - 1);
-                    $("#username").val(fullname);
-                }
-                $('#selectUser').window('close');
-            }
-
-            function getUsername(node) {
-                var fullname = "";
-                fullname = node.text + " " + fullname;
-                if (node.attributes.parentcode == 0) {
-                    return;
-                }
-                var abc = $('#tree').tree('getParent', node.target);
-                getAreaname(abc);
-            }
+//            function setToarea() {
+//                var id = "";
+//                var show = "";
+//                fullname = "";
+//                var selections = $('#infoulist').tree('getUsername');
+//                if (selections) {
+//                    id = selections.id;
+//                    show = selections.attributes.username;
+//                    $("#usercode").val(id);
+//                    getUsername(selections);
+//                    fullname = fullname.substring(0, fullname.length - 1);
+//                    $("#username").val(fullname);
+//                }
+//                $('#selectUser').window('close');
+//            }
+//
+//            function getUsername(node) {
+//                var fullname = "";
+//                fullname = node.text + " " + fullname;
+//                if (node.attributes.parentcode == 0) {
+//                    return;
+//                }
+//                var abc = $('#tree').tree('getParent', node.target);
+//                getAreaname(abc);
+//            }
 
         });
 

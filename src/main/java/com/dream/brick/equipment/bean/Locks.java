@@ -17,7 +17,7 @@ public class Locks implements Serializable {
     private String lockDate;      //安装时间
     private Qgdis qgdis;
 
-    //    private String dissId;
+    private String dissId;
     private String address;//详细地址
     /**
      * 常显

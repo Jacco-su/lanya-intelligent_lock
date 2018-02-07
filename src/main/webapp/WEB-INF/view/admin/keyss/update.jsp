@@ -7,14 +7,7 @@
 %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <script>
-    <%--$(function () {--%>
-    <%--var data = '${userList}';--%>
-    <%--data = JSON.parse(data);--%>
-    <%--$('#usersname').empty();--%>
-    <%--for (var i = 0; i < data.length; i++) {--%>
-    <%--$('#usersname').append("<option value='" + data[i].username + "'>" + data[i].username + "</option>");--%>
-    <%--}--%>
-    <%--});--%>
+
     $(function () {
         var data = '${userList}';
         data = JSON.parse(data);

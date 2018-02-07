@@ -4,6 +4,7 @@ package com.dream.brick.equipment.bean;
 import com.dream.brick.admin.bean.User;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 蓝牙钥匙实体类
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "t_keyss")
 
-public class Keyss {
+public class Keyss implements Serializable {
 
     private String id;             //蓝牙钥匙id 编号
     private String keyssCode;
@@ -26,6 +27,7 @@ public class Keyss {
      * 常显
      */
     private int alwaysShow;
+
 
     private User user;
 
@@ -97,9 +99,19 @@ public class Keyss {
     }
 
 
+//    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "userName", nullable = false,insertable=false, updatable = false)
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
+
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", nullable = false, updatable = true)
-    public User getCollector() {
+    public User getUser() {
         return user;
     }
 

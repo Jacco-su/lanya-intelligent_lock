@@ -3,15 +3,13 @@ package com.dream.brick.equipment.action;
 
 import com.alibaba.fastjson.JSON;
 import com.dream.brick.equipment.bean.Authorization;
-
 import com.dream.brick.equipment.dao.IAuthorizationDao;
-
 import com.dream.brick.equipment.dao.IKeyssDao;
 import com.dream.brick.equipment.dao.QgdisDao;
-import com.dream.brick.listener.BasicData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -144,7 +142,12 @@ public class AuthorizationAction {
     @RequestMapping("/distribution")
     @ResponseBody
     public String getDistributionAction(String disaId){
-        return JSON.toJSONString(authorizationDao.findListDisa(disaId));
+        if (StringUtils.isNotEmpty(disaId)) {
+            return JSON.toJSONString(authorizationDao.findListDisa(disaId));
+        } else {
+            return JSON.toJSONString(disDao.findAllQgdis());
+        }
+
     }
     @RequestMapping("/user")
     @ResponseBody

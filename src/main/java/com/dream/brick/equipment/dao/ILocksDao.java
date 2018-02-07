@@ -17,4 +17,5 @@ public interface ILocksDao extends BaseDao {
     //    public List<Locks> findLocksByAreacode(String areacode);
     public List<Locks> findLocksList(Pager pager);
 
+
 }

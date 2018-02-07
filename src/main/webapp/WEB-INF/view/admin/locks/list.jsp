@@ -117,8 +117,8 @@
                 addWin = $.createWin({
                     title: "添加",
                     url: '${basePath}/locks/prAdd',
-                    height: 350,
-                    width: 800,
+                    height: 450,
+                    width: 600,
                     buttons: [{
                         text: '保存',
                         iconCls: 'icon-ok',

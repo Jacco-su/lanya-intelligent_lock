@@ -79,6 +79,12 @@ public class LocksAction {
         return message;
     }
 
+//    @RequestMapping("/prAddView")
+//    public String prAddView( ModelMap model) {
+//
+//        return "admin/locks/addList";
+//    }
+
 
     @RequestMapping("/prUpdate")
     public String prUpdate(String id, ModelMap model) {
@@ -140,6 +146,29 @@ public class LocksAction {
         }
         return message;
     }
+
+//    @RequestMapping("/disa/collector")
+//    @ResponseBody
+//    public String getCollectorAction(String disaId){
+//        return JSON.toJSONString(ilocksDao.findList("from Collector where disId="+disaId));
+//    }
+//    @RequestMapping("collector/collectore")
+//    @ResponseBody
+//    public String getCollectoreAction(String collectorId){
+//        return JSON.toJSONString(ilocksDao.findList("from Collectore where cid="+collectorId));
+//    }
+//
+////    @RequestMapping("/keys")
+////    @ResponseBody
+////    public String getKeysAction(){
+////        return JSON.toJSONString(ikeyssDao.findAllKeyss());
+////    }
+//
+//    @RequestMapping("/disa/locks")
+//    @ResponseBody
+//    public String getLocksAction(String disaId) {
+//        return JSON.toJSONString(ilocksDao.findList("from Locks where dissId=" + disaId));
+//    }
 
 
 }
