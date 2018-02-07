@@ -223,8 +223,9 @@
 
             });
         }
-        function getLock() {
-            var key=$('#collector').combobox('getText')+",1,"
+        function getLock(t) {
+            var key=$('#collector').combobox('getText') +","
+                +t+","
                 +$('#collectore').combobox('getText')+","
                 +$('#keys').combobox('getText')+","
                 +$('#locks').combobox('getText')+","
@@ -243,19 +244,27 @@
                 dataType: "json",
                 success: function(data){
                     if(data.result=="1"){
-                        $("#locks").empty();
-                        var collectorData = []; //创建数组
-                        var lockNum=data.message.split(":")[1];
+                        if(t==2){
+                            alert(data.message);
+                        }else{
+                            $("#locks").empty();
+                            var collectorData = []; //创建数组
+                            var lockNum=data.message.split(";")[1];
                             collectorData.push({
                                 "id": lockNum,
                                 "text":lockNum
                             });
-                            console.log(data.message.split(":")[1]);
+                            console.log(data.message.split(";")[1]);
                             console.log(collectorData);
-                        $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
-                            .combobox("loadData", collectorData).combobox("setValue",lockNum);;
+                            $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
+                                .combobox("loadData", collectorData).combobox("setValue",lockNum);
+                        }
                     }else{
-                        alert("读取门锁信息失败!");
+                        if(t==2){
+                            alert("初始化门锁失败!");
+                        }else{
+                            alert("读取门锁信息失败!");
+                        }
                     }
                 }
 
@@ -277,7 +286,7 @@
             <table cellpadding="5">
             <tr>
                    <td>站点:</td>
-                   <td colspan="2">
+                   <td colspan="3">
                        <select class="easyui-combobox" name="disa" id="disa" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
                             <option value="0">---请选择---</option>
                        </select>
@@ -285,7 +294,7 @@
                </tr>
                <tr>
                    <td>采集器:</td>
-                   <td colspan="2">
+                   <td colspan="3">
                        <select class="easyui-combobox" id="collector" name="collector" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
                            <option value="0">---请选择---</option>
                        </select>
@@ -293,7 +302,7 @@
                </tr>
                <tr>
                    <td>控制器:</td>
-                   <td colspan="2">
+                   <td colspan="3">
                        <select class="easyui-combobox" name="collectore" id="collectore" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
                            <option value="0">---请选择---</option>
                        </select>
@@ -301,7 +310,7 @@
                </tr>
                <tr>
                    <td>选择钥匙:</td>
-                   <td colspan="2">
+                   <td colspan="3">
                        <select class="easyui-combobox"  id="keys" name="keys" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
                        <option value="0">---请选择---</option>
 
@@ -311,7 +320,7 @@
                     <td>
                         操作钥匙:
                     </td>
-                    <td colspan="2">
+                    <td colspan="3">
                         <button class="easyui-linkbutton"  onclick="keyBinding()">绑定钥匙</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <button class="easyui-linkbutton"  onclick="keyTiming()">钥匙校时</button>
                     </td>
@@ -323,13 +332,16 @@
                            <option value="0">---请选择---</option>
                        </select></td>
                    <td>
-                       <button class="easyui-linkbutton"  onclick="getLock()">读取门锁信息</button>
+                       <button class="easyui-linkbutton"  onclick="getLock(2)">初始门锁</button>
+                   </td>
+                   <td>
+                       <button class="easyui-linkbutton"  onclick="getLock(1)">在线门锁信息</button>
                    </td>
                </tr>
 
                <tr>
                    <td width="100">授权时间:</td>
-                   <td colspan="2">
+                   <td colspan="3">
                        <input id="startDate" name="startDate" class="easyui-validatebox"  value=""/>
                        <img onclick="WdatePicker({el:'startDate',dateFmt:'yyyyMMddHHmmss'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
                        -
@@ -339,7 +351,7 @@
                </tr>
                 <tr>
                     <td>被授权人:</td>
-                    <td colspan="2">
+                    <td colspan="3">
                         <select class="easyui-combobox"  name="users" id="users" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
                             <option value="0">---请选择---</option>
                         </select></td>
