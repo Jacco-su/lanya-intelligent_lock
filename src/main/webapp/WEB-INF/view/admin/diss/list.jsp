@@ -162,8 +162,8 @@
                     addWin = $.createWin( {
                         title: "站点添加",
                         url : basePath+'/disa/prAdd?deptId='+deptId,
-                        height : 550,
-                        width : 800,
+                        height: 350,
+                        width: 500,
                         buttons : [ {
                             text : '保存',
                             iconCls : 'icon-ok',
@@ -187,8 +187,8 @@
                     title: "站点修改",
                     url : basePath+'/disa/prUpdate',
                     data : 'id=' +id,
-                    height : 550,
-                    width : 800,
+                    height: 350,
+                    width: 500,
                     buttons : [ {
                         text : '修改',
                         iconCls : 'icon-ok',

@@ -98,6 +98,7 @@ public class DistributionAction {
     @ResponseBody
     public String update(@ModelAttribute Qgdis disa) {
         String message = "";
+//        disa.setCreateTime(FormatDate.getYMdHHmmss().trim());
         try {
             disa.setAddress(disa.getAddress().trim());
             disa.setName(disa.getName().trim());

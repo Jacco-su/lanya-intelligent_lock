@@ -22,7 +22,7 @@
         data = JSON.parse(data);
         $('#username').empty();
         for (var i = 0; i < data.length; i++) {
-            $('#username').append("<option value='" + data[i].username + "'>" + data[i].username + "</option>");
+            $('#username').append("<option value='" + data[i].id + "'>" + data[i].username + "</option>");
         }
     });
 

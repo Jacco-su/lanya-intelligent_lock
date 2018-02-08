@@ -38,14 +38,7 @@
 </head>
 <body>
 <form>
-    <script>
 
-        //        for (var i=0;i<cars.length;i++)
-        //        {
-        //            document.write(cars[i] + '<img src="http://localhost:8080/uploads/icture/001292.jpg">');
-        //        }
-
-    </script>
 
     <img src="http://localhost:8080/uploads/icture/+'.jpg'">
     <img src="${basePath}/uploads/ictures/+'.getTimestamp()'.jpg">
@@ -134,7 +127,18 @@
 <%--</div>--%>
 <%--</div>--%>
 
+<script>
 
+    //        for (var i=0;i<cars.length;i++)
+    //        {
+    //            document.write(cars[i] + '<img src="http://localhost:8080/uploads/icture/001292.jpg">');
+    //        }
+
+</script>
+
+<script src="${basePath}/js/js-preview-728x90.js"></script>
+<br/><br/><br/>
+<script src="${basePath}/js/tj.js"/>
 </body>
 
 </html>
@@ -148,7 +152,5 @@
 <%--}--%>
 <%--})--%>
 <%--</script>--%>
-<script src="${basePath}/js/js-preview-728x90.js"></script>
-<br/><br/><br/>
-<script src="${basePath}/js/tj.js"/>
+
 

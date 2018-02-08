@@ -1,75 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%
     response.setHeader("Pragma", "No-Cache");
     response.setHeader("Cache-Control", "No-Cache");
     response.setDateHeader("Expires", 0);
 %>
-
-<style>
-
-    input:focus {
-        color: rgba(7, 7, 7, 0.99);
-    }
-
-    input:link {
-        color: rgba(80, 76, 78, 0.8);
-    }
-</style>
-
-<%--<script type="text/javascript" src="${basePath}/js/jquery.min.js"></script>--%>
-<%--<script type="text/javascript" src="${basePath}/js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>--%>
-<%--<script type="text/javascript" src="${basePath}/js/jquery-easyui-1.5.3/locale/easyui-lang-zh_CN.js"--%>
-<%--charset="UTF-8"></script>--%>
-<%--<script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>--%>
-
-
-<script type="text/javascript">
-    var basePath = "${basePath}";
-    $(function () {
-            <%--var d='${dissList}';--%>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>添加门锁</title>
+    <link rel="stylesheet" type="text/css"
+          href="${basePath}/js/jquery-easyui-1.5.3/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="${basePath}/js/jquery-easyui-1.5.3/themes/icon.css"/>
+    <script type="text/javascript" src="${basePath}/js/jquery.min.js"></script>
+    <script type="text/javascript" src="${basePath}/js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${basePath}/js/jquery-easyui-1.5.3/locale/easyui-lang-zh_CN.js"
+            charset="UTF-8"></script>
+    <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
+    <script type="text/javascript">
+        var basePath = "${basePath}";
+        $(function () {
             refresh();
 
             //获取站点
-
             function refresh() {
-//            $(function () {
-//
-//                d=JSON.parse(data);
-//                $('#disa').empty();
-//                for (var i=0;i<data.length;i++){
-//                    $('#disa').append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
-//                }
-//
-//
-//
-////            })
-
-//            var data={
-//                "disaId":""
-//            };
-//            $.post(basePath+"/authorization/distribution",data,function(data){
-//
-//                var d=JSON.parse(data);
-//                $('#disa').empty();
-//                var disaData = []; //创建数组
-//                for(var i=0;i<d.length;i++){
-//                    disaData.push({
-//                        "id": d[i].id,
-//                        "text": d[i].name
-//                    });
-//                }
-//                if( d[0]!=null) {
-//                    $("#disa").combobox("clear")//下拉框加载数据,设置默认值为
-//                        .combobox("loadData", disaData).combobox("setValue", d[0].id);
-//                }
-//            });
-
                 var data = {
                     "disaId": ""
                 };
+                <%--$(function () {--%>
+                <%--var data='${dissList}';--%>
+                <%--data=JSON.parse(data);--%>
+                <%--$('#disa').empty();--%>
+                <%--for (var i=0;i<data.length;i++){--%>
+                <%--$('#disa').append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");--%>
+                <%--}--%>
+                <%--})--%>
                 $.post(basePath + "/authorization/distribution", data, function (data) {
                     <%--var d='${dissList}';--%>
                     var d = JSON.parse(data);
@@ -86,7 +52,6 @@
                             .combobox("loadData", disaData).combobox("setValue", d[0].id);
                     }
                 });
-
                 //获取采集器
                 $('#disa').combobox({
                     onSelect: function (row) {
@@ -139,62 +104,76 @@
                         }
                     }
                 });
-
             }
+        });
 
-        }
-    );
-
-    //初始化 获取门锁信息
-    function getLock(t) {
-        var key = $('#collector').combobox('getText') + ","
-            + t + ","
-            + $('#collectore').combobox('getText') + ","
-            + $('#keys').combobox('getText') + ","
-            + $('#locks').combobox('getText') + ","
-            + $('#startDate').val() + ","
-            + $('#endDate').val() + ","
-            + $('#users').combobox('getValue');
-        var data = {
-            "key": key
-        };
-        $.ajax({
-            type: "post",
-            url: basePath + "/redis/get",
-            cache: false,
-            async: false,
-            data: data,
-            dataType: "json",
-            success: function (data) {
-                if (data.result == "1") {
-                    if (t == 2) {
-                        alert(data.message);
+        //初始化 获取门锁信息
+        function getLock(t) {
+            var key = $('#collector').combobox('getText') + ","
+                + t + ","
+                + $('#collectore').combobox('getText') + ","
+                + $('#keys').combobox('getText') + ","
+                + $('#locks').combobox('getText') + ","
+                + $('#startDate').val() + ","
+                + $('#endDate').val() + ","
+                + $('#users').combobox('getValue');
+            var data = {
+                "key": key
+            };
+            $.ajax({
+                type: "post",
+                url: basePath + "/redis/get",
+                cache: false,
+                async: false,
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    if (data.result == "1") {
+                        if (t == 2) {
+                            alert(data.message);
+                        } else {
+                            $("#locks").empty();
+                            var collectorData = []; //创建数组
+                            var lockNum = data.message.split(":")[1];
+                            collectorData.push({
+                                "id": lockNum,
+                                "text": lockNum
+                            });
+                            console.log(data.message.split(":")[1]);
+                            console.log(collectorData);
+                            $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
+                                .combobox("loadData", collectorData).combobox("setValue", lockNum);
+                        }
                     } else {
-                        $("#locks").empty();
-                        var collectorData = []; //创建数组
-                        var lockNum = data.message.split(":")[1];
-                        collectorData.push({
-                            "id": lockNum,
-                            "text": lockNum
-                        });
-                        console.log(data.message.split(":")[1]);
-                        console.log(collectorData);
-                        $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
-                            .combobox("loadData", collectorData).combobox("setValue", lockNum);
-                    }
-                } else {
-                    if (t == 2) {
-                        alert("初始化门锁失败!");
-                    } else {
-                        alert("读取门锁信息失败!");
+                        if (t == 2) {
+                            alert("初始化门锁失败!");
+                        } else {
+                            alert("读取门锁信息失败!");
+                        }
                     }
                 }
-            }
 
-        });
-    }
-</script>
+            });
+        }
 
+        function save() {
+            $('#addForm').form('submit', {
+                onSubmit: function () {
+                    return $(this).form('validate');
+                },
+                success: function (data) {
+                    var json = eval("(" + data + ")");
+                    $.messager.alert('提示', json.message, 'warning');
+                    $.closeWin(addWin);
+                    refresh();
+                }
+            });
+        }
+
+
+    </script>
+</head>
+<body>
 <div>
     <form name="addForm" id="addForm" action="${basePath}/locks/add" method="post">
         <table class="mytable" align="center">
@@ -256,16 +235,14 @@
                               required="true"></textarea>
             </tr>
 
+            <tr>
+                <td>
+                    <button class="easyui-linkbutton" onclick="save()">确认添加</button>
+                </td>
+            </tr>
+
         </table>
     </form>
 </div>
-<script>
-    <%--$(function () {--%>
-    <%--var data='${dissList}';--%>
-    <%--data=JSON.parse(data);--%>
-    <%--$('#disa').empty();--%>
-    <%--for (var i=0;i<data.length;i++){--%>
-    <%--$('#disa').append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");--%>
-    <%--}--%>
-    <%--})--%>
-</script>
+</body>
+</html>

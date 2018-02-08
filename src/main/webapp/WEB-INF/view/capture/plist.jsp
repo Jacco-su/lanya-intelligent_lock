@@ -34,31 +34,7 @@
     <link rel="stylesheet" type="text/css" href="${basePath}/js/uploadify/uploadify.css"/>
     <script type="text/javascript" src="${basePath}js/resources/js/jquery-1.8.2.min.js"></script>
 
-    <script type="text/javascript">
-        ImageCropper.prototype.loadImage = function (file) {
-            if (!this.isAvaiable() || !this.isImage(file)) return;
-            var reader = new FileReader();
-            var me = this;
-            reader.readAsDataURL(file);
-            reader.onload = function (evt) {
-                if (!me.image) me.image = new Image();
-                me.image.onload = function (e) {
-                    me._init()
-                };
-                me.image.src = evt.target.result;
-            }
-        };
 
-        ImageCropper.prototype.loadImage2 = function (url) {
-            var me = this;
-            if (!me.image) me.image = new Image();
-            me.image.onload = function (e) {
-                me._init()
-            };
-            me.image.src = url;
-        }
-
-    </script>
 </head>
 <body>
 
@@ -128,7 +104,31 @@
 <div>
     8<input type="file" id="input" size="10" style="visibility:hidden;" onchange="selectImage(this.files)"/>
 </div>
+<script type="text/javascript">
+    ImageCropper.prototype.loadImage = function (file) {
+        if (!this.isAvaiable() || !this.isImage(file)) return;
+        var reader = new FileReader();
+        var me = this;
+        reader.readAsDataURL(file);
+        reader.onload = function (evt) {
+            if (!me.image) me.image = new Image();
+            me.image.onload = function (e) {
+                me._init()
+            };
+            me.image.src = evt.target.result;
+        }
+    };
 
+    ImageCropper.prototype.loadImage2 = function (url) {
+        var me = this;
+        if (!me.image) me.image = new Image();
+        me.image.onload = function (e) {
+            me._init()
+        };
+        me.image.src = url;
+    }
+
+</script>
 </body>
 </html>
 

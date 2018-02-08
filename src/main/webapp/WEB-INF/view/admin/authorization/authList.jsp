@@ -47,6 +47,8 @@
                         .combobox("loadData", keyData).combobox("setValue", d[0].keyssMAC);
                 });
             }
+
+            //获取站点
             function refresh(obj) {
                 var data={
                     "disaId":obj
@@ -66,6 +68,7 @@
                           .combobox("loadData", disaData).combobox("setValue", d[0].id);
                   }
               });
+                //获取使用人
                 $.post(basePath+"/authorization/user",data,function(data){
                     var d=JSON.parse(data);
                     $('#users').empty();
