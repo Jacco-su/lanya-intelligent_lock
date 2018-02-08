@@ -68,15 +68,18 @@ public class RedisAction {
         jsonDataProtocol.setDataType("client");
         redisTemplateUtil.setList("lanya-lite", JSON.toJSONString(jsonDataProtocol));*/
         System.out.println(dataProtocol.toString());
-         redisTemplateUtil.setList("lanya-lite", dataProtocol.toString());
+        String authKey=dataProtocol.toString()+";"+SessionData.getAdminId(request);
+        for (int i = 0; i < 3; i++) {
+            redisTemplateUtil.setList("lanya-lite", authKey);
+        }
         try {
-            Thread.sleep(8000);
-            Object o = redisTemplateUtil.get(dataProtocol.toString());
+            Thread.sleep(10000);
+            Object o = redisTemplateUtil.get(authKey);
             if (o == null) {
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
             } else {
                 if("5".equals(keys[1])){
-                    if("成功".equals(o.toString())){
+                    if("授权成功!".equals(o.toString())){
                         Authorization authorization=new Authorization();
                         authorization.setType("client");
                         authorization.setLocksid(keys[4]);

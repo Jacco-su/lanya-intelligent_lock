@@ -188,14 +188,15 @@ public class FormatDate {
 	 * 获取时分秒 如 2015-05-01 11:20:32
 	 * **/
 	public static Date getYMdHHmmss(String date) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
 		try {
-			return sdfHHmmss.parse(date);
+			return df.parse(date);
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	public static void main(String[] args){
-		System.out.println(FormatDate.getYMdHHmmss());
+		System.out.println(FormatDate.getYMdHHmmss("20180208113047"));
 	}
 }
