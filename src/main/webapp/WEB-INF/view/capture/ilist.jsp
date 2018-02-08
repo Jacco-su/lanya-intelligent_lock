@@ -20,6 +20,43 @@
     </script>
 </head>
 <body>
+
+
+<p>
+    <%--<%--%>
+    <%--out.println("Your IP address is " + request.getRemoteAddr());--%>
+    <%--%>--%>
+    <%--<%--%>
+    <%--out.println("Your IP address is " + CaptureAction.getFiles("E://192.168.2.2"));--%>
+    <%--%>--%>
+    <%--<%--%>
+    <%--out.println("Your IP address is " + showPicDetail(pichtml));--%>
+    <%--%>--%>
+
+
+<pre name="code" class="java">
+    <%
+        String test[] = (String[]) request.getAttribute("fileList");
+        out.print(test);
+    %>
+    图片: <img src="<%=test%>" alt="">
+</pre>
+<%--<%String s=application.getAttribute("fileList").toString();%>--%>
+<%--<img src="<%=s%>">--%>
+
+<%--<%out.println(<%for(var i=0;i<9;i++) {%>--%>
+<%--<img src="<%=s%>">--%>
+<%--<%}%>}%>--%>
+
+<%--<%for() {%>--%>
+<%--<img src="<%=s%>">--%>
+<%--<%}%>--%>
+
+
+</p>
+<%--<img alt="image" src="capture/seekExperts">--%>
+<%--<input type="button" value="查看" onclick="getPicFileList()">--%>
+
 <script>
     /**
      *获取图片文件数组
@@ -107,42 +144,5 @@
     //        out.println("Your IP address is " + pichtml);
     //    }
 </script>
-
-<p>
-    <%--<%--%>
-    <%--out.println("Your IP address is " + request.getRemoteAddr());--%>
-    <%--%>--%>
-    <%--<%--%>
-    <%--out.println("Your IP address is " + CaptureAction.getFiles("E://192.168.2.2"));--%>
-    <%--%>--%>
-    <%--<%--%>
-    <%--out.println("Your IP address is " + showPicDetail(pichtml));--%>
-    <%--%>--%>
-
-
-<pre name="code" class="java">
-    <%
-        String test[] = (String[]) request.getAttribute("fileList");
-        out.print(test);
-    %>
-    图片: <img src="<%=test%>" alt="">
-</pre>
-    <%--<%String s=application.getAttribute("fileList").toString();%>--%>
-    <%--<img src="<%=s%>">--%>
-
-    <%--<%out.println(<%for(var i=0;i<9;i++) {%>--%>
-    <%--<img src="<%=s%>">--%>
-    <%--<%}%>}%>--%>
-
-    <%--<%for() {%>--%>
-    <%--<img src="<%=s%>">--%>
-    <%--<%}%>--%>
-
-
-</p>
-<%--<img alt="image" src="capture/seekExperts">--%>
-<%--<input type="button" value="查看" onclick="getPicFileList()">--%>
-
-
 </body>
 </html>

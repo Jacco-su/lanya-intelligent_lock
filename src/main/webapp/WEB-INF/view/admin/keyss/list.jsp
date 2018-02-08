@@ -62,17 +62,11 @@
                         width: 300,
                         align: 'center'
                     },
-//                    {
-//                        title: '领用人',
-//                        field: 'userName',
-//                        width: 200,
-//                        align: 'left'
-//                    },
                     {
                         title: '领用人',
                         field: 'userNume',
                         formatter: function (value, rowData, rowIndx) {
-                            return rowData.username;
+                            return rowData.user.username;
                         },
                         width: $(this).width() * 0.1,
                         align: 'center'

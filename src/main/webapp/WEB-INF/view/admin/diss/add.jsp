@@ -23,7 +23,8 @@
         <tr>
             <td>所在地址:</td>
             <td>
-                <textarea name="address" class="easyui-validatebox" id="address" cols="30" rows="10"required="true"></textarea>
+                <textarea name="address" class="easyui-validatebox" id="address" cols="25" rows="3"
+                          required="true"></textarea>
             </td>
         </tr>
     </table>

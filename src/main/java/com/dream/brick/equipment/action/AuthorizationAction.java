@@ -9,7 +9,7 @@ import com.dream.brick.equipment.dao.QgdisDao;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.StringUtil;
-import org.apache.commons.lang3.StringUtils;
+import com.dream.util.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -145,10 +145,19 @@ public class AuthorizationAction {
         if (StringUtils.isNotEmpty(disaId)) {
             return JSON.toJSONString(authorizationDao.findListDisa(disaId));
         } else {
+
             return JSON.toJSONString(disDao.findAllQgdis());
         }
 
     }
+//    @RequestMapping("/disloke")
+//    @ResponseBody
+//    public String getDisLoke(){
+//            return JSON.toJSONString(disDao.findAllQgdis());
+//    }
+
+
+
     @RequestMapping("/user")
     @ResponseBody
     public String getUserAction(String disaId){

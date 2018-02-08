@@ -55,12 +55,22 @@
                     field: 'ceMAC',
                     width: $(this).width() * 0.2,
                     align: 'center'
-                }, {
+                },
+                    {
                     title: '采集器ID',
                     field: 'ceCode',
                     width: $(this).width() * 0.1,
                     align: 'center'
                 },
+//                    {
+//                        title: '采集器ID',
+//                        field: 'ceCode',
+//                        formatter: function (value, rowData, rowIndx) {
+//                            return rowData.collector;
+//                        },
+//                        width: $(this).width() * 0.2,
+//                        align: 'center'
+//                    },
 //                    {
 //                        title: '所属站点',
 //                        field: 'ccode',

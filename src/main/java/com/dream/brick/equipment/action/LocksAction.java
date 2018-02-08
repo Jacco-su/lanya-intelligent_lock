@@ -79,11 +79,17 @@ public class LocksAction {
         return message;
     }
 
-//    @RequestMapping("/prAddView")
-//    public String prAddView( ModelMap model) {
-//
-//        return "admin/locks/addList";
-//    }
+    @RequestMapping("/prAddView")
+    public String prAddView(ModelMap model) {
+
+        return "admin/locks/adds";
+    }
+
+    @RequestMapping("/prLists")
+    public String prLists(ModelMap model) {
+
+        return "admin/locks/addList";
+    }
 
 
     @RequestMapping("/prUpdate")
