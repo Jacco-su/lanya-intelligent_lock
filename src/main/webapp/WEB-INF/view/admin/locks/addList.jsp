@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>门锁管理</title>
+    <title>门锁添加</title>
     <link rel="stylesheet" type="text/css"
           href="${basePath}/js/jquery-easyui-1.5.3/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css"
@@ -244,7 +244,7 @@
 //                url: basePath+"/redis/get",
                 url: basePath + "/locks/add",
                 cache: false,
-                async: false,
+                async: true,
                 data: data,
                 dataType: "json",
                 success: function (data) {
@@ -307,92 +307,90 @@
     </script>
 </head>
 <body>
-<div>
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
-        <tr>
-            <td width="12%" valign="top"
-                style="border: 1px solid #99bbe8; border-right: 0;">
-                <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
-                <ul id="tree" style="margin-top: 10px;"></ul>
-            </td>
-            <td valign="top" style="border: 1px solid #99bbe8;">
-                <div class="easyui-panel" title="添加门锁" style="width:800px">
-                    <div style="padding:10px 60px 20px 60px">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
+    <tr>
+        <td width="12%" valign="top"
+            style="border: 1px solid #99bbe8; border-right: 0;">
+            <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
+            <ul id="tree" style="margin-top: 10px;"></ul>
+        </td>
+        <td valign="top" style="border: 1px solid #99bbe8;">
+            <div class="easyui-panel" title="添加门锁" style="width:800px">
+                <div style="padding:10px 60px 20px 60px">
+                    <table cellpadding="5">
+                        <tr>
+                            <td>站点:</td>
+                            <td colspan="2">
+                                <select class="easyui-combobox" name="qgdis.id" id="disa" style="width: 180px;"
+                                        data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option value="0">---请选择---</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>选择采集器:</td>
+                            <td colspan="2">
+                                <select class="easyui-combobox" id="collector" name="collector"
+                                        style="width: 180px;"
+                                        data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option value="0">---请选择---</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>控制器:</td>
+                            <td colspan="2">
+                                <select class="easyui-combobox" name="collectore" id="collectore"
+                                        style="width: 200px;"
+                                        data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option value="0">---请选择---</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100">门锁编号:</td>
+                            <td colspan="2">
+                                <input id="lockNum" name="lockNum" style="width: 200px;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100">门锁识别码:</td>
+                            <td colspan="2">
+                                <input id="lockCode" name="lockCode" style="width: 200px;"/>
+                                <a class="easyui-linkbutton"
+                                   onclick="getLock(2)">初始化</a>
+                                <a class="easyui-linkbutton"
+                                   onclick="getLock(1)">获取</a>
+                            </td>
+                        </tr>
 
-                        <form name="addForm" id="addForm" action="${basePath}/locks/add" method="post">
-
-                            <table cellpadding="5">
-                                <tr>
-                                    <td>站点:</td>
-                                    <td colspan="2">
-                                        <select class="easyui-combobox" name="qgdis.id" id="disa" style="width: 180px;"
-                                                data-options="editable:false,valueField:'id', textField:'text'">
-                                            <option value="0">---请选择---</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>选择采集器:</td>
-                                    <td colspan="2">
-                                        <select class="easyui-combobox" id="collector" name="collector"
-                                                style="width: 180px;"
-                                                data-options="editable:false,valueField:'id', textField:'text'">
-                                            <option value="0">---请选择---</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>控制器:</td>
-                                    <td colspan="2">
-                                        <select class="easyui-combobox" name="collectore" id="collectore"
-                                                style="width: 200px;"
-                                                data-options="editable:false,valueField:'id', textField:'text'">
-                                            <option value="0">---请选择---</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100">门锁编号:</td>
-                                    <td colspan="2">
-                                        <input id="lockNum" name="lockNum" style="width: 200px;"/>
-                                </tr>
-                                <tr>
-                                    <td width="100">门锁识别码:</td>
-                                    <td colspan="2">
-                                        <input id="lockCode" name="lockCode" style="width: 200px;"/>
-                                        <a class="easyui-linkbutton"
-                                           onclick="getLock(2)">初始化</a>
-                                        <a class="easyui-linkbutton"
-                                           onclick="getLock(1)">获取</a>
-                                </tr>
-
-                                <tr>
-                                    <td width="100">添加时间:</td>
-                                    <td colspan="2">
-                                        <input id="lockDate" name="lockDate" class="easyui-validatebox" required="true"
-                                               value=""/>
-                                        <img onclick="WdatePicker({el:'lockDate'})"
-                                             src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22"
-                                             align="absmiddle">
-                                </tr>
-                                <tr>
-                                    <td width="100">详细地址:</td>
-                                    <td colspan="2">
+                        <tr>
+                            <td width="100">添加时间:</td>
+                            <td colspan="2">
+                                <input id="lockDate" name="lockDate" class="easyui-validatebox" required="true"
+                                       value=""/>
+                                <img onclick="WdatePicker({el:'lockDate'})"
+                                     src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22"
+                                     align="absmiddle">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100">详细地址:</td>
+                            <td colspan="2">
                     <textarea name="address" class="easyui-validatebox" id="address" cols="30" rows="3"
                               required="true"></textarea>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <button class="easyui-linkbutton" onclick="save()">确认添加</button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </form>
-                    </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button class="easyui-linkbutton" onclick="save()">确认添加</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-            </td>
-        </tr>
-    </table>
-</div>
+            </div>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

@@ -67,13 +67,18 @@ public class KeyssAction {
         return "admin/keyss/add";
     }
 
+    @RequestMapping("/prAddView")
+    public String prAddView(ModelMap modelMap) {
+//        modelMap.addAttribute("collectorList", JSON.toJSONString(collectorDao.findAllCollector()));
+        modelMap.addAttribute("usersList", JSON.toJSONString(userDao.findAllUser()));
+        return "admin/keyss/addList";
+    }
 
-    @RequestMapping(value = "/add")
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String add(@ModelAttribute Keyss keyss) {
         String message = "";
-        // Keyss keyss = BasicData.findKeyssByUserName(disa.getUserName());
-
         try {
             keyss.setKeyssDate(FormatDate.getYMdHHmmss());
             ikeyssDao.save(keyss);
