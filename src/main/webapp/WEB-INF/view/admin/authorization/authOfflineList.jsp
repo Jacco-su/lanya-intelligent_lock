@@ -330,16 +330,10 @@
                         </tr>
                         <tr>
                             <td>选择锁具:</td>
-                            <td >
+                            <td colspan="3">
                                 <select class="easyui-combobox"  name="locks" id="locks" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
                                     <option value="0">---请选择---</option>
                                 </select></td>
-                            <td>
-                                <button class="easyui-linkbutton"  onclick="getLock(2)">初始门锁</button>
-                            </td>
-                            <td>
-                                <button class="easyui-linkbutton"  onclick="getLock(1)">在线门锁信息</button>
-                            </td>
                         </tr>
 
                         <tr>
@@ -360,7 +354,7 @@
                                 </select></td>
                         </tr>
                         <tr>
-                            <td> <button class="easyui-linkbutton" onclick="onlineAuth()">在线授权</button></td>
+                            <td> <button class="easyui-linkbutton" onclick="onlineAuth()">离线授权</button></td>
                         </tr>
                     </table>
                 </div>

@@ -67,10 +67,15 @@ public class AuthorizationAction {
         model.addAttribute("authorizationa", authorizationa);
         return "admin/authorization/view";
     }
+    //在线授权
     @RequestMapping("/prViewAuth")
     public String prViewAuth( ModelMap model) {
-
         return "admin/authorization/authList";
+    }
+
+    @RequestMapping("/prViewOfflineAuth")
+    public String prViewOfflineAuth( ModelMap model) {
+        return "admin/authorization/authOfflineList";
     }
     @RequestMapping("/workView")
     public String workView(String id, ModelMap model) {
