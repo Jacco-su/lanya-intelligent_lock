@@ -56,7 +56,8 @@ public class RedisAction {
             //初始化锁      key=0000000002,2,DF:98,
            authModel=new AuthModel(new byte[]{2},AuthModel.toData(2,10),Constants.KEY).toString();
         }else if("13".equals(keys[1])){
-
+            //获取钥匙Mac地址
+            authModel=new AuthModel(new byte[]{13}).toString();
         }
 
         String macAddess=keys[2].replace(":","");

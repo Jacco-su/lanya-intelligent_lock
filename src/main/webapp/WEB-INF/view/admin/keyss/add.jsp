@@ -28,41 +28,27 @@
 
 
     function getMVC() {
-//        System.out.println(System.currentTimeMillis());
-//        //连接本地的 Redis 服务
-//        Jedis jedis = new Jedis("192.168.1.120", 6379);
-        var ccode = $("#cid").val();
-        var quest = ccode + ':13';
-
+        var key=",13,,,";
+        var data={
+            "key":key
+        };
         $.ajax({
-            //此处使用的是自己封装的JAVA类
-//            http://localhost:8080/redis/set?key=xxx&value=niaws74123&call_id=1517282489050&token=12&app_sign=123&SecurityKey=123
-            url: "${basePath}/redis/get",
-            type: "POST",
-            data: {"key": quest},
-            success: function (data) {
-                if (!data.length) {
-                    return data;
-                } else {
-                    document.getElementById("keyssMVC").innerHTML = "";
-                    $('#keyssMAC').value();
+            type: "post",
+            url: basePath+"/redis/get",
+            cache:false,
+            async:false,
+            data:data,
+            dataType: "json",
+            success: function(data){
+                if(data.result=="1"){
+                    alert(data.message);
+                }else{
+                    alert("授权失败!");
                 }
-            },
-            error: function (e) {
-                console.log(e);
-                console.log("获取文件list数组失败，请检查接口服务");
-            }//获取文件list数组失败
+            }
+
         });
-
     }
-
-    //    success：function（data）{
-    ////在这里写你的业务代码，处理页面效果。
-    //    }
-    //    $.get("/api/get",success:function(json){
-    //        alert(json);
-    //    });
-
 
 </script>
 
@@ -102,11 +88,9 @@
                 <td>钥匙MAC:</td>
                 <td>
                     <input id="keyssMAC" type="text" name="keyssMAC" value="" class="easyui-validatebox"
-                           onclick="getMVC()"
                            required="true"/>
                     <a class="easyui-linkbutton"
                        onclick="getMVC()">获取</a>
-                    <input type="hidden" name="keyssMAC" id="keysMAC" value=""/>
                 </td>
             </tr>
 
