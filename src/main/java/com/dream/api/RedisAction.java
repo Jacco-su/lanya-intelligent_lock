@@ -7,7 +7,6 @@ import com.dream.socket.entity.AuthModel;
 import com.dream.socket.entity.DataProtocol;
 import com.dream.socket.utils.ByteUtil;
 import com.dream.socket.utils.Constants;
-import com.dream.socket.utils.DateUtil;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.RedisTemplateUtil;
@@ -57,7 +56,7 @@ public class RedisAction {
            authModel=new AuthModel(new byte[]{2},AuthModel.toData(2,10),Constants.KEY).toString();
         }else if("13".equals(keys[1])){
             //获取钥匙Mac地址
-            authModel=new AuthModel(new byte[]{13}).toString();
+            authModel = new AuthModel(new byte[]{13}).toString();
         }
 
         String macAddess=keys[2].replace(":","");

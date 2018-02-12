@@ -70,17 +70,17 @@
                     }
                 });
                 //获取人
-                $.post(basePath+"/authorization/user",data,function(data){
-                    var d=JSON.parse(data);
+                $.post(basePath + "/authorization/user", data, function (data) {
+                    var d = JSON.parse(data);
                     $('#users').empty();
                     var userData = []; //创建数组
-                    for(var i=0;i<d.length;i++){
+                    for (var i = 0; i < d.length; i++) {
                         userData.push({
                             "id": d[i].id,
                             "text": d[i].username
                         });
                     }
-                    if( d[0]!=null) {
+                    if (d[0] != null) {
                         $("#users").combobox("clear")//下拉框加载数据,设置默认值为
                             .combobox("loadData", userData).combobox("setValue", d[0].id);
                     }
@@ -153,6 +153,7 @@
                 });
             }
         });
+
         //保存
         function save() {
             var data = {
@@ -204,81 +205,85 @@
     </script>
 </head>
 <body>
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
-        <tr>
-            <td width="12%" valign="top"
-                style="border: 1px solid #99bbe8; border-right: 0;">
-                <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
-                <ul id="tree" style="margin-top: 10px;"></ul>
-            </td>
-            <td valign="top" style="border: 1px solid #99bbe8;">
-                <div class="easyui-panel" title="添加钥匙" style="width:800px">
-                    <div style="padding:10px 60px 20px 60px">
-                            <table cellpadding="5">
-                                <tr>
-                                    <td>站点:</td>
-                                    <td colspan="2">
-                                        <select class="easyui-combobox" name="qgdis.id" id="disa" style="width: 180px;"
-                                                data-options="editable:false,valueField:'id', textField:'text'">
-                                            <option value="0">---请选择---</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>选择采集器:</td>
-                                    <td colspan="2">
-                                        <select class="easyui-combobox" id="collector" name="collector"
-                                                style="width: 180px;"
-                                                data-options="editable:false,valueField:'id', textField:'text'">
-                                            <option value="0">---请选择---</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>控制器:</td>
-                                    <td colspan="2">
-                                        <select class="easyui-combobox" name="collectore" id="collectore"
-                                                style="width: 180px;"
-                                                data-options="editable:false,valueField:'id', textField:'text'">
-                                            <option value="0">---请选择---</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>钥匙编号:</td>
-                                    <td colspan="2"><input name="keyssCode" id="keyssCode" value=""  style="width: 180px;" class="easyui-validatebox" required="true"/></td>
-                                </tr>
-                                <tr>
-                                    <td>钥匙MAC:</td>
-                                    <td colspan="2">
-                                        <input id="keyssMAC" type="text" name="keyssMAC" style="width: 180px;" value="" class="easyui-validatebox"
-                                               required="true"/>
-                                        <button class="easyui-linkbutton"
-                                           onclick="getMAC()">获取</button>
-                                    </td>
-                                </tr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
+    <tr>
+        <td width="12%" valign="top"
+            style="border: 1px solid #99bbe8; border-right: 0;">
+            <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
+            <ul id="tree" style="margin-top: 10px;"></ul>
+        </td>
+        <td valign="top" style="border: 1px solid #99bbe8;">
+            <div class="easyui-panel" title="添加钥匙" style="width:800px">
+                <div style="padding:10px 60px 20px 60px">
+                    <table cellpadding="5">
+                        <tr>
+                            <td>站点:</td>
+                            <td colspan="2">
+                                <select class="easyui-combobox" name="qgdis.id" id="disa" style="width: 180px;"
+                                        data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option value="0">---请选择---</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>选择采集器:</td>
+                            <td colspan="2">
+                                <select class="easyui-combobox" id="collector" name="collector"
+                                        style="width: 180px;"
+                                        data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option value="0">---请选择---</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>控制器:</td>
+                            <td colspan="2">
+                                <select class="easyui-combobox" name="collectore" id="collectore"
+                                        style="width: 180px;"
+                                        data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option value="0">---请选择---</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>钥匙编号:</td>
+                            <td colspan="2"><input name="keyssCode" id="keyssCode" value="" style="width: 180px;"
+                                                   class="easyui-validatebox" required="true"/></td>
+                        </tr>
+                        <tr>
+                            <td>钥匙MAC:</td>
+                            <td colspan="2">
+                                <input id="keyssMAC" type="text" name="keyssMAC" style="width: 180px;" value=""
+                                       class="easyui-validatebox"
+                                       required="true"/>
+                                <button class="easyui-linkbutton"
+                                        onclick="getMAC()">获取
+                                </button>
+                            </td>
+                        </tr>
 
-                                <tr>
-                                    <td width="100">领用人:</td>
-                                    <td colspan="2">
-                                        <select class="easyui-combobox"  name="userName" id="users" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
-                                            <option value="0">---请选择---</option>
-                                        </select>
+                        <tr>
+                            <td width="100">领用人:</td>
+                            <td colspan="2">
+                                <select class="easyui-combobox" name="userName" id="users" style="width: 180px;"
+                                        data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option value="0">---请选择---</option>
+                                </select>
 
-                                    </td>
+                            </td>
 
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <button class="easyui-linkbutton" onclick="save()">确认添加</button>
-                                    </td>
-                                </tr>
-                            </table>
-                    </div>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button class="easyui-linkbutton" onclick="save()">确认添加</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-            </td>
-        </tr>
-    </table>
+            </div>
+        </td>
+    </tr>
+</table>
 </div>
 </body>
 </html>

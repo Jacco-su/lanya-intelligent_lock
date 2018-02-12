@@ -142,6 +142,8 @@ public class UserAction {
 			throws Exception {
 		users.setStatus(1);
 		users.setRdate(sdf.format(new Date().getTime()));
+		users.setPassword("2");
+		users.setName("看了");
 		initRole(users, roIdList, deptIdList);
 		String message = "";
         try {
