@@ -19,7 +19,7 @@ public class Collectore {
     private String ceMAC;// 控制器蓝牙地址
     private String cename;  //控制器名称
 
-//    private Collector collector;      // 所在采集器
+    private Collector collector;      // 所在采集器   不可用 collector, 页面 .属性无法访问,没找到原因
 
     private String ceDate;// 日期
 
@@ -66,14 +66,13 @@ public class Collectore {
     }
 
 
-//    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "cid", nullable = false, updatable = true)
-//    public Collector getCollector() {
-//        return collector;
-//    }
-//
-//    public void setCollector(Collector collector) {
-//        this.collector = collector;
-//    }
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cid", nullable = false, updatable = true)
+    public Collector getCollector() {
+        return collector;
+    }
 
+    public void setCollector(Collector collector) {
+        this.collector = collector;
+    }
 }

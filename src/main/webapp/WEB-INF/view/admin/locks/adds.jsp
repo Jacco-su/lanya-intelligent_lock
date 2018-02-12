@@ -19,8 +19,94 @@
             charset="UTF-8"></script>
     <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
     <script type="text/javascript">
+
+
         var basePath = "${basePath}";
         $(function () {
+            var infolist = $('#infolist');
+            infolist.datagrid({
+                title: '智能锁列表',
+                iconCls: 'icon-us-=-ers',
+                width: '95%',
+                height: 500,
+                pageSize: 20,
+                pageList: [20, 30, 50, 100],
+                nowrap: false,
+                striped: true,
+                collapsible: false,
+                fitColumns: true,
+                url: '${basePath}/locks/list',
+                queryParams: {},
+                loadMsg: '数据装载中......',
+                remoteSort: false,
+                singleSelect: true,
+                onDblClickRow: function (rowIndex, field, value) {
+                    var rows = infolist.datagrid("getRows");
+                    var id = rows[rowIndex].id;
+                    detail(id);
+                },
+                columns: [[
+                    {
+                        title: '智能锁编号',
+                        field: 'lockNum',
+                        width: 250,
+                        align: 'center'
+                    },
+                    {
+                        title: '识别码',
+                        field: 'lockCode',
+                        width: 250,
+                        align: 'center'
+                    },
+                    {
+                        title: '所属站点',
+                        field: 'dissName',
+                        formatter: function (value, rowData, rowIndx) {
+                            return rowData.qgdis.name;
+                        },
+                        width: $(this).width() * 0.1,
+                        align: 'center'
+                    },
+                    {
+                        title: '地址',
+                        field: 'address',
+                        width: 200,
+                        align: 'center'
+                    },
+                    {
+                        title: '添加时间',
+                        field: 'lockDate',
+                        width: 150,
+                        align: 'left'
+                    },
+                ]],
+
+                pagination: true,
+                rownumbers: true,
+                toolbar: [
+                    {
+                        text: '详情',
+                        iconCls: 'icon-view',
+                        handler: seedetail
+                    },
+//                    {
+//                        iconCls: "icon-add",
+//                        text: "添加",
+//                        handler: add
+//                    },
+                    '-', {
+                        text: '修改',
+                        iconCls: 'icon-edit',
+                        handler: edit
+                    }, '-', {
+                        text: '删除',
+                        iconCls: 'icon-remove',
+                        handler: del
+                    }]
+            });
+
+
+//        $(function () {
             refresh();
 
             //获取站点
@@ -174,6 +260,9 @@
     </script>
 </head>
 <body>
+<div>
+    <table id="infolist"></table>
+</div>
 <div>
     <form name="addForm" id="addForm" action="${basePath}/locks/add" method="post">
         <table class="mytable" align="center">

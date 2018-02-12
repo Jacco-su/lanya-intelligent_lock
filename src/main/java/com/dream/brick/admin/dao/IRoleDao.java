@@ -1,8 +1,8 @@
 package com.dream.brick.admin.dao;
 
+import com.dream.brick.admin.bean.Role;
 import com.dream.framework.dao.BaseDao;
 import com.dream.framework.dao.Pager;
-import com.dream.brick.admin.bean.Role;
 
 import java.util.List;
 
@@ -24,4 +24,7 @@ public interface IRoleDao extends BaseDao {
 	 * 考核小项适用人员，需要查询所有角色
 	 * **/
 	public List<Role> findRoleName(boolean isAll);
+
+//	public List<UserRole> findUserRoleName(boolean isAll);
+
 }

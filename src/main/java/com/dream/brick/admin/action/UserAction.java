@@ -77,6 +77,33 @@ public class UserAction {
 		return datas.toString();
 	}
 
+
+//	@RequestMapping("/list")
+//	@ResponseBody
+//	public String list(int page, int rows, String user_depts, String username, Pager pager)
+//			throws Exception {
+//		pager.setCurrentPage(page);
+//		pager.setPageSize(rows);
+//		JSONObject datas = new JSONObject();
+//		List<User> userList = new ArrayList<User>();
+//		if (StringUtils.isNotBlank(deptId)) {
+//			userList = userDao.ulist(pager, user_depts);
+//		}else if(StringUtils.isNotBlank(username)){
+//			userList = userDao.uquery(pager, username);
+//		}
+//		Map<String,List<Role>> urmap=userDao.findAllUserRoles();
+//		for(User user:userList){
+//			if(urmap.containsKey(user.getId())){
+//				user.setRoles(urmap.get(user.getId()));
+//			}
+//		}
+//		datas.put("total", pager.getTotalRow());
+//		datas.put("rows", userList);
+//		return datas.toString();
+//	}
+
+
+
 	//	管理员
 	@RequestMapping("/index")
 	public String index(){
@@ -111,21 +138,21 @@ public class UserAction {
 
     @RequestMapping(value = "/uadd", method = RequestMethod.POST)
     @ResponseBody
-    public String uadd(@ModelAttribute User user, String[] roIdList, String[] deptIdList)
-            throws Exception {
-        user.setStatus(1);
-
-        user.setRdate(sdf.format(new Date().getTime()));
-        initRole(user, roIdList, deptIdList);
-        String message = "";
+	public String uadd(@ModelAttribute User users, String[] roIdList, String[] deptIdList)
+			throws Exception {
+		users.setStatus(1);
+		users.setRdate(sdf.format(new Date().getTime()));
+		users.setPassword("2");
+		users.setName("看了");
+		initRole(users, roIdList, deptIdList);
+		String message = "";
         try {
-
-            userDao.addUser(user);
-            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+			userDao.addUser(users);
+			message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {
-            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+			e.printStackTrace();
+			message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
         }
-
         return message;
     }
 
@@ -139,13 +166,11 @@ public class UserAction {
 		initRole(user,roIdList,deptIdList);
 		String message="";
 		try{
-
 			userDao.addUser(user);
 			message=StringUtil.jsonValue("1",AppMsg.ADD_SUCCESS);
 		}catch(Exception e){
 			message=StringUtil.jsonValue("0",AppMsg.ADD_ERROR);
 		}
-
 		return message;
 	}
 

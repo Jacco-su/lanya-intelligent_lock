@@ -115,14 +115,14 @@ public class DistributionAction {
     @ResponseBody
     public String delete(String id) {
         String message = "";
-//        String hql = "from Locks t where t.id=?";
+        String hql = "from Locks t where t.disidid=?";
         try {
-//            int count = disDao.getResultNumber(hql, id);
-//            if (count > 0) {
-//                message = StringUtil.jsonValue("0", AppMsg.getMessage("disa101"));
-//                //101该站点拥有智能锁，不允许删除
-//                return message;
-//            }
+            int count = disDao.getResultNumber(hql, id);
+            if (count > 0) {
+                message = StringUtil.jsonValue("0", AppMsg.getMessage("disa101"));
+                //101该站点拥有智能锁，不允许删除
+                return message;
+            }
             Qgdis disa = disDao.find(Qgdis.class, id);
             disDao.delete(disa);
             message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);

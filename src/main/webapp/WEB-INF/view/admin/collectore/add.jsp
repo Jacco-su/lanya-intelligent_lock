@@ -29,7 +29,7 @@
                 <td>
                     <%--<input name="ceCode"  class="easyui-validatebox" required="true"/>--%>
                     <%--<a class="easyui-linkbutton" onclick="getID()">选择</a>--%>
-                    <select id="ccode" name="ceCode" class="easyui-validatebox" required="true"
+                    <select id="ccode" name="collector.id" class="easyui-validatebox" required="true"
                             style="width: 150px"></select>
                     <%--<select id="dissName" name="qgdis.id" style="width: 220px;"></select>--%>
                 </td>
@@ -82,7 +82,7 @@
         data = JSON.parse(data);
         $('#ccode').empty();
         for (var i = 0; i < data.length; i++) {
-            $('#ccode').append("<option value='" + data[i].ccode + "'>" + data[i].ccode + "</option>");
+            $('#ccode').append("<option value='" + data[i].id + "'>" + data[i].ccode + "</option>");
         }
     })
 </script>

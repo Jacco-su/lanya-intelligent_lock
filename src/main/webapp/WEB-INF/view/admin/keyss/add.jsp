@@ -28,21 +28,21 @@
 
 
     function getMVC() {
-        var key=",13,,,";
-        var data={
-            "key":key
+        var key = ",13,,,";
+        var data = {
+            "key": key
         };
         $.ajax({
             type: "post",
-            url: basePath+"/redis/get",
-            cache:false,
-            async:false,
-            data:data,
+            url: basePath + "/redis/get",
+            cache: false,
+            async: false,
+            data: data,
             dataType: "json",
-            success: function(data){
-                if(data.result=="1"){
+            success: function (data) {
+                if (data.result == "1") {
                     alert(data.message);
-                }else{
+                } else {
                     alert("授权失败!");
                 }
             }

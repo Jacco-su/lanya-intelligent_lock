@@ -16,7 +16,9 @@
 <table class="mytable" align="center">
 	<tr>
         <td>区域名称:</td>
-		<td><input type="hidden" name="parentId"  value="${parentId }"/><input name="name"  class="easyui-validatebox" required="true"/></td>
+        <td><input type="hidden" name="parentId" value="${parentId }"/>
+            <input type="hidden" name="areacode" value="4101"/>
+            <input name="name" class="easyui-validatebox" required="true"/></td>
 	</tr>
     <%--<tr>--%>
     <%--<td>所属区域:</td>--%>

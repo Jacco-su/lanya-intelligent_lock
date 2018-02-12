@@ -44,26 +44,26 @@
                 },
                 columns: [[
                     {
-                    title: '智能锁编号',
+                        title: '智能锁编号',
                         field: 'lockNum',
-                    width: 250,
-                    align: 'center'
-                  },
-                {
-                    title: '识别码',
-                    field: 'lockCode',
-                    width: 250,
-                    align: 'center'
-                },
-                {
-                    title: '所属站点',
-                    field : 'dissName',
-                    formatter : function(value,rowData,rowIndx) {
-                        return rowData.qgdis.name;
+                        width: 250,
+                        align: 'center'
                     },
-                    width : $(this).width() * 0.1,
-                    align : 'center'
-                },
+                    {
+                        title: '识别码',
+                        field: 'lockCode',
+                        width: 250,
+                        align: 'center'
+                    },
+                    {
+                        title: '所属站点',
+                        field: 'dissName',
+                        formatter: function (value, rowData, rowIndx) {
+                            return rowData.qgdis.name;
+                        },
+                        width: $(this).width() * 0.1,
+                        align: 'center'
+                    },
                     {
                         title: '地址',
                         field: 'address',
@@ -85,11 +85,12 @@
                         iconCls: 'icon-view',
                         handler: seedetail
                     },
-                    {
-                        iconCls: "icon-add",
-                        text: "添加",
-                        handler: add
-                    }, '-', {
+//                    {
+//                        iconCls: "icon-add",
+//                        text: "添加",
+//                        handler: add
+//                    },
+                    '-', {
                         text: '修改',
                         iconCls: 'icon-edit',
                         handler: edit
@@ -160,6 +161,7 @@
                     buttons: []
                 });
             }
+
             $('#selectDept').window({
                 title: '安装区域选择',
                 width: 400,

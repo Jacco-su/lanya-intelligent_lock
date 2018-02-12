@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>门锁添加</title>
+    <title>门锁管理</title>
     <link rel="stylesheet" type="text/css"
           href="${basePath}/js/jquery-easyui-1.5.3/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css"
@@ -85,6 +85,7 @@
 //                            .combobox("loadData", userData).combobox("setValue", d[0].id);
 //                    }
 //                });
+                //获取采集器
                 $('#disa').combobox({
                     onSelect: function (row) {
                         if (row != null) {
@@ -126,6 +127,7 @@
                         }
                     }
                 });
+                //获取控制器
                 $('#collector').combobox({
                     onSelect: function (row) {
                         if (row != null) {
@@ -153,109 +155,7 @@
                 });
             }
         });
-        //        function keyBinding() {
-        //            var key=$('#collector').combobox('getText')+",7,"+$('#collectore').combobox('getText')+","+$('#keys').combobox('getText')+",";
-        //            var data={
-        //                "key":key
-        //            };
-        //            $.ajax({
-        //                type: "post",
-        //                url: basePath+"/redis/get",
-        //                cache:false,
-        //                async:false,
-        //                data:data,
-        //                dataType: "json",
-        //                success: function(data){
-        //                   if(data.result=="1"){
-        //                      alert(data.message);
-        //                   }else{
-        //                       alert("绑定蓝牙钥匙失败");
-        //                   }
-        //                }
-        //
-        //            });
-        //        }
 
-        //        function keyTiming() {
-        //            var key=$('#collector').combobox('getText')+",12,"+$('#collectore').combobox('getText')+","+$('#keys').combobox('getText')+",";
-        //            var data={
-        //                "key":key
-        //            };
-        //            $.ajax({
-        //                type: "post",
-        //                url: basePath+"/redis/get",
-        //                cache:false,
-        //                async:false,
-        //                data:data,
-        //                dataType: "json",
-        //                success: function(data){
-        //                    if(data.result=="1"){
-        //                        alert(data.message);
-        //                    }else{
-        //                        alert("蓝牙钥匙校时失败！");
-        //                    }
-        //                }
-        //
-        //            });
-        //        }
-        //        function onlineAuth() {
-        //            var key=$('#collector').combobox('getText')
-        //                 +",5,"
-        //                +$('#collectore').combobox('getText')+","
-        //                +$('#keys').combobox('getText')+","
-        //                +$('#locks').combobox('getText')+","
-        //                +$('#startDate').val()+","
-        //                +$('#endDate').val()+","
-        //                +$('#users').combobox('getValue');
-        //            var data={
-        //                "key":key
-        //            };
-        //            $.ajax({
-        //                type: "post",
-        //                url: basePath+"/redis/get",
-        //                cache:false,
-        //                async:false,
-        //                data:data,
-        //                dataType: "json",
-        //                success: function(data){
-        //                    if(data.result=="1"){
-        //                        alert(data.message);
-        //
-        //                    }else{
-        //                        alert("授权失败!");
-        //                    }
-        //                }
-        //
-        //            });
-        //        }
-        //保存
-        function save() {
-            var data = {
-                "qgdis.id": $('#disa').combobox('getValue'),
-                "collector": $('#collector').combobox('getValue'),
-                "collectore": $('#collectore').combobox('getValue'),
-                "lockNum": $("#lockNum").val(),
-                "lockCode": $("#lockCode").val(),
-                "lockDate": $("#lockDate").val(),
-                "lockNum": $("#lockNum").val(),
-            };
-            $.ajax({
-                type: "post",
-//                url: basePath+"/redis/get",
-                url: basePath + "/locks/add",
-                cache: false,
-                async: true,
-                data: data,
-                dataType: "json",
-                success: function (data) {
-                    if (data.result == "1") {
-                        $.messager.alert('提示', data.message, 'success');
-                    } else {
-                        $.messager.alert('提示', data.message, 'warning');
-                    }
-                }
-            });
-        }
 
         function getLock(t) {
             var key = $('#collector').combobox('getText') + ","
@@ -304,93 +204,167 @@
 
             });
         }
+
+
     </script>
 </head>
 <body>
-<table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
-    <tr>
-        <td width="12%" valign="top"
-            style="border: 1px solid #99bbe8; border-right: 0;">
-            <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
-            <ul id="tree" style="margin-top: 10px;"></ul>
-        </td>
-        <td valign="top" style="border: 1px solid #99bbe8;">
-            <div class="easyui-panel" title="添加门锁" style="width:800px">
-                <div style="padding:10px 60px 20px 60px">
-                    <table cellpadding="5">
-                        <tr>
-                            <td>站点:</td>
-                            <td colspan="2">
-                                <select class="easyui-combobox" name="qgdis.id" id="disa" style="width: 180px;"
-                                        data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>选择采集器:</td>
-                            <td colspan="2">
-                                <select class="easyui-combobox" id="collector" name="collector"
-                                        style="width: 180px;"
-                                        data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>控制器:</td>
-                            <td colspan="2">
-                                <select class="easyui-combobox" name="collectore" id="collectore"
-                                        style="width: 200px;"
-                                        data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="100">门锁编号:</td>
-                            <td colspan="2">
-                                <input id="lockNum" name="lockNum" style="width: 200px;"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="100">门锁识别码:</td>
-                            <td colspan="2">
-                                <input id="lockCode" name="lockCode" style="width: 200px;"/>
-                                <a class="easyui-linkbutton"
-                                   onclick="getLock(2)">初始化</a>
-                                <a class="easyui-linkbutton"
-                                   onclick="getLock(1)">获取</a>
-                            </td>
-                        </tr>
+<div>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
+        <tr>
+            <td width="12%" valign="top"
+                style="border: 1px solid #99bbe8; border-right: 0;">
+                <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
+                <ul id="tree" style="margin-top: 10px;"></ul>
+            </td>
+            <td valign="top" style="border: 1px solid #99bbe8;">
+                <div class="easyui-panel" title="添加门锁" style="width:800px">
+                    <div style="padding:10px 60px 20px 60px">
 
-                        <tr>
-                            <td width="100">添加时间:</td>
-                            <td colspan="2">
-                                <input id="lockDate" name="lockDate" class="easyui-validatebox" required="true"
-                                       value=""/>
-                                <img onclick="WdatePicker({el:'lockDate'})"
-                                     src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22"
-                                     align="absmiddle">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="100">详细地址:</td>
-                            <td colspan="2">
+                        <%--<form name="addForm" id="addForm" action="${basePath}/locks/add" method="post">--%>
+
+                            <table cellpadding="5">
+                                <tr>
+                                    <td>站点:</td>
+                                    <td colspan="2">
+                                        <select class="easyui-combobox" name="qgdis.id" id="disa" style="width: 180px;"
+                                                data-options="editable:false,valueField:'id', textField:'text'"
+                                                required="true">
+                                            <option>---请选择---</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>选择采集器:</td>
+                                    <td colspan="2">
+                                        <select class="easyui-combobox" id="collector" name="collector"
+                                                style="width: 180px;"
+                                                data-options="editable:false,valueField:'id', textField:'text'">
+                                            <option>---请选择---</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>控制器:</td>
+                                    <td colspan="2">
+                                        <select class="easyui-combobox" name="collectore" id="collectore"
+                                                style="width: 200px;"
+                                                data-options="editable:false,valueField:'id', textField:'text'"
+                                                required>
+                                            <option>---请选择---</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100">门锁编号:</td>
+                                    <td colspan="2">
+                                        <input id="lockNum" name="lockNum" style="width: 200px;" required="true"/>
+                                </tr>
+                                <tr>
+                                    <td width="100">门锁识别码:</td>
+                                    <td colspan="2">
+                                        <input id="lockCode" name="lockCode" style="width: 200px;" required="true"/>
+                                        <a class="easyui-linkbutton"
+                                           onclick="getLock(2)">初始化</a>
+                                        <a class="easyui-linkbutton"
+                                           onclick="getLock(1)">获取</a>
+                                </tr>
+
+                                <tr>
+                                    <td width="100">添加时间:</td>
+                                    <td colspan="2">
+                                        <input id="lockDate" name="lockDate" class="easyui-validatebox" required="true"
+                                               value=""/>
+                                        <img onclick="WdatePicker({el:'lockDate'})"
+                                             src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22"
+                                             align="absmiddle">
+                                </tr>
+                                <tr>
+                                    <td width="100">详细地址:</td>
+                                    <td colspan="2">
                     <textarea name="address" class="easyui-validatebox" id="address" cols="30" rows="3"
                               required="true"></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="easyui-linkbutton" onclick="save()">确认添加</button>
-                            </td>
-                        </tr>
-                    </table>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button class="easyui-linkbutton" onclick="save()">确认添加</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        <%--</form>--%>
+                    </div>
                 </div>
-            </div>
-        </td>
-    </tr>
-</table>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
+<script>
+    //        保存
+    function save() {
+        sb1();
+
+        function sb1() {
+            debugger;
+            var dis = $('#disa').combobox('getValue');
+            var lockCode = $("#lockCode").val();
+            if (dis == null || dis == "" || dis == 0 || dis == "---请选择---") {
+                $.messager.alert('提示', "请选择正确站点", 'warning');
+                dis.focus();
+                return false;
+            }
+            if ($("#lockNum").val() == null || $("#lockNum").val() == "") {
+                $.messager.alert('提示', "请选择正确站点", 'warning');
+                dis.focus();
+                return false;
+            }
+            if (lockCode == null || lockCode == "") {
+                $.messager.alert('提示', "请获取门锁识别码", 'warning');
+                alert("请获取门锁识别码");
+                lockCode.focus();
+                return false;
+            } else {
+
+//            return true;
+                var data = {
+                    "qgdis.id": $('#disa').combobox('getValue'),
+                    "collector": $('#collector').combobox('getValue'),
+                    "collectore": $('#collectore').combobox('getValue'),
+                    "lockNum": $("#lockNum").val(),
+                    "lockCode": $("#lockCode").val(),
+                    "lockDate": $("#lockDate").val(),
+                    "lockNum": $("#lockNum").val(),
+                };
+//        if($('#disa').value()==null) {
+//            $.messager.alert('提示', data.message, '');
+//        }else {
+
+//            if($('#disa').value('getValue')!=0 || $('#disa').value('getValue')!="") {
+
+
+                $.ajax({
+                    type: "post",
+//                url: basePath+"/redis/get",
+                    url: basePath + "/locks/add",
+                    cache: false,
+                    async: false,
+                    data: data,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.result == "1") {
+
+                            $.messager.alert('提示', data.message, 'success');
+                        } else {
+                            $.messager.alert('提示', data.message, 'warning');
+                        }
+                    }
+                });
+//            }else {  $.messager.alert('提示', data.message, 'warning');
+//        }
+            }
+        }
+
+
+    }
+</script>
 </html>
