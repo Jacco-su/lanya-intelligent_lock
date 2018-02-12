@@ -2,8 +2,6 @@ package com.dream.brick.admin.action;
 
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.dao.IDeptDao;
-import com.dream.brick.equipment.bean.Qgorg;
-import com.dream.brick.listener.BasicData;
 import com.dream.brick.listener.SessionData;
 import com.dream.util.AppMsg;
 import com.dream.util.StringUtil;
@@ -70,22 +68,52 @@ public class DeptAction {
 
 	@RequestMapping("/prAdd")
 	public String prAdd(String parentId, ModelMap model, HttpServletRequest request){
-		String areacode= SessionData.getAreacode(request);
-		List<Qgorg> qgorgList=BasicData.findQgorgByAreacode(areacode);
-		model.addAttribute("qgorgList", qgorgList);	
-		model.addAttribute("parentId", parentId);
+//		String areacode= SessionData.getAreacode(request);
+//		List<Qgorg> qgorgList=BasicData.findQgorgByAreacode(areacode);
+//		model.addAttribute("qgorgList", qgorgList);
+        model.addAttribute("parentId", parentId);
 		return "admin/dept/add";
 	}
 
 	@RequestMapping("/prUpdate")
 	public String prUpdate(String id, ModelMap model, HttpServletRequest request){
 		Department dept = deptDao.find(Department.class, id);
-		String areacode= SessionData.getAreacode(request);
-		List<Qgorg> qgorgList=BasicData.findQgorgByAreacode(areacode);
-		model.addAttribute("qgorgList", qgorgList);			
-		model.addAttribute("dept", dept);
+//		String areacode= SessionData.getAreacode(request);
+//		List<Qgorg> qgorgList=BasicData.findQgorgByAreacode(areacode);
+//		model.addAttribute("qgorgList", qgorgList);
+        model.addAttribute("dept", dept);
 		return "admin/dept/update";
 	}
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
+    public String add(@ModelAttribute Department dept) {
+
+        String message = "";
+
+        try {
+            if (StringUtils.isBlank(dept.getParentId())) {
+                dept.setParentId("null");
+            }
+//		Qgorg qgorg=BasicData.findQgorgById(dept.getQgorgId());
+//		dept.setAreacode(qgorg.getAreacode());
+            deptDao.save(dept);
+            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+        }
+        return message;
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public String update(@ModelAttribute Department dept) {
+//		Qgorg qgorg=BasicData.findQgorgById(dept.getQgorgId());
+//		dept.setAreacode(qgorg.getAreacode());
+        deptDao.update(dept);
+        return "success";
+    }
 
 
     @RequestMapping("/delete")
@@ -95,17 +123,28 @@ public class DeptAction {
 		String areacode= SessionData.getAreacode(request);
 		List<Department> children = deptDao.getChildren(ids,areacode);
 		if(children.size()>0){
-			message=StringUtil.jsonValue("0",AppMsg.getMessage("dept100"));
-			//100该部门拥有子部门，不允许删除
+            message = StringUtil.jsonValue("0", AppMsg.getMessage("dept"));
+//			message="该地区拥有区域，不允许删除";
+            //100该部门拥有子部门，不允许删除
 			return message;
 		}
 		String hql="select count(*) from User t where t.dept.id=?";
 		
 		int count=deptDao.getResultNumber(hql,ids);
 		if(count>0){
-			message=StringUtil.jsonValue("0",AppMsg.getMessage("dept101"));
-			//101该部门拥有人员，不允许删除
-			return message;
+            message = StringUtil.jsonValue("0", AppMsg.getMessage("deptUser"));
+//			message="该区域拥有人员，不允许删除";
+            //101该区域拥有人员，不允许删除
+            return message;
+        }
+        String hqldis = "select count(*) from Dis t where t.dept.id=?";
+
+        int count2 = deptDao.getResultNumber(hqldis, ids);
+        if (count2 > 0) {
+            message = StringUtil.jsonValue("0", AppMsg.getMessage("dis"));
+
+            //101该区域拥有站点，不允许删除
+            return message;
 		}
 		try{
 			Department dept = new Department();
@@ -118,25 +157,6 @@ public class DeptAction {
 		return message;
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	@ResponseBody
-	public String add(@ModelAttribute Department dept){
-		if (StringUtils.isBlank(dept.getParentId()))
-			dept.setParentId("null");
-		Qgorg qgorg=BasicData.findQgorgById(dept.getQgorgId());
-		dept.setAreacode(qgorg.getAreacode());
-		deptDao.save(dept);
-		return "success";
-	}
-
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	@ResponseBody
-	public String update(@ModelAttribute Department dept){
-		Qgorg qgorg=BasicData.findQgorgById(dept.getQgorgId());
-		dept.setAreacode(qgorg.getAreacode());		
-		deptDao.update(dept);
-		return "success";
-	}
 
 	@RequestMapping("/getDeptTree")
 	@ResponseBody

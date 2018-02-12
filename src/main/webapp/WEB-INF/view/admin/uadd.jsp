@@ -8,23 +8,17 @@
 
             <tr>
                 <td>姓名:</td>
-                <td><input name="dept.id" type="hidden" value="${deptId}"/></input><input size="40"
-                                                                                          class="easyui-validatebox"
-                                                                                          name="username"
-                                                                                          required="true"
-                                                                                          validType="CHS"/></td>
+                <td>
+                    <%--<input name="dept.id" type="hidden" value="${user_depts}"/></input>--%>
+                    <input name="dept.id" type="hidden" value="${deptId}"/></input>
+                    <input size="40"
+                           class="easyui-validatebox"
+                           name="username"
+                           required="true"
+                           validType="CHS"/>
+                </td>
             </tr>
 
-
-            <%--<tr>
-                <td>绩效考核:</td>
-                <td>
-                                <select name="haskh" id="haskh">
-                                            <option value="1" selected>参与</option>
-                                            <option value="0" >不参与</option>
-                                </select>
-                </td>
-            </tr>--%>
             <tr>
                 <td>手机:</td>
                 <td><input size="40" class="easyui-validatebox" name="phone" value="" validType="mobile"/></td>
@@ -56,17 +50,17 @@
                     </c:forEach>
                 </td>
             </tr>
-            <tr>
-                <td>管理区域:</td>
-                <td>
-                    <div class="easyui-accordion" style="width: 500px;" border=false animate=false>
-                        <c:forEach items="${deptList}" var="dept" varStatus="s">
-                            <span><input name="deptIdList" type="checkbox" value="${dept.id}"/>${dept.name }</span>
-                            <c:if test="${(s.index+1)%5==0}"><br/></c:if>
-                        </c:forEach>
-                    </div>
-                </td>
-            </tr>
+            <%--<tr>--%>
+            <%--<td>管理区域:</td>--%>
+            <%--<td>--%>
+            <%--<div class="easyui-accordion" style="width: 500px;" border=false animate=false>--%>
+            <%--<c:forEach items="${deptList}" var="dept" varStatus="s">--%>
+            <%--<span><input name="deptIdList" type="checkbox" value="${dept.id}"/>${dept.name }</span>--%>
+            <%--<c:if test="${(s.index+1)%5==0}"><br/></c:if>--%>
+            <%--</c:forEach>--%>
+            <%--</div>--%>
+            <%--</td>--%>
+            <%--</tr>--%>
             <%--<tr>--%>
             <%--<td>负责区域:</td>--%>
             <%--<td>--%>

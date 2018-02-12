@@ -41,7 +41,7 @@
 
 
     <img src="http://localhost:8080/uploads/icture/+'.jpg'">
-    <img src="${basePath}/uploads/ictures/+'.getTimestamp()'.jpg">
+    <img src="${basePath}/uploads/ictures/+'getTimestamp()'.jpg">
     <br/>
     起始时间:<input type="datetime-local">
     结束时间:<input type="datetime-local">
