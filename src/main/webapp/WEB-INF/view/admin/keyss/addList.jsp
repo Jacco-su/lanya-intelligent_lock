@@ -206,8 +206,7 @@
                 }
             }
         }
-
-
+        
         function getMAC() {
             var key = $('#collector').combobox('getText') + ","
                 + "13" + ","
