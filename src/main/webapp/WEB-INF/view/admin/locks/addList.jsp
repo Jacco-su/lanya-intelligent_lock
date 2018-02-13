@@ -320,7 +320,7 @@
             }
             if (lockCode == null || lockCode == "") {
                 $.messager.alert('提示', "请获取门锁识别码", 'warning');
-                alert("请获取门锁识别码");
+//                alert("请获取门锁识别码");
                 lockCode.focus();
                 return false;
             } else {

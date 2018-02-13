@@ -223,7 +223,7 @@
                         }]
                     });
                 } else {
-                    $.messager.alert('警告', '请选择一个部门', 'warning');
+                    $.messager.alert('警告', '请选择一个区域', 'warning');
                 }
             }
 

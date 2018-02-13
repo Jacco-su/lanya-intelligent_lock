@@ -9,8 +9,8 @@
             <tr>
                 <td>姓名:</td>
                 <td>
-                    <%--<input name="dept.id" type="hidden" value="${user_depts}"/></input>--%>
-                    <input name="dept.id" type="hidden" value="${deptId}"/></input>
+                    <input name="dept.id" type="hidden" value="${user_depts}"/></input>
+                    <%--<input name="dept.id" type="hidden" value="${deptId}"/></input>--%>
                     <input size="40"
                            class="easyui-validatebox"
                            name="username"

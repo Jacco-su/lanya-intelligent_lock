@@ -135,7 +135,7 @@
                     title: "添加",
                     url: '${basePath}/collectore/prAdd',
                     height: 350,
-                    width: 800,
+                    width: 500,
                     buttons: [{
                         text: '保存',
                         iconCls: 'icon-ok',

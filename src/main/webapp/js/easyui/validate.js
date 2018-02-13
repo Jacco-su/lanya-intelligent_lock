@@ -128,7 +128,17 @@ $.extend($.fn.validatebox.defaults.rules, {
 			return /^(2[\d]{3})-(0[1-9]|1[0-2])$/.test(value);
 		},
 		message : '请输入正确格式的日期'
-	}
+    },
+
+    ccode: {
+
+        validator: function (value, param) {
+            return ceid(value);
+        },
+        message: 'ID不正确,请输入8位非汉字ID'
+    }
+
+
 });
 
 /* 密码由字母和数字组成，至少6位 */
@@ -198,4 +208,14 @@ var isDateTime = function(format, reObj) {
 			reVal = s2 * 1;
 		return (reVal == s1 && s1.length != s5 || reVal > s4) ? -10000 : reVal;
 	}
+};
+
+
+var ccode = function (value) {
+
+    // if (value.length == 8 && value==!(/^[\u0391-\uFFE5]+$/.test(value)))
+
+
+    return !(/^(([A-Z]*|[a-z]*|\d*|[-_\~!@#\$%\^&\*\.\(\)\[\]\{\}<>\?\\\/\'\"]*)|.{0,5})$|\s/
+        .test(value));
 };

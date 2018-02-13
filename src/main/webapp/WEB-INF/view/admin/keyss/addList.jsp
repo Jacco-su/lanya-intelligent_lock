@@ -156,27 +156,57 @@
 
         //保存
         function save() {
-            var data = {
-                "user.id": $('#users').combobox('getValue'),
-                "keyssCode": $("#keyssCode").val(),
-                "keyssMAC": $("#keyssMAC").val()
-            };
-            $.ajax({
-                type: "post",
-                url: basePath + "/keyss/add",
-                cache: false,
-                async: true,
-                data: data,
-                dataType: "json",
-                success: function (data) {
-                    if (data.result == "1") {
-                        $.messager.alert('提示', data.message, 'success');
-                    } else {
-                        $.messager.alert('提示', data.message, 'warning');
-                    }
+            sb1();
+
+            function sb1() {
+                debugger;
+                var dis = $('#disa').combobox('getValue');
+                var keyssCode = $("#keyssCode").val();
+                if (dis == null || dis == "" || dis == 0 || dis == "---请选择---") {
+                    $.messager.alert('提示', "请选择正确站点", 'warning');
+                    dis.focus();
+                    return false;
                 }
-            });
+                if ($("#keyssMAC").val() == null || $("#keyssMAC").val() == "") {
+                    $.messager.alert('提示', "请选获取钥匙MVC", 'warning');
+                    dis.focus();
+                    return false;
+                }
+                if (keyssCode == null || keyssCode == "") {
+                    $.messager.alert('提示', "请获取钥匙编号", 'warning');
+//                alert("请获取门锁识别码");
+                    lockCode.focus();
+                    return false;
+                }
+                if ($('#users') == null || $('#users') == "") {
+                    $.messager.alert('提示', "请选择使用人", 'warning');
+                    users.focus();
+                    return false;
+                } else {
+                    var data = {
+                        "user.id": $('#users').combobox('getValue'),
+                        "keyssCode": $("#keyssCode").val(),
+                        "keyssMAC": $("#keyssMAC").val()
+                    };
+                    $.ajax({
+                        type: "post",
+                        url: basePath + "/keyss/add",
+                        cache: false,
+                        async: true,
+                        data: data,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.result == "1") {
+                                $.messager.alert('提示', data.message, 'success');
+                            } else {
+                                $.messager.alert('提示', data.message, 'warning');
+                            }
+                        }
+                    });
+                }
+            }
         }
+
 
         function getMAC() {
             var key = $('#collector').combobox('getText') + ","

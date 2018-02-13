@@ -216,7 +216,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					} ]
 				});
 			}else{
-				$.messager.alert('警告', '请选择一个部门', 'warning');
+                $.messager.alert('警告', '请选择一个区域', 'warning');
 			}
 		}
 		function edit() {
