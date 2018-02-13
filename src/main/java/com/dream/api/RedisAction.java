@@ -1,10 +1,12 @@
 package com.dream.api;
 
+import com.alibaba.fastjson.JSON;
 import com.dream.brick.equipment.bean.Authorization;
 import com.dream.brick.equipment.dao.IAuthorizationDao;
 import com.dream.brick.listener.SessionData;
 import com.dream.socket.entity.AuthModel;
 import com.dream.socket.entity.DataProtocol;
+import com.dream.socket.entity.JsonDataProtocol;
 import com.dream.socket.utils.ByteUtil;
 import com.dream.socket.utils.Constants;
 import com.dream.util.AppMsg;
@@ -62,16 +64,14 @@ public class RedisAction {
         String macAddess=keys[2].replace(":","");
         macAddess="00000000000000000000"+macAddess;
         DataProtocol dataProtocol=new DataProtocol(new byte[]{00,01}, ByteUtil.hexToBytes(macAddess),ByteUtil.hexToBytes(authModel));
-      /*  JsonDataProtocol jsonDataProtocol=new JsonDataProtocol();
+        JsonDataProtocol jsonDataProtocol=new JsonDataProtocol();
         jsonDataProtocol.setCollectorId(keys[0]);
         jsonDataProtocol.setContent(dataProtocol.toString());
         jsonDataProtocol.setDataType("client");
-        redisTemplateUtil.setList("lanya-lite", JSON.toJSONString(jsonDataProtocol));*/
         System.out.println(dataProtocol.toString());
-        String authKey=dataProtocol.toString()+";"+SessionData.getAdminId(request);
+        String authKey=JSON.toJSONString(jsonDataProtocol)+";"+SessionData.getAdminId(request);
         for (int i = 0; i < 3; i++) {
-            redisTemplateUtil.setList("lanya-lite", authKey);
-        }
+            redisTemplateUtil.setList("lanya-lite", authKey); }
         try {
             Thread.sleep(10000);
             Object o = redisTemplateUtil.get(authKey);
