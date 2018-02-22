@@ -49,11 +49,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 				){
 			return true;
 		}
-		if(action.contains("api")){
+		/*if(action.contains("api")){
 			return SecurityChecker.getInstance().check(request,response);
-		}
+		}*/
 		boolean flag = true;
 		List<String> ignoreList = new ArrayList<String>();
+		ignoreList.add("api");
 		ignoreList.add("login");
 		ignoreList.add("logout");
 		ignoreList.add("zhzjLogin");

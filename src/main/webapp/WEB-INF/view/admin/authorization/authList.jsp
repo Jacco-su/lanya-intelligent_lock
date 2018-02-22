@@ -20,7 +20,7 @@
     <script type="text/javascript">
         var basePath="${basePath}";
         $(function() {
-            getkeys();
+           // getkeys();
             $('#tree').tree({
                 checkbox: false,
                 url: basePath+'/dept/getChildren',
@@ -107,7 +107,7 @@
                                 }
                             });
                             //获取锁具
-                            $.post(basePath+"/authorization/disa/locks",data,function(data){
+                           /* $.post(basePath+"/authorization/disa/locks",data,function(data){
                                 var d=JSON.parse(data);
                                 $('#locks').empty();
                                 var collectorData = []; //创建数组
@@ -121,7 +121,7 @@
                                     $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
                                         .combobox("loadData", collectorData).combobox("setValue", d[0].id);
                                 }
-                            });
+                            });*/
                         }
                     }
                 });
@@ -153,7 +153,7 @@
             }
         });
         function keyBinding() {
-            var key=$('#collector').combobox('getText')+",7,"+$('#collectore').combobox('getText')+","+$('#keys').combobox('getText')+",";
+            var key=$('#collector').combobox('getText')+",7,"+$('#collectore').combobox('getText')+","+""+",";
             var data={
                 "key":key
             };
@@ -175,7 +175,7 @@
             });
         }
         function keyTiming() {
-            var key=$('#collector').combobox('getText')+",12,"+$('#collectore').combobox('getText')+","+$('#keys').combobox('getText')+",";
+            var key=$('#collector').combobox('getText')+",12,"+$('#collectore').combobox('getText')+","+""+",";
             var data={
                 "key":key
             };
@@ -200,8 +200,8 @@
             var key=$('#collector').combobox('getText')
                 + ",5,"
                 +$('#collectore').combobox('getText')+","
-                +$('#keys').combobox('getText')+","
-                +$('#locks').combobox('getText')+","
+                +""+","
+                +$('#locks').val()+","
                 +$('#startDate').val()+","
                 +$('#endDate').val()+","
                 +$('#users').combobox('getValue');
@@ -230,8 +230,8 @@
             var key=$('#collector').combobox('getText') +","
                 +t+","
                 +$('#collectore').combobox('getText')+","
-                +$('#keys').combobox('getText')+","
-                +$('#locks').combobox('getText')+","
+                +""+","
+                +$('#locks').val()+","
                 +$('#startDate').val()+","
                 +$('#endDate').val()+","
                 +$('#users').combobox('getValue');
@@ -253,14 +253,15 @@
                             $("#locks").empty();
                             var collectorData = []; //创建数组
                             var lockNum=data.message.split(";")[1];
-                            collectorData.push({
+                            $("#locks").val(lockNum);
+                           /* collectorData.push({
                                 "id": lockNum,
                                 "text":lockNum
                             });
                             console.log(data.message.split(";")[1]);
                             console.log(collectorData);
                             $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
-                                .combobox("loadData", collectorData).combobox("setValue",lockNum);
+                                .combobox("loadData", collectorData).combobox("setValue",lockNum);*/
                         }
                     }else{
                         if(t==2){
@@ -314,7 +315,7 @@
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                <%--        <tr>
                             <td>选择钥匙:</td>
                             <td colspan="3">
                                 <select class="easyui-combobox" id="keys" name="keys" style="width: 180px;"
@@ -322,7 +323,7 @@
                                     <option value="0">---请选择---</option>
 
                                 </select></td>
-                        </tr>
+                        </tr>--%>
                         <tr>
                             <td>
                                 操作钥匙:
@@ -335,10 +336,11 @@
                         <tr>
                             <td>选择锁具:</td>
                             <td>
-                                <select class="easyui-combobox" name="locks" id="locks" style="width: 180px;"
+                                <input width="180px" name="locks" id="locks">
+                               <%-- <select class="easyui-combobox" name="locks" id="locks" style="width: 180px;"
                                         data-options="editable:false,valueField:'id', textField:'text'">
                                     <option value="0">---请选择---</option>
-                                </select></td>
+                                </select></td>--%>
                             <td>
                                 <button class="easyui-linkbutton" onclick="getLock(2)">初始门锁</button>
                             </td>

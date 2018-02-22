@@ -73,7 +73,7 @@ public class RedisAction {
         for (int i = 0; i < 3; i++) {
             redisTemplateUtil.setList("lanya-lite", authKey); }
         try {
-            Thread.sleep(10000);
+            Thread.sleep(15000);
             Object o = redisTemplateUtil.get(authKey);
             if (o == null) {
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
