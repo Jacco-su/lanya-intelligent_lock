@@ -226,6 +226,42 @@ public class UserAction {
 		return message;
 	}
 
+	@RequestMapping("/uprUpdate")
+	public String uprUpdate(String id, ModelMap model) {
+		List<Role> roles = roleDao.findRoleName(false);
+		//List<Department> deptList=deptDao.findDeptIdAndName();
+		User user = userDao.findUserById(id);
+		StringBuffer roIds = new StringBuffer();
+		for (Role o : user.getRoles()) {
+			roIds.append(o.getRoId() + ",");
+		}
+		if (roIds.length() > 0) {
+			roIds.deleteCharAt(roIds.length() - 1);
+		}
+		model.addAttribute("user", user);
+		model.addAttribute("roIds", roIds);
+		//model.addAttribute("deptIds",user.getUserDepts());
+		model.addAttribute("roles", roles);
+		//model.addAttribute("deptList",deptList);
+		return "admin/uupdate";
+	}
+
+	@RequestMapping(value = "/uupdate", method = RequestMethod.POST)
+	@ResponseBody
+	public String uupdate(@ModelAttribute User user, String[] roIdList, String[] deptIdList) {
+		String message = "";
+		try {
+			initRole(user, roIdList, deptIdList);
+			user.setStatus(1);
+			userDao.updateUser(user);
+			message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = StringUtil.jsonValue("0", AppMsg.UPDATE_ERROR);
+		}
+		return message;
+	}
+
 
 	public void initRole(User user, String[] list, String[] deptIdList){
 		if(list==null){
