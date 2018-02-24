@@ -48,6 +48,21 @@ public class ChartsAction {
         datas.put("rows", list);
         return datas.toString();
     }
-
+    @RequestMapping("/kbsReport")
+    @ResponseBody
+    public String kbsList(int page, int rows, Pager pager){
+        pager.setCurrentPage(page);
+        pager.setPageSize(rows);
+        JSONObject datas = new JSONObject();
+        List<Charts> list = chartsDao.findChartsList(pager);
+        datas.put("total", pager.getTotalRow());
+        datas.put("rows", list);
+        return datas.toString();
+    }
+    @RequestMapping("/kbsList")
+    public String kbsList()
+            throws Exception {
+        return "admin/charts/kbsList";
+    }
 
 }

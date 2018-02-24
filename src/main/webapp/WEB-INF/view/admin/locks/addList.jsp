@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>门锁管理</title>
+    <title>门锁添加</title>
     <link rel="stylesheet" type="text/css"
           href="${basePath}/js/jquery-easyui-1.5.3/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css"
@@ -160,12 +160,7 @@
         function getLock(t) {
             var key = $('#collector').combobox('getText') + ","
                 + t + ","
-                + $('#collectore').combobox('getText') + ","
-                + $('#keys').combobox('getText') + ","
-                + $('#locks').combobox('getText') + ","
-                + $('#startDate').val() + ","
-                + $('#endDate').val() + ","
-                + $('#users').combobox('getValue');
+                + $('#collectore').combobox('getText');
             var data = {
                 "key": key
             };
@@ -190,8 +185,7 @@
                             });
                             console.log(data.message.split(";")[1]);
                             console.log(collectorData);
-                            $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
-                                .combobox("loadData", collectorData).combobox("setValue", lockNum);
+                            $("#lockCode").val(lockNum);
                         }
                     } else {
                         if (t == 2) {
@@ -204,8 +198,6 @@
 
             });
         }
-
-
     </script>
 </head>
 <body>
@@ -303,9 +295,7 @@
     //        保存
     function save() {
         sb1();
-
         function sb1() {
-            debugger;
             var dis = $('#disa').combobox('getValue');
             var lockCode = $("#lockCode").val();
             if (dis == null || dis == "" || dis == 0 || dis == "---请选择---") {

@@ -108,4 +108,9 @@ public class RedisAction {
         redisTemplateUtil.set(key, value);
         return StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
     }
+    @RequestMapping("/areaAuth")
+    @ResponseBody
+    public String areaAuth(String areaId, String startDate,String endDate,String userId) {
+        return StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+    }
 }

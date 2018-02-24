@@ -2,17 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>ECharts</title>
-    <!-- compressed -->
-    <%--<script src="http://s1.bdstatic.com/r/www/cache/efe/esl/2-1-6/esl.js"></script>--%>
-
-    <%--<!-- compressed(https) -->--%>
-    <%--<script src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/efe/esl/2-1-6/esl.js"></script>--%>
-
-    <%--<!-- source -->--%>
-    <%--<script src="http://s1.bdstatic.com/r/www/cache/efe/esl/2-1-6/esl.source.js"></script>--%>
-
-
+    <title>开闭锁统计</title>
     <!-- 引入 ECharts 文件 echarts.js -->
     <script type="text/javascript" src="${basePath}/js/echarts/echarts.min.js"></script>
 
@@ -24,32 +14,14 @@
     <input type="submit" value="年统计" onclick="myChart.setOption(1)">
     <input type="button" value="月统计" onclick="myChart.setOption(option)">
     <input type="button" value="月统计" onclick="myChart.setOption(onclick)">
-
-
 </div>
-
-
 <script type="text/javascript">
-
-
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
 
 
     var app = {};
     option = null;
-    // 指定图表的配置项和数据
-    //    var dataAxis = ['点', '击', '柱', '子', '或', '者', '两', '指', '在', '触', '屏', '上', '滑', '动', '能', '够', '自', '动', '缩', '放'];
-    //    var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
-    //    var dataAxis = [];
-    //    var data = [];
-    //    var yMax = 500;
-    //    var dataShadow = [];
-
-    //    for (var i = 0; i < data.length; i++) {
-    //        dataShadow.push(yMax);
-    //    }
-
 
     function fetchData(cb) {
         // 通过 setTimeout 模拟异步加载
