@@ -12,7 +12,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "t_keyss")
-
 public class Keyss implements Serializable {
 
     private String id;             //蓝牙钥匙id 编号

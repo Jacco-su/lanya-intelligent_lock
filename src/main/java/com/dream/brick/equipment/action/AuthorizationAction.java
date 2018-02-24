@@ -9,7 +9,7 @@ import com.dream.brick.equipment.dao.QgdisDao;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.StringUtil;
-import com.dream.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -72,10 +72,15 @@ public class AuthorizationAction {
     public String prViewAuth( ModelMap model) {
         return "admin/authorization/authList";
     }
-
+    //离线授权
     @RequestMapping("/prViewOfflineAuth")
     public String prViewOfflineAuth( ModelMap model) {
         return "admin/authorization/authOfflineList";
+    }
+    //区域授权
+    @RequestMapping("/prAreaAuth")
+    public String prAreaAuth( ModelMap model) {
+        return "admin/authorization/authAreaList";
     }
     @RequestMapping("/workView")
     public String workView(String id, ModelMap model) {
@@ -171,12 +176,23 @@ public class AuthorizationAction {
     @RequestMapping("/disa/collector")
     @ResponseBody
     public String getCollectorAction(String disaId){
-        return JSON.toJSONString(authorizationDao.findList("from Collector where disId="+disaId));
+        if(StringUtils.isNotEmpty(disaId)){
+            if(!disaId.contains("请选择")){
+                return JSON.toJSONString(authorizationDao.findList("from Collector where disId="+disaId));
+            }
+        }
+        return null;
     }
     @RequestMapping("collector/collectore")
     @ResponseBody
     public String getCollectoreAction(String collectorId){
-        return JSON.toJSONString(authorizationDao.findList("from Collectore where cid="+collectorId));
+        if(StringUtils.isNotEmpty(collectorId)) {
+            if (!collectorId.contains("请选择")) {
+                return JSON.toJSONString(authorizationDao.findList("from Collectore where cid=" + collectorId));
+            }
+        }
+        return null;
+
     }
 
     @RequestMapping("/keys")
@@ -188,6 +204,12 @@ public class AuthorizationAction {
     @RequestMapping("/disa/locks")
     @ResponseBody
     public String getLocksAction(String disaId) {
-        return JSON.toJSONString(authorizationDao.findList("from Locks where dissId=" + disaId));
+        if(StringUtils.isNotEmpty(disaId)) {
+            if (!disaId.contains("请选择")) {
+                return JSON.toJSONString(authorizationDao.findList("from Locks where dissId=" + disaId));
+            }
+        }
+        return null;
+
     }
 }
