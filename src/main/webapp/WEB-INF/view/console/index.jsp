@@ -35,6 +35,11 @@ request.setAttribute("basePath",path);
 		text-decoration: none;
 		outline: none;
 	}
+
+	#myindex {
+		padding: 0px;
+		background: url(${basePath}/images/xlogin/index.PNG) center;
+	}
 </style>
     <script type="text/javascript">
 		function appInfo(){
@@ -288,8 +293,10 @@ request.setAttribute("basePath",path);
 	    </div>
 	    <div id="mainPanle" region="center" style="background: #eee; overflow-y:hidden;" scroll="no">
 	        <div id="tabs" class="easyui-tabs"  fit="true" border="false" scroll="no">
-						<div title="个人主页" style="padding: 0px;" id="myindex">
-						<iframe scrolling="auto" frameborder="0"  id="personIndex" src="${basePath}/log/mainPanle" style="width:100%;height:100%"></iframe>
+				<div title="个人主页" id="myindex">
+					<%--<img src="${basePath}/images/xlogin/index.PNG">--%>
+					<%--<iframe scrolling="auto" frameborder="0"  id="personIndex" src="${basePath}/log/mainPanle" style="width:100%;height:100%"></iframe>--%>
+							
 						</div>
 			</div>
 			<div style="display:none">

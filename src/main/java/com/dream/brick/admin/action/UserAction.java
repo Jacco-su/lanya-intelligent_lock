@@ -78,23 +78,23 @@ public class UserAction {
 	}
 
 
-//	@RequestMapping("/list")
+//	@RequestMapping("/ulist")
 //	@ResponseBody
-//	public String list(int page, int rows, String user_depts, String username, Pager pager)
+//	public String ulist(int page, int rows, String user_depts, String username, Pager pager)
 //			throws Exception {
 //		pager.setCurrentPage(page);
 //		pager.setPageSize(rows);
 //		JSONObject datas = new JSONObject();
 //		List<User> userList = new ArrayList<User>();
-//		if (StringUtils.isNotBlank(deptId)) {
-//			userList = userDao.ulist(pager, user_depts);
+//		if (StringUtils.isNotBlank(user_depts)) {
+//			userList = userDao.list(pager, user_depts);
 //		}else if(StringUtils.isNotBlank(username)){
-//			userList = userDao.uquery(pager, username);
+//			userList = userDao.query(pager, username);
 //		}
-//		Map<String,List<Role>> urmap=userDao.findAllUserRoles();
+//		Map<String,List<Role>> urmaps=userDao.findAllUserRoles();
 //		for(User user:userList){
-//			if(urmap.containsKey(user.getId())){
-//				user.setRoles(urmap.get(user.getId()));
+//			if(urmaps.containsKey(user.getId())){
+//				user.setRoles(urmaps.get(user.getId()));
 //			}
 //		}
 //		datas.put("total", pager.getTotalRow());

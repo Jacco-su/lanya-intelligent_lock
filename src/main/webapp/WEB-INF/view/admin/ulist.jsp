@@ -37,7 +37,7 @@
                 collapsible: false,
                 fitColumns: true,
                 singleSelect: true,
-                url: '${basePath}/user/list',
+                url: '${basePath}/user/ulist',
                 queryParams: {
                     'deptId': deptId
                 },
@@ -143,7 +143,7 @@
 
             function refresh() {
                 infolist.datagrid({
-                    url: '${basePath}/user/list',
+                    url: '${basePath}/user/ulist',
                     queryParams: {
                         'deptId': deptId
                     },
