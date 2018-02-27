@@ -37,7 +37,7 @@ public class RedisAction {
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         String [] keys=key.split(",");
         String  authModel=null;
-
+        //钥匙绑定
         if("7".equals(keys[1])){
             ////采集器id:指令字:mac地址:钥匙mac地址
             authModel=new AuthModel(new byte[]{7}, AuthModel.toData(7,14), Constants.KEY).toString();
@@ -71,7 +71,8 @@ public class RedisAction {
         System.out.println(dataProtocol.toString());
         String authKey=JSON.toJSONString(jsonDataProtocol)+";"+SessionData.getAdminId(request);
         for (int i = 0; i < 3; i++) {
-            redisTemplateUtil.setList("lanya-lite", authKey); }
+            redisTemplateUtil.setList("lanya-lite", authKey);
+        }
         try {
             Thread.sleep(15000);
             Object o = redisTemplateUtil.get(authKey);
@@ -106,11 +107,6 @@ public class RedisAction {
     public String set(String key, String value) {
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         redisTemplateUtil.set(key, value);
-        return StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
-    }
-    @RequestMapping("/areaAuth")
-    @ResponseBody
-    public String areaAuth(String areaId, String startDate,String endDate,String userId) {
         return StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
     }
 }

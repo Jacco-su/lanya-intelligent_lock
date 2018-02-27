@@ -54,7 +54,34 @@
                 });
             }
         });
+        function getMAC() {
+            var key = ",13,,,";
+            var data = {
+                "key": key
+            };
+            $.ajax({
+                type: "post",
+                url: basePath + "/redis/get",
+                cache: false,
+                async: false,
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    if (data.result == "1") {
+                        alert(data.message);
+                    } else {
+                        alert("授权失败!");
+                    }
+                }
+
+            });
+        }
         function areaAuth() {
+            var keyssMAC=$("#keyssMAC").val();
+            if(keyssMAC==""){
+                $.messager.alert('警告', '请选择获取钥匙', 'warning');
+                return;
+            }
             if (areaId != "") {
                 var data = {
                     "areaId": areaId,
@@ -64,7 +91,7 @@
                 };
                 $.ajax({
                     type: "post",
-                    url: basePath + "/redis/areaAuth",
+                    url: basePath + "/authorization/areaAuth",
                     cache: false,
                     async: true,
                     data: data,
@@ -98,6 +125,15 @@
             <div class="easyui-panel" title="区域授权" style="width:800px">
                 <div style="padding:10px 60px 20px 60px">
                     <table cellpadding="5">
+                        <tr>
+                            <td>钥匙MAC:</td>
+                            <td colspan="3">
+                                <input id="keyssMAC" type="text" name="keyssMAC" value="" class="easyui-validatebox"
+                                       required="true"/>
+                                <a class="easyui-linkbutton"
+                                   onclick="getMAC()">获取</a>
+                            </td>
+                        </tr>
                         <tr>
                             <td width="100">授权时间:</td>
                             <td colspan="3">

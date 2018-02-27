@@ -33,7 +33,7 @@ public class CollectorDaoImpl extends BaseDaoImpl implements CollectorDao {
 //    }
 //
 public List<Collector> findCollectorByQgdisid(String disId) {
-    String hql = "from Collector t ";
+    String hql = "from Collector t where disId="+disId;
     return findList(hql);
 }
 
