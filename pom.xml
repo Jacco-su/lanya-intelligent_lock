@@ -376,8 +376,13 @@
 			<version>2.9.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>poi</groupId>
+			<artifactId>poi</artifactId>
+		</dependency>
 
-    </dependencies>
+
+	</dependencies>
 
 
 	<build>

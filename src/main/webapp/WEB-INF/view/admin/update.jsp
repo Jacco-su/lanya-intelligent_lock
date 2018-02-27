@@ -46,7 +46,7 @@ $.each(deptIds.split(','), function(i, v) {
 </script>
 <div>
 <div>
-<form name="editForm" id="editForm" action="${basePath}/user/update" method="post">
+	<form name="editForm" id="editForm" action="${basePath}/user/uupdate" method="post">
 <table class="mytable" align="center">
 	<tr>
 		<td>帐户:</td>
@@ -115,17 +115,17 @@ $.each(deptIds.split(','), function(i, v) {
 		</td>
 	</tr>
 
-    <tr>
-        <td>区域调动:</td>
-        <td>
-            <div class="easyui-accordion" style="width: 500px;" border=false animate=false>
-                <c:forEach items="${deptList}" var="dept" varStatus="s">
-                    <span><input name="deptIdList" type="checkbox" value="${dept.id}"/>${dept.name }</span>
-                    <c:if test="${(s.index+1)%5==0}"><br/></c:if>
-                </c:forEach>
-            </div>
-        </td>
-    </tr>
+	<%--<tr>--%>
+	<%--<td>区域调动:</td>--%>
+	<%--<td>--%>
+	<%--<div class="easyui-accordion" style="width: 500px;" border=false animate=false>--%>
+	<%--<c:forEach items="${deptList}" var="dept" varStatus="s">--%>
+	<%--<span><input name="deptIdList" type="checkbox" value="${dept.id}"/>${dept.name }</span>--%>
+	<%--<c:if test="${(s.index+1)%5==0}"><br/></c:if>--%>
+	<%--</c:forEach>--%>
+	<%--</div>--%>
+	<%--</td>--%>
+	<%--</tr>--%>
 </table>
 	</form>
 	</div>

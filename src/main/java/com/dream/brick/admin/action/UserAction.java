@@ -78,23 +78,23 @@ public class UserAction {
 	}
 
 
-//	@RequestMapping("/list")
+//	@RequestMapping("/ulist")
 //	@ResponseBody
-//	public String list(int page, int rows, String user_depts, String username, Pager pager)
+//	public String ulist(int page, int rows, String user_depts, String username, Pager pager)
 //			throws Exception {
 //		pager.setCurrentPage(page);
 //		pager.setPageSize(rows);
 //		JSONObject datas = new JSONObject();
 //		List<User> userList = new ArrayList<User>();
-//		if (StringUtils.isNotBlank(deptId)) {
-//			userList = userDao.ulist(pager, user_depts);
+//		if (StringUtils.isNotBlank(user_depts)) {
+//			userList = userDao.list(pager, user_depts);
 //		}else if(StringUtils.isNotBlank(username)){
-//			userList = userDao.uquery(pager, username);
+//			userList = userDao.query(pager, username);
 //		}
-//		Map<String,List<Role>> urmap=userDao.findAllUserRoles();
+//		Map<String,List<Role>> urmaps=userDao.findAllUserRoles();
 //		for(User user:userList){
-//			if(urmap.containsKey(user.getId())){
-//				user.setRoles(urmap.get(user.getId()));
+//			if(urmaps.containsKey(user.getId())){
+//				user.setRoles(urmaps.get(user.getId()));
 //			}
 //		}
 //		datas.put("total", pager.getTotalRow());
@@ -223,6 +223,42 @@ public class UserAction {
 			message=StringUtil.jsonValue("0",AppMsg.UPDATE_ERROR);
 		}
 
+		return message;
+	}
+
+	@RequestMapping("/uprUpdate")
+	public String uprUpdate(String id, ModelMap model) {
+		List<Role> roles = roleDao.findRoleName(false);
+		//List<Department> deptList=deptDao.findDeptIdAndName();
+		User user = userDao.findUserById(id);
+		StringBuffer roIds = new StringBuffer();
+		for (Role o : user.getRoles()) {
+			roIds.append(o.getRoId() + ",");
+		}
+		if (roIds.length() > 0) {
+			roIds.deleteCharAt(roIds.length() - 1);
+		}
+		model.addAttribute("user", user);
+		model.addAttribute("roIds", roIds);
+		//model.addAttribute("deptIds",user.getUserDepts());
+		model.addAttribute("roles", roles);
+		//model.addAttribute("deptList",deptList);
+		return "admin/uupdate";
+	}
+
+	@RequestMapping(value = "/uupdate", method = RequestMethod.POST)
+	@ResponseBody
+	public String uupdate(@ModelAttribute User user, String[] roIdList, String[] deptIdList) {
+		String message = "";
+		try {
+			initRole(user, roIdList, deptIdList);
+			user.setStatus(1);
+			userDao.updateUser(user);
+			message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = StringUtil.jsonValue("0", AppMsg.UPDATE_ERROR);
+		}
 		return message;
 	}
 

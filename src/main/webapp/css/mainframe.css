@@ -193,12 +193,33 @@ a:hover{ color:Red; text-decoration:underline;}
     background-position: -0px -420px;
 }
 
+.icon-diqiu {
+    background-position: -160px -500px;
+}
+
+.icon-zd {
+    background-position: -60px -0px;
+}
+
+.icon-helps {
+    background-position: -280px -40px;
+}
+
 .icon-qita {
     background: url("../images/framework/bg_sign52.png") no-repeat;
 }
 
+
 .icon-ziliao {
     background: url("../images/login/00100.jpg");
+}
+
+.icon-jsuo {
+    background: url("../images/icons/icon014a2.gif");
+}
+
+.icon-jyaoshi {
+    background: url("../images/icons/icon_key_add.gif");
 }
 
 

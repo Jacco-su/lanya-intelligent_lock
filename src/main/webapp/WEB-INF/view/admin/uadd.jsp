@@ -4,13 +4,11 @@
 <div>
     <form name="addForm" id="addForm" action="${basePath}/user/uadd" method="post">
         <table class="mytable" align="center">
-
-
             <tr>
                 <td>姓名:</td>
                 <td>
-                    <input name="dept.id" type="hidden" value="${user_depts}"/></input>
-                    <%--<input name="dept.id" type="hidden" value="${deptId}"/></input>--%>
+                    <%--<input name="dept.id" type="hidden" value="${user_depts}"/>--%>
+                    <input name="dept.id" type="hidden" value="${deptId}"/></input>
                     <input size="40"
                            class="easyui-validatebox"
                            name="username"
@@ -30,26 +28,23 @@
             <tr>
                 <td>排序序号:</td>
                 <td>
-
                     <select id="orderId" name="orderId" style="width:100px;">
                         <c:forEach var="x" begin="1" end="50" step="1">
                             <option value="${x}">${x}</option>
                         </c:forEach>
                     </select>
-
-
                 </td>
             </tr>
-            <tr>
-                <td>角色:</td>
-                <td>
-                    <input name="roIdList" type="hidden"/>
-                    <c:forEach items="${roles}" var="role" varStatus="s">
-                        <span><input name="roIdList" type="radio" value="${role.roId}"/>${role.name }</span>
-                        <c:if test="${(s.index+1)%3==0}"><br/></c:if>
-                    </c:forEach>
-                </td>
-            </tr>
+            <%--<tr>--%>
+            <%--<td>角色:</td>--%>
+            <%--<td>--%>
+            <%--<input name="roIdList" type="hidden"/>--%>
+            <%--<c:forEach items="${roles}" var="role" varStatus="s">--%>
+            <%--<span><input name="roIdList" type="radio" value="${role.roId}"/>${role.name }</span>--%>
+            <%--<c:if test="${(s.index+1)%3==0}"><br/></c:if>--%>
+            <%--</c:forEach>--%>
+            <%--</td>--%>
+            <%--</tr>--%>
             <%--<tr>--%>
             <%--<td>管理区域:</td>--%>
             <%--<td>--%>
