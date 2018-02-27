@@ -1,15 +1,13 @@
 package com.dream.brick.admin.bean;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 用户实体类 保存注册的普通用户和管理员信息
- * 
- * @author maolei
+ *
+ * @author
  * 
  */
 @Entity

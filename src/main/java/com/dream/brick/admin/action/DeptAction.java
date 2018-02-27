@@ -120,13 +120,21 @@ public class DeptAction {
 	@ResponseBody
 	public String delete(String ids, HttpServletRequest request){
 		String message="";
-		String areacode= SessionData.getAreacode(request);
-		List<Department> children = deptDao.getChildren(ids,areacode);
-		if(children.size()>0){
+//		String areacode= SessionData.getAreacode(request);
+//		List<Department> children = deptDao.getChildren(ids,areacode);
+//		if(children.size()>0){
+//            message = StringUtil.jsonValue("0", AppMsg.getMessage("dept"));
+////			message="该地区拥有区域，不允许删除";
+//            //100该部门拥有子部门，不允许删除
+//			return message;
+//		}
+        String parentId = SessionData.getAreacode(request);
+        List<Department> children = deptDao.getChildren(ids, parentId);
+        if(children.size()>0){
             message = StringUtil.jsonValue("0", AppMsg.getMessage("dept"));
 //			message="该地区拥有区域，不允许删除";
             //100该部门拥有子部门，不允许删除
-			return message;
+            return message;
 		}
 		String hql="select count(*) from User t where t.dept.id=?";
 		
@@ -137,7 +145,7 @@ public class DeptAction {
             //101该区域拥有人员，不允许删除
             return message;
         }
-        String hqldis = "select count(*) from Dis t where t.dept.id=?";
+        String hqldis = "select count(*) from Qgdis t where t.dept.id=?";
 
         int count2 = deptDao.getResultNumber(hqldis, ids);
         if (count2 > 0) {
