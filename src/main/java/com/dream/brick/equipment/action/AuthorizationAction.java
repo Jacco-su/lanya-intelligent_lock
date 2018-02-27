@@ -2,16 +2,23 @@ package com.dream.brick.equipment.action;
 
 
 import com.alibaba.fastjson.JSON;
-import com.dream.brick.equipment.bean.Authorization;
-import com.dream.brick.equipment.dao.IAuthorizationDao;
-import com.dream.brick.equipment.dao.IKeyssDao;
-import com.dream.brick.equipment.dao.QgdisDao;
+import com.dream.brick.equipment.bean.*;
+import com.dream.brick.equipment.dao.*;
+import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
+import com.dream.socket.entity.AuthModel;
+import com.dream.socket.entity.DataProtocol;
+import com.dream.socket.entity.JsonDataProtocol;
+import com.dream.socket.utils.ByteUtil;
+import com.dream.socket.utils.Constants;
 import com.dream.util.AppMsg;
+import com.dream.util.FormatDate;
+import com.dream.util.RedisTemplateUtil;
 import com.dream.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,6 +46,20 @@ public class AuthorizationAction {
     @Resource
     private QgdisDao disDao;
 
+    @Resource
+    private CollectorDao collectorDao;
+
+    @Resource
+    private CollectoreDao collectoreDao;
+
+    @Resource
+    private ILocksDao ilocksDao;
+
+    @Resource
+    private RedisTemplate redisTemplate;
+    private RedisTemplateUtil redisTemplateUtil = null;
+
+    private boolean checkTime=true;
     @RequestMapping("/prList")
     public String prList(String authorizationId, HttpServletRequest request)
             throws Exception {
@@ -210,6 +231,87 @@ public class AuthorizationAction {
             }
         }
         return null;
+
+    }
+    @RequestMapping("/areaAuth")
+    @ResponseBody
+    public String areaAuth(String areaId, String startDate,String endDate,String userId,HttpServletRequest request) {
+        String adminId=SessionData.getAdminId(request);
+        List<Qgdis> qgdisList=disDao.findQgdisByAreacode(areaId);
+       //System.out.println(qgdisList);
+        if(qgdisList!=null&&qgdisList.size()>0){
+            for (int i = 0; i < qgdisList.size(); i++) {
+                Qgdis qgdis=qgdisList.get(i);
+                //读取采集器
+                List<Collector> collectorList=collectorDao.findCollectorByQgdisid(qgdis.getId());
+                //System.out.println(collectorList);
+                if(collectorList!=null&&collectorList.size()>0) {
+                    for (int j = 0; j < collectorList.size(); j++) {
+                        Collector collector=collectorList.get(j);
+                        //读取控制器
+                       List<Collectore>  collectoreList=collectoreDao.findCollectoreByCollector(collector.getId());
+                       // System.out.println(collectoreList);
+                        if(collectoreList!=null&&collectoreList.size()>0) {
+                            for (int z= 0; z < collectoreList.size(); z++) {
+                                Collectore collectore=collectoreList.get(z);
+                                System.out.println(collectore.getCeMAC());
+                                if(StringUtils.isNotEmpty(collectore.getCeMAC())){
+                                    String macAddess=collectore.getCeMAC().replace(":","");
+                                    macAddess="00000000000000000000"+macAddess;
+                                    String  authModel=null;
+                                    if(checkTime){
+                                        //钥匙绑定
+                                        authModel=new AuthModel(new byte[]{7}, AuthModel.toData(7,14), Constants.KEY).toString();
+                                        auth("7",macAddess,collector.getCcode(),adminId,authModel);
+                                        authModel=new AuthModel(new byte[]{12},AuthModel.toData(12,14),Constants.LOCK_KEY).toString();//校时成功
+                                        auth("12",macAddess,collector.getCcode(),adminId,authModel);
+                                        checkTime=false;
+                                    }
+                                   List<Locks> locksList=ilocksDao.findLocksByDis(qgdis.getId());
+                                    if(locksList!=null&&locksList.size()>0) {
+                                        for (int ii = 0; ii < locksList.size(); ii++) {
+                                            Locks locks=locksList.get(ii);
+                                            System.out.println(locks.getLockCode());
+                                            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray("01010101"),ByteUtil.hexStrToByteArray(locks.getLockCode()),collectore.getCeMAC(),startDate,endDate),Constants.LOCK_KEY).toString();//
+                                            System.out.println("开始授权！");
+                                            auth("5",macAddess,collector.getCcode(),adminId,authModel);
+                                        }
+                                    }
+                                }
+                            }
+                       }
+                    }
+                }
+            }
+        }
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return StringUtil.jsonValue("1", "授权成功！");
+    }
+    private String  auth(String t,String macAddess,String collectorId,String adminId,String authModel){
+        redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
+        DataProtocol dataProtocol=new DataProtocol(new byte[]{00,01}, ByteUtil.hexToBytes(macAddess),ByteUtil.hexToBytes(authModel));
+        JsonDataProtocol jsonDataProtocol=new JsonDataProtocol();
+        jsonDataProtocol.setCollectorId(collectorId);
+        jsonDataProtocol.setContent(dataProtocol.toString());
+        jsonDataProtocol.setDataType("client");
+        System.out.println(dataProtocol.toString());
+        String authKey=JSON.toJSONString(jsonDataProtocol)+";"+adminId;
+        for (int i = 0; i < 3; i++) {
+            redisTemplateUtil.setList("lanya-lite", authKey); }
+            Object o = redisTemplateUtil.get(authKey);
+            if (o == null) {
+                return   "";
+            } else {
+                if("5".equals(t)){
+                    if("授权成功!".equals(o.toString())){
+                    }
+                }
+                return  StringUtil.jsonValue("1", o.toString());
+            }
 
     }
 }

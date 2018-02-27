@@ -36,7 +36,7 @@ public class QgdisDaoImpl extends BaseDaoImpl implements QgdisDao {
     }
 
     public List<Qgdis> findQgdisByAreacode(String areacode) {
-        String hql = "from Qgdis t ";
+        String hql = "from Qgdis t where deptId="+areacode;
         return findList(hql);
     }
 

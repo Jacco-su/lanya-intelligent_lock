@@ -23,4 +23,5 @@ public interface CollectoreDao extends BaseDao {
     public List<Collectore> findCollectoreList(Pager pager);
 
     void addCollectore(Collectore collectore);
+    List<Collectore> findCollectoreByCollector(String collectorId);
 }

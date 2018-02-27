@@ -23,6 +23,12 @@ public class LocksDaoImpl extends BaseDaoImpl implements ILocksDao {
         return findList(hql);
     }
 
+    @Override
+    public List<Locks> findLocksByDis(String disId) {
+        String hql="from Locks t where dissId="+disId;
+       return findList(hql);
+    }
+
 //    public List<Locks> findLocksByAreacode(String areacode){
 //        String hql="from Locks t where order by t.sortorder";
 //        return findList(hql);
