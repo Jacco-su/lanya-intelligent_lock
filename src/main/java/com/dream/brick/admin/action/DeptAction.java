@@ -137,7 +137,7 @@ public class DeptAction {
             //101该区域拥有人员，不允许删除
             return message;
         }
-        String hqldis = "select count(*) from Dis t where t.dept.id=?";
+        String hqldis = "select count(*) from Qgdis t where t.dept.id=?";
 
         int count2 = deptDao.getResultNumber(hqldis, ids);
         if (count2 > 0) {

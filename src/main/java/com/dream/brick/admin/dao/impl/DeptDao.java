@@ -28,7 +28,7 @@ public class DeptDao extends BaseDaoImpl implements IDeptDao {
     }
 
     public List<Department> findDeptIdAndName(){
-		String hql="select id,name,parentId,haskh from Department order by parentId asc,orderId asc";
+		String hql="select id,name,parentId,haskh from Department order by parentId asc";
 		List<Object[]> results=query(hql,0,0);
 		List<Department> list=new ArrayList<Department>();
 		for(Object[] objs:results){
@@ -44,7 +44,7 @@ public class DeptDao extends BaseDaoImpl implements IDeptDao {
 
 	@Override
 	public Department getDeptByName(String deptName, String areacode) {
-		List<Object> query = query("from Department where name=? andareacode like '"+areacode+"%'", 0, 0,
+		List<Object> query = query("from Department where name=? and areacode like '"+areacode+"%'", 0, 0,
 				deptName);
 		if (query != null && query.size() > 0)
 			return (Department) query.get(0);
