@@ -1,13 +1,11 @@
-//package com.dream.brick.admin.action;
-//
-//import org.springframework.web.bind.annotation.RequestMapping;
-//
-//import java.io.*;
-//
-//
-//public class HelpAction {
-//    @RequestMapping("/help")
-//    public String help() {
+package com.dream.brick.admin.action;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+public class HelpAction {
+    @RequestMapping("/help")
+    public String help() {
 //        File file = new File ("/help.htm");
 //        System.out.println("=======--------") ;
 //        FileInputStream is = null;
@@ -52,6 +50,7 @@
 //        System.out.println("the result length is"+str.length());
 //        System.out.println("the result is"+str);
 //        SprmOperation so = null ;
-//        return "/log/help";
-//    }
-//}
+
+        return "/help/help";
+    }
+}

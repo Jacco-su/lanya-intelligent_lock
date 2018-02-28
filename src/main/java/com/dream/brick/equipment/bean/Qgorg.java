@@ -26,7 +26,6 @@ public class Qgorg  implements java.io.Serializable{
 
 
     @Id
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public String getId() {
 		return id;

@@ -33,7 +33,6 @@ import static com.dream.brick.listener.BasicData.qgdisDao;
 
 public class DistributionAction {
 
-
     @Resource
     private QgdisDao disDao;
 
@@ -42,7 +41,6 @@ public class DistributionAction {
             throws Exception {
         return "admin/diss/list";
     }
-
 
     @RequestMapping("/list")
     @ResponseBody
@@ -85,14 +83,12 @@ public class DistributionAction {
         return "admin/diss/update";
     }
 
-
     @RequestMapping("/prView")
     public String prView(String id, ModelMap model) {
         Qgdis disa = disDao.find(Qgdis.class, id);
         model.addAttribute("disa", disa);
         return "admin/diss/view";
     }
-
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
@@ -113,17 +109,19 @@ public class DistributionAction {
 
     @RequestMapping("/delete")
     @ResponseBody
-    public String delete(String id) {
+    public String delete(String id, HttpServletRequest request) {
         String message = "";
-        String hql = "from Locks t where t.disidid=?";
-        try {
-            int count = disDao.getResultNumber(hql, id);
-            if (count > 0) {
-                message = StringUtil.jsonValue("0", AppMsg.getMessage("disa101"));
+        String hql = "select count(*) from Locks t where t.qgdis.id=?";
+
+        int count = disDao.getResultNumber(hql, id);
+        if (count > 0) {
+            message = StringUtil.jsonValue("0", AppMsg.getMessage("dislock"));
                 //101该站点拥有智能锁，不允许删除
                 return message;
             }
+        try {
             Qgdis disa = disDao.find(Qgdis.class, id);
+            System.out.println(disa);
             disDao.delete(disa);
             message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);
         } catch (Exception e) {
