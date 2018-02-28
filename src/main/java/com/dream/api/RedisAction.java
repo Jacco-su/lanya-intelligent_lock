@@ -70,8 +70,12 @@ public class RedisAction {
         jsonDataProtocol.setDataType("client");
         System.out.println(dataProtocol.toString());
         String authKey=JSON.toJSONString(jsonDataProtocol)+";"+SessionData.getAdminId(request);
-        for (int i = 0; i < 3; i++) {
+        if("2".equals(keys[1])){
             redisTemplateUtil.setList("lanya-lite", authKey);
+        }else {
+            for (int i = 0; i < 3; i++) {
+                redisTemplateUtil.setList("lanya-lite", authKey);
+            }
         }
         try {
             Thread.sleep(15000);

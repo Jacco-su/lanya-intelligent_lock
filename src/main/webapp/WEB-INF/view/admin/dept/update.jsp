@@ -13,6 +13,7 @@
         <td>区域名称:</td>
         <td><input type="hidden" name="id" value="${dept.id}"/>
             <input type="hidden" name="parentId" value="${dept.parentId}"/>
+            <input type="hidden" name="areacode" value="4101"/>
             <input name="name" value="${dept.name }" class="easyui-validatebox" required="true"/></td>
 	</tr>
 	<%--<tr>
