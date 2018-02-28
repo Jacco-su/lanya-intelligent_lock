@@ -78,29 +78,29 @@ public class UserAction {
 	}
 
 
-//	@RequestMapping("/ulist")
-//	@ResponseBody
-//	public String ulist(int page, int rows, String user_depts, String username, Pager pager)
-//			throws Exception {
-//		pager.setCurrentPage(page);
-//		pager.setPageSize(rows);
-//		JSONObject datas = new JSONObject();
-//		List<User> userList = new ArrayList<User>();
-//		if (StringUtils.isNotBlank(user_depts)) {
-//			userList = userDao.list(pager, user_depts);
-//		}else if(StringUtils.isNotBlank(username)){
-//			userList = userDao.query(pager, username);
-//		}
-//		Map<String,List<Role>> urmaps=userDao.findAllUserRoles();
-//		for(User user:userList){
-//			if(urmaps.containsKey(user.getId())){
-//				user.setRoles(urmaps.get(user.getId()));
-//			}
-//		}
-//		datas.put("total", pager.getTotalRow());
-//		datas.put("rows", userList);
-//		return datas.toString();
-//	}
+	@RequestMapping("/ulist")
+	@ResponseBody
+	public String ulist(int page, int rows, String deptId, String username, Pager pager)
+			throws Exception {
+		pager.setCurrentPage(page);
+		pager.setPageSize(rows);
+		JSONObject datas = new JSONObject();
+		List<User> userList = new ArrayList<User>();
+		if (StringUtils.isNotBlank(deptId)) {
+			userList = userDao.ulist(pager, deptId);
+		}else if(StringUtils.isNotBlank(username)){
+			userList = userDao.uquery(pager, username);
+		}
+		/*Map<String,List<Role>> urmaps=userDao.findAllUserRoles();
+		for(User user:userList){
+			if(urmaps.containsKey(user.getId())){
+				user.setRoles(urmaps.get(user.getId()));
+			}
+		}*/
+		datas.put("total", pager.getTotalRow());
+		datas.put("rows", userList);
+		return datas.toString();
+	}
 
 
 
@@ -251,9 +251,8 @@ public class UserAction {
 	public String uupdate(@ModelAttribute User user, String[] roIdList, String[] deptIdList) {
 		String message = "";
 		try {
-			initRole(user, roIdList, deptIdList);
 			user.setStatus(1);
-			userDao.updateUser(user);
+			userDao.uupdateUser(user);
 			message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -388,4 +387,23 @@ public class UserAction {
         datas.put("rows", list);
         return datas.toString();
     }
+
+	@RequestMapping("/udelete")
+	@ResponseBody
+	public String udelete(String ids){
+		String msg = "success";
+		if (StringUtils.isNotBlank(ids)) {
+			for (String id : ids.split(",")) {
+				if (!id.equals("admin")) {
+					User user =userDao.find(User.class, id);
+					user.setStatus(0);
+					userDao.deleteUser(user);
+				} else {
+					msg = AppMsg.getMessage("user100");
+					//admin用户不能被删除! AppMsg.UPDATE_ERROR
+				}
+			}
+		}
+		return msg;
+	}
 }

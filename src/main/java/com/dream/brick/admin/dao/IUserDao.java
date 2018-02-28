@@ -108,4 +108,7 @@ public interface IUserDao extends BaseDao {
 
 
     public List<User> findByUsernames(Pager pager);
+	List<User> ulist(IPager pager, String deptId) throws Exception;
+	List<User> uquery(IPager pager, String username) throws Exception;
+	void uupdateUser(User user);
 }
