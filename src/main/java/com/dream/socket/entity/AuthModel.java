@@ -143,6 +143,20 @@ public class AuthModel {
 				+ByteUtil.bytesToHex(getV())
 				+ByteUtil.bytesToHex(getC());
 	}
+	public  static int [] toBingKeyData(int length,byte[] userCode){
+		int[] arrayOfInt = new int[length];
+		for (int i = 0; i < 4; i++) {
+			arrayOfInt[i] =  userCode[i];
+		}
+		int i = 4;
+		while (i < 12) {
+			arrayOfInt[i] = Constants.LOCK_KEY.charAt(i - 4);
+			i += 1;
+		}
+		arrayOfInt[12] = 0xff;
+		arrayOfInt[13] = 0xff;
+		return arrayOfInt;
+	}
 	public  static int [] toData(int t,int length){
 		int[] arrayOfInt = new int[length];
 		if(t==12||t==9){//length=14
@@ -174,7 +188,7 @@ public class AuthModel {
 				arrayOfInt[i] = arrayOfByte[i];
 				i += 1;
 			}
-		}else if(t==2){///length=10
+		}else if(t==2){///length=32
 			byte[] arrayOfByte = Constants.OLD_KEY.getBytes();
 			int i = 0;
 			while (i < 8)
@@ -184,6 +198,19 @@ public class AuthModel {
 			}
 			arrayOfInt[8] = 1;
 			arrayOfInt[9] = 1;
+			arrayOfInt[10] = 1;
+			arrayOfInt[11] = 1;
+			arrayOfInt[12] = 1;
+			arrayOfInt[13] = 1;
+			arrayOfInt[14] = 1;
+			arrayOfInt[15] = 1;
+			String startDate="00"+DateUtil.formatDateYmdhms(new Date());
+			i=0;
+			while (i < 16) {
+				arrayOfInt[(i + 16)] =startDate.charAt(i);
+				i += 1;
+			}
+
 		}
 		return arrayOfInt;
 	}

@@ -272,7 +272,7 @@
             var id = "";
             var show = "";
             fullname = ""
-            var selections = $('#tree').tree('getSelected');
+            var selections = $('#tree2').tree('getSelected');
             if (selections) {
                 id = selections.id;
                 show = selections.attributes.deptname;
@@ -291,7 +291,7 @@
             if (node.attributes.parentcode == 0) {
                 return;
             }
-            var abc = $('#tree').tree('getParent', node.target);
+            var abc = $('#tree2').tree('getParent', node.target);
             getDisname(abc);
         }
 
@@ -325,16 +325,16 @@
         </tr>
     </table>
 </div>
-<%--<div id="selectCt">
+<div id="selectCt">
     <div class="easyui-layout" fit="true">
         <div region="center" border="false" style="padding: 10px;">
-            <ul id="tree" style="margin-top: 10px;"></ul>
+            <ul id="tree2" style="margin-top: 10px;"></ul>
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
             <a class="easyui-linkbutton" icon="icon-cancel" onclick="$('#selectCt').window('close');">关闭</a>
         </div>
     </div>
-</div>--%>
+</div>
 </body>
 </html>

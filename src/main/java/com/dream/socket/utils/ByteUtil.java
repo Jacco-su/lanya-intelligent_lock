@@ -581,4 +581,14 @@ public class ByteUtil {
 		sb.insert(2, ":");
 		return sb.toString();
 	}
+	public static String addZeroForNum(String str, int strLength) {
+		int strLen = str.length();
+		String string="";
+		if (strLen < strLength) {
+			for (int i = 0; i < strLen; i++) {
+				string+="0"+str.charAt(i);
+			}
+		}
+		return string;
+	}
 }

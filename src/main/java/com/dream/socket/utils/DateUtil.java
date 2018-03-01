@@ -398,6 +398,6 @@ public class DateUtil {
         return new SimpleDateFormat(YYYYMMDDHHMMSS_DEFAULT_FORMAT).format(y);
     }
     public static void main(String[] args) {
-        System.out.println(nextThereMonthDate());
+        System.out.println(formatDateYmdhms(new Date()));
     }
 }

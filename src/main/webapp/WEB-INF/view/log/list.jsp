@@ -62,9 +62,16 @@
 						if(value==1)value="新增";
 						if(value==2)value="更新";
 						if(value==3)value="删除";
+                        if(value==4)value="设备";
 						return value;
 					}
 				},
+                {
+                    title : '用户',
+                    field : 'username',
+                    width : $(this).width() * 0.2,
+                    align : 'left'
+                },
 				{
 					title : '描述',
 					field : 'content',
