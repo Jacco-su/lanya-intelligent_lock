@@ -146,9 +146,9 @@ public class BasicData {
 		return (Qgdis) qgdisDao.find(Qgdis.class, id);
 	}
 
-	public static List<Collector> findCollectorByQgdisId(String disId) {
+	/*public static List<Collector> findCollectorByQgdisId(String disId) {
 		return collectorDao.findCollectorByQgdisid(disId);
-	}
+	}*/
 //	public static Collector findCollectorByCollectordisId(String areacode){
 //		return qgorgDao.findAreaByAreacode(areacode);
 //	}

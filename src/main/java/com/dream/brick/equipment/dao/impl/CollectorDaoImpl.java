@@ -4,6 +4,7 @@ import com.dream.brick.equipment.bean.Collector;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.framework.dao.BaseDaoImpl;
 import com.dream.framework.dao.Pager;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,13 +34,23 @@ public class CollectorDaoImpl extends BaseDaoImpl implements CollectorDao {
 //    }
 //
 public List<Collector> findCollectorByQgdisid(String disId) {
-    String hql = "from Collector t where disId="+disId;
+      String hql = "from Collector t where disId="+disId;
     return findList(hql);
 }
 
     public List<Collector> findCollectorList(Pager pager) {
         String hql = "from Collector";
+        return query(hql, pager);
+    }
 
+    @Override
+    public List<Collector> findCollectorList(String deptId, Pager pager) {
+        String hql=null;
+        if(StringUtils.isNotEmpty(deptId)){
+            hql = "from Collector where dis.dept.id= "+deptId;
+        }else{
+            hql = "from Collector";
+        }
         return query(hql, pager);
     }
 

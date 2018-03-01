@@ -9,6 +9,7 @@ import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -44,17 +45,17 @@ public class CollectorAction {
     @RequestMapping("/prList")
     public String prList(String collectorId, HttpServletRequest request)
             throws Exception {
-        return "admin/collector/list";
+        return "admin/collector/lists";
     }
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, Pager pager)
+    public String list(int page, int rows, Pager pager,String deptId)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        List<Collector> list = collectorDao.findCollectorList(pager);
+        List<Collector> list = collectorDao.findCollectorList(deptId,pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
