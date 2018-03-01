@@ -78,7 +78,7 @@
                     <td><input name="email" size="40" class="easyui-validatebox" validType="email"
                                value="${user.email}"/></td>
                 </tr>
-                <tr>
+               <%-- <tr>
                     <td>排序序号:</td>
                     <td>
                         <select id="orderId" name="orderId" style="width:100px;">
@@ -88,7 +88,7 @@
                         </select>
 
                     </td>
-                </tr>
+                </tr>--%>
 
             </table>
         </form>

@@ -214,8 +214,8 @@
                     addWin = $.createWin({
                         title: "用户添加",
                         url: basePath + '/user/uprAdd?deptId=' + deptId,
-                        height: 550,
-                        width: 800,
+                        height: 350,
+                        width: 500,
                         buttons: [{
                             text: '保存',
                             iconCls: 'icon-ok',

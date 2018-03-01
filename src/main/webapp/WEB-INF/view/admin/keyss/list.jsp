@@ -449,7 +449,7 @@
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
 
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
-            <a class="easyui-linkbutton" onclick="$('#selectUser').window('close');">关闭</a>
+            <a class="easyui-linkbutton" icon="icon-cancel" onclick="$('#selectUser').window('close');">关闭</a>
         </div>
     </div>
 </div>

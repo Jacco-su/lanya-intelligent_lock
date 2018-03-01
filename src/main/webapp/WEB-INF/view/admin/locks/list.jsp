@@ -292,7 +292,7 @@
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setTodept();">确定</a>
-            <a class="easyui-linkbutton" onclick="$('#selectDept').window('close');">关闭</a>
+            <a class="easyui-linkbutton" icon="icon-cancel" onclick="$('#selectDept').window('close');">关闭</a>
         </div>
     </div>
 </div>

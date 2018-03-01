@@ -10,12 +10,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>蓝牙控制器信息</title>
-    <link rel="stylesheet" type="text/css" href="${basePath}/css/mainframe.css"/>
-    <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
-    <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
-    <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
-    <script type="text/javascript" src="${basePath}/js/easyui/jquery.easyui.min.1.2.2.js"></script>
-    <script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
+    <link rel="stylesheet" type="text/css"
+          href="${basePath}/js/jquery-easyui-1.5.3/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="${basePath}/js/jquery-easyui-1.5.3/themes/icon.css"/>
+    <script type="text/javascript" src="${basePath}/js/jquery.min.js"></script>
+    <script type="text/javascript" src="${basePath}/js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${basePath}/js/jquery-easyui-1.5.3/locale/easyui-lang-zh_CN.js"
+            charset="UTF-8"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
     <script type="text/javascript">
@@ -71,15 +73,15 @@
                         width: $(this).width() * 0.2,
                         align: 'center'
                     },
-//                    {
-//                        title: '所属站点',
-//                        field: 'ccode',
-//                        formatter: function (value, rowData, rowIndx) {
-//                            return rowData.dis.name;
-//                        },
-//                        width: $(this).width() * 0.2,
-//                        align: 'center'
-//                    },
+                    {
+                        title: '所属站点',
+                        field: 'disName',
+                        formatter: function (value, rowData, rowIndx) {
+                            return rowData.collector.dis.name;
+                        },
+                        width: $(this).width() * 0.2,
+                        align: 'center'
+                    },
                     {
                         title: '添加日期 ',
                         field: 'ceDate',
@@ -308,18 +310,31 @@
 </head>
 <body>
 <div>
-    <table id="infolist"></table>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td width="12%" valign="top" style="border: 1px solid #99bbe8; border-right: 0;">
+                <div style="width: 100%;">
+                    <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
+                    <ul id="tree" style="margin-top: 10px;  height: 500px; overflow: scroll;">
+                    </ul>
+                </div>
+            </td>
+            <td valign="top">
+                <table id="infolist"></table>
+            </td>
+        </tr>
+    </table>
 </div>
-<div id="selectCt">
+<%--<div id="selectCt">
     <div class="easyui-layout" fit="true">
         <div region="center" border="false" style="padding: 10px;">
             <ul id="tree" style="margin-top: 10px;"></ul>
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
-            <a class="easyui-linkbutton" onclick="$('#selectCt').window('close');">关闭</a>
+            <a class="easyui-linkbutton" icon="icon-cancel" onclick="$('#selectCt').window('close');">关闭</a>
         </div>
     </div>
-</div>
+</div>--%>
 </body>
 </html>
