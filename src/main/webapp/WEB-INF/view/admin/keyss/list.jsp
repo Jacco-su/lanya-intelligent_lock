@@ -175,17 +175,27 @@
                 modal: true
             });
 
+            <%--$('#tree').tree({--%>
+                <%--checkbox: false,--%>
+                <%--url: '${basePath}/user/kList',--%>
+                <%--simpleDataModel: true,--%>
+                <%--onBeforeExpand: function (node, param) {--%>
+                    <%--$('#tree').tree('options').url = basePath + "/user/listAll";// change the url--%>
+                    <%--return true;--%>
+                <%--}--%>
+            <%--});--%>
 
             $('#tree').tree({
                 checkbox: false,
-                url: '${basePath}/user/kList',
-                simpleDataModel: true,
-                onBeforeExpand: function (node, param) {
-                    $('#tree').tree('options').url = basePath + "/user/listAll";// change the url
-                    return true;
+                url: basePath+'/dept/getChildren',
+                onBeforeExpand:function(node,param){
+                    $('#tree').tree('options').url = basePath+"/dept/getChildren?parentId=" + node.id;
+                },
+                onClick:function(node){
+                    deptId = node.id;
+                    refresh();
                 }
             });
-
             function refresh() {
                 infolist.datagrid("clearSelections");
                 infolist.datagrid("reload");
@@ -252,7 +262,6 @@
                 }
             }
 
-
 //----------------------------------------------
             function search() {
                 addWin = $.createWin({
@@ -280,7 +289,6 @@
                 $.closeWin(seeuWin);
             }
 
-
             $('#infoulist').tree({
                 checkbox: false,
                 url: basePath + '/user/list',
@@ -292,8 +300,7 @@
                     refresh();
                 }
             });
-
-
+            
             function query() {
                 infoulist.datagrid({
                     url: basePath + '/user/list',

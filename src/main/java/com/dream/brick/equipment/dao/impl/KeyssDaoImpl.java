@@ -32,7 +32,7 @@ public class KeyssDaoImpl extends BaseDaoImpl implements IKeyssDao {
     public List<Keyss> findKeyssList(String deptId,Pager pager) {
         String hql=null;
         if(StringUtils.isNotEmpty(deptId)){
-            hql = "from Keyss where dis.dept.id= "+deptId;
+            hql = "from Keyss where user.dept.id= "+deptId;
         }else{
             hql = "from Keyss";
         }
