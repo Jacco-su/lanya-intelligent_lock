@@ -20,10 +20,11 @@
     <script type="text/javascript">
         var basePath = "${basePath}";
         $(function () {
+            var deptId="";
             var infolist = $('#infolist');
             infolist.datagrid({
                 title: '智能锁列表',
-                iconCls: 'icon-us-=-ers',
+                iconCls: 'icon-users',
                 width: '95%',
                 height: 500,
                 pageSize: 20,
@@ -33,7 +34,9 @@
                 collapsible: false,
                 fitColumns: true,
                 url: '${basePath}/locks/list',
-                queryParams: {},
+                queryParams: {
+                    "deptId" : deptId
+                },
                 loadMsg: '数据装载中......',
                 remoteSort: false,
                 singleSelect: true,
@@ -171,20 +174,26 @@
             });
             $('#tree').tree({
                 checkbox: false,
-                <%--url: '${basePath}/areainfo/findAreaByCode',--%>
-                url: '${basePath}/dept/getChildren',
-                simpleDataModel: true,
-                onBeforeExpand: function (node, param) {
-                    $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId="
-                        + node.id;
-                    <%--$('#tree').tree('options').url = "${basePath}/deptinfo/findDeptByParentId?parentId=" + node.id;// change the url--%>
-                    return true;
+                url: basePath+'/dept/getChildren',
+                onBeforeExpand:function(node,param){
+                    $('#tree').tree('options').url = basePath+"/dept/getChildren?parentId=" + node.id;
+                },
+                onClick:function(node){
+                    deptId = node.id;
+                    refresh();
                 }
             });
 
+
             function refresh() {
+                infolist.datagrid( {
+                    url : '${basePath}/locks/list',
+                    queryParams:{
+                        'deptId':deptId
+                    },
+                    loadMsg : '数据装载中......'
+                });
                 infolist.datagrid("clearSelections");
-                infolist.datagrid("reload");
                 displayMsg();
             }
 
@@ -255,8 +264,8 @@
         function setTodept() {
             var id = "";
             var show = "";
-            fullname = ""
-            var selections = $('#tree').tree('getSelected');
+            fullname = "";
+            var selections = $('#tree2').tree('getSelected');
             if (selections) {
                 id = selections.id;
                 show = selections.attributes.deptname;
@@ -276,19 +285,28 @@
             if (node.attributes.parentId == 0) {
                 return;
             }
-            var abc = $('#tree').tree('getParent', node.target);
+            var abc = $('#tree2').tree('getParent', node.target);
             getDisname(abc);
         }
     </script>
 </head>
 <body>
-<div>
-    <table id="infolist"></table>
-</div>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
+        <tr>
+            <td width="12%" valign="top"
+                style="border: 1px solid #99bbe8; border-right: 0;">
+                <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
+                <ul id="tree" style="margin-top: 10px;"></ul>
+            </td>
+            <td valign="top" style="border: 1px solid #99bbe8;">
+                <table id="infolist"></table>
+            </td>
+        </tr>
+    </table>
 <div id="selectDept">
     <div class="easyui-layout" fit="true">
         <div region="center" border="false" style="padding: 10px;">
-            <ul id="tree" style="margin-top: 10px;"></ul>
+            <ul id="tree2" style="margin-top: 10px;"></ul>
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setTodept();">确定</a>

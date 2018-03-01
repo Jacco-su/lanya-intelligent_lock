@@ -42,13 +42,13 @@ public class LocksAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, Pager pager) throws Exception {
+    public String list(int page, int rows, Pager pager,String deptId) throws Exception {
 
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
 
-        List<Locks> list = ilocksDao.findLocksList(pager);
+        List<Locks> list = ilocksDao.findLocksList(deptId,pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
 

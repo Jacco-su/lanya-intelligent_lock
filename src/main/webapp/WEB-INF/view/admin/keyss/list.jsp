@@ -22,6 +22,7 @@
     <script type="text/javascript">
         var basePath = "${basePath}";
         $(function () {
+            var deptId="";
             var infolist = $('#infolist');
             infolist.datagrid({
                 title: '蓝牙钥匙列表',
@@ -35,7 +36,9 @@
                 collapsible: false,
                 fitColumns: true,
                 url: '${basePath}/keyss/list',
-                queryParams: {},
+                queryParams:{
+                    'deptId':deptId
+                },
                 loadMsg: '数据装载中......',
                 remoteSort: false,
                 singleSelect: true,
@@ -290,6 +293,7 @@
                 }
             });
 
+
             function query() {
                 infoulist.datagrid({
                     url: basePath + '/user/list',
@@ -423,9 +427,21 @@
     </script>
 </head>
 <body>
-<div>
-    <table id="infolist"></table>
-</div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
+    <tr>
+        <td width="12%" valign="top"
+            style="border: 1px solid #99bbe8; border-right: 0;">
+            <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
+            <ul id="tree" style="margin-top: 10px;"></ul>
+        </td>
+        <td valign="top" style="border: 1px solid #99bbe8;">
+            <table id="infolist"></table>
+        </td>
+    </tr>
+</table>
+<%--<div>--%>
+    <%--<table id="infolist"></table>--%>
+<%--</div>--%>
 <%--<div id="selectUser">--%>
 <%--<div class="easyui-layout" fit="true">--%>
 <%--<a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>--%>
@@ -437,21 +453,24 @@
 <%--<a class="easyui-linkbutton" onclick="$('#selectUser').window('close');">关闭</a>--%>
 <%--</div>--%>
 <%--</div>--%>
-<div id="selectUser">
-    <div class="easyui-layout" fit="true">11
-        <a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>
-        <table id="users"></table>
-        <div id="user" region="center" border="false" style="padding: 10px;">
-            <%--<ul id="tree" style="margin-top: 10px;"></ul>--%>
-            <table id="infoulist"></table>
 
-        </div>
-        <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
 
-            <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
-            <a class="easyui-linkbutton" icon="icon-cancel" onclick="$('#selectUser').window('close');">关闭</a>
-        </div>
-    </div>
-</div>
+<%--<div id="selectUser">--%>
+    <%--<div class="easyui-layout" fit="true">--%>
+        <%--<a class="easyui-linkbutton" icon="icon-ok" onclick="search();">查询</a>--%>
+        <%--<table id="users"></table>--%>
+        <%--<div id="user" region="center" border="false" style="padding: 10px;">--%>
+            <%--&lt;%&ndash;<ul id="tree" style="margin-top: 10px;"></ul>&ndash;%&gt;--%>
+            <%--<table id="infoulist"></table>--%>
+
+        <%--</div>--%>
+        <%--<div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">--%>
+
+            <%--<a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>--%>
+            <%--<a class="easyui-linkbutton" icon="icon-cancel" onclick="$('#selectUser').window('close');">关闭</a>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
+
 </body>
 </html>
