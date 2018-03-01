@@ -25,7 +25,7 @@
                 <td>Email:</td>
                 <td><input size="40" class="easyui-validatebox" name="email" validType="email"></td>
             </tr>
-            <tr>
+           <%-- <tr>
                 <td>排序序号:</td>
                 <td>
                     <select id="orderId" name="orderId" style="width:100px;">
@@ -34,7 +34,7 @@
                         </c:forEach>
                     </select>
                 </td>
-            </tr>
+            </tr>--%>
             <%--<tr>--%>
             <%--<td>角色:</td>--%>
             <%--<td>--%>

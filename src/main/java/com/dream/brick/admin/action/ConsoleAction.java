@@ -76,7 +76,7 @@ public class ConsoleAction {
 				request.getSession().setAttribute("admin", admin);
 				request.getSession().setAttribute("dept", dept);
 				request.getSession().setAttribute("seqgorg",qgorg);
-                request.getSession().setAttribute("seareacode", "41");    //**
+				request.getSession().setAttribute("seareacode", qgorg.getAreacode());    //**
                 admin.setRoles(userDao.findRoles(admin.getId()));
 				List<Role> roles = admin.getRoles();
 				if(roles.size()==0){

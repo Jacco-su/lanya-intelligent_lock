@@ -3,6 +3,8 @@ package com.dream.socket.utils;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import static java.lang.Long.BYTES;
+
 /**
  * @author 陶乐乐(wangyiqianyi@qq.com)
  * @ClassName: ByteUtil.java
@@ -388,7 +390,7 @@ public class ByteUtil {
 		return ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN).getShort();
 	}
 
-	private static ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+	private static ByteBuffer buffer = ByteBuffer.allocate(BYTES);
 
 	public static byte[] longToBytes(long x) {
 		buffer.putLong(0, x);
