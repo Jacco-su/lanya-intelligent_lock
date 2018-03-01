@@ -37,7 +37,7 @@
 
                 url: '${basePath}/collectore/list',
                 queryParams: {
-                    // 'disId': disId
+                     'deptId': deptId
                 },
                 loadMsg: '数据装载中......',
                 remoteSort: false,
@@ -107,11 +107,11 @@
                         text: "添加",
                         handler: add
                     },
-//                    '-', {
-//                        text: '修改',
-//                        iconCls: 'icon-edit',
-//                        handler: edit
-//                    },
+                    '-', {
+                        text: '修改',
+                        iconCls: 'icon-edit',
+                        handler: edit
+                    },
                     '-', {
                         text: '删除',
                         iconCls: 'icon-remove',
@@ -195,7 +195,11 @@
                 simpleDataModel: true,
                 onBeforeExpand: function (node, param) {
                     $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId=" + node.id;// change the url
-                    return true;
+//                    return true;
+                },
+                onClick:function(node){
+                    deptId = node.id;
+                    refresh();
                 }
             });
 
