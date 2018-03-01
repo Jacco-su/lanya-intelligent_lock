@@ -21,7 +21,7 @@
             <tr>
                 <td width="100">所属站点</td>
                 <td>
-                    <input type="text" name="disame" id="areaname" value="${collectora.dis}" readonly/><a
+                    <input type="text" name="disame" id="areaname" value="${collectora.dis.name}" readonly/><a
                         class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>
                     <%--<input type="hidden" name="discode" id="discode" value="${collector.dis}"/>--%>
                 </td>
