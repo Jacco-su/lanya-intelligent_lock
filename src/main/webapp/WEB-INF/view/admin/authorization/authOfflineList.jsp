@@ -19,8 +19,17 @@
     <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
     <script type="text/javascript">
         var basePath="${basePath}";
+        var deptId="";
         $(function() {
-            getkeys();
+            //getkeys();
+            $('#userList').datagrid({
+                onCheck:function(index, row){
+                    alert(row.id);
+                }
+            });
+
+            $("#stepTwo").panel('close');
+            $("#stepThere").panel('close');
             $('#tree').tree({
                 checkbox: false,
                 url: basePath+'/dept/getChildren',
@@ -29,6 +38,7 @@
                 },
                 onClick:function(node){
                     refresh(node.id);
+                    deptId=node.id;
                 }
             });
             //获取钥匙
@@ -66,22 +76,6 @@
                     if( d[0]!=null) {
                         $("#disa").combobox("clear")//下拉框加载数据,设置默认值为
                             .combobox("loadData", disaData).combobox("setValue", d[0].id);
-                    }
-                });
-                //获取使用人
-                $.post(basePath+"/authorization/user",data,function(data){
-                    var d=JSON.parse(data);
-                    $('#users').empty();
-                    var userData = []; //创建数组
-                    for(var i=0;i<d.length;i++){
-                        userData.push({
-                            "id": d[i].id,
-                            "text": d[i].username
-                        });
-                    }
-                    if( d[0]!=null) {
-                        $("#users").combobox("clear")//下拉框加载数据,设置默认值为
-                            .combobox("loadData", userData).combobox("setValue", d[0].id);
                     }
                 });
                 $('#disa').combobox({
@@ -152,50 +146,6 @@
                 });
             }
         });
-        function keyBinding() {
-            var key=$('#collector').combobox('getText')+",7,"+$('#collectore').combobox('getText')+","+$('#keys').combobox('getText')+",";
-            var data={
-                "key":key
-            };
-            $.ajax({
-                type: "post",
-                url: basePath+"/redis/get",
-                cache:false,
-                async:false,
-                data:data,
-                dataType: "json",
-                success: function(data){
-                    if(data.result=="1"){
-                        alert(data.message);
-                    }else{
-                        alert("绑定蓝牙钥匙失败");
-                    }
-                }
-
-            });
-        }
-        function keyTiming() {
-            var key=$('#collector').combobox('getText')+",12,"+$('#collectore').combobox('getText')+","+$('#keys').combobox('getText')+",";
-            var data={
-                "key":key
-            };
-            $.ajax({
-                type: "post",
-                url: basePath+"/redis/get",
-                cache:false,
-                async:false,
-                data:data,
-                dataType: "json",
-                success: function(data){
-                    if(data.result=="1"){
-                        alert(data.message);
-                    }else{
-                        alert("蓝牙钥匙校时失败！");
-                    }
-                }
-
-            });
-        }
         function onlineAuth() {
             var key=$('#collector').combobox('getText')
                 +",5,"
@@ -273,6 +223,47 @@
 
             });
         }
+        function getUsers(obj) {
+            var data={
+                "disaId":obj
+            };
+            //获取使用人
+            $.post(basePath+"/authorization/user",data,function(data){
+                var d=JSON.parse(data);
+                $('#userTbody').empty();
+                var userData = []; //创建数组
+                for(var i=0;i<d.length;i++){
+                    userData.push({
+                        "id": d[i].id,
+                        "name": d[i].username
+                    });
+                    //$("#userTbody").append("<tr><td><input type=\"radio\" name=\"keys\" value='"+d[i].id+"'></td><td>"+d[i].username+"</td></tr>");
+                }
+                $('#userList').datagrid('loadData', userData);
+            });
+        }
+        function stepAuth(num) {
+            if(num==1){
+                $("#stepOne").panel('open');
+                $("#stepTwo").panel('close');
+                $("#stepThere").panel('close');
+            }
+            if(num==2){
+                if (deptId != "") {
+                    getUsers(deptId);
+                    $("#stepOne").panel('close');
+                    $("#stepTwo").panel('open');
+                    $("#stepThere").panel('close');
+                }else{
+                    $.messager.alert('警告', '请选择一个区域', 'warning');
+                }
+            }
+            if(num==3){
+                $("#stepOne").panel('close');
+                $("#stepTwo").panel('close');
+                $("#stepThere").panel('open');
+            }
+        }
     </script>
 </head>
 <body>
@@ -284,57 +275,62 @@
             <ul id="tree" style="margin-top: 10px;"></ul>
         </td>
         <td valign="top" style="border: 1px solid #99bbe8;">
-            <div class="easyui-panel" title="开始授权" style="width:800px">
+            <div class="easyui-panel" title="开始授权" style="width:800px" id="stepOne">
                 <div style="padding:10px 60px 20px 60px">
                     <table cellpadding="5">
                         <tr>
-                            <td>站点:</td>
+                            <td>授权类型:</td>
                             <td colspan="3">
-                                <select class="easyui-combobox" name="disa" id="disa" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
+                                <select id="taskType" class="easyui-combobox"  name="taskType" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option value="0">开关锁</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
-                            <td>采集器:</td>
+                            <td>授权名称:</td>
                             <td colspan="3">
-                                <select class="easyui-combobox" id="collector" name="collector" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-                                </select>
+                                <input width="180px" name="taskName" id="taskName">
                             </td>
                         </tr>
-                        <tr>
-                            <td>控制器:</td>
-                            <td colspan="3">
-                                <select class="easyui-combobox" name="collectore" id="collectore" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>选择钥匙:</td>
-                            <td colspan="3">
-                                <select class="easyui-combobox"  id="keys" name="keys" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
+                        <%--          <tr>
+                                      <td>站点:</td>
+                                      <td colspan="3">
+                                          <select class="easyui-combobox" name="disa" id="disa" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
+                                              <option value="0">---请选择---</option>
+                                          </select>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td>采集器:</td>
+                                      <td colspan="3">
+                                          <select class="easyui-combobox" id="collector" name="collector" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
+                                              <option value="0">---请选择---</option>
+                                          </select>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td>控制器:</td>
+                                      <td colspan="3">
+                                          <select class="easyui-combobox" name="collectore" id="collectore" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
+                                              <option value="0">---请选择---</option>
+                                          </select>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td>选择钥匙:</td>
+                                      <td colspan="3">
+                                          <select class="easyui-combobox"  id="keys" name="keys" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
+                                              <option value="0">---请选择---</option>
 
-                                </select></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                操作钥匙:
-                            </td>
-                            <td colspan="3">
-                                <button class="easyui-linkbutton"  onclick="keyBinding()">绑定钥匙</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button class="easyui-linkbutton"  onclick="keyTiming()">钥匙校时</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>选择锁具:</td>
-                            <td colspan="3">
-                                <select class="easyui-combobox"  name="locks" id="locks" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-                                </select></td>
-                        </tr>
+                                          </select></td>
+                                  </tr>
+                                  <tr>
+                                      <td>选择锁具:</td>
+                                      <td colspan="3">
+                                          <select class="easyui-combobox"  name="locks" id="locks" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
+                                              <option value="0">---请选择---</option>
+                                          </select></td>
+                                  </tr>--%>
 
                         <tr>
                             <td width="100">授权时间:</td>
@@ -346,15 +342,98 @@
                                 <img onclick="WdatePicker({el:'endDate',dateFmt:'yyyyMMddHHmmss'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
                             </td>
                         </tr>
-                        <tr>
+                        <%--<tr>
                             <td>被授权人:</td>
                             <td colspan="3">
                                 <select class="easyui-combobox"  name="users" id="users" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
                                     <option value="0">---请选择---</option>
                                 </select></td>
+                        </tr>--%>
+                        <%--<tr>
+                            <td> <button class="easyui-linkbutton" onclick="onlineAuth()">离线授权</button></td>
+                        </tr>--%>
+                        <tr>
+                            <td><button class="easyui-linkbutton" onclick="stepAuth(2)">下一步</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="easyui-panel" title="选择人员->选择钥匙" style="width:800px" id="stepTwo">
+                <div style="padding:10px 60px 20px 60px">
+                    <table cellpadding="5">
+                        <tr>
+                            <td colspan="2">
+                                <%--<select class="easyui-combobox"  name="users" id="users" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option value="0">---请选择---</option>
+                                </select>--%>
+                                    <table class="easyui-datagrid" id="userList"  data-options="singleSelect:true" title = "用户列表" style="width:350px;height:250px">
+                                        <thead>
+                                        <tr>
+                                            <th data-options="field:'id',checkbox:true"></th>
+                                            <th data-options="field:'name'" width="520px">姓名</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="userTbody">
+                                        </tbody>
+                                    </table>
+                            </td>
+                            <td colspan="2">
+                                <table class="easyui-datagrid" title = "钥匙列表" style="width:350px;height:250px">
+                                    <thead>
+                                    <tr>
+                                        <th data-options="field:'code'"></th>
+                                        <th data-options="field:'name'" width="520px">钥匙</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr><td><input type="radio" name="keys"></td><td>钥匙1</td></tr>
+                                    <tr><td><input type="radio" name="keys"></td><td>钥匙2</td></tr>
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
                         <tr>
-                            <td> <button class="easyui-linkbutton" onclick="onlineAuth()">离线授权</button></td>
+                            <td><button class="easyui-linkbutton" onclick="stepAuth(1)">上一步</button></td>
+                            <td><button class="easyui-linkbutton" onclick="stepAuth(3)">下一步</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="easyui-panel" title="变电站->门锁" style="width:800px" id="stepThere">
+                <div style="padding:10px 60px 20px 60px">
+                    <table cellpadding="5">
+                        <tr>
+                            <td colspan="2">
+                                <table class="easyui-datagrid" style="width:350px;height:250px">
+                                    <thead>
+                                    <tr>
+                                        <th data-options="field:'code'"></th>
+                                        <th data-options="field:'name'" width="520px">钥匙</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td colspan="2">
+                                <table class="easyui-datagrid" style="width:350px;height:250px">
+                                    <thead>
+                                    <tr>
+                                        <th data-options="field:'code'"></th>
+                                        <th data-options="field:'name'" width="520px">钥匙</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr><td><input type="radio" name="keys"></td><td>钥匙1</td></tr>
+                                    <tr><td><input type="radio" name="keys"></td><td>钥匙2</td></tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><button class="easyui-linkbutton" onclick="stepAuth(2)">上一步</button></td>
+                            <td><button class="easyui-linkbutton" onclick="onlineAuth(3)">完成</button></td>
                         </tr>
                     </table>
                 </div>
