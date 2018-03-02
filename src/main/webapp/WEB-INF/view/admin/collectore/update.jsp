@@ -6,7 +6,17 @@
     response.setDateHeader("Expires", 0);
 %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-
+<script type="text/javascript">
+    $(function () {
+        $('#selectArea').window({
+            title: '选择采集器',
+            width: 350,
+            height: 500,
+            closed: true,
+            modal: true
+        });
+    });
+</script>
 <%--&lt;%&ndash;/**   修改*/&ndash;%&gt;--%>
 <div>
     <form name="editForm" id="editForm" action="${basePath}/collectore/prUpdate" method="post">
@@ -21,9 +31,9 @@
            <tr>
                 <td width="100">所属智能采集器</td>
                 <td>
-                    <input type="text" name="disame" id="areaname" value="${collectore.collectors.ccode}" readonly/><a
-                        class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>
-                    <%--<input type="hidden" name="discode" id="discode" />--%>
+                    <input type="text" name="disame" id="areaname" value="${collectore.collector.ccode}" readonly/>
+                    <a class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>
+                    <input type="hidden" name="discode" id="discode" />
                 </td>
             </tr>
             <tr>
