@@ -231,8 +231,13 @@ public class AuthorizationAction {
             }
         }
         return null;
-
     }
+    @RequestMapping("/keys/user")
+    @ResponseBody
+    public String getKeysUserAction(){
+        return JSON.toJSONString(ikeyssDao.findAllKeyss());
+    }
+
     @RequestMapping("/areaAuth")
     @ResponseBody
     public String areaAuth(String areaId, String startDate,String endDate,String userId,HttpServletRequest request) {

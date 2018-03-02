@@ -159,7 +159,12 @@ public class CollectoreAction {
     public String prUpdate(String id, ModelMap model,String deptId,Pager pager) {
         Collectore collectore = collectoreDao.find(Collectore.class, id);
         model.addAttribute("collectore", collectore);
-        model.addAttribute("collectorList", JSON.toJSONString(collectorDao.findCollectorList(deptId,pager)));
+        String str = JSON.toJSONString(collectorDao.findCollectorList(deptId,pager));
+        if(str.equals("")||str==null){
+            model.addAttribute("collectorList", "该站点下没有采集器");
+        }else {
+            model.addAttribute("collectorList", JSON.toJSONString(collectorDao.findCollectorList(deptId,pager)));
+        }
 
         return "admin/collectore/update";
     }

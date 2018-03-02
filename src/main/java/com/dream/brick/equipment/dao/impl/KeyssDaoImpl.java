@@ -38,5 +38,9 @@ public class KeyssDaoImpl extends BaseDaoImpl implements IKeyssDao {
         }
         return query(hql, pager);
     }
-
+    @Override
+    public List<Keyss> findKeyssUserList(String userId) {
+        String     hql = "from Keyss where userId="+userId;
+        return findList(hql);
+    }
 }

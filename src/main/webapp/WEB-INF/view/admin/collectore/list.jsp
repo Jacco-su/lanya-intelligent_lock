@@ -136,7 +136,10 @@
             function add() {
                 addWin = $.createWin({
                     title: "添加",
-                    url: '${basePath}/collectore/prAdd',
+                    url: '${basePath}/collectore/prAdd?deptId='+deptId,
+                    /*queryParams: {
+                        'deptId': deptId
+                    },*/
                     height: 350,
                     width: 500,
                     buttons: [{
@@ -241,7 +244,7 @@
 //                        $.closeWin(updateWin);
 //                        refresh();
 
-                        if(json.result=='1') {
+                        if(json.result=='0') {
                             $.messager.alert('提示', '保存成功', 'warning');
                         }else{
                             $.messager.alert('提示', '保存失败', 'warning');
@@ -256,7 +259,7 @@
             function showEdit(id) {
                 updateWin = $.createWin({
                     title: "修改",
-                    url: '${basePath}/collectore/prUpdate',
+                    url: '${basePath}/collectore/prUpdate?deptId='+deptId,
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
