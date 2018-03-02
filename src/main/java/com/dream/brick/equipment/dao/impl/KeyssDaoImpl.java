@@ -38,5 +38,5 @@ public class KeyssDaoImpl extends BaseDaoImpl implements IKeyssDao {
         }
         return query(hql, pager);
     }
-    
+
 }

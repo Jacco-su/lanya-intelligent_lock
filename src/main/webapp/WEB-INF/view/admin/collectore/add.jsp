@@ -29,7 +29,7 @@
                 <td>
                     <%--<input name="ceCode"  class="easyui-validatebox" required="true"/>--%>
                     <%--<a class="easyui-linkbutton" onclick="getID()">选择</a>--%>
-                    <select id="ccode" name="collector.id" class="easyui-validatebox" required="true"
+                    <select id="ccode" name="collector.id" class="easyui-validatebox"
                             style="width: 150px"></select>
                     <%--<select id="dissName" name="qgdis.id" style="width: 220px;"></select>--%>
                 </td>

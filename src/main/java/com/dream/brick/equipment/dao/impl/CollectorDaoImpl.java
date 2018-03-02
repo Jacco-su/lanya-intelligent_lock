@@ -43,11 +43,11 @@ public List<Collector> findCollectorByQgdisid(String disId) {
         return query(hql, pager);
     }
 
-    @Override
+
     public List<Collector> findCollectorList(String deptId, Pager pager) {
         String hql=null;
         if(StringUtils.isNotEmpty(deptId)){
-            hql = "from Collector where dis.dept.id= "+deptId;
+            hql = "from Collector t where t.dis.dept.id= "+deptId;
         }else{
             hql = "from Collector";
         }

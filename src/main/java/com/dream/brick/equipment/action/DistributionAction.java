@@ -112,13 +112,14 @@ public class DistributionAction {
     public String delete(String id, HttpServletRequest request) {
         String message = "";
         //有智能锁不能删除
-        String hql = "from Locks t where t.qgdis.id=?";
+        String hql = "from Locks where Qgdis.id=?";
+//        String hql = "from Keyss where user.dept.id= "+id;
 //        String hql = "select * from t_locks t where t.qgis.id=?";
 
         int count = disDao.getResultNumber(hql, id);
         if (count > 0) {
             message = StringUtil.jsonValue("0", AppMsg.getMessage("dislock"));
-                //101该站点拥有智能锁，不允许删除
+         //101该站点拥有智能锁，不允许删除
                 return message;
             }
             //有采集器不能删除

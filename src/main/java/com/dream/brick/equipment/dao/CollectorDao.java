@@ -21,6 +21,7 @@ public List<Collector> findCollectorByQgdisid(String deptid);
 
     public List<Collector> findCollectorList(Pager pager);
     List<Collector> findCollectorList(String deptid, Pager pager);
+    /*List<Collector>*/
 
 //    public void addCollector(Collector collector);
 }

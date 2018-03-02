@@ -10,6 +10,7 @@ import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
 import org.json.JSONObject;
+import org.json.JSONString;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -62,9 +63,10 @@ public class CollectoreAction {
 
 
     @RequestMapping("/prAdd")
-    public String prAdd(ModelMap modelMap) {
-        modelMap.addAttribute("collectorList", JSON.toJSONString(collectorDao.findAllCollector()));
+    public String prAdd(ModelMap modelMap,String deptId, Pager pager) {
+//        modelMap.addAttribute("collectorList", JSON.toJSONString(collectorDao.findAllCollector()));
 //        model.addAttribute("collectoreId", collectoreId);
+        modelMap.addAttribute("collectorList",JSON.toJSONString(collectorDao.findCollectorList(deptId,pager)));
         return "admin/collectore/add";
     }
 
@@ -73,7 +75,6 @@ public class CollectoreAction {
     @ResponseBody
     public String add(@ModelAttribute Collectore collectorea) {
         String message = "";
-
         try {
             collectorea.setCeDate(FormatDate.getYMdHHmmss());
 //                collectorea.setCeCode(collectorea.getCeCode());
@@ -155,9 +156,11 @@ public class CollectoreAction {
 
 
     @RequestMapping("/prUpdate")
-    public String prUpdate(String id, ModelMap model) {
+    public String prUpdate(String id, ModelMap model,String deptId,Pager pager) {
         Collectore collectore = collectoreDao.find(Collectore.class, id);
         model.addAttribute("collectore", collectore);
+        model.addAttribute("collectorList", JSON.toJSONString(collectorDao.findCollectorList(deptId,pager)));
+
         return "admin/collectore/update";
     }
 

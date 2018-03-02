@@ -45,7 +45,8 @@
                 onDblClickRow: function (rowIndex, field, value) {
                     var rows = infolist.datagrid("getRows");
                     var id = rows[rowIndex].id;
-                    detail(id);
+//                    detail(id);
+                    showEdit(id);
                 },
                 columns: [[{
                     title: '控制器名称',
@@ -228,16 +229,26 @@
             function update() {
                 $('#editForm').form('submit', {
                     onSubmit: function () {
-                        var v = $(this).form('validate');
-                        if (v) {
-                        }
-                        return v;
+//                        var v = $(this).form('validate');
+//                        if (v) {
+//                        }
+//                        return v;
+                        return $(this).form('validate');
                     },
                     success: function (data) {
                         var json = eval("(" + data + ")");
-                        $.messager.alert('提示', json.message, 'warning');
+//                        $.messager.alert('提示', json.message, 'warning');
+//                        $.closeWin(updateWin);
+//                        refresh();
+
+                        if(json.result=='1') {
+                            $.messager.alert('提示', '保存成功', 'warning');
+                        }else{
+                            $.messager.alert('提示', '保存失败', 'warning');
+                        }
+
                         $.closeWin(updateWin);
-                        refresh();
+                        infolist.datagrid('reload');
                     }
                 });
             }

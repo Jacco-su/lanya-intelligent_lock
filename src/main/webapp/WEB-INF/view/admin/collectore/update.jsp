@@ -22,25 +22,20 @@
     <form name="editForm" id="editForm" action="${basePath}/collectore/prUpdate" method="post">
         <table class="mytable" align="center">
             <tr>
-                <td>控制器ID:</td>
+                <td>控制器名称:</td>
                 <td>
                     <input type="hidden" name="id" value="${collectore.id}"/>
-                    <input name="name" value="${collectore.ceCode}" class="easyui-validatebox" required="true"/></td>
+                    <input name="name" value="${collectore.cename}" class="easyui-validatebox" required="true"/></td>
             </tr>
 
            <tr>
                 <td width="100">所属智能采集器</td>
                 <td>
-                    <input type="hidden" name="disame" id="areaname" value="${collectore.collector.id}" readonly/>
-                    <input  name="discode" id="discode" />
-                    <input size="40" readonly="readonly" class="easyui-validatebox" required="true" id="deptName"
-                           value="${collectore.collector.ccode}"/>
-                    <a class="easyui-linkbutton" onclick="$('#selectCt').window('open');">选择</a>
-
-                    <input type="hidden" name="dept.id" id="deptId" value="${user.dept.id}"/>
-                    <input size="40" readonly="readonly" class="easyui-validatebox" required="true" id="deptName"
-                           value="${user.dept.name}"/>
-                    <a class="easyui-linkbutton" onclick="$('#selectDept').window('open');">区域调动</a>
+                    <%--<input type="hidden" name="disame" id="areaname" value="${collectore.collector.id}" readonly/>--%>
+                    <%--<input size="40" readonly="readonly" class="easyui-validatebox" required="true" name="discode" id="discode"--%>
+                           <%--value="${collectore.collector.ccode}"/>--%>
+                    <%--<a class="easyui-linkbutton" onclick="$('#selectCt').window('open');">选择</a>--%>
+                        <select id="collectorname" name="collector.id" style="width:180px;" ></select>
                 </td>
             </tr>
             <tr>
@@ -68,3 +63,16 @@
         <%--</div>--%>
     </form>
 </div>
+
+<script>
+    $(function () {
+        var data = '${collectorList}';
+        data = JSON.parse(data);
+        $('#collectorname').empty();
+        $("#collectorname").prepend("<option value='0'>${collectore.collector.ccode}</option>");   //为Select插入一个Option(第一个位置)
+        for (var i = 0; i < data.length; i++) {
+            $('#collectorname').append("<option value='" + data[i].id + "'>" + data[i].ccode + "</option>");
+        }
+    });
+
+</script>
