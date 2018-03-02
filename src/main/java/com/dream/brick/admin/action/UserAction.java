@@ -217,12 +217,10 @@ public class UserAction {
 					//考核大项由该人员负责
 				}
 			}
-
 		}catch(Exception e){
 			e.printStackTrace();
 			message=StringUtil.jsonValue("0",AppMsg.UPDATE_ERROR);
 		}
-
 		return message;
 	}
 
