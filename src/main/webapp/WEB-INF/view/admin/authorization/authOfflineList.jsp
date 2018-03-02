@@ -24,9 +24,28 @@
             //getkeys();
             $('#userList').datagrid({
                 onCheck:function(index, row){
-                    alert(row.id);
+                    getkeys(row.id);
                 }
             });
+
+            //获取钥匙
+            function getkeys(userId) {
+                var data={
+                    "userId":userId
+                };
+                $.post(basePath+"/authorization/keys/user",data,function(data){
+                    var d=JSON.parse(data);
+                    $('#keysList').empty();
+                    var keyData = []; //创建数组
+                    for(var i=0;i<d.length;i++){
+                        keyData.push({
+                            "id": d[i].keyssMAC,
+                            "keyssName": d[i].keyssName
+                        });
+                    }
+                    $('#keysList').datagrid('loadData', keyData);
+                });
+            }
 
             $("#stepTwo").panel('close');
             $("#stepThere").panel('close');
@@ -39,24 +58,10 @@
                 onClick:function(node){
                     refresh(node.id);
                     deptId=node.id;
+                    getUsers(deptId);
                 }
             });
-            //获取钥匙
-            function getkeys() {
-                $.post(basePath+"/authorization/keys",null,function(data){
-                    var d=JSON.parse(data);
-                    $('#keys').empty();
-                    var keyData = []; //创建数组
-                    for(var i=0;i<d.length;i++){
-                        keyData.push({
-                            "id": d[i].keyssMAC,
-                            "text": d[i].keyssCode
-                        });
-                    }
-                    $("#keys").combobox("clear")//下拉框加载数据,设置默认值为
-                        .combobox("loadData", keyData).combobox("setValue", d[0].keyssMAC);
-                });
-            }
+
 
             //获取站点
             function refresh(obj) {
@@ -207,8 +212,6 @@
                                 "id": lockNum,
                                 "text":lockNum
                             });
-                            console.log(data.message.split(";")[1]);
-                            console.log(collectorData);
                             $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
                                 .combobox("loadData", collectorData).combobox("setValue",lockNum);
                         }
@@ -230,14 +233,12 @@
             //获取使用人
             $.post(basePath+"/authorization/user",data,function(data){
                 var d=JSON.parse(data);
-                $('#userTbody').empty();
                 var userData = []; //创建数组
                 for(var i=0;i<d.length;i++){
                     userData.push({
                         "id": d[i].id,
                         "name": d[i].username
                     });
-                    //$("#userTbody").append("<tr><td><input type=\"radio\" name=\"keys\" value='"+d[i].id+"'></td><td>"+d[i].username+"</td></tr>");
                 }
                 $('#userList').datagrid('loadData', userData);
             });
@@ -250,7 +251,7 @@
             }
             if(num==2){
                 if (deptId != "") {
-                    getUsers(deptId);
+                    //getUsers(deptId);
                     $("#stepOne").panel('close');
                     $("#stepTwo").panel('open');
                     $("#stepThere").panel('close');
@@ -259,6 +260,22 @@
                 }
             }
             if(num==3){
+                var userRow = $("#userList").datagrid("getChecked");
+                var keysRow = $("#keysList").datagrid("getChecked");
+                var userId="";
+                var keysId="";
+                if(userRow==""){
+                    $.messager.alert('警告', '请选择一个用户', 'warning');
+                    return;
+                }else{
+                    userId=userRow[0].id;
+                }
+                if(keysRow==""){
+                    $.messager.alert('警告', '请选择一个钥匙', 'warning');
+                    return;
+                }else{
+                    keysId=keysRow[0].id;
+                }
                 $("#stepOne").panel('close');
                 $("#stepTwo").panel('close');
                 $("#stepThere").panel('open');
@@ -373,21 +390,20 @@
                                             <th data-options="field:'name'" width="520px">姓名</th>
                                         </tr>
                                         </thead>
-                                        <tbody id="userTbody">
+                                        <tbody>
                                         </tbody>
                                     </table>
                             </td>
                             <td colspan="2">
-                                <table class="easyui-datagrid" title = "钥匙列表" style="width:350px;height:250px">
+                                <table class="easyui-datagrid" id="keysList" data-options="singleSelect:true" title = "钥匙列表" style="width:350px;height:250px">
                                     <thead>
                                     <tr>
-                                        <th data-options="field:'code'"></th>
-                                        <th data-options="field:'name'" width="520px">钥匙</th>
+                                        <th data-options="field:'id',checkbox:true"></th>
+                                        <th data-options="field:'keyssName'" width="520px">钥匙</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr><td><input type="radio" name="keys"></td><td>钥匙1</td></tr>
-                                    <tr><td><input type="radio" name="keys"></td><td>钥匙2</td></tr>
+
                                     </tbody>
                                 </table>
                             </td>
@@ -404,11 +420,11 @@
                     <table cellpadding="5">
                         <tr>
                             <td colspan="2">
-                                <table class="easyui-datagrid" style="width:350px;height:250px">
+                                <table class="easyui-datagrid" id="dissList" data-options="singleSelect:true" title = "站点列表" style="width:350px;height:250px">
                                     <thead>
                                     <tr>
-                                        <th data-options="field:'code'"></th>
-                                        <th data-options="field:'name'" width="520px">钥匙</th>
+                                        <th data-options="field:'id',checkbox:true"></th>
+                                        <th data-options="field:'name'" width="520px">站点</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -417,16 +433,15 @@
                                 </table>
                             </td>
                             <td colspan="2">
-                                <table class="easyui-datagrid" style="width:350px;height:250px">
+                                <table class="easyui-datagrid" title = "门锁列表" id="lockList"  style="width:350px;height:250px">
                                     <thead>
                                     <tr>
-                                        <th data-options="field:'code'"></th>
-                                        <th data-options="field:'name'" width="520px">钥匙</th>
+                                        <th data-options="field:'id',checkbox:true"></th>
+                                        <th data-options="field:'name'" width="520px">门锁</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr><td><input type="radio" name="keys"></td><td>钥匙1</td></tr>
-                                    <tr><td><input type="radio" name="keys"></td><td>钥匙2</td></tr>
+
                                     </tbody>
                                 </table>
                             </td>
