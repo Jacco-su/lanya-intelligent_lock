@@ -197,6 +197,13 @@
                 }
             });
             function refresh() {
+                infolist.datagrid( {
+                    url: '${basePath}/keyss/list',
+                    queryParams:{
+                        'deptId':deptId
+                    },
+                    loadMsg : '数据装载中......'
+                });
                 infolist.datagrid("clearSelections");
                 infolist.datagrid("reload");
                 displayMsg();

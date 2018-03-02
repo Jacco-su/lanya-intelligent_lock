@@ -6,7 +6,7 @@
     response.setDateHeader("Expires", 0);
 %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<script type="text/javascript">
+<%--<script type="text/javascript">
     $(function () {
         $('#selectArea').window({
             title: '选择采集器',
@@ -16,7 +16,7 @@
             modal: true
         });
     });
-</script>
+</script>--%>
 <%--&lt;%&ndash;/**   修改*/&ndash;%&gt;--%>
 <div>
     <form name="editForm" id="editForm" action="${basePath}/collectore/prUpdate" method="post">
@@ -31,9 +31,16 @@
            <tr>
                 <td width="100">所属智能采集器</td>
                 <td>
-                    <input type="text" name="disame" id="areaname" value="${collectore.collector.ccode}" readonly/>
-                    <a class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>
-                    <input type="hidden" name="discode" id="discode" />
+                    <input type="hidden" name="disame" id="areaname" value="${collectore.collector.id}" readonly/>
+                    <input  name="discode" id="discode" />
+                    <input size="40" readonly="readonly" class="easyui-validatebox" required="true" id="deptName"
+                           value="${collectore.collector.ccode}"/>
+                    <a class="easyui-linkbutton" onclick="$('#selectCt').window('open');">选择</a>
+
+                    <input type="hidden" name="dept.id" id="deptId" value="${user.dept.id}"/>
+                    <input size="40" readonly="readonly" class="easyui-validatebox" required="true" id="deptName"
+                           value="${user.dept.name}"/>
+                    <a class="easyui-linkbutton" onclick="$('#selectDept').window('open');">区域调动</a>
                 </td>
             </tr>
             <tr>
@@ -48,5 +55,16 @@
                 </td>
             </tr>
         </table>
+        <%--<div id="selectct">--%>
+            <%--<div class="easyui-layout" fit="true">--%>
+                <%--<div region="center" border="false" style="padding: 10px;">--%>
+                    <%--<ul id="tree2" style="margin-top: 10px;"></ul>--%>
+                <%--</div>--%>
+                <%--<div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">--%>
+                    <%--<a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>--%>
+                    <%--<a class="easyui-linkbutton" icon="icon-cancel" onclick="$('#selectCt').window('close');">关闭</a>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
     </form>
 </div>
