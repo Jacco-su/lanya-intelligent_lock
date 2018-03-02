@@ -11,17 +11,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>蓝牙控制器信息</title>
     <link rel="stylesheet" type="text/css"
-          href="${basePath}/js/jquery-easyui-1.5.3/themes/default/easyui.css"/>
+          href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css"
-          href="${basePath}/js/jquery-easyui-1.5.3/themes/icon.css"/>
-    <script type="text/javascript" src="${basePath}/js/jquery.min.js"></script>
-    <script type="text/javascript" src="${basePath}/js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="${basePath}/js/jquery-easyui-1.5.3/locale/easyui-lang-zh_CN.js"
-            charset="UTF-8"></script>
+          href="${basePath}/js/easyui/themes/icon.css"/>
+    <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="${basePath}/js/easyui/jquery.easyui.min.1.2.2.js"></script>
+    <script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
     <script type="text/javascript">
         $(function () {
+            var deptId = "";
             var infolist = $('#infolist');
             infolist.datagrid({
                 title: '控制器列表',
@@ -204,6 +204,13 @@
             });
 
             function refresh() {
+                infolist.datagrid( {
+                    url: '${basePath}/collectore/list',
+                    queryParams: {
+                        'deptId': deptId
+                    },
+                    loadMsg : '数据装载中......'
+                });
                 infolist.datagrid("clearSelections");
                 infolist.datagrid("reload");
                 displayMsg();
@@ -313,22 +320,18 @@
     </script>
 </head>
 <body>
-<div>
-    <table width="100%" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td width="12%" valign="top" style="border: 1px solid #99bbe8; border-right: 0;">
-                <div style="width: 100%;">
-                    <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
-                    <ul id="tree" style="margin-top: 10px;  height: 500px; overflow: scroll;">
-                    </ul>
-                </div>
-            </td>
-            <td valign="top">
-                <table id="infolist"></table>
-            </td>
-        </tr>
-    </table>
-</div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
+    <tr>
+        <td width="12%" valign="top"
+            style="border: 1px solid #99bbe8; border-right: 0;">
+            <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
+            <ul id="tree" style="margin-top: 10px;"></ul>
+        </td>
+        <td valign="top" style="border: 1px solid #99bbe8;">
+            <table id="infolist"></table>
+        </td>
+    </tr>
+</table>
 <div id="selectCt">
     <div class="easyui-layout" fit="true">
         <div region="center" border="false" style="padding: 10px;">

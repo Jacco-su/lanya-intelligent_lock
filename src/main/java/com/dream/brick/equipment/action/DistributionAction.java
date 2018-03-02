@@ -111,7 +111,9 @@ public class DistributionAction {
     @ResponseBody
     public String delete(String id, HttpServletRequest request) {
         String message = "";
-        String hql = "select count(*) from Locks t where t.qgdis.id=?";
+        //有智能锁不能删除
+        String hql = "from Locks t where t.qgdis.id=?";
+//        String hql = "select * from t_locks t where t.qgis.id=?";
 
         int count = disDao.getResultNumber(hql, id);
         if (count > 0) {
@@ -119,6 +121,24 @@ public class DistributionAction {
                 //101该站点拥有智能锁，不允许删除
                 return message;
             }
+            //有采集器不能删除
+        String hql2 = "select count(1) from Collector  t where t.qgdis.id=?";
+
+        int count2 = disDao.getResultNumber(hql, id);
+        if (count2 > 0) {
+            message = StringUtil.jsonValue("0", AppMsg.getMessage("dislock"));
+            //101该站点拥有智能锁，不允许删除
+            return message;
+        }
+        //有控制器不能删除
+        String hql3 = "select count(1) from Colloctore t where t.qgdis.id=?";
+
+        int count3 = disDao.getResultNumber(hql, id);
+        if (count3 > 0) {
+            message = StringUtil.jsonValue("0", AppMsg.getMessage("dislock"));
+            //101该站点拥有智能锁，不允许删除
+            return message;
+        }
         try {
             Qgdis disa = disDao.find(Qgdis.class, id);
             System.out.println(disa);

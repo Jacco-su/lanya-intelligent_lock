@@ -44,7 +44,7 @@ public class LocksDaoImpl extends BaseDaoImpl implements ILocksDao {
     public List<Locks> findLocksList(String deptId,Pager pager) {
         String hql=null;
         if(StringUtils.isNotEmpty(deptId)){
-            hql = "from Locks where dis.dept.id= "+deptId;
+            hql = "from Locks where qgdis.dept.id= "+deptId;
         }else{
             hql = "from Locks";
         }
