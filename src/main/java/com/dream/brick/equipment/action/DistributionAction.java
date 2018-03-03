@@ -157,10 +157,10 @@ public class DistributionAction {
             Qgdis disa = disDao.find(Qgdis.class, id);
             System.out.println(disa);
             disDao.delete(disa);
-            message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);
+            message = StringUtil.jsonValue("3", AppMsg.DEL_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            message = StringUtil.jsonValue("0", AppMsg.DEL_ERROR);
+            message = StringUtil.jsonValue("4", AppMsg.DEL_ERROR);
         }
         return message;
     }

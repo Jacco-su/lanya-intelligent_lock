@@ -2,9 +2,11 @@ package com.dream.brick.equipment.action;
 
 
 import com.alibaba.fastjson.JSON;
+import com.dream.brick.equipment.bean.Collector;
 import com.dream.brick.equipment.bean.Collectore;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.CollectoreDao;
+import com.dream.brick.listener.BasicData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
@@ -177,23 +179,23 @@ public class CollectoreAction {
     }
 
 
-//    @RequestMapping(value = "/update", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String update(@ModelAttribute Collectore collectore) {
-//        String message = "";
-//            try{
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public String update(@ModelAttribute Collectore collectore) {
+        String message = "";
+            try{
 //                Collector collector= BasicData.findAreaByAreacode(collectore.getAreacode());
 //                collectore.setAreaname(collector.getAreaname());
 //                collectore.setAddress(collectore.getAddress().trim());
 //                collectore.setName(collectore.getName().trim());
-//                collectoreDao.update(collectore);
-//                message=StringUtil.jsonValue("1",AppMsg.UPDATE_SUCCESS);
-//            }catch(Exception e){
-//                message=StringUtil.jsonValue("0",AppMsg.UPDATE_ERROR);
-//            }
-//
-//        return message;
-//    }
+                collectoreDao.update(collectore);
+                message=StringUtil.jsonValue("1",AppMsg.UPDATE_SUCCESS);
+            }catch(Exception e){
+                message=StringUtil.jsonValue("0",AppMsg.UPDATE_ERROR);
+            }
+
+        return message;
+    }
 
     @RequestMapping(value = "/delete")
     @ResponseBody

@@ -146,8 +146,8 @@ public class CollectorAction {
 //                collector.setDis();
 
 
-            collector.setCcode(collector.getCcode().trim());
-            collector.setCip(collector.getCip().trim());
+//            collector.setCcode(collector.getCcode().trim());
+//            collector.setCip(collector.getCip().trim());
 //                collector.setDis(collector.getDis().g.trim());
             collectorDao.update(collector);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
