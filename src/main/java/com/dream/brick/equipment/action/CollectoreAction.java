@@ -190,7 +190,7 @@ public class CollectoreAction {
 //                collectore.setAddress(collectore.getAddress().trim());
 //                collectore.setName(collectore.getName().trim());
 //                collectoreDao.save(collectore);
-                collectore.setCeDate(FormatDate.getYMdHHmmss().trim());
+//                collectore.setCeDate(FormatDate.getYMdHHmmss().trim());
                 collectoreDao.update(collectore);
                 message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
             } catch (Exception e) {
