@@ -232,37 +232,54 @@
             function update() {
                 $('#editForm').form('submit', {
                     onSubmit: function () {
-//                        var v = $(this).form('validate');
-//                        if (v) {
-//                        }
-//                        return v;
+                        var v = $(this).form('validate');
+                        if (v) {
+                        }
+                        return v;
                         return $(this).form('validate');
                     },
                     success: function (data) {
                         var json = eval("(" + data + ")");
-//                        $.messager.alert('提示', json.message, 'warning');
-//                        $.closeWin(updateWin);
-//                        refresh();
-
-                        if(json.result=='0') {
-                            $.messager.alert('提示', '保存成功', 'warning');
-                        }else{
-                            $.messager.alert('提示', '保存失败', 'warning');
-                        }
-
+                        $.messager.alert('提示', json.message, 'warning');
                         $.closeWin(updateWin);
-                        infolist.datagrid('reload');
+                        refresh();
+
+////                        if(json.result=='0') {
+////                            $.messager.alert('提示', '保存成功', 'warning');
+////                        }else{
+////                            $.messager.alert('提示', '保存失败', 'warning');
+////                        }
+//
+//                        $.closeWin(updateWin);
+//                        infolist.datagrid('reload');
                     }
                 });
             }
+//            function update() {
+//                $('#editForm').form('submit', {
+//                    onSubmit:function(){
+//                        return $(this).form('validate');
+//                    },
+//                    success : function(data) {
+//                        var json=eval("("+data+")");
+//                        if(json.result=='1') {
+//                            $.messager.alert('提示', '修改成功', 'warning');
+//                        }else{
+//                            $.messager.alert('提示', '修改失败', 'warning');
+//                        }
+//                        $.closeWin(updateWin);
+//                        infolist.datagrid('reload');
+//                    }
+//                });
+//            }
 
             function showEdit(id) {
                 updateWin = $.createWin({
                     title: "修改",
                     url: '${basePath}/collectore/prUpdate?deptId='+deptId,
                     data: 'id=' + id,
-                    height: 550,
-                    width: 800,
+                    height: 350,
+                    width: 550,
                     buttons: [{
                         text: '修改',
                         iconCls: 'icon-ok',

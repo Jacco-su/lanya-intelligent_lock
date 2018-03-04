@@ -9,7 +9,7 @@
 
 <%--/**   修改*/--%>
 <div>
-    <form name="editForm" id="editForm" action="${basePath}/collector/prUpdate" method="post">
+    <form name="editForm" id="editForm" action="${basePath}/collector/update" method="post">
         <table class="mytable" align="center">
             <tr>
                 <td>采集器ID:</td>
@@ -46,7 +46,7 @@
         var data = '${qgdisList}';
         data = JSON.parse(data);
         $('#dissname').empty();
-        $("#usersname").prepend("<option value='0'>${collectora.dis.name}</option>");   //为Select插入一个Option(第一个位置)
+        <%--$("#usersname").prepend("<option value='0'>${collectora.dis.name}</option>");   //为Select插入一个Option(第一个位置)--%>
         for (var i = 0; i < data.length; i++) {
             $('#dissname').append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
         }

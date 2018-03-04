@@ -138,14 +138,6 @@ public class CollectorAction {
     public String update(@ModelAttribute Collector collector) {
         String message = "";
         try {
-//                Qgdis qgdis= BasicData.findAreaByAreacode(collector.getAreacode());
-//                collector.setAreaname(qgdis.getAreaname());
-//                Qgdis qgdis= BasicData.findQgdsiById(collector.getDis().getId());
-//                collector.setDis(qgdis.getName());
-//                Qgdis qgdis = BasicData.findCollectorByQgdisId(collector.getDis().getId());
-//                collector.setDis();
-
-
 //            collector.setCcode(collector.getCcode().trim());
 //            collector.setCip(collector.getCip().trim());
 //                collector.setDis(collector.getDis().g.trim());
