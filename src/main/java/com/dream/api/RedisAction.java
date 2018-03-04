@@ -49,14 +49,25 @@ public class RedisAction {
             //开始授权
             //采集器id:指令字:控制器mac地址:钥匙mac地址:锁识别号:开始日期:结束日期:用户id
             System.out.println(keys[7]);
-            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keys[7],8)),ByteUtil.hexStrToByteArray(keys[4]),keys[2],keys[5],keys[6]),Constants.LOCK_KEY).toString();//
+            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keys[7],8)),keys[4],keys[2],keys[5],keys[6]),Constants.LOCK_KEY).toString();//
         }else if("1".equals(keys[1])){
             //获取门锁信息  key=0000000002,1,DF:98,
             //采集器id:指令字:控制器mac地址
             authModel=new AuthModel(new byte[]{1},AuthModel.toData(1,1),Constants.KEY).toString();
         }else if("2".equals(keys[1])){
-            //初始化锁      key=0000000002,2,DF:98,
-           authModel=new AuthModel(new byte[]{2},AuthModel.toData(2,32),Constants.KEY).toString();
+            //初始化锁      key=0000000002,2,DF:98:deptId,
+            Object value=redisTemplateUtil.get("lanya-lock-client");
+            String lockNum="";
+            if(value==null){
+                lockNum="41"+keys[3];
+                lockNum=addZeroForNum(lockNum,16);
+                redisTemplateUtil.set("lanya-lock-client",lockNum);
+            }else{
+                lockNum=String.valueOf(Long.parseLong(value.toString())+1);
+                redisTemplateUtil.set("lanya-lock-client",lockNum);
+            }
+            System.out.println(lockNum+"lockNum");
+          authModel=new AuthModel(new byte[]{2},AuthModel.toLockData(32,lockNum),Constants.KEY).toString();
         }else if("13".equals(keys[1])){
             //获取钥匙Mac地址
             authModel = new AuthModel(new byte[]{13}).toString();
@@ -116,17 +127,21 @@ public class RedisAction {
     }
     public static String addZeroForNum(String str, int strLength) {
         int strLen = str.length();
-        String string="";
-        if (strLen < strLength) {
-            for (int i = 0; i < strLen; i++) {
-                string+="0"+str.charAt(i);
-            }
+        StringBuffer sb = null;
+        while (strLen < strLength) {
+            sb = new StringBuffer();
+            //sb.append("0").append(str);// 左补0
+            sb.append(str).append("0");//右补0
+            str = sb.toString();
+            strLen = str.length();
         }
-        return string;
+        return str;
     }
     public static void main(String[] args) {
 
-        System.out.println(addZeroForNum("1002",8));
-        System.out.println(ByteUtil.hexStrToByteArray("00001002"));
+        System.out.println(addZeroForNum("4110003",16));
+        //34313130303033303030303030303031
+        System.out.println(ByteUtil.bytesToHex("".getBytes()));
+        System.out.println(ByteUtil.hexStr2Str("30343031303230323030303030303030"));
     }
 }

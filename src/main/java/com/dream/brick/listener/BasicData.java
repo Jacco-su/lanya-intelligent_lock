@@ -39,6 +39,8 @@ public class BasicData {
 
     public static IKeysListDao IKeysListDao;
 
+    public static IAuthLogDao authLogDao;
+
 	public static SpringUtil getSprintUtil()
 	{
 		return sprintUtil;
@@ -57,6 +59,7 @@ public class BasicData {
 		collectoreDao = (CollectoreDao) SpringUtil.getObject("collectoreDaoImpl");
 //               iauthorizationDao = (IAuthorizationDao) SpringUtil.getObject("authorizationDapImpl");
 		IKeysListDao = (IKeysListDao) SpringUtil.getObject("keysListDaoImpl");
+		authLogDao=(IAuthLogDao) SpringUtil.getObject("authLogDaoImpl");
 
 	}
 	/**

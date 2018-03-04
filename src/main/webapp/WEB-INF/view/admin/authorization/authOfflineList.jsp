@@ -27,16 +27,20 @@
                     getkeys(row.id);
                 }
             });
-
+            $('#dissList').datagrid({
+                onCheck:function(index, row){
+                    getLocks(row.id);
+                }
+            });
             //获取钥匙
             function getkeys(userId) {
                 var data={
                     "userId":userId
                 };
+                var keyData = []; //创建数组
+                $('#keysList').datagrid('loadData', keyData);
                 $.post(basePath+"/authorization/keys/user",data,function(data){
                     var d=JSON.parse(data);
-                    $('#keysList').empty();
-                    var keyData = []; //创建数组
                     for(var i=0;i<d.length;i++){
                         keyData.push({
                             "id": d[i].keyssMAC,
@@ -45,8 +49,45 @@
                     }
                     $('#keysList').datagrid('loadData', keyData);
                 });
+                console.log(keyData);
             }
-
+            //获取站点
+            function getDiss(obj) {
+                var data={
+                    "disaId":obj
+                };
+                $('#dissList').empty();
+                $.post(basePath+"/authorization/distribution",data,function(data){
+                    var d=JSON.parse(data);
+                    var disaData = []; //创建数组
+                    for(var i=0;i<d.length;i++){
+                        disaData.push({
+                            "id": d[i].id,
+                            "name": d[i].name
+                        });
+                    }
+                    $('#dissList').datagrid('loadData', disaData);
+                });
+            }
+            //获取门锁
+            function getLocks(obj) {
+                var data={
+                    "disaId":obj
+                };
+                //获取锁具
+                $.post(basePath+"/authorization/disa/locks",data,function(data){
+                    var d=JSON.parse(data);
+                    $('#locksList').empty();
+                    var locksData = []; //创建数组
+                    for(var i=0;i<d.length;i++){
+                        locksData.push({
+                            "id": d[i].lockCode,
+                            "name": d[i].lockNum
+                        });
+                    }
+                    $('#locksList').datagrid('loadData', locksData);
+                });
+            }
             $("#stepTwo").panel('close');
             $("#stepThere").panel('close');
             $('#tree').tree({
@@ -56,33 +97,18 @@
                     $('#tree').tree('options').url = basePath+"/dept/getChildren?parentId=" + node.id;
                 },
                 onClick:function(node){
-                    refresh(node.id);
+                    //refresh(node.id);
                     deptId=node.id;
                     getUsers(deptId);
+                    getDiss(deptId);
+                    //getLocks(deptId);
                 }
             });
 
 
             //获取站点
             function refresh(obj) {
-                var data={
-                    "disaId":obj
-                };
-                $.post(basePath+"/authorization/distribution",data,function(data){
-                    var d=JSON.parse(data);
-                    $('#disa').empty();
-                    var disaData = []; //创建数组
-                    for(var i=0;i<d.length;i++){
-                        disaData.push({
-                            "id": d[i].id,
-                            "text": d[i].name
-                        });
-                    }
-                    if( d[0]!=null) {
-                        $("#disa").combobox("clear")//下拉框加载数据,设置默认值为
-                            .combobox("loadData", disaData).combobox("setValue", d[0].id);
-                    }
-                });
+
                 $('#disa').combobox({
                     onSelect: function (row) {
                         if (row != null) {
@@ -105,22 +131,7 @@
                                         .combobox("loadData", collectorData).combobox("setValue", d[0].id);
                                 }
                             });
-                            //获取锁具
-                            $.post(basePath+"/authorization/disa/locks",data,function(data){
-                                var d=JSON.parse(data);
-                                $('#locks').empty();
-                                var collectorData = []; //创建数组
-                                for(var i=0;i<d.length;i++){
-                                    collectorData.push({
-                                        "id": d[i].id,
-                                        "text": d[i].lockCode
-                                    });
-                                }
-                                if( d[0]!=null) {
-                                    $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", collectorData).combobox("setValue", d[0].id);
-                                }
-                            });
+
                         }
                     }
                 });
@@ -167,7 +178,7 @@
                 type: "post",
                 url: basePath+"/redis/get",
                 cache:false,
-                async:false,
+                async:true,
                 data:data,
                 dataType: "json",
                 success: function(data){
@@ -262,24 +273,84 @@
             if(num==3){
                 var userRow = $("#userList").datagrid("getChecked");
                 var keysRow = $("#keysList").datagrid("getChecked");
-                var userId="";
-                var keysId="";
                 if(userRow==""){
                     $.messager.alert('警告', '请选择一个用户', 'warning');
                     return;
-                }else{
-                    userId=userRow[0].id;
                 }
                 if(keysRow==""){
                     $.messager.alert('警告', '请选择一个钥匙', 'warning');
                     return;
-                }else{
-                    keysId=keysRow[0].id;
                 }
                 $("#stepOne").panel('close');
                 $("#stepTwo").panel('close');
                 $("#stepThere").panel('open');
             }
+        }
+        //离线授权
+        function offlineAuth() {
+            var userId=$("#userList").datagrid("getChecked")[0].id;
+            var keysId=$("#keysList").datagrid("getChecked")[0].id;
+            var dissRow=$("#dissList").datagrid("getChecked");
+            var locksRows=$("#locksList").datagrid("getChecked");
+            if(dissRow==""){
+                $.messager.alert('警告', '请选择一个站点', 'warning');
+                return;
+            }
+            if(locksRows==""){
+                $.messager.alert('警告', '请至少选择一个锁具', 'warning');
+                return;
+            }
+            var authName=$('#authName').val();
+            if(authName==""){
+                $.messager.alert('警告', '请填写授权名称', 'warning');
+                return;
+            }
+            var authStartTime=$('#authStartTime').val();
+            if(authStartTime==""){
+                $.messager.alert('警告', '请填写授权开始时间', 'warning');
+                return;
+            }
+            var authEndTime=$('#authEndTime').val();
+            if(authEndTime==""){
+                $.messager.alert('警告', '请填写授权结束时间', 'warning');
+                return;
+            }
+            var authLocks="";
+            var authLocksId="";
+            for(var i=0;i<locksRows.length;i++){
+                authLocks+=locksRows[i].name+",";
+                authLocksId+=locksRows[i].id+",";
+            }
+            var data={
+                "user.id":userId,
+                "keysId":keysId,
+                "authName":authName,
+                "authType":$("#authType").val(),
+                "authStartTime":authStartTime,
+                "authEndTime":authEndTime,
+                "authKeys":$("#keysList").datagrid("getChecked")[0].keyssName,
+                "authKeysId":keysId,
+                "qgdis.id":dissRow[0].id,
+                "authLocks":authLocks,
+                "authLocksId":authLocksId
+            };
+            console.log(data);
+            $.ajax({
+                type: "post",
+                url: basePath + "/authlog/save",
+                cache: false,
+                async: true,
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    if(data.result=="1"){
+                        alert(data.message);
+
+                    }else{
+                        alert("保存失败!");
+                    }
+                }
+            })
         }
     </script>
 </head>
@@ -298,7 +369,7 @@
                         <tr>
                             <td>授权类型:</td>
                             <td colspan="3">
-                                <select id="taskType" class="easyui-combobox"  name="taskType" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
+                                <select id="authType" class="easyui-combobox"  name="authType" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
                                     <option value="0">开关锁</option>
                                 </select>
                             </td>
@@ -306,7 +377,7 @@
                         <tr>
                             <td>授权名称:</td>
                             <td colspan="3">
-                                <input width="180px" name="taskName" id="taskName">
+                                <input width="180px" style="width: 200px" name="authName" id="authName">
                             </td>
                         </tr>
                         <%--          <tr>
@@ -352,11 +423,11 @@
                         <tr>
                             <td width="100">授权时间:</td>
                             <td colspan="3">
-                                <input id="startDate" name="startDate" class="easyui-validatebox"  value=""/>
-                                <img onclick="WdatePicker({el:'startDate',dateFmt:'yyyyMMddHHmmss'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+                                <input id="authStartTime" name="authStartTime" class="easyui-validatebox"  value=""/>
+                                <img onclick="WdatePicker({el:'authStartTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
                                 -
-                                <input id="endDate" name="endDate" class="easyui-validatebox"    value=""/>
-                                <img onclick="WdatePicker({el:'endDate',dateFmt:'yyyyMMddHHmmss'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+                                <input id="authEndTime" name="authEndTime" class="easyui-validatebox"    value=""/>
+                                <img onclick="WdatePicker({el:'authEndTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
                             </td>
                         </tr>
                         <%--<tr>
@@ -433,7 +504,7 @@
                                 </table>
                             </td>
                             <td colspan="2">
-                                <table class="easyui-datagrid" title = "门锁列表" id="lockList"  style="width:350px;height:250px">
+                                <table class="easyui-datagrid" title = "门锁列表" id="locksList"  style="width:350px;height:250px">
                                     <thead>
                                     <tr>
                                         <th data-options="field:'id',checkbox:true"></th>
@@ -448,7 +519,7 @@
                         </tr>
                         <tr>
                             <td><button class="easyui-linkbutton" onclick="stepAuth(2)">上一步</button></td>
-                            <td><button class="easyui-linkbutton" onclick="onlineAuth(3)">完成</button></td>
+                            <td><button class="easyui-linkbutton" onclick="offlineAuth(3)">完成</button></td>
                         </tr>
                     </table>
                 </div>

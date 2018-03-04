@@ -157,6 +157,31 @@ public class AuthModel {
 		arrayOfInt[13] = 0xff;
 		return arrayOfInt;
 	}
+	public  static int [] toLockData(int length,String lockNum){
+		int[] arrayOfInt = new int[length];
+		byte[] arrayOfByte = Constants.OLD_KEY.getBytes();
+		int i = 0;
+		while (i < 8)
+		{
+			arrayOfInt[i] = arrayOfByte[i];
+			i += 1;
+		}
+		arrayOfInt[8] = 1;
+		arrayOfInt[9] = 1;
+		arrayOfInt[10] = 1;
+		arrayOfInt[11] = 1;
+		arrayOfInt[12] = 1;
+		arrayOfInt[13] = 1;
+		arrayOfInt[14] = 1;
+		arrayOfInt[15] = 1;
+		i=0;
+		//lockNum=ByteUtil.
+		while (i < 16) {
+			arrayOfInt[(i + 16)] =lockNum.charAt(i);
+			i += 1;
+		}
+		return arrayOfInt;
+	}
 	public  static int [] toData(int t,int length){
 		int[] arrayOfInt = new int[length];
 		if(t==12||t==9){//length=14
@@ -246,7 +271,9 @@ public class AuthModel {
 	 * @return
 	 * @throws
 	 */
-	public  static int [] AuthorizationKey(byte[] userCode,byte[] lockCode,String macAddress,String startDate,String endDate){
+	public  static int [] AuthorizationKey(byte[] userCode,String lockNum,String macAddress,String startDate,String endDate){
+		byte[] lockCode=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(lockNum.getBytes()));
+		String db=lockNum.substring(12,16);
 		int[] arrayOfInt = new int[64];
 		for (int i = 0; i < 4; i++) {
 			arrayOfInt[i] =  userCode[i];
@@ -303,8 +330,8 @@ public class AuthModel {
 				arrayOfInt[(i + 85)] = Integer.parseInt(macString[i], 16);
 				i += 1;
 			}
-			arrayOfInt[91] = 0;//存储位置
-			arrayOfInt[92] = 0;//存储位置
+			arrayOfInt[91] = Integer.parseInt(db.substring(0,2));//存储位置
+			arrayOfInt[92] = Integer.parseInt(db.substring(2,4));//存储位置
 			arrayOfInt[93] = 10;//
 			arrayOfInt[94] = 10;//
 			//arrayOfInt[95] = 0xff;//次数 待定

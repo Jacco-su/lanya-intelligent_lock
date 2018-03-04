@@ -1,5 +1,7 @@
 package com.dream.util;
 
+import org.apache.commons.lang3.time.DateUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,6 +27,8 @@ public class FormatDate {
 	public static SimpleDateFormat sdfyd=new SimpleDateFormat("MMdd");
 	//生成到分的日期
 	public static SimpleDateFormat sdfyM=new SimpleDateFormat("yyyy-MM");
+	public static SimpleDateFormat YYYYMMDDHHMMSS_DEFAULT_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
+
 
 	private static final int year;
 	static {
@@ -196,7 +200,23 @@ public class FormatDate {
 			return null;
 		}
 	}
+/**
+       * 字符串解析成时间对象
+       * @param dateTimeString String
+       * @return
+       * @throws ParseException
+       */
+      public static String dateParse(String dateTimeString){
+	      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	      try {
+		      return YYYYMMDDHHMMSS_DEFAULT_FORMAT.format(sdf.parse(dateTimeString));
+	      } catch (ParseException e) {
+		      e.printStackTrace();
+		      return null;
+	      }
+      }
 	public static void main(String[] args){
-		System.out.println(FormatDate.getYMdHHmmss("20180208113047"));
+		System.out.println("0012".substring(2,4));
+		System.out.println(FormatDate.dateParse("2018-03-04 10:30:30"));
 	}
 }
