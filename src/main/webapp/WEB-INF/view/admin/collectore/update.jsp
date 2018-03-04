@@ -25,7 +25,8 @@
                 <td>控制器名称:</td>
                 <td>
                     <input type="hidden" name="id" value="${collectore.id}"/>
-                    <input name="name" value="${collectore.cename}" class="easyui-validatebox" required="true"/></td>
+                    <input name="dept.id" type="hidden" value="${collectore.collector.dis.id}"/>
+                    <input name="cename" value="${collectore.cename}" class="easyui-validatebox" required="true"/></td>
             </tr>
 
            <tr>
