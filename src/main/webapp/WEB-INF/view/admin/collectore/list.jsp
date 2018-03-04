@@ -45,7 +45,8 @@
                 onDblClickRow: function (rowIndex, field, value) {
                     var rows = infolist.datagrid("getRows");
                     var id = rows[rowIndex].id;
-                    detail(id);
+//                    detail(id);
+                    showEdit(id);
                 },
                 columns: [[{
                     title: '控制器名称',
@@ -135,7 +136,10 @@
             function add() {
                 addWin = $.createWin({
                     title: "添加",
-                    url: '${basePath}/collectore/prAdd',
+                    url: '${basePath}/collectore/prAdd?deptId='+deptId,
+                    /*queryParams: {
+                        'deptId': deptId
+                    },*/
                     height: 350,
                     width: 500,
                     buttons: [{
@@ -228,16 +232,26 @@
             function update() {
                 $('#editForm').form('submit', {
                     onSubmit: function () {
-                        var v = $(this).form('validate');
-                        if (v) {
-                        }
-                        return v;
+//                        var v = $(this).form('validate');
+//                        if (v) {
+//                        }
+//                        return v;
+                        return $(this).form('validate');
                     },
                     success: function (data) {
                         var json = eval("(" + data + ")");
-                        $.messager.alert('提示', json.message, 'warning');
+//                        $.messager.alert('提示', json.message, 'warning');
+//                        $.closeWin(updateWin);
+//                        refresh();
+
+                        if(json.result=='0') {
+                            $.messager.alert('提示', '保存成功', 'warning');
+                        }else{
+                            $.messager.alert('提示', '保存失败', 'warning');
+                        }
+
                         $.closeWin(updateWin);
-                        refresh();
+                        infolist.datagrid('reload');
                     }
                 });
             }
@@ -245,7 +259,7 @@
             function showEdit(id) {
                 updateWin = $.createWin({
                     title: "修改",
-                    url: '${basePath}/collectore/prUpdate',
+                    url: '${basePath}/collectore/prUpdate?deptId='+deptId,
                     data: 'id=' + id,
                     height: 550,
                     width: 800,

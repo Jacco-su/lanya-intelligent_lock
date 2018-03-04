@@ -43,7 +43,7 @@ public List<Collector> findCollectorByQgdisid(String disId) {
         return query(hql, pager);
     }
 
-    @Override
+
     public List<Collector> findCollectorList(String deptId, Pager pager) {
         String hql=null;
         if(StringUtils.isNotEmpty(deptId)){
