@@ -225,7 +225,15 @@
                                 dataType : "text",
                                 cache : false,
                                 success : function(msg) {
-                                    $.messager.alert('提示', '删除成功!', 'warning');
+                                    var json = eval("(" + msg + ")");
+                                    if(json.result=='0') {
+                                        $.messager.alert('提示', '有智能锁不能删除', 'warning');
+                                    }else if(json.result=='1') {
+                                        $.messager.alert('提示', '有采集器不能删除', 'warning');
+                                    }else{
+                                        $.messager.alert('提示', '删除成功', 'warning');
+                                    }
+//                                    $.messager.alert('提示', '删除成功!', 'warning');
                                     infolist.datagrid('reload');
                                 }
                             });

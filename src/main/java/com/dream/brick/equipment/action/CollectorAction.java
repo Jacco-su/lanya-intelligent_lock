@@ -63,8 +63,8 @@ public class CollectorAction {
 
 
     @RequestMapping("/prAdd")
-    public String prAdd(ModelMap model) {
-        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findAllQgdis()));
+    public String prAdd(ModelMap model,String deptId, String dissName, Pager pager) {
+        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
         return "admin/collector/add";
     }
 
@@ -117,9 +117,11 @@ public class CollectorAction {
 
 
     @RequestMapping("/prUpdate")
-    public String prUpdate(String id, ModelMap model) {
+    public String prUpdate(String id, ModelMap model,String deptId, String dissName, Pager pager) {
         Collector collector = collectorDao.find(Collector.class, id);
         model.addAttribute("collectora", collector);
+        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
+
         return "admin/collector/update";
     }
 
@@ -144,8 +146,8 @@ public class CollectorAction {
 //                collector.setDis();
 
 
-            collector.setCcode(collector.getCcode().trim());
-            collector.setCip(collector.getCip().trim());
+//            collector.setCcode(collector.getCcode().trim());
+//            collector.setCip(collector.getCip().trim());
 //                collector.setDis(collector.getDis().g.trim());
             collectorDao.update(collector);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
