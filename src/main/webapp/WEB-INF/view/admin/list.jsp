@@ -232,8 +232,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						title : "用户修改",
 						url : basePath+'/user/prUpdate',
 						data : 'id=' +id,
-						height : 550,
-						width : 800,
+						height : 350,
+						width : 550,
 						buttons : [ {
 							text : '修改',
 							iconCls : 'icon-ok',

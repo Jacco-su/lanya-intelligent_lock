@@ -183,17 +183,20 @@ public class CollectoreAction {
     @ResponseBody
     public String update(@ModelAttribute Collectore collectore) {
         String message = "";
+//            collectore.getId();
             try{
 //                Collector collector= BasicData.findAreaByAreacode(collectore.getAreacode());
-//                collectore.setAreaname(collector.getAreaname());
+//                collectore.setAreaname(collector.getAreaname());In
 //                collectore.setAddress(collectore.getAddress().trim());
 //                collectore.setName(collectore.getName().trim());
+//                collectoreDao.save(collectore);
+                collectore.setCeDate(FormatDate.getYMdHHmmss().trim());
                 collectoreDao.update(collectore);
-                message=StringUtil.jsonValue("1",AppMsg.UPDATE_SUCCESS);
-            }catch(Exception e){
-                message=StringUtil.jsonValue("0",AppMsg.UPDATE_ERROR);
+                message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
+            } catch (Exception e) {
+                e.printStackTrace();
+                message = StringUtil.jsonValue("0", AppMsg.UPDATE_ERROR);
             }
-
         return message;
     }
 

@@ -19,7 +19,7 @@
 </script>--%>
 <%--&lt;%&ndash;/**   修改*/&ndash;%&gt;--%>
 <div>
-    <form name="editForm" id="editForm" action="${basePath}/collectore/prUpdate" method="post">
+    <form name="editForm" id="editForm" action="${basePath}/collectore/update" method="post">
         <table class="mytable" align="center">
             <tr>
                 <td>控制器名称:</td>
@@ -35,7 +35,7 @@
                     <%--<input size="40" readonly="readonly" class="easyui-validatebox" required="true" name="discode" id="discode"--%>
                            <%--value="${collectore.collector.ccode}"/>--%>
                     <%--<a class="easyui-linkbutton" onclick="$('#selectCt').window('open');">选择</a>--%>
-                        <select id="collectorname" name="collector.id" style="width:180px;" ></select>
+                        <select id="cid" name="collector.id" style="width:180px;" ></select>
                 </td>
             </tr>
             <tr>
@@ -68,10 +68,10 @@
     $(function () {
         var data = '${collectorList}';
         data = JSON.parse(data);
-        $('#collectorname').empty();
-        $("#collectorname").prepend("<option value='0'>${collectore.collector.ccode}</option>");   //为Select插入一个Option(第一个位置)
+        $('#cid').empty();
+        <%--$("#cid").prepend("<option value='0'>${collectore.collector.ccode}</option>");   //为Select插入一个Option(第一个位置)--%>
         for (var i = 0; i < data.length; i++) {
-            $('#collectorname').append("<option value='" + data[i].id + "'>" + data[i].ccode + "</option>");
+            $('#cid').append("<option value='" + data[i].id + "'>" + data[i].ccode + "</option>");
         }
     });
 

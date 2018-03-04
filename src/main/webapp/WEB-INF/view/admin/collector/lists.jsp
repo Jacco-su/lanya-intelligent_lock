@@ -189,7 +189,7 @@
             function showEdit(id){
                 updateWin = $.createWin( {
                     title: "采集器修改",
-                    url : basePath+'/collector/prUpdate',
+                    url : basePath+'/collector/prUpdate?deptId='+deptId,
                     data : 'id=' +id,
                     height: 350,
                     width: 500,
@@ -208,9 +208,9 @@
                     success : function(data) {
                         var json=eval("("+data+")");
                         if(json.result=='1') {
-                            $.messager.alert('提示', '保存成功', 'warning');
+                            $.messager.alert('提示', '修改成功', 'warning');
                         }else{
-                            $.messager.alert('提示', '保存失败', 'warning');
+                            $.messager.alert('提示', '修改失败', 'warning');
                         }
                         $.closeWin(updateWin);
                         infolist.datagrid('reload');
