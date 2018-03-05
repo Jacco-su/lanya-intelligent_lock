@@ -42,7 +42,8 @@
             <tr>
                 <td>MAC地址:</td>
                 <td>
-                    <input name="ceMAC" value="${collectore.ceMAC}" class="easyui-validatebox" required="true"/>
+                    <input name="ceMAC" value="${collectore.ceMAC}" class="easyui-validatebox" required="true"
+                           onblur=""/>
                 </td>
             </tr>
             <tr>
@@ -76,5 +77,5 @@
         }
     });
 
-//            alert("请输入8位数字！");
+
 </script>
