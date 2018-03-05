@@ -80,7 +80,7 @@
             $('#cid').append("<option value='" + data[i].id + "'>" + data[i].ccode + "</option>");
         }
     })
-
+    
     function ce() {
         var p = $("#ceMAC").val();
         if (!p.match(/[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}/)) {
