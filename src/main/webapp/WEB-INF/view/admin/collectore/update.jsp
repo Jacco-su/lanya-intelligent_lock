@@ -47,7 +47,7 @@
             </tr>
             <tr>
                 <td>日期:</td>
-                <td><input name="ceDate" id="ceDate" value="" class="easyui-validatebox" required="true"/>
+                <td><input name="ceDate" value="${collectore.ceDate}" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
         </table>
@@ -75,27 +75,5 @@
             $('#cid').append("<option value='" + data[i].id + "'>" + data[i].ccode + "</option>");
         }
     });
-
-    <%--function () {--%>
-    <%--var cedate='${collectore.ceDate}';--%>
-    <%--//        temp = list.get(i).getCdate().toString();--%>
-    <%--Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(cedate);--%>
-    <%--String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);--%>
-    <%--list.get(i).setCdate(str);--%>
-
-    <%--}--%>
-
-
-    $(function crtTimeFtt() {
-        var data = '${collectore.ceDate}';
-        data = JSON.parse(data);
-        for (var i = 0; i < data.length; i++) {
-            var crtTime = new Date(date);
-            return top.dateFtt("yyyy-MM-dd hh:mm:ss", crtTime);//直接调用公共JS里面的时间类处理的办法
-
-        }
-        $('#ceDate').val("format(${collectore.ceDate},'yyyy-mm-dd HH-mm-ss')");
-    })
-
 
 </script>

@@ -14,7 +14,7 @@
             <tr>
                 <td>采集器ID:</td>
                 <td>
-                    <input type="hidden" name="cid" value="${collectora.id}"/>
+                    <input type="hidden" name="id" value="${collectora.id}"/>
                     <input name="dept.id" type="hidden" value="${collectora.dis.id}"/>
                     <input name="ccode" value="${collectora.ccode}" class="easyui-validatebox" required="true"/></td>
             </tr>

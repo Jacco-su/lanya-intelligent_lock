@@ -54,12 +54,6 @@
                     align: 'center'
                 },
                     {
-                        title: '钥匙名称',
-                        field: 'keyssName',
-                        width: 250,
-                        align: 'center'
-                    },
-                    {
                         title: '钥匙MAC',
                         field: 'keyssMAC',
                         width: 300,
@@ -238,7 +232,7 @@
             function showEdit(id) {
                 updateWin = $.createWin({
                     title: "修改",
-                    url: '${basePath}/keyss/prUpdate?parentId=" + node.id;
+                    url: '${basePath}/keyss/prUpdate?deptId='+deptId,
                     data: 'id=' + id,
                     height: 350,
                     width: 550,

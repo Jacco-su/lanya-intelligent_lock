@@ -44,7 +44,7 @@
                     for(var i=0;i<d.length;i++){
                         keyData.push({
                             "id": d[i].keyssMAC,
-                            "keyssName": d[i].keyssName
+                            "keyssCode": d[i].keyssCode
                         });
                     }
                     $('#keysList').datagrid('loadData', keyData);
@@ -328,7 +328,7 @@
                 "authType":$("#authType").val(),
                 "authStartTime":authStartTime,
                 "authEndTime":authEndTime,
-                "authKeys":$("#keysList").datagrid("getChecked")[0].keyssName,
+                "authKeys":$("#keysList").datagrid("getChecked")[0].keyssCode,
                 "authKeysId":keysId,
                 "qgdis.id":dissRow[0].id,
                 "authLocks":authLocks,
@@ -470,7 +470,7 @@
                                     <thead>
                                     <tr>
                                         <th data-options="field:'id',checkbox:true"></th>
-                                        <th data-options="field:'keyssName'" width="520px">钥匙</th>
+                                        <th data-options="field:'keyssCode'" width="520px">钥匙</th>
                                     </tr>
                                     </thead>
                                     <tbody>
