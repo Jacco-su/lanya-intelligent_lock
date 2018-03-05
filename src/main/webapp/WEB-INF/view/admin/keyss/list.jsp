@@ -54,12 +54,6 @@
                     align: 'center'
                 },
                     {
-                        title: '钥匙名称',
-                        field: 'keyssName',
-                        width: 250,
-                        align: 'center'
-                    },
-                    {
                         title: '钥匙MAC',
                         field: 'keyssMAC',
                         width: 300,

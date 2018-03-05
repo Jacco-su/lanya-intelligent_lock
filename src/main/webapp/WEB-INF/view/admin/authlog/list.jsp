@@ -101,7 +101,10 @@
                         title: '授权状态',
                         field: 'authStatus',
                         width: $(this).width() * 0.1,
-                        align: 'left'
+                        align: 'left',
+                        formatter: function (value, rowData, rowIndx) {
+                            return "已授权";
+                        }
                     }
                 ]],
                 pagination: true,

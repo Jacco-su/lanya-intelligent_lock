@@ -303,8 +303,6 @@ public class AuthModel {
 			for (int j = 0; j < arrayOfInt.length; j++) {
 				arrayOfByte[j] = (byte) arrayOfInt[j];
 			}
-			//System.out.println(Integer.toHexString(arrayOfInt&0xFF));
-			System.out.println("加密前钥匙串"+ByteUtil.bytesToHex(arrayOfByte));
 			byte[] localObject= Des.encrypt(arrayOfByte, Constants.OLD_KEY.getBytes());//可能有问题
 
 			arrayOfInt=new int[95];
