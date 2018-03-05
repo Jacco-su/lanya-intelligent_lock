@@ -99,11 +99,7 @@
                     text : '删除',
                     iconCls : 'icon-remove',
                     handler : del
-                },'-', {
-                    text : '查询',
-                    iconCls : 'icon-search',
-                    handler : search
-                } ]
+                }, ]
             });
             displayMsg();
 
@@ -247,7 +243,7 @@
             function search(){
                 addWin = $.createWin( {
                     title : "查询条件",
-                    contents: "<table style='font-size:12px;'><tr><td>站点：</td><td><input id='dissName' /></td></tr></table>",
+                    contents: "<table style='font-size:12px;'><tr><td>站点名称：</td><td><input id='dissName' /></td></tr></table>",
                     width : 300,
                     buttons : [ {
                         text : '查询',

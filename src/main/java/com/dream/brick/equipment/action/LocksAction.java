@@ -68,6 +68,7 @@ public class LocksAction {
 //        locks.setLockNum(locks.getLockNum());
 //        locks.setLockCode(locks.getLockCode());
         //locks.setQgdis();
+        System.out.println(locks.getAddress()+"dddddddddddddddddddddddd");
         locks.setLockDate(FormatDate.getYMdHHmmss());
         try {
             ilocksDao.save(locks);

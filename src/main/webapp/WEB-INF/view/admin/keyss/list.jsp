@@ -232,7 +232,7 @@
             function showEdit(id) {
                 updateWin = $.createWin({
                     title: "修改",
-                    url: '${basePath}/keyss/prUpdate',
+                    url: '${basePath}/keyss/prUpdate?parentId=" + node.id;
                     data: 'id=' + id,
                     height: 350,
                     width: 550,

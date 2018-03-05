@@ -29,6 +29,11 @@
                     <input name="keyssCode" value="${keyss.keyssCode}" class="easyui-validatebox" required="true"/></td>
             </tr>
             <tr>
+                <td>钥匙名称:</td>
+                <td><input name="keyssName" value="${keyss.keyssName}" class="easyui-validatebox" required="true"/>
+                </td>
+            </tr>
+            <tr>
                 <td>钥匙MAC:</td>
                 <td><input name="keyssMAC" value="${keyss.keyssMAC}" class="easyui-validatebox" required="true"/>
                 </td>
@@ -41,7 +46,7 @@
                     <%--class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>--%>
                     <%--<input type="hidden" name="discode" id="discode" value="${keyss.id}"/>--%>
                     <%--<input type="hidden" name="user.id" id="discode" value="${keyss.user.username}"/>--%>
-                    <select id="usersname" name="uaerName" style="width: 200px;"></select>
+                    <select id="usersname" name="user.id" style="width: 200px;"></select>
 
                 </td>
             </tr>
