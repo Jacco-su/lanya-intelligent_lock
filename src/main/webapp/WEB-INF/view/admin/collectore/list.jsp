@@ -237,9 +237,9 @@
                         if (v) {
                         }
                         var p = $("#ceMAC").val();
-                        if (!p.match(/／^[A-F0-9]{2}(:[A-F0-9]{2}){5}$/)) {
+                        if (!p.match(/[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}/)) {
 //            alert("请输入8位数字！");
-                            $.messager.alert('提示', '请正确格式输入MAC！', 'warning');
+                            $.messager.alert('提示', '请输入正确格式的MAC！', 'warning');
                         }
                         return v;
                         return $(this).form('validate');
