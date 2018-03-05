@@ -42,7 +42,12 @@
             <tr>
                 <td>MAC地址:</td>
                 <td>
+<<<<<<< HEAD
                     <input name="ceMAC" value="${collectore.ceMAC}" class="easyui-validatebox"  onblur="ce()"/>
+=======
+                    <input name="ceMAC" value="${collectore.ceMAC}" class="easyui-validatebox" required="true"
+                           onblur=""/>
+>>>>>>> dev
                 </td>
             </tr>
             <tr>

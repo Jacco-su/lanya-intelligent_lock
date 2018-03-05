@@ -113,9 +113,6 @@ public class KeyssAction {
         String message = "";
         try {
 
-//            keyss.setKeyssName(keyss.getKeyssName().trim());
-//            keyss.setUserName(keyss.getUserName().trim());
-//            keyss.setKeyssDate(keyss.getKeyssDate().trim());
             ikeyssDao.update(keyss);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {
