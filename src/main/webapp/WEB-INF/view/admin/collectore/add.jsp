@@ -44,7 +44,7 @@
             <tr>
                 <td>MAC地址:</td>
                 <td>
-                    <input name="ceMAC" class="easyui-validatebox" required="true"/>
+                    <input name="ceMAC" id="ceMAC" class="easyui-validatebox" required="true" readonly="value" onblur="ce()"/>
                     <a class="easyui-linkbutton"
                        onclick="getMAC()">获取</a>
                 </td>
@@ -89,4 +89,15 @@
             $('#ccode').append("<option value='" + data[i].id + "'>" + data[i].ccode + "</option>");
         }
     })
+    function ce() {
+        var p = $("#ceMAC").val();
+        if (!p.match(/／^[A-F0-9]{2}(:[A-F0-9]{2}){5}$/)) {
+//            alert("请输入8位数字！");
+            $.messager.alert('提示', '请正确格式输入MAC！', 'warning');
+        }
+
+
+
+    };
+
 </script>
