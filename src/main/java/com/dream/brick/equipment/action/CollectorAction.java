@@ -9,7 +9,6 @@ import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -56,6 +56,14 @@ public class CollectorAction {
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
         List<Collector> list = collectorDao.findCollectorList(deptId,pager);
+//        System.out.println(list.get(0).getCdate()+"dddddddddd");
+        String temp = "";
+        for (int i = 0; i < list.size(); i++) {
+            temp = list.get(i).getCdate().toString();
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
+            String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+            list.get(i).setCdate(str);
+        }
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
@@ -119,8 +127,28 @@ public class CollectorAction {
     @RequestMapping("/prUpdate")
     public String prUpdate(String id, ModelMap model,String deptId, String dissName, Pager pager) {
         Collector collector = collectorDao.find(Collector.class, id);
+
+
+       /* for(int i=0;i<list.size();i++){
+            temp = list.get(i).getCeDate().toString();
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
+            String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+            list.get(i).setCeDate(str);
+        }*/
+//        String temp = collector.getCdate();
+//        System.out.println(temp+"ffffffffff");
+        /*Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
+        String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);*/
+        /*SimpleDateFormat sdf = new SimpleDateFormat(temp.toString());
+        String dateString = sdf.format(new Date());*/
+
+
+
         model.addAttribute("collectora", collector);
+
+
         model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
+
 
         return "admin/collector/update";
     }

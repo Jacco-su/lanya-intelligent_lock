@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,6 +51,13 @@ public class LocksAction {
         JSONObject datas = new JSONObject();
 
         List<Locks> list = ilocksDao.findLocksList(deptId,pager);
+        String temp = "";
+        for (int i = 0; i < list.size(); i++) {
+            temp = list.get(i).getLockDate().toString();
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
+            String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+            list.get(i).setLockCode(str);
+        }
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
 

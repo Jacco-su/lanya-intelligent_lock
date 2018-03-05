@@ -2,17 +2,14 @@ package com.dream.brick.equipment.action;
 
 
 import com.alibaba.fastjson.JSON;
-import com.dream.brick.equipment.bean.Collector;
 import com.dream.brick.equipment.bean.Collectore;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.CollectoreDao;
-import com.dream.brick.listener.BasicData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
 import org.json.JSONObject;
-import org.json.JSONString;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -58,6 +56,14 @@ public class CollectoreAction {
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
         List<Collectore> list = collectoreDao.findCollectoreList(deptId,pager);
+
+        String temp = "";
+        for (int i = 0; i < list.size(); i++) {
+            temp = list.get(i).getCeDate().toString();
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
+            String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+            list.get(i).setCeDate(str);
+        }
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
@@ -160,6 +166,8 @@ public class CollectoreAction {
     @RequestMapping("/prUpdate")
     public String prUpdate(String id, ModelMap model,String deptId,Pager pager) {
         Collectore collectore = collectoreDao.find(Collectore.class, id);
+//        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(collectore.getCeDate().trim().toString());
+//        String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
         model.addAttribute("collectore", collectore);
         String str = JSON.toJSONString(collectorDao.findCollectorList(deptId,pager));
         if(str.equals("")||str==null){

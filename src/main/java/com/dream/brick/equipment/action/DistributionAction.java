@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static com.dream.brick.listener.BasicData.qgdisDao;
@@ -52,6 +54,19 @@ public class DistributionAction {
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
         List<Qgdis> list = disDao.findQgdisList(deptId, dissName, pager);
+        if (list.size() > 0) {
+            String temp = "";
+            temp = list.get(0).getCreateTime().toString();
+            System.out.println(temp + "ddddddd");
+            for (int i = 0; i < list.size(); i++) {
+                temp = list.get(i).getCreateTime().toString();
+                System.out.println(temp);
+                Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
+                String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+                System.out.println(str + "fdfdfdfdfdfdfd");
+                list.get(i).setCreateTime(str);
+            }
+        }
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
