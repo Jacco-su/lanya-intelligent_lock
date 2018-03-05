@@ -111,4 +111,6 @@ public interface IUserDao extends BaseDao {
 	List<User> ulist(IPager pager, String deptId) throws Exception;
 	List<User> uquery(IPager pager, String username) throws Exception;
 	void uupdateUser(User user);
+
+	public List<User> keyssUser(String deptId,Pager pager) throws Exception;
 }

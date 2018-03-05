@@ -8,6 +8,7 @@ import com.dream.brick.admin.bean.User;
 import com.dream.brick.admin.bean.UserRole;
 import com.dream.brick.admin.dao.IUserDao;
 import com.dream.framework.dao.Pager;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -294,4 +295,16 @@ public class UserDao extends BaseDaoImpl implements IUserDao {
 	public void uupdateUser(User user){
 		update(user);
 	}
+
+
+	public List<User> keyssUser(String deptId,Pager pager) throws Exception {
+		String hql=null;
+		if(StringUtils.isNotEmpty(deptId)){
+			hql = "from User where dept.id= "+deptId;
+		}else{
+			hql = "from User";
+		}
+		return query(hql, pager);
+	}
+
 }

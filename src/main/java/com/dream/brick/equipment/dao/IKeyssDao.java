@@ -16,7 +16,7 @@ public interface IKeyssDao extends BaseDao {
 
     public List<Keyss> findKeyssList(Pager pager);
 
-    List<Keyss> findKeyssList(String deptId,Pager pager);
-    public List<Keyss> findKeyssUserList(String userId);
+    public List<Keyss> findKeyssList(String deptId,Pager pager);
+    public List<Keyss> findKeyssUserList(String deptId);
 
 }

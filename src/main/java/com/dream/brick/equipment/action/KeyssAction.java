@@ -91,10 +91,10 @@ public class KeyssAction {
     }
 
     @RequestMapping("/prUpdate")
-    public String Update(String id, ModelMap modelMap) {
+    public String Update(String id, ModelMap modelMap,String deptId, String dissName, Pager pager) throws Exception {
         Keyss keyss = ikeyssDao.find(Keyss.class, id);
         modelMap.addAttribute("keyss", keyss);
-        modelMap.addAttribute("userList", JSON.toJSONString(userDao.findAllUser()));
+        modelMap.addAttribute("userList", JSON.toJSONString(userDao.keyssUser(deptId,pager)));
         return "admin/keyss/update";
     }
 
