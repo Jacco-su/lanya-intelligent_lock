@@ -44,11 +44,11 @@
                     <input name="dept.id" type="hidden" value="${keyss.user.id}"/>
                     <input name="keyssCode" value="${keyss.keyssCode}" class="easyui-validatebox" required="true"/></td>
             </tr>
-            <tr>
+  <%--          <tr>
                 <td>钥匙名称:</td>
                 <td><input name="keyssName" value="${keyss.keyssName}" class="easyui-validatebox" required="true"/>
                 </td>
-            </tr>
+            </tr>--%>
             <tr>
                 <td>钥匙MAC:</td>
                 <td><input name="keyssMAC" value="${keyss.keyssMAC}" class="easyui-validatebox" required="true"/>
@@ -58,16 +58,7 @@
             <tr>
                 <td width="100">领用人：</td>
                 <td>
-                    <%--<input type="text" name="userName" id="areaname" value="${keyss.userName}"/><a--%>
-                    <%--class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>--%>
-                    <%--<input type="hidden" name="discode" id="discode" value="${keyss.id}"/>--%>
-                    <%--<input type="hidden" name="user.id" id="discode" value="${keyss.user.username}"/>--%>
                     <select id="usersname" name="user.id" style="width: 200px;"></select>
-
-                        <%--<select class="easyui-combobox" name="userName" id="users" style="width: 180px;"--%>
-                                <%--data-options="editable:false,valueField:'id', textField:'text'">--%>
-                            <%--<option value="0">---请选择---</option>--%>
-                        <%--</select>--%>
 
                 </td>
             </tr>
