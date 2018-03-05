@@ -120,7 +120,6 @@
                     }]
             });
             displayMsg();
-
             function displayMsg() {
                 infolist.datagrid('getPager').pagination({
                     beforePageText: '第',
@@ -236,11 +235,7 @@
                         var v = $(this).form('validate');
                         if (v) {
                         }
-                        var p = $("#ceMAC").val();
-                        if (!p.match(/／^[A-F0-9]{2}(:[A-F0-9]{2}){5}$/)) {
-//            alert("请输入8位数字！");
-                            $.messager.alert('提示', '请正确格式输入MAC！', 'warning');
-                        }
+
                         return v;
                         return $(this).form('validate');
                     },
@@ -292,7 +287,6 @@
                         handler: update
                     }]
                 });
-
             }
 
             function del() {
@@ -333,7 +327,6 @@
         }
 
         var fullname = "";
-
         function getDisname(node) {
             fullname = node.text + " " + fullname;
             if (node.attributes.parentcode == 0) {
@@ -352,7 +345,6 @@
             displayMsg();
             $('#query').window('close');
         }
-
 
     </script>
 </head>
