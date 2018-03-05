@@ -243,7 +243,7 @@
             function search(){
                 addWin = $.createWin( {
                     title : "查询条件",
-                    contents: "<table style='font-size:12px;'><tr><td>站点：</td><td><input id='dissName' /></td></tr></table>",
+                    contents: "<table style='font-size:12px;'><tr><td>采集器：</td><td><input id='dissName' /></td></tr></table>",
                     width : 300,
                     buttons : [ {
                         text : '查询',
