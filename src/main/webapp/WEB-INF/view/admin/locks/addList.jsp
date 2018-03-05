@@ -158,6 +158,7 @@
 
 
         function getLock(t) {
+            $("#lockCode").val("");
             var key = $('#collector').combobox('getText') + ","
                 + t + ","
                 + $('#collectore').combobox('getText')+","+deptId;
@@ -183,15 +184,13 @@
                                 "id": lockNum,
                                 "text": lockNum
                             });
-                            console.log(data.message.split(";")[1]);
-                            console.log(collectorData);
                             $("#lockCode").val(lockNum);
                         }
                     } else {
                         if (t == 2) {
-                            alert("初始化门锁失败!");
+                            alert("初始化门锁信息未获取到!");
                         } else {
-                            alert("读取门锁信息失败!");
+                            alert("未获取到门锁信息!");
                         }
                     }
                 }
@@ -212,9 +211,6 @@
             <td valign="top" style="border: 1px solid #99bbe8;">
                 <div class="easyui-panel" title="添加门锁" style="width:800px">
                     <div style="padding:10px 60px 20px 60px">
-
-                        <%--<form name="addForm" id="addForm" action="${basePath}/locks/add" method="post">--%>
-
                             <table cellpadding="5">
                                 <tr>
                                     <td>站点:</td>
