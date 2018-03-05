@@ -153,7 +153,12 @@
             }
         });
         function keyBinding() {
-            var key=$('#collector').combobox('getText')+",7,"+$('#collectore').combobox('getText')+","+""+",";
+            var key=$('#collector').combobox('getText')
+                +",7,"
+                +$('#collectore').combobox('getText')+","
+                +""
+                +","
+                +$('#users').combobox('getValue');
             var data={
                 "key":key
             };

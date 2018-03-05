@@ -20,25 +20,13 @@
             <input type="hidden" name="areacode" value="4101"/>
             <input name="name" class="easyui-validatebox" required="true"/></td>
 	</tr>
-    <%--<tr>--%>
-    <%--<td>所属区域:</td>--%>
-    <%--<td>--%>
-    <%--<select name="qgorgId" name="qgorgId" style="width:200px;" class="easyui-validatebox" required="true">--%>
-    <%--<option value="">---请选择---</option>--%>
-    <%--<c:forEach items="${qgorgList}" var="qgorg" varStatus="s">--%>
-    <%--<option value="${qgorg.id}"--%>
-    <%--<c:if test="${qgorg.id eq seqgorg.id}">selected</c:if>>${qgorg.name}</option>--%>
-    <%--</c:forEach>--%>
-    <%--</select>--%>
-    <%--</td>--%>
-    <%--</tr>	--%>
-	<tr>
+	<%--<tr>
 		<td>排序:</td>
 		<td>
 		<input name="orderId"  class="easyui-validatebox" required="true"/>
 		<input type="hidden" name="treeShow" value="1"/>
 		</td>
-	</tr>
+	</tr>--%>
 </table>
 </form>
 </body>

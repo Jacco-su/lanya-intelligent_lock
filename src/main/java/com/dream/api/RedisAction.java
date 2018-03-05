@@ -39,23 +39,35 @@ public class RedisAction {
         String  authModel=null;
         //钥匙绑定
         if("7".equals(keys[1])){
-            ////采集器id:指令字:mac地址:钥匙mac地址
-            authModel=new AuthModel(new byte[]{7}, AuthModel.toData(7,14), Constants.KEY).toString();
+            ////采集器id:指令字:mac地址:钥匙mac地址:用户id
+            authModel=new AuthModel(new byte[]{7}, AuthModel.toBingKeyData(14,ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keys[4],8))), Constants.KEY).toString();
         }else if("12".equals(keys[1])){
             //给钥匙校时
             ////采集器id:指令字:控制器mac地址:钥匙mac地址
            authModel=new AuthModel(new byte[]{12},AuthModel.toData(12,14),Constants.LOCK_KEY).toString();//校时成功
         }else if("5".equals(keys[1])){
             //开始授权
-            //采集器id:指令字:控制器mac地址:钥匙mac地址:锁识别号:开始日期:结束日期
-            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray("01010101"),ByteUtil.hexStrToByteArray(keys[4]),keys[2],keys[5],keys[6]),Constants.LOCK_KEY).toString();//
+            //采集器id:指令字:控制器mac地址:钥匙mac地址:锁识别号:开始日期:结束日期:用户id
+            System.out.println(keys[7]);
+            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keys[7],8)),keys[4],keys[2],keys[5],keys[6]),Constants.LOCK_KEY).toString();//
         }else if("1".equals(keys[1])){
             //获取门锁信息  key=0000000002,1,DF:98,
             //采集器id:指令字:控制器mac地址
             authModel=new AuthModel(new byte[]{1},AuthModel.toData(1,1),Constants.KEY).toString();
         }else if("2".equals(keys[1])){
-            //初始化锁      key=0000000002,2,DF:98,
-           authModel=new AuthModel(new byte[]{2},AuthModel.toData(2,10),Constants.KEY).toString();
+            //初始化锁      key=0000000002,2,DF:98:deptId,
+            Object value=redisTemplateUtil.get("lanya-lock-client");
+            String lockNum="";
+            if(value==null){
+                lockNum="41"+keys[3];
+                lockNum=addZeroForNum(lockNum,16);
+                redisTemplateUtil.set("lanya-lock-client",lockNum);
+            }else{
+                lockNum=String.valueOf(Long.parseLong(value.toString())+1);
+                redisTemplateUtil.set("lanya-lock-client",lockNum);
+            }
+            System.out.println(lockNum+"lockNum");
+          authModel=new AuthModel(new byte[]{2},AuthModel.toLockData(32,lockNum),Constants.KEY).toString();
         }else if("13".equals(keys[1])){
             //获取钥匙Mac地址
             authModel = new AuthModel(new byte[]{13}).toString();
@@ -70,8 +82,12 @@ public class RedisAction {
         jsonDataProtocol.setDataType("client");
         System.out.println(dataProtocol.toString());
         String authKey=JSON.toJSONString(jsonDataProtocol)+";"+SessionData.getAdminId(request);
-        for (int i = 0; i < 3; i++) {
+        if("2".equals(keys[1])){
             redisTemplateUtil.setList("lanya-lite", authKey);
+        }else {
+            for (int i = 0; i < 3; i++) {
+                redisTemplateUtil.setList("lanya-lite", authKey);
+            }
         }
         try {
             Thread.sleep(15000);
@@ -108,5 +124,24 @@ public class RedisAction {
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         redisTemplateUtil.set(key, value);
         return StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+    }
+    public static String addZeroForNum(String str, int strLength) {
+        int strLen = str.length();
+        StringBuffer sb = null;
+        while (strLen < strLength) {
+            sb = new StringBuffer();
+            //sb.append("0").append(str);// 左补0
+            sb.append(str).append("0");//右补0
+            str = sb.toString();
+            strLen = str.length();
+        }
+        return str;
+    }
+    public static void main(String[] args) {
+
+        System.out.println(addZeroForNum("4110003",16));
+        //34313130303033303030303030303031
+        System.out.println(ByteUtil.bytesToHex("".getBytes()));
+        System.out.println(ByteUtil.hexStr2Str("30343031303230323030303030303030"));
     }
 }

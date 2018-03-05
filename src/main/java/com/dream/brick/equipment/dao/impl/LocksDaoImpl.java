@@ -4,6 +4,7 @@ import com.dream.brick.equipment.bean.Locks;
 import com.dream.brick.equipment.dao.ILocksDao;
 import com.dream.framework.dao.BaseDaoImpl;
 import com.dream.framework.dao.Pager;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,17 @@ public class LocksDaoImpl extends BaseDaoImpl implements ILocksDao {
         String hql = "from Locks";
         return query(hql, pager);
     }
+
+    public List<Locks> findLocksList(String deptId,Pager pager) {
+        String hql=null;
+        if(StringUtils.isNotEmpty(deptId)){
+            hql = "from Locks where qgdis.dept.id= "+deptId;
+        }else{
+            hql = "from Locks";
+        }
+        return query(hql, pager);
+    }
+
 
 
 }

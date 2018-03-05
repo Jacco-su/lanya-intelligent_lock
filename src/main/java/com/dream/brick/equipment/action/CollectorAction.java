@@ -9,6 +9,7 @@ import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -44,17 +45,17 @@ public class CollectorAction {
     @RequestMapping("/prList")
     public String prList(String collectorId, HttpServletRequest request)
             throws Exception {
-        return "admin/collector/list";
+        return "admin/collector/lists";
     }
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, Pager pager)
+    public String list(int page, int rows, Pager pager,String deptId)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        List<Collector> list = collectorDao.findCollectorList(pager);
+        List<Collector> list = collectorDao.findCollectorList(deptId,pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
@@ -62,8 +63,8 @@ public class CollectorAction {
 
 
     @RequestMapping("/prAdd")
-    public String prAdd(ModelMap model) {
-        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findAllQgdis()));
+    public String prAdd(ModelMap model,String deptId, String dissName, Pager pager) {
+        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
         return "admin/collector/add";
     }
 
@@ -116,9 +117,11 @@ public class CollectorAction {
 
 
     @RequestMapping("/prUpdate")
-    public String prUpdate(String id, ModelMap model) {
+    public String prUpdate(String id, ModelMap model,String deptId, String dissName, Pager pager) {
         Collector collector = collectorDao.find(Collector.class, id);
         model.addAttribute("collectora", collector);
+        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
+
         return "admin/collector/update";
     }
 
@@ -135,16 +138,8 @@ public class CollectorAction {
     public String update(@ModelAttribute Collector collector) {
         String message = "";
         try {
-//                Qgdis qgdis= BasicData.findAreaByAreacode(collector.getAreacode());
-//                collector.setAreaname(qgdis.getAreaname());
-//                Qgdis qgdis= BasicData.findQgdsiById(collector.getDis().getId());
-//                collector.setDis(qgdis.getName());
-//                Qgdis qgdis = BasicData.findCollectorByQgdisId(collector.getDis().getId());
-//                collector.setDis();
-
-
-            collector.setCcode(collector.getCcode().trim());
-            collector.setCip(collector.getCip().trim());
+//            collector.setCcode(collector.getCcode().trim());
+//            collector.setCip(collector.getCip().trim());
 //                collector.setDis(collector.getDis().g.trim());
             collectorDao.update(collector);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);

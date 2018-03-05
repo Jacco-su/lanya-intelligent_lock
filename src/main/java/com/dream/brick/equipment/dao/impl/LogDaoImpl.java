@@ -15,7 +15,7 @@ public class LogDaoImpl extends BaseDaoImpl implements LogDao {
 	public List<Log> findLogList(Pager pager){
 		 String areacode=pager.getParamValue("areacode");
 		 //地区编码，不同地区只能查看自己管辖的地区数据	
-		 String hql="from Log t";
+		 String hql="from Log t order by createTime desc";
 		 return query(hql, pager);
 	}
 }

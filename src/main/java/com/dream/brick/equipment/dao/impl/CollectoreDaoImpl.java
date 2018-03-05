@@ -4,6 +4,7 @@ import com.dream.brick.equipment.bean.Collectore;
 import com.dream.brick.equipment.dao.CollectoreDao;
 import com.dream.framework.dao.BaseDaoImpl;
 import com.dream.framework.dao.Pager;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +40,8 @@ public class CollectoreDaoImpl extends BaseDaoImpl implements CollectoreDao {
         return findList(hql);
     }
     public List<Collectore> findCollectoreByQgdisid(String disId) {
-        String hql = "from Collectore t ";
+
+        String hql = "from Collectore t where disId="+disId;
         return findList(hql);
     }
 
@@ -48,12 +50,18 @@ public class CollectoreDaoImpl extends BaseDaoImpl implements CollectoreDao {
 
         return query(hql, pager);
     }
+    public List<Collectore> findCollectoreList(String deptId, Pager pager) {
+        String hql=null;
+        if(StringUtils.isNotEmpty(deptId)){
+            hql = "from Collectore where collector.dis.dept.id= "+deptId;
+        }else{
+            hql = "from Collectore";
+        }
+        return query(hql, pager);
+    }
 
     @Override
     public void addCollectore(Collectore collectore) {
-
         save(collectore);
-
-
     }
 }

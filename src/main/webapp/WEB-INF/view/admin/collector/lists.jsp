@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>站点列表</title>
+    <title>采集器列表</title>
     <link rel="stylesheet" type="text/css"
           href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css"
@@ -24,7 +24,7 @@
             var deptId = "";
             var infolist = $('#infolist');
             infolist.datagrid( {
-                title: '站点列表',
+                title: '采集器列表',
                 iconCls : 'icon-users',
                 width : '95%',
                 height : 560,
@@ -35,7 +35,7 @@
                 collapsible : false,
                 fitColumns : true,
                 singleSelect : true,
-                url : '${basePath}/disa/list',
+                url : '${basePath}/collector/list',
                 queryParams:{
                     'deptId':deptId
                 },
@@ -47,44 +47,48 @@
                     showEdit(id);
                 },
                 columns : [ [
+//                    {
+//                        title: '区域',
+//                        field : 'deptname',
+//                        formatter : function(value,rowData,rowIndx) {
+//                            return rowData.dept.name;
+//                        },
+//                        width : $(this).width() * 0.1,
+//                        align : 'center'
+//                    },
                     {
-                        title: '区域',
-                        field : 'deptname',
-                        formatter : function(value,rowData,rowIndx) {
-                            return rowData.dept.name;
+                        title: '采集器编号',
+                        field: 'id',
+                        width: $(this).width() * 0.1,
+                        align: 'center'
+                    }, {
+                        title: '采集器ID',
+                        field: 'ccode',
+                        width: $(this).width() * 0.2,
+                        align: 'center'
+                    },
+                    {
+                        title: '所属站点',
+                        field: 'dissName',
+                        formatter: function (value, rowData, rowIndx) {
+                            return rowData.dis.name;
                         },
-                        width : $(this).width() * 0.1,
-                        align : 'center'
+                        width: $(this).width() * 0.2,
+                        align: 'center'
                     },
                     {
-                        title: '站点编号',
-                        field : 'id',
-                        width : $(this).width() * 0.1,
-                        rowspan : 2,
-                        align : 'center'
+                        title: '添加日期 ',
+                        field: 'cdate',
+                        width: $(this).width() * 0.2,
+                        align: 'left',
+//                        formatter:function(date)
+//                        { /* 调用函数显示时间 */
+////                            SimpleDateFormat c = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+//                            return format(date);
+//
+//                        }
                     },
-                    {
-                        title: '站点名称',
-                        field : 'name',
-                        width : $(this).width() * 0.1,
-                        rowspan : 2,
-                        align : 'center'
-                    },
-                    {
-                        title: '站点地址',
-                        field : 'address',
-                        width : $(this).width() * 0.1,
-                        rowspan : 2,
-                        align : 'center'
-                    },
-                    {
-                        title : '添加时间',
-                        field : 'createTime',
-                        width : $(this).width() * 0.1,
-                        rowspan : 2,
-                        align : 'center'
-                    }
-                    ] ],
+                ]],
                 pagination : true,
                 rownumbers : true,
                 toolbar : [ {
@@ -109,7 +113,7 @@
 
             function refresh() {
                 infolist.datagrid( {
-                    url : '${basePath}/disa/list',
+                    url : '${basePath}/collector/list',
                     queryParams:{
                         'deptId':deptId
                     },
@@ -160,8 +164,8 @@
             function add() {
                 if (deptId != "") {
                     addWin = $.createWin( {
-                        title: "站点添加",
-                        url : basePath+'/disa/prAdd?deptId='+deptId,
+                        title: "采集器添加",
+                        url : basePath+'/collector/prAdd?deptId='+deptId,
                         height: 350,
                         width: 500,
                         buttons : [ {
@@ -184,8 +188,8 @@
             }
             function showEdit(id){
                 updateWin = $.createWin( {
-                    title: "站点修改",
-                    url : basePath+'/disa/prUpdate',
+                    title: "采集器修改",
+                    url : basePath+'/collector/prUpdate?deptId='+deptId,
                     data : 'id=' +id,
                     height: 350,
                     width: 500,
@@ -204,9 +208,9 @@
                     success : function(data) {
                         var json=eval("("+data+")");
                         if(json.result=='1') {
-                            $.messager.alert('提示', '保存成功', 'warning');
+                            $.messager.alert('提示', '修改成功', 'warning');
                         }else{
-                            $.messager.alert('提示', '保存失败', 'warning');
+                            $.messager.alert('提示', '修改失败', 'warning');
                         }
                         $.closeWin(updateWin);
                         infolist.datagrid('reload');
@@ -220,20 +224,12 @@
                         if (f) {
                             $.ajax( {
                                 type : "POST",
-                                url : basePath+"/disa/delete",
+                                url : basePath+"/collector/delete",
                                 data : "id=" + select.id,
                                 dataType : "text",
                                 cache : false,
                                 success : function(msg) {
-                                    var json = eval("(" + msg + ")");
-                                    if(json.result=='0') {
-                                        $.messager.alert('提示', '有智能锁不能删除', 'warning');
-                                    }else if(json.result=='1') {
-                                        $.messager.alert('提示', '有采集器不能删除', 'warning');
-                                    }else{
-                                        $.messager.alert('提示', '删除成功', 'warning');
-                                    }
-//                                    $.messager.alert('提示', '删除成功!', 'warning');
+                                    $.messager.alert('提示', '删除成功!', 'warning');
                                     infolist.datagrid('reload');
                                 }
                             });
@@ -258,7 +254,7 @@
             }
             function query() {
                 infolist.datagrid( {
-                    url : basePath+'/disa/list',
+                    url : basePath+'/collector/list',
                     queryParams:{
                         'dissName':$('#dissName').val()
                     },

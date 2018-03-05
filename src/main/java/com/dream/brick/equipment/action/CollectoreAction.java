@@ -2,14 +2,17 @@ package com.dream.brick.equipment.action;
 
 
 import com.alibaba.fastjson.JSON;
+import com.dream.brick.equipment.bean.Collector;
 import com.dream.brick.equipment.bean.Collectore;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.CollectoreDao;
+import com.dream.brick.listener.BasicData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
 import org.json.JSONObject;
+import org.json.JSONString;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -49,12 +52,12 @@ public class CollectoreAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, Pager pager)
+    public String list(int page, int rows, Pager pager,String deptId)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        List<Collectore> list = collectoreDao.findCollectoreList(pager);
+        List<Collectore> list = collectoreDao.findCollectoreList(deptId,pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
@@ -62,9 +65,10 @@ public class CollectoreAction {
 
 
     @RequestMapping("/prAdd")
-    public String prAdd(ModelMap modelMap) {
-        modelMap.addAttribute("collectorList", JSON.toJSONString(collectorDao.findAllCollector()));
+    public String prAdd(ModelMap modelMap,String deptId, Pager pager) {
+//        modelMap.addAttribute("collectorList", JSON.toJSONString(collectorDao.findAllCollector()));
 //        model.addAttribute("collectoreId", collectoreId);
+        modelMap.addAttribute("collectorList",JSON.toJSONString(collectorDao.findCollectorList(deptId,pager)));
         return "admin/collectore/add";
     }
 
@@ -73,7 +77,6 @@ public class CollectoreAction {
     @ResponseBody
     public String add(@ModelAttribute Collectore collectorea) {
         String message = "";
-
         try {
             collectorea.setCeDate(FormatDate.getYMdHHmmss());
 //                collectorea.setCeCode(collectorea.getCeCode());
@@ -155,9 +158,16 @@ public class CollectoreAction {
 
 
     @RequestMapping("/prUpdate")
-    public String prUpdate(String id, ModelMap model) {
+    public String prUpdate(String id, ModelMap model,String deptId,Pager pager) {
         Collectore collectore = collectoreDao.find(Collectore.class, id);
         model.addAttribute("collectore", collectore);
+        String str = JSON.toJSONString(collectorDao.findCollectorList(deptId,pager));
+        if(str.equals("")||str==null){
+            model.addAttribute("collectorList", "该站点下没有采集器");
+        }else {
+            model.addAttribute("collectorList", JSON.toJSONString(collectorDao.findCollectorList(deptId,pager)));
+        }
+
         return "admin/collectore/update";
     }
 
@@ -169,23 +179,26 @@ public class CollectoreAction {
     }
 
 
-//    @RequestMapping(value = "/update", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String update(@ModelAttribute Collectore collectore) {
-//        String message = "";
-//            try{
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public String update(@ModelAttribute Collectore collectore) {
+        String message = "";
+//            collectore.getId();
+            try{
 //                Collector collector= BasicData.findAreaByAreacode(collectore.getAreacode());
-//                collectore.setAreaname(collector.getAreaname());
+//                collectore.setAreaname(collector.getAreaname());In
 //                collectore.setAddress(collectore.getAddress().trim());
 //                collectore.setName(collectore.getName().trim());
-//                collectoreDao.update(collectore);
-//                message=StringUtil.jsonValue("1",AppMsg.UPDATE_SUCCESS);
-//            }catch(Exception e){
-//                message=StringUtil.jsonValue("0",AppMsg.UPDATE_ERROR);
-//            }
-//
-//        return message;
-//    }
+//                collectoreDao.save(collectore);
+//                collectore.setCeDate(FormatDate.getYMdHHmmss().trim());
+                collectoreDao.update(collectore);
+                message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
+            } catch (Exception e) {
+                e.printStackTrace();
+                message = StringUtil.jsonValue("0", AppMsg.UPDATE_ERROR);
+            }
+        return message;
+    }
 
     @RequestMapping(value = "/delete")
     @ResponseBody

@@ -2,6 +2,8 @@ package com.dream.brick.admin.action;
 
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.dao.IDeptDao;
+import com.dream.brick.equipment.bean.Qgorg;
+import com.dream.brick.listener.BasicData;
 import com.dream.brick.listener.SessionData;
 import com.dream.util.AppMsg;
 import com.dream.util.StringUtil;
@@ -95,8 +97,8 @@ public class DeptAction {
             if (StringUtils.isBlank(dept.getParentId())) {
                 dept.setParentId("null");
             }
-//		Qgorg qgorg=BasicData.findQgorgById(dept.getQgorgId());
-//		dept.setAreacode(qgorg.getAreacode());
+	        dept.setQgorgId("1001");
+	        dept.setAreacode("4101");
             deptDao.save(dept);
             message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {

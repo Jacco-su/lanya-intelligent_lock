@@ -281,4 +281,17 @@ public class UserDao extends BaseDaoImpl implements IUserDao {
         return findList(hql);
     }
 
+	@Override
+	public List<User> ulist(IPager pager, String deptId) throws Exception {
+		String hql = "from User where deptId=? and id!='"+deptId+"'  and name is null and status!=0 order by orderId , rdate asc";
+		return query(hql, pager, deptId);
+	}
+	@Override
+	public List<User> uquery(IPager pager, String username) throws Exception {
+		String hql = "from User where username like ?  and name is null and status!=0 order by orderId , rdate asc";
+		return query(hql, pager, "%" + username + "%");
+	}
+	public void uupdateUser(User user){
+		update(user);
+	}
 }

@@ -51,7 +51,11 @@
 
                 <tr>
                     <td>姓名:</td>
-                    <td><input name="username" size="40" class="easyui-validatebox" required="true" validType="CHS"
+                    <td>
+                        <input name="rdate" type="hidden" value="${user.rdate}"/>
+                        <input type="hidden"  name="dept.id" id="deptId" value="${user.dept.id}"/>
+                        <input type="hidden" name="id"  id="id"  value="${user.id}"/>
+                        <input name="username" size="40" class="easyui-validatebox" required="true" validType="CHS"
                                value="${user.username}"/></td>
                 </tr>
                 <%--<tr>--%>
@@ -74,7 +78,7 @@
                     <td><input name="email" size="40" class="easyui-validatebox" validType="email"
                                value="${user.email}"/></td>
                 </tr>
-                <tr>
+               <%-- <tr>
                     <td>排序序号:</td>
                     <td>
                         <select id="orderId" name="orderId" style="width:100px;">
@@ -84,7 +88,7 @@
                         </select>
 
                     </td>
-                </tr>
+                </tr>--%>
 
             </table>
         </form>

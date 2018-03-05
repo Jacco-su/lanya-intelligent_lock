@@ -76,7 +76,7 @@ public class ConsoleAction {
 				request.getSession().setAttribute("admin", admin);
 				request.getSession().setAttribute("dept", dept);
 				request.getSession().setAttribute("seqgorg",qgorg);
-                request.getSession().setAttribute("seareacode", qgorg.getAreacode());    //**
+				request.getSession().setAttribute("seareacode", qgorg.getAreacode());    //**
                 admin.setRoles(userDao.findRoles(admin.getId()));
 				List<Role> roles = admin.getRoles();
 				if(roles.size()==0){
@@ -133,7 +133,7 @@ public class ConsoleAction {
 				model.addAttribute("module", jsonObject.toString());
 				model.addAttribute("root", root);
 				model.addAttribute("tip", tip);
-				//SessionData.createSyslog(request,0, "登录系统");
+				SessionData.createSyslog(request,0, "登录系统");
 				return "/console/index";
 			} else {
 				errormsg =findLogMsg(101);

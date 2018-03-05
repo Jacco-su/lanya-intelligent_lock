@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>智能锁信息</title>
+    <title>授权记录信息</title>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
@@ -16,14 +16,14 @@
     <script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
-    <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
+
     <script type="text/javascript">
         var basePath = "${basePath}";
         $(function () {
             var deptId="";
             var infolist = $('#infolist');
             infolist.datagrid({
-                title: '智能锁列表',
+                title: '授权记录列表',
                 iconCls: 'icon-users',
                 width: '95%',
                 height: 500,
@@ -33,9 +33,9 @@
                 striped: true,
                 collapsible: false,
                 fitColumns: true,
-                url: '${basePath}/locks/list',
-                queryParams: {
-                    "deptId" : deptId
+                url: '${basePath}/authlog/list',
+                queryParams:{
+                    'deptId':deptId
                 },
                 loadMsg: '数据装载中......',
                 remoteSort: false,
@@ -45,40 +45,64 @@
                     var id = rows[rowIndex].id;
                     detail(id);
                 },
-                columns: [[
+                columns: [[{
+                    title: '授权名称',
+                    field: 'authName',
+                    width: $(this).width() * 0.1,
+                    align: 'center'
+                },
                     {
-                        title: '智能锁编号',
-                        field: 'lockNum',
-                        width: 250,
+                        title: '创建时间',
+                        field: 'createTime',
+                        width: $(this).width() * 0.1,
                         align: 'center'
                     },
                     {
-                        title: '识别码',
-                        field: 'lockCode',
-                        width: 250,
+                        title: '授权类型',
+                        field: 'authType',
+                        width: $(this).width() * 0.1,
                         align: 'center'
                     },
                     {
-                        title: '所属站点',
-                        field: 'dissName',
+                        title: '授权人员',
+                        field: 'userName',
                         formatter: function (value, rowData, rowIndx) {
-                            return rowData.qgdis.name;
+                            return rowData.user.username;
                         },
                         width: $(this).width() * 0.1,
                         align: 'center'
                     },
                     {
-                        title: '地址',
-                        field: 'address',
-                        width: 200,
-                        align: 'center'
-                    },
-                    {
-                        title: '添加时间',
-                        field: 'lockDate',
-                        width: 150,
+                        title: '授权钥匙',
+                        field: 'authKeys',
+                        width: $(this).width() * 0.1,
                         align: 'left'
                     },
+                    {
+                        title: '授权锁具',
+                        field: 'authLocks',
+                        width: $(this).width() * 0.2,
+                        align: 'left'
+                    },
+                    {
+                        title: '授权开始时间',
+                        field: 'authStartTime',
+                        width: $(this).width() * 0.1,
+                        align: 'left'
+                    }
+                    ,
+                    {
+                        title: '授权结束时间',
+                        field: 'authEndTime',
+                        width: $(this).width() * 0.1,
+                        align: 'left'
+                    },
+                    {
+                        title: '授权状态',
+                        field: 'authStatus',
+                        width: $(this).width() * 0.1,
+                        align: 'left'
+                    }
                 ]],
                 pagination: true,
                 rownumbers: true,
@@ -88,11 +112,6 @@
                         iconCls: 'icon-view',
                         handler: seedetail
                     },
-//                    {
-//                        iconCls: "icon-add",
-//                        text: "添加",
-//                        handler: add
-//                    },
                     '-', {
                         text: '修改',
                         iconCls: 'icon-edit',
@@ -116,13 +135,14 @@
             var addWin;
             var seeWin;
             var updateWin;
+            var seeuWin;
 
             function add() {
                 addWin = $.createWin({
                     title: "添加",
-                    url: '${basePath}/locks/prAdd',
-                    height: 450,
-                    width: 600,
+                    url: '${basePath}/keyss/prAdd',
+                    height: 350,
+                    width: 800,
                     buttons: [{
                         text: '保存',
                         iconCls: 'icon-ok',
@@ -157,7 +177,7 @@
             function detail(id) {
                 seeWin = $.createWin({
                     title: "详情",
-                    url: '${basePath}/locks/prView',
+                    url: '${basePath}/keyss/prView',
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
@@ -165,35 +185,23 @@
                 });
             }
 
-            $('#selectDept').window({
-                title: '安装区域选择',
-                width: 400,
+            $('#selectUser').window({
+                title: '领用人',
+                width: 800,
                 height: 500,
                 closed: true,
                 modal: true
             });
-            $('#tree').tree({
-                checkbox: false,
-                url: basePath+'/dept/getChildren',
-                onBeforeExpand:function(node,param){
-                    $('#tree').tree('options').url = basePath+"/dept/getChildren?parentId=" + node.id;
-                },
-                onClick:function(node){
-                    deptId = node.id;
-                    refresh();
-                }
-            });
-
-
             function refresh() {
                 infolist.datagrid( {
-                    url : '${basePath}/locks/list',
+                    url: '${basePath}/keyss/list',
                     queryParams:{
                         'deptId':deptId
                     },
                     loadMsg : '数据装载中......'
                 });
                 infolist.datagrid("clearSelections");
+                infolist.datagrid("reload");
                 displayMsg();
             }
 
@@ -226,7 +234,7 @@
             function showEdit(id) {
                 updateWin = $.createWin({
                     title: "修改",
-                    url: basePath + '/locks/prUpdate',
+                    url: '${basePath}/keyss/prUpdate',
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
@@ -244,7 +252,7 @@
                 if (selected) {
                     $.messager.confirm('警告', '确定要删除么?', function (f) {
                         if (f) {
-                            $.post("${basePath}/locks/delete", {"id": selected.id}, function (json) {
+                            $.post("${basePath}/keyss/delete", {"id": selected.id}, function (json) {
                                 $.messager.alert('提示', json.message);
                                 if (json.result == 1) {
                                     infolist.datagrid('reload');
@@ -256,63 +264,65 @@
                     $.messager.alert('警告', '未选中任何数据', 'warning');
                 }
             }
+
+//----------------------------------------------
+            function search() {
+                addWin = $.createWin({
+                    title: "查询条件",
+                    contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr></table>",
+                    width: 300,
+                    buttons: [{
+                        text: '查询',
+                        iconCls: 'icon-search',
+                        handler: uquery
+                    }]
+                });
+            }
+
+            function uquery() {
+                infolist.datagrid({
+                    url: basePath + '/user/list',
+                    queryParams: {
+                        'username': $('#username').val()
+                    },
+                    loadMsg: '数据装载中......'
+                });
+                infolist.datagrid("clearSelections");
+                displayMsg();
+                $.closeWin(seeuWin);
+            }
+
+            $('#infolist').tree({
+                checkbox: false,
+                url: basePath + '/user/list',
+                onBeforeExpand: function (node, param) {
+                    $('#tree').tree('options').url = basePath + "/dept/getChildren?parentId=" + node.id;
+                },
+                onClick: function (node) {
+                    deptId = node.id;
+                    refresh();
+                }
+            });
+            
+            function query() {
+                infolist.datagrid({
+                    url: basePath + '/user/list',
+                    queryParams: {
+                        'username': $('#username').val()
+                    },
+                    loadMsg: '数据装载中......'
+                });
+                infolist.datagrid("clearSelections");
+                displayMsg();
+                $.closeWin(seeuWin);
+            };
+
         });
 
 
-        //        -----
-
-        function setTodept() {
-            var id = "";
-            var show = "";
-            fullname = "";
-            var selections = $('#tree2').tree('getSelected');
-            if (selections) {
-                id = selections.id;
-                show = selections.attributes.deptname;
-                $("#deptid").val(id);
-                getDisname(selections);
-                fullname = fullname.substring(0, fullname.length - 1);
-                $("#deptid").val(fullname);
-            }
-            $('#selectDept').window('close');
-        }
-
-        var fullname = "";
-
-        function getDisname(node) {
-            if (node == null) return;					//改动 控制树显示
-            fullname = node.text + " " + fullname;
-            if (node.attributes.parentId == 0) {
-                return;
-            }
-            var abc = $('#tree2').tree('getParent', node.target);
-            getDisname(abc);
-        }
     </script>
 </head>
 <body>
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
-        <tr>
-            <td width="12%" valign="top"
-                style="border: 1px solid #99bbe8; border-right: 0;">
-                <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
-                <ul id="tree" style="margin-top: 10px;"></ul>
-            </td>
-            <td valign="top" style="border: 1px solid #99bbe8;">
-                <table id="infolist"></table>
-            </td>
-        </tr>
-    </table>
-<div id="selectDept">
-    <div class="easyui-layout" fit="true">
-        <div region="center" border="false" style="padding: 10px;">
-            <ul id="tree2" style="margin-top: 10px;"></ul>
-        </div>
-        <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
-            <a class="easyui-linkbutton" icon="icon-ok" onclick="setTodept();">确定</a>
-            <a class="easyui-linkbutton" icon="icon-cancel" onclick="$('#selectDept').window('close');">关闭</a>
-        </div>
-    </div>
-</div>
+<table id="infolist"></table>
 </body>
 </html>

@@ -231,8 +231,14 @@ public class AuthorizationAction {
             }
         }
         return null;
-
     }
+    @RequestMapping("/keys/user")
+    @ResponseBody
+    public String getKeysUserAction(String userId){
+
+        return JSON.toJSONString(ikeyssDao.findKeyssUserList(userId));
+    }
+
     @RequestMapping("/areaAuth")
     @ResponseBody
     public String areaAuth(String areaId, String startDate,String endDate,String userId,HttpServletRequest request) {
@@ -272,7 +278,7 @@ public class AuthorizationAction {
                                         for (int ii = 0; ii < locksList.size(); ii++) {
                                             Locks locks=locksList.get(ii);
                                             System.out.println(locks.getLockCode());
-                                            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray("01010101"),ByteUtil.hexStrToByteArray(locks.getLockCode()),collectore.getCeMAC(),startDate,endDate),Constants.LOCK_KEY).toString();//
+                                            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(userId,8)),locks.getLockCode(),collectore.getCeMAC(),startDate,endDate),Constants.LOCK_KEY).toString();//
                                             System.out.println("开始授权！");
                                             auth("5",macAddess,collector.getCcode(),adminId,authModel);
                                         }

@@ -20,9 +20,8 @@
     <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
     <script type="text/javascript">
         var basePath = "${basePath}";
+        var deptId="";
         $(function () {
-
-//            getkeys();
             $('#tree').tree({
                 checkbox: false,
                 url: basePath + '/dept/getChildren',
@@ -31,6 +30,7 @@
                 },
                 onClick: function (node) {
                     refresh(node.id);
+                    deptId=node.id;
                 }
             });
             //获取钥匙
@@ -160,7 +160,7 @@
         function getLock(t) {
             var key = $('#collector').combobox('getText') + ","
                 + t + ","
-                + $('#collectore').combobox('getText');
+                + $('#collectore').combobox('getText')+","+deptId;
             var data = {
                 "key": key
             };

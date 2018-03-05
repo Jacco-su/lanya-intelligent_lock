@@ -10,9 +10,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>蓝牙控制器信息</title>
-    <link rel="stylesheet" type="text/css" href="${basePath}/css/mainframe.css"/>
-    <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
-    <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="${basePath}/js/easyui/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/jquery.easyui.min.1.2.2.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
@@ -20,6 +21,7 @@
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
     <script type="text/javascript">
         $(function () {
+            var deptId = "";
             var infolist = $('#infolist');
             infolist.datagrid({
                 title: '控制器列表',
@@ -35,7 +37,7 @@
 
                 url: '${basePath}/collectore/list',
                 queryParams: {
-                    // 'disId': disId
+                     'deptId': deptId
                 },
                 loadMsg: '数据装载中......',
                 remoteSort: false,
@@ -43,7 +45,8 @@
                 onDblClickRow: function (rowIndex, field, value) {
                     var rows = infolist.datagrid("getRows");
                     var id = rows[rowIndex].id;
-                    detail(id);
+//                    detail(id);
+                    showEdit(id);
                 },
                 columns: [[{
                     title: '控制器名称',
@@ -71,15 +74,15 @@
                         width: $(this).width() * 0.2,
                         align: 'center'
                     },
-//                    {
-//                        title: '所属站点',
-//                        field: 'ccode',
-//                        formatter: function (value, rowData, rowIndx) {
-//                            return rowData.dis.name;
-//                        },
-//                        width: $(this).width() * 0.2,
-//                        align: 'center'
-//                    },
+                    {
+                        title: '所属站点',
+                        field: 'disName',
+                        formatter: function (value, rowData, rowIndx) {
+                            return rowData.collector.dis.name;
+                        },
+                        width: $(this).width() * 0.2,
+                        align: 'center'
+                    },
                     {
                         title: '添加日期 ',
                         field: 'ceDate',
@@ -105,11 +108,11 @@
                         text: "添加",
                         handler: add
                     },
-//                    '-', {
-//                        text: '修改',
-//                        iconCls: 'icon-edit',
-//                        handler: edit
-//                    },
+                    '-', {
+                        text: '修改',
+                        iconCls: 'icon-edit',
+                        handler: edit
+                    },
                     '-', {
                         text: '删除',
                         iconCls: 'icon-remove',
@@ -133,7 +136,10 @@
             function add() {
                 addWin = $.createWin({
                     title: "添加",
-                    url: '${basePath}/collectore/prAdd',
+                    url: '${basePath}/collectore/prAdd?deptId='+deptId,
+                    /*queryParams: {
+                        'deptId': deptId
+                    },*/
                     height: 350,
                     width: 500,
                     buttons: [{
@@ -193,11 +199,22 @@
                 simpleDataModel: true,
                 onBeforeExpand: function (node, param) {
                     $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId=" + node.id;// change the url
-                    return true;
+//                    return true;
+                },
+                onClick:function(node){
+                    deptId = node.id;
+                    refresh();
                 }
             });
 
             function refresh() {
+                infolist.datagrid( {
+                    url: '${basePath}/collectore/list',
+                    queryParams: {
+                        'deptId': deptId
+                    },
+                    loadMsg : '数据装载中......'
+                });
                 infolist.datagrid("clearSelections");
                 infolist.datagrid("reload");
                 displayMsg();
@@ -219,23 +236,50 @@
                         if (v) {
                         }
                         return v;
+                        return $(this).form('validate');
                     },
                     success: function (data) {
                         var json = eval("(" + data + ")");
                         $.messager.alert('提示', json.message, 'warning');
                         $.closeWin(updateWin);
                         refresh();
+
+////                        if(json.result=='0') {
+////                            $.messager.alert('提示', '保存成功', 'warning');
+////                        }else{
+////                            $.messager.alert('提示', '保存失败', 'warning');
+////                        }
+//
+//                        $.closeWin(updateWin);
+//                        infolist.datagrid('reload');
                     }
                 });
             }
+//            function update() {
+//                $('#editForm').form('submit', {
+//                    onSubmit:function(){
+//                        return $(this).form('validate');
+//                    },
+//                    success : function(data) {
+//                        var json=eval("("+data+")");
+//                        if(json.result=='1') {
+//                            $.messager.alert('提示', '修改成功', 'warning');
+//                        }else{
+//                            $.messager.alert('提示', '修改失败', 'warning');
+//                        }
+//                        $.closeWin(updateWin);
+//                        infolist.datagrid('reload');
+//                    }
+//                });
+//            }
 
             function showEdit(id) {
                 updateWin = $.createWin({
                     title: "修改",
-                    url: '${basePath}/collectore/prUpdate',
+                    url: '${basePath}/collectore/prUpdate?deptId='+deptId,
                     data: 'id=' + id,
-                    height: 550,
-                    width: 800,
+                    height: 350,
+                    width: 550,
                     buttons: [{
                         text: '修改',
                         iconCls: 'icon-ok',
@@ -270,7 +314,7 @@
             var id = "";
             var show = "";
             fullname = ""
-            var selections = $('#tree').tree('getSelected');
+            var selections = $('#tree2').tree('getSelected');
             if (selections) {
                 id = selections.id;
                 show = selections.attributes.deptname;
@@ -289,7 +333,7 @@
             if (node.attributes.parentcode == 0) {
                 return;
             }
-            var abc = $('#tree').tree('getParent', node.target);
+            var abc = $('#tree2').tree('getParent', node.target);
             getDisname(abc);
         }
 
@@ -307,17 +351,26 @@
     </script>
 </head>
 <body>
-<div>
-    <table id="infolist"></table>
-</div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
+    <tr>
+        <td width="12%" valign="top"
+            style="border: 1px solid #99bbe8; border-right: 0;">
+            <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
+            <ul id="tree" style="margin-top: 10px;"></ul>
+        </td>
+        <td valign="top" style="border: 1px solid #99bbe8;">
+            <table id="infolist"></table>
+        </td>
+    </tr>
+</table>
 <div id="selectCt">
     <div class="easyui-layout" fit="true">
         <div region="center" border="false" style="padding: 10px;">
-            <ul id="tree" style="margin-top: 10px;"></ul>
+            <ul id="tree2" style="margin-top: 10px;"></ul>
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
             <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
-            <a class="easyui-linkbutton" onclick="$('#selectCt').window('close');">关闭</a>
+            <a class="easyui-linkbutton" icon="icon-cancel" onclick="$('#selectCt').window('close');">关闭</a>
         </div>
     </div>
 </div>

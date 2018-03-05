@@ -232,8 +232,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						title : "用户修改",
 						url : basePath+'/user/prUpdate',
 						data : 'id=' +id,
-						height : 550,
-						width : 800,
+						height : 350,
+						width : 550,
 						buttons : [ {
 							text : '修改',
 							iconCls : 'icon-ok',
@@ -340,5 +340,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</td>
 	</tr>
 </table>
+<div id="selectDept">
+	<div class="easyui-layout" fit="true">
+		<div region="center" border="false" style="padding: 10px;">
+			<ul id="deptTree" style="margin-top: 10px;"></ul>
+		</div>
+		<div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
+			<a class="easyui-linkbutton"  icon="icon-ok" onclick="selectDept();">确定</a>
+			<a class="easyui-linkbutton" icon="icon-cancel" onclick="$('#selectDept').window('close');">关闭</a>
+		</div>
+	</div>
+</div>
 </body>
 </html>

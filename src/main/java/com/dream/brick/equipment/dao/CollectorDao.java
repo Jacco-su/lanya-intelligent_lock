@@ -17,9 +17,11 @@ public interface CollectorDao extends BaseDao {
 //
 //    public Qgdis findQgdisByAreacode(String qgdisid);
 //
-public List<Collector> findCollectorByQgdisid(String disId);
+public List<Collector> findCollectorByQgdisid(String deptid);
 
     public List<Collector> findCollectorList(Pager pager);
+    List<Collector> findCollectorList(String deptId, Pager pager);
+    /*List<Collector>*/
 
 //    public void addCollector(Collector collector);
 }

@@ -29,9 +29,12 @@
                 <td>
                     <%--<input name="ceCode"  class="easyui-validatebox" required="true"/>--%>
                     <%--<a class="easyui-linkbutton" onclick="getID()">选择</a>--%>
-                    <select id="ccode" name="collector.id" class="easyui-validatebox" required="true"
-                            style="width: 150px"></select>
+                    <select id="ccode" name="collector.id" class="easyui-validatebox"
+                            style="width: 150px">
+                        <%--<option value=""> ${collectorList.ccode}</option>--%>
+                    </select>
                     <%--<select id="dissName" name="qgdis.id" style="width: 220px;"></select>--%>
+
                 </td>
             </tr>
             <tr>
@@ -80,6 +83,7 @@
     $(function () {
         var data = '${collectorList}';
         data = JSON.parse(data);
+       // console.log(data);
         $('#ccode').empty();
         for (var i = 0; i < data.length; i++) {
             $('#ccode').append("<option value='" + data[i].id + "'>" + data[i].ccode + "</option>");

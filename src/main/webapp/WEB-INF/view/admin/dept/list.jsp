@@ -101,6 +101,7 @@
 			        		return $(this).form('validate');   
 			   			},
 						success : function(data) {
+                            refresh();
 							$.messager.alert('提示', '修改成功!', 'warning');
 						}
 			   			

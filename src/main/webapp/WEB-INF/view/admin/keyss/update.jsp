@@ -25,14 +25,8 @@
             <tr>
                 <td>钥匙编号:</td>
                 <td><input type="hidden" name="id" value="${keyss.id}"/>
+                    <input name="dept.id" type="hidden" value="${keyss.user.id}"/>
                     <input name="keyssCode" value="${keyss.keyssCode}" class="easyui-validatebox" required="true"/></td>
-            </tr>
-
-            <tr>
-                <td>自定义名称:</td>
-                <td>
-                    <input name="keyssName" value="${keyss.keyssName}" class="easyui-validatebox" required="true"/>
-                </td>
             </tr>
             <tr>
                 <td>钥匙MAC:</td>

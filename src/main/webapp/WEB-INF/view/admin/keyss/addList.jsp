@@ -157,30 +157,9 @@
         //保存
         function save() {
             sb1();
-
             function sb1() {
-                debugger;
-                var dis = $('#disa').combobox('getValue');
-                var keyssCode = $("#keyssCode").val();
-                if (dis == null || dis == "" || dis == 0 || dis == "---请选择---") {
-                    $.messager.alert('提示', "请选择正确站点", 'warning');
-                    dis.focus();
-                    return false;
-                }
-                if ($("#keyssMAC").val() == null || $("#keyssMAC").val() == "") {
-                    $.messager.alert('提示', "请选获取钥匙MVC", 'warning');
-                    dis.focus();
-                    return false;
-                }
-                if (keyssCode == null || keyssCode == "") {
-                    $.messager.alert('提示', "请获取钥匙编号", 'warning');
-//                alert("请获取门锁识别码");
-                    lockCode.focus();
-                    return false;
-                }
                 if ($('#users') == null || $('#users') == "") {
                     $.messager.alert('提示', "请选择使用人", 'warning');
-                    users.focus();
                     return false;
                 } else {
                     var data = {
@@ -245,35 +224,6 @@
             <div class="easyui-panel" title="添加钥匙" style="width:800px">
                 <div style="padding:10px 60px 20px 60px">
                     <table cellpadding="5">
-                        <tr>
-                            <td>站点:</td>
-                            <td colspan="2">
-                                <select class="easyui-combobox" name="qgdis.id" id="disa" style="width: 180px;"
-                                        data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>选择采集器:</td>
-                            <td colspan="2">
-                                <select class="easyui-combobox" id="collector" name="collector"
-                                        style="width: 180px;"
-                                        data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>控制器:</td>
-                            <td colspan="2">
-                                <select class="easyui-combobox" name="collectore" id="collectore"
-                                        style="width: 180px;"
-                                        data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-                                </select>
-                            </td>
-                        </tr>
                         <tr>
                             <td>钥匙编号:</td>
                             <td colspan="2"><input name="keyssCode" id="keyssCode" value="" style="width: 180px;"
