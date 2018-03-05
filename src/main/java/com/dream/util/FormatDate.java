@@ -1,7 +1,5 @@
 package com.dream.util;
 
-import org.apache.commons.lang3.time.DateUtils;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,6 +25,7 @@ public class FormatDate {
 	public static SimpleDateFormat sdfyd=new SimpleDateFormat("MMdd");
 	//生成到分的日期
 	public static SimpleDateFormat sdfyM=new SimpleDateFormat("yyyy-MM");
+
 	public static SimpleDateFormat YYYYMMDDHHMMSS_DEFAULT_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
 
 
