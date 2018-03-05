@@ -15,6 +15,6 @@ public interface IAuthLogDao extends BaseDao {
 
     public List<AuthLog> findAll();
 
-    public List<AuthLog> findList(Pager pager);
+    public List<AuthLog> findList(String authName,String authStartTime,String authEndTime,String userId,Pager pager);
 
 }
