@@ -42,7 +42,12 @@
             <tr>
                 <td>MAC地址:</td>
                 <td>
+<<<<<<< HEAD
                     <input name="ceMAC" value="${collectore.ceMAC}" class="easyui-validatebox"  onblur="ce()"/>
+=======
+                    <input name="ceMAC" value="${collectore.ceMAC}" class="easyui-validatebox" required="true"
+                           onblur=""/>
+>>>>>>> dev
                 </td>
             </tr>
             <tr>
@@ -76,6 +81,7 @@
         }
     })
 
+<<<<<<< HEAD
     function ce() {
         var p = $("#ceMAC").val();
         if (!p.match(/[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}/)) {
@@ -83,4 +89,7 @@
             $.messager.alert('提示', '请输入正确格式的MAC！', 'warning');
         }
     };
+=======
+
+>>>>>>> dev
 </script>

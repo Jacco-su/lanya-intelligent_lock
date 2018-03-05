@@ -44,7 +44,7 @@
             <tr>
                 <td>MAC地址:</td>
                 <td>
-                    <input name="ceMAC" id="ceMAC" class="easyui-validatebox" required="true"  onblur="ce()"/>
+                    <input name="ceMAC" id="ceMAC" class="easyui-validatebox" required="true" onblur="ce()"/>
                     <a class="easyui-linkbutton"
                        onclick="getMAC()">获取</a>
                 </td>
