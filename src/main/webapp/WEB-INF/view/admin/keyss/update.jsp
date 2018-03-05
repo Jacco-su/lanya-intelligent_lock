@@ -20,7 +20,7 @@
 </script>
 <%--/**   修改*/--%>
 <div>
-    <form name="editForm" id="editForm" action="${basePath}/keyss/prUpdate" method="post">
+    <form name="editForm" id="editForm" action="${basePath}/keyss/update" method="post">
         <table class="mytable" align="center">
             <tr>
                 <td>钥匙编号:</td>

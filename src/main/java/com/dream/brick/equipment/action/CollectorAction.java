@@ -138,9 +138,11 @@ public class CollectorAction {
     public String update(@ModelAttribute Collector collector) {
         String message = "";
         try {
-//            collector.setCcode(collector.getCcode().trim());
-//            collector.setCip(collector.getCip().trim());
-//                collector.setDis(collector.getDis().g.trim());
+            /*collector.setCcode(collector.getCcode().trim());
+            collector.setCip(collector.getCip().trim());*/
+//                collector.setDis(collector.getDis().trim());
+            System.out.println(collector.getCcode());
+            System.out.println(collector.getCip());
             collectorDao.update(collector);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {
