@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>站点信息</title>
+    <title>地区管理</title>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
@@ -17,10 +17,12 @@
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
     <script type="text/javascript">
+        var basePath = "${basePath}";
         $(function () {
+            var areacode = "";
             var infolist = $('#infolist');
             infolist.datagrid({
-                title: '站点列表',
+                title: '地区列表',
                 iconCls: 'icon-users',
                 width: '95%',
                 height: 500,
@@ -30,39 +32,41 @@
                 striped: true,
                 collapsible: false,
                 fitColumns: true,
-                url: '${basePath}/disa/list',
-                queryParams: {},
+                singleSelect: true,
+                url: '${basePath}/qgorga/list',
+                queryParams: {
+                    'areacode': areacode
+                },
                 loadMsg: '数据装载中......',
                 remoteSort: false,
-                singleSelect: true,
                 onDblClickRow: function (rowIndex, field, value) {
                     var rows = infolist.datagrid("getRows");
                     var id = rows[rowIndex].id;
                     detail(id);
                 },
-                columns: [[
+                columns: [[{
+                    title: '区域名称',
+                    field: 'name',
+                    width: 200,
+                    align: 'center'
+                },
                     {
-                        title: '编号',
-                        field: 'id',
+                        title: '区域位置',
+                        field: 'address',
                         width: 300,
                         align: 'left'
                     },
                     {
-                        title: '站点名称',
-                        field: 'name',
-                        width: 250,
-                        align: 'center'
-                    },
-                    {
-                        title: '位置',
+                        title: '上级区域',
                         field: 'areaname',
-                        width: 400,
+                        width: 200,
                         align: 'center'
                     },
+
                     {
-                        title: '锁状态 ',
-                        field: 'lock',
-                        width: 200,
+                        title: '区域编号',
+                        field: 'id',
+                        width: 300,
                         align: 'left'
                     },
                 ]],
@@ -90,6 +94,19 @@
             });
             displayMsg();
 
+            function refresh() {
+                infolist.datagrid({
+                    url: '${basePath}/qgorga/list',
+                    queryParams: {
+                        'areacode': areacode
+                    },
+                    loadMsg: '数据装载中......'
+                });
+                infolist.datagrid("clearSelections");
+//                infolist.datagrid("reload");
+                displayMsg();
+            }
+
             function displayMsg() {
                 infolist.datagrid('getPager').pagination({
                     beforePageText: '第',
@@ -98,22 +115,36 @@
                 });
             }
 
+            var id;
             var addWin;
             var seeWin;
             var updateWin;
 
+            function getSelect() {
+                var select = infolist.datagrid('getSelected');
+                if (select) {
+                    $('#addFrom').window('open');
+                } else {
+                    $.messager.alert('警告', '请选择一行数据', 'warning');
+                }
+            }
+
             function add() {
-                addWin = $.createWin({
-                    title: "添加",
-                    url: '${basePath}/disa/prAdd',
-                    height: 350,
-                    width: 800,
-                    buttons: [{
-                        text: '保存',
-                        iconCls: 'icon-ok',
-                        handler: save
-                    }]
-                });
+                if (areacode != "") {
+                    addWin = $.createWin({
+                        title: "添加",
+                        url: '${basePath}/qgorga/prAdd?areacode=' + areacode,
+                        height: 350,
+                        width: 800,
+                        buttons: [{
+                            text: '保存',
+                            iconCls: 'icon-ok',
+                            handler: save
+                        }]
+                    });
+                } else {
+                    $.messager.alert('警告', '请选择一个行政区', 'warning');
+                }
             }
 
             function save() {
@@ -142,7 +173,7 @@
             function detail(id) {
                 seeWin = $.createWin({
                     title: "详情",
-                    url: '${basePath}/disa/prView',
+                    url: '${basePath}/qgorga/prView',
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
@@ -161,26 +192,17 @@
 
             $('#tree').tree({
                 checkbox: false,
-                <%--url: '${basePath}/areainfo/findAreaByCode',--%>
-                url: '${basePath}/dept/getChildren',
-                //simpleDataModel: true,
+                url: '${basePath}/areainfo/findAreaByCode',
+//            simpleDataModel: true,
                 onBeforeExpand: function (node, param) {
-                    <%--$('#tree').tree('options').url = "${basePath}/areainfo/findAreaByParentId?parentId=" + node.id;// change the url--%>
-                    <%--return true;--%>
-                    $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId=" + node.id;
+                    $('#tree').tree('options').url = "${basePath}/areainfo/findAreaByParentId?parentId=" + node.id;// change the url
+//                return true;
                 },
                 onClick: function (node) {
-                    deptId = node.id;
+                    areacode = node.id;
                     refresh();
                 }
             });
-
-
-            function refresh() {
-                infolist.datagrid("clearSelections");
-                infolist.datagrid("reload");
-                displayMsg();
-            }
 
             function edit() {
                 var select = infolist.datagrid('getSelected');
@@ -211,7 +233,7 @@
             function showEdit(id) {
                 updateWin = $.createWin({
                     title: "修改",
-                    url: '${basePath}/disa/prUpdate',
+                    url: '${basePath}/qgorga/prUpdate',
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
@@ -229,7 +251,7 @@
                 if (selected) {
                     $.messager.confirm('警告', '确定要删除么?', function (f) {
                         if (f) {
-                            $.post("${basePath}/disa/delete", {"id": selected.id}, function (json) {
+                            $.post("${basePath}/qgorga/delete", {"id": selected.id}, function (json) {
                                 $.messager.alert('提示', json.message);
                                 if (json.result == 1) {
                                     infolist.datagrid('reload');
@@ -241,50 +263,68 @@
                     $.messager.alert('警告', '未选中任何数据', 'warning');
                 }
             }
-        });
+        })
+        //        function setToarea() {
+        //            var id = "";
+        //            var show = "";
+        //            fullname = ""
+        //            var selections = $('#tree').tree('getSelected');
+        //            if (selections) {
+        //                id = selections.id;
+        //                show = selections.attributes.areaname;
+        //
+        //                $("#areacode").val(id);
+        //                getAreaname(selections);
+        //                fullname = fullname.substring(0, fullname.length - 1);
+        //                $("#areaname").val(fullname);
+        //            }
+        //            $('#selectArea').window('close');
+        //        }
 
-        function setToarea() {
-            var id = "";
-            var show = "";
-            fullname = "";
-            var selections = $('#tree').tree('getSelected');
-            if (selections) {
-                id = selections.id;
-                show = selections.attributes.areaname;
-                $("#areacode").val(id);
-                getAreaname(selections);
-                fullname = fullname.substring(0, fullname.length - 1);
-                $("#areaname").val(fullname);
-            }
-            $('#selectArea').window('close');
-        }
-
-        var fullname = "";
-
-        function getAreaname(node) {
-            fullname = node.text + " " + fullname;
-            if (node.attributes.parentcode == 0) {
-                return;
-            }
-            var abc = $('#tree').tree('getParent', node.target);
-            getAreaname(abc);
-        }
+        //        var fullname = "";
+        //
+        //        function getAreaname(node) {
+        //            if (node == null) return;					//改动
+        //            fullname = node.text + " " + fullname;
+        //            if (node.attributes.parentcode == 0) {
+        //                return;
+        //            }
+        //            var abc = $('#tree').tree('getParent', node.target);
+        //            getAreaname(abc);
+        //        }
     </script>
 </head>
 <body>
-<div>
-    <table id="infolist"></table>
-</div>
-<div id="selectArea">
-    <div class="easyui-layout" fit="true">
-        <div region="center" border="false" style="padding: 10px;">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
+
+    <tr>
+        <td width="12%" valign="top"
+            style="border: 1px solid #99bbe8; border-right: 0;">
+            <div class="panel-header" style="border-left: 0; border-right: 0;">地区</div>
             <ul id="tree" style="margin-top: 10px;"></ul>
-        </div>
-        <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
-            <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
-            <a class="easyui-linkbutton" icon="icon-cancel" onclick="$('#selectArea').window('close');">关闭</a>
-        </div>
-    </div>
-</div>
+        </td>
+        <td valign="top" style="border: 1px solid #99bbe8;">
+            <table id="infolist"></table>
+
+            <%--<div class="panel-header" style="border-left: 0; border-right: 0;">修改地区</div>--%>
+            <%--<div id="toolbar"></div>--%>
+            <%--<div id="qgorg"></div>--%>
+        </td>
+    </tr>
+</table>
+
+<%--<div id="selectArea" >--%>
+<%--<div class="easyui-layout" fit="true">--%>
+<%--<div region="center" border="false" style="padding: 10px;">--%>
+<%--<ul id="tree" style="margin-top: 10px;"></ul>--%>
+<%--</div>--%>
+<%--<div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">--%>
+<%--<a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>--%>
+<%--<a class="easyui-linkbutton" icon="icon-cancel"  onclick="$('#selectArea').window('close');">关闭</a>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
+
 </body>
 </html>

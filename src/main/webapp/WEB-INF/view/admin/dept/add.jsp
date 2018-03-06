@@ -20,13 +20,24 @@
             <input type="hidden" name="areacode" value="4101"/>
             <input name="name" class="easyui-validatebox" required="true"/></td>
 	</tr>
-	<%--<tr>
-		<td>排序:</td>
+
+	<tr>
+		<td width="100">上级行政区</td>
 		<td>
-		<input name="orderId"  class="easyui-validatebox" required="true"/>
-		<input type="hidden" name="treeShow" value="1"/>
+			<input type="text" name="areaname" id="areaname" value="" readonly/>
+			<a class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>
+			<input type="hidden" name="areacode" id="areacode" value=""/>
 		</td>
-	</tr>--%>
+	</tr>
+
+
+	<%--<tr>
+            <td>排序:</td>
+            <td>
+            <input name="orderId"  class="easyui-validatebox" required="true"/>
+            <input type="hidden" name="treeShow" value="1"/>
+            </td>
+        </tr>--%>
 </table>
 </form>
 </body>

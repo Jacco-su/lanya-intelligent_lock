@@ -18,7 +18,7 @@ public interface QgorgDao  extends BaseDao {
 
     public Area findAreaByAreacode(String areacode);
 
-    public List<Qgorg> findQgorgByAreacode(String areacode);
+    public List<Qgorg> findQgorgByAreacode(String areacode, Pager pager);
 
     public List<Qgorg> findQgorgList(Pager pager);
 }

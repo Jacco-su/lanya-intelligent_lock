@@ -133,10 +133,18 @@ $.extend($.fn.validatebox.defaults.rules, {
     ccode: {
 
         validator: function (value, param) {
-            return ceid(value);
+            return /\d{8}$/.test(value);
         },
         message: 'ID不正确,请输入8位非汉字ID'
-    }
+    },
+
+    ceMac: {
+        validator: function (value, param) {
+
+            return ceMac(value);
+        },
+        message: '请输入正确格式的MAC'
+    },
 
 
 });
@@ -215,7 +223,9 @@ var ccode = function (value) {
 
     // if (value.length == 8 && value==!(/^[\u0391-\uFFE5]+$/.test(value)))
 
-
-    return !(/^(([A-Z]*|[a-z]*|\d*|[-_\~!@#\$%\^&\*\.\(\)\[\]\{\}<>\?\\\/\'\"]*)|.{0,5})$|\s/
-        .test(value));
+    return !(/\d{8}$/.test(value));
 };
+
+var ceMac = function (value) {
+    return !(/[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}/.test(value));
+}

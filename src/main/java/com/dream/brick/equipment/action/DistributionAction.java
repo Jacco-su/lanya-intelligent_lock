@@ -57,13 +57,11 @@ public class DistributionAction {
         if (list.size() > 0) {
             String temp = "";
             temp = list.get(0).getCreateTime().toString();
-            System.out.println(temp + "ddddddd");
             for (int i = 0; i < list.size(); i++) {
                 temp = list.get(i).getCreateTime().toString();
                 System.out.println(temp);
                 Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
                 String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-                System.out.println(str + "fdfdfdfdfdfdfd");
                 list.get(i).setCreateTime(str);
             }
         }

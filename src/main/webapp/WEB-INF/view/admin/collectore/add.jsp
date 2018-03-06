@@ -96,8 +96,6 @@
             $.messager.alert('提示', '请输入正确格式的MAC！', 'warning');
         }
 
-
-
     };
 
 </script>
