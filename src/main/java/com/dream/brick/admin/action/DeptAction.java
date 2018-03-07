@@ -41,7 +41,7 @@ public class DeptAction {
 	@Resource
 	private IDeptDao deptDao;
 
-
+	@Resource
     private AreaInfoDao areaInfoDao;
 
 
@@ -91,7 +91,8 @@ public class DeptAction {
         List<Qgorg> qgorgList = BasicData.findQgorgByAreacode(areacode, pager);
         List<Area> areaList = areaInfoDao.findAreaByCode(areacode);
 //		model.addAttribute("qgorgList", qgorgList);
-        model.addAttribute("areaList", areaList);
+		Area area=areaInfoDao.find(Area.class,dept.getAreacode());
+        model.addAttribute("area", area);
         model.addAttribute("dept", dept);
 		return "admin/dept/update";
 	}

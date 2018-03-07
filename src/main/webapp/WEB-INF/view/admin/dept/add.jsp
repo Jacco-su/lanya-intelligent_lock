@@ -22,7 +22,7 @@
 	</tr>
 
 	<tr>
-		<td width="100">所属行政区域:</td>
+		<td width="100">所属区域:</td>
 		<td>
 			<input type="text" name="areaname" id="areaname" value="" readonly/>
 			<a class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>

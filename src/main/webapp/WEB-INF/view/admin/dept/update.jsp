@@ -32,11 +32,11 @@
             </tr>--%>
 
             <tr>
-                <td>所属地区:</td>
+                <td>所属区域:</td>
                 <td>
                     <%--<input name="areac" coords="" href="" alt="" value="${dept.areacode}"/>--%>
 
-                    <input type="text" name="areaname" id="areaname" value="${areaList.areaname}"/>
+                    <input type="text" name="areaname" id="areaname" value="${area.areaname}"/>
                     <%--readonly/>--%>
                     <a class="easyui-linkbutton" id="area" onclick="$('#selectArea').window('open');">选择</a>
                     <input type="hidden" name="areacode" id="areacode" value="${dept.areacode}"/>

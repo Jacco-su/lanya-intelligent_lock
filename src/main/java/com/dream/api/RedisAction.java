@@ -95,7 +95,7 @@ public class RedisAction {
             }
         }
         try {
-            Thread.sleep(7000);
+            Thread.sleep(10000);
             Object o = redisTemplateUtil.get(authKey);
             if (o == null) {
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);

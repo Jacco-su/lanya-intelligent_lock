@@ -176,22 +176,7 @@
             }
 
 
-            function setToarea() {
-                var id = "";
-                var show = "";
-                fullname = "";
-                var selections = $('#tree').tree('getSelected');
-                if (selections) {
-                    id = selections.id;
-                    show = selections.attributes.areaname;
 
-                    $("#areacode").val(id);
-                    getAreaname(selections);
-                    fullname = fullname.substring(0, fullname.length - 1);
-                    $("#areaname").val(fullname);
-                }
-                $('#selectArea').window('close');
-            }
 
             var fullname = "";
 
@@ -208,7 +193,24 @@
 
         });
 
+        function setToarea() {
+            debugger;
+            var id = "";
+            var show = "";
+            fullname = "";
+            var selections = $('#tree').tree('getSelected');
+            console.log(selections);
+            if (selections) {
+                id = selections.id;
+                show = selections.attributes.areaname;
 
+                $("#areacode").val(id);
+                //getAreaname(selections);
+                fullname = show.substring(0, fullname.length - 1);
+                $("#areaname").val(selections.areaname);
+            }
+            $('#selectArea').window('close');
+        }
     </script>
 </head>
 <body>
