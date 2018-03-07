@@ -28,7 +28,7 @@
         var data = '${userList}';
         data = JSON.parse(data);
         $('#usersname').empty();
-        $("#usersname").prepend("<option value='0'>${keyss.user.username}</option>");   //为Select插入一个Option(第一个位置)
+        <%--$("#usersname").prepend("<option value='0'>${keyss.user.username}</option>");   //为Select插入一个Option(第一个位置)--%>
         for (var i = 0; i < data.length; i++) {
             $('#usersname').append("<option value='" + data[i].id + "'>" + data[i].username + "</option>");
         }

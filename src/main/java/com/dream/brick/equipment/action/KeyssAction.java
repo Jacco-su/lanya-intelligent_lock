@@ -112,7 +112,7 @@ public class KeyssAction {
     public String update(@ModelAttribute Keyss keyss) {
         String message = "";
         try {
-            keyss.setKeyssDate(FormatDate.getYMdHHmmss());
+//            keyss.setKeyssDate(FormatDate.getYMdHHmmss());
             ikeyssDao.update(keyss);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {
