@@ -17,111 +17,101 @@
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
     <script type="text/javascript">
-        var basePath="${basePath}";
-        $(function() {
-            var deptId = "";
+        var basePath = "${basePath}";
+        $(function () {
+            var areacode = "";
             var infolist = $('#infolist');
-            infolist.datagrid( {
+            infolist.datagrid({
                 title: '站点列表',
-                iconCls : 'icon-users',
-                width : '95%',
-                height : 560,
-                pageSize : 20,
-                pageList : [ 20, 30, 50, 100 ],
-                nowrap : false,
-                striped : true,
-                collapsible : false,
-                fitColumns : true,
-                singleSelect : true,
-                url : '${basePath}/disa/list',
-                queryParams:{
-                    'deptId':deptId
+                iconCls: 'icon-users',
+                width: '95%',
+                height: 560,
+                pageSize: 20,
+                pageList: [20, 30, 50, 100],
+                nowrap: false,
+                striped: true,
+                collapsible: false,
+                fitColumns: true,
+                singleSelect: true,
+                url: '${basePath}/qgorga/list',
+                queryParams: {
+                    'areacode': areacode
                 },
-                loadMsg : '数据装载中......',
-                remoteSort : false,
-                onDblClickRow:function(rowIndex, field, value){
-                    var rows=infolist.datagrid("getRows");
-                    var id=rows[rowIndex].id;
+                loadMsg: '数据装载中......',
+                remoteSort: false,
+                onDblClickRow: function (rowIndex, field, value) {
+                    var rows = infolist.datagrid("getRows");
+                    var id = rows[rowIndex].id;
                     showEdit(id);
                 },
-                columns : [ [
+                columns: [[{
+                    title: '区域名称',
+                    field: 'name',
+                    width: 200,
+                    align: 'center'
+                },
                     {
-                        title: '区域',
-                        field : 'deptname',
-                        formatter : function(value,rowData,rowIndx) {
-                            return rowData.dept.name;
-                        },
-                        width : $(this).width() * 0.1,
-                        align : 'center'
+                        title: '区域位置',
+                        field: 'address',
+                        width: 300,
+                        align: 'left'
                     },
                     {
-                        title: '站点编号',
-                        field : 'id',
-                        width : $(this).width() * 0.1,
-                        rowspan : 2,
-                        align : 'center'
+                        title: '上级区域',
+                        field: 'areaname',
+                        width: 200,
+                        align: 'center'
                     },
+
                     {
-                        title: '站点名称',
-                        field : 'name',
-                        width : $(this).width() * 0.1,
-                        rowspan : 2,
-                        align : 'center'
+                        title: '区域编号',
+                        field: 'id',
+                        width: 300,
+                        align: 'left'
                     },
-                    {
-                        title: '站点地址',
-                        field : 'address',
-                        width : $(this).width() * 0.1,
-                        rowspan : 2,
-                        align : 'center'
-                    },
-                    {
-                        title : '添加时间',
-                        field : 'createTime',
-                        width : $(this).width() * 0.1,
-                        rowspan : 2,
-                        align : 'center'
-                    }
-                    ] ],
-                pagination : true,
-                rownumbers : true,
-                toolbar : [ {
-                    text : '添加',
-                    iconCls : 'icon-add',
-                    handler : add
+                ]],
+                pagination: true,
+                rownumbers: true,
+                toolbar: [{
+                    text: '添加',
+                    iconCls: 'icon-add',
+                    handler: add
                 }, '-', {
-                    text : '修改',
-                    iconCls : 'icon-edit',
-                    handler : edit
+                    text: '修改',
+                    iconCls: 'icon-edit',
+                    handler: edit
                 }, '-', {
-                    text : '删除',
-                    iconCls : 'icon-remove',
-                    handler : del
-                }, ]
+                    text: '删除',
+                    iconCls: 'icon-remove',
+                    handler: del
+                },]
             });
             displayMsg();
 
             function refresh() {
-                infolist.datagrid( {
-                    url : '${basePath}/disa/list',
-                    queryParams:{
-                        'deptId':deptId
+                infolist.datagrid({
+                    url: '${basePath}/qgorga/list',
+                    queryParams: {
+                        'deptId': deptId
                     },
-                    loadMsg : '数据装载中......'
+                    loadMsg: '数据装载中......'
                 });
                 infolist.datagrid("clearSelections");
                 displayMsg();
             }
+
             function displayMsg() {
-                infolist.datagrid('getPager').pagination( {
-                    beforePageText : '第',
-                    afterPageText : '页，共{pages}页',
-                    displayMsg : '当前显示从{from}到{to}共{total}记录'
+                infolist.datagrid('getPager').pagination({
+                    beforePageText: '第',
+                    afterPageText: '页，共{pages}页',
+                    displayMsg: '当前显示从{from}到{to}共{total}记录'
                 });
             }
+
             var id;
             var addWin;
             var updateWin;
+
             function getSelect() {
                 var select = infolist.datagrid('getSelected');
                 if (select) {
@@ -130,18 +120,19 @@
                     $.messager.alert('警告', '请选择一行数据', 'warning');
                 }
             }
+
             function save() {
                 $('#addForm').form('submit', {
-                    onSubmit:function(){
+                    onSubmit: function () {
                         return $(this).form('validate');
                     },
-                    success : function(data) {
-                        var json=eval("("+data+")");
-                        if(json.result=='1'){
+                    success: function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.result == '1') {
                             $.messager.alert('提示', '保存成功', 'warning');
                             $.closeWin(addWin);
                             refresh();
-                        }else{
+                        } else {
                             $.messager.alert('提示', '保存失败', 'warning');
                             $.closeWin(addWin);
                             refresh();
@@ -153,21 +144,22 @@
 
             function add() {
                 if (deptId != "") {
-                    addWin = $.createWin( {
+                    addWin = $.createWin({
                         title: "站点添加",
-                        url : basePath+'/disa/prAdd?deptId='+deptId,
+                        url: basePath + '/qgorga/prAdd?deptId=' + deptId,
                         height: 350,
                         width: 500,
-                        buttons : [ {
-                            text : '保存',
-                            iconCls : 'icon-ok',
-                            handler : save
-                        } ]
+                        buttons: [{
+                            text: '保存',
+                            iconCls: 'icon-ok',
+                            handler: save
+                        }]
                     });
-                }else{
+                } else {
                     $.messager.alert('警告', '请选择一个区域', 'warning');
                 }
             }
+
             function edit() {
                 var select = infolist.datagrid('getSelected');
                 if (select) {
@@ -176,30 +168,32 @@
                     $.messager.alert('警告', '请选择一行数据', 'warning');
                 }
             }
-            function showEdit(id){
-                updateWin = $.createWin( {
+
+            function showEdit(id) {
+                updateWin = $.createWin({
                     title: "站点修改",
-                    url : basePath+'/disa/prUpdate',
-                    data : 'id=' +id,
+                    url: basePath + '/qgorga/prUpdate',
+                    data: 'id=' + id,
                     height: 350,
                     width: 500,
-                    buttons : [ {
-                        text : '修改',
-                        iconCls : 'icon-ok',
-                        handler : update
-                    } ]
+                    buttons: [{
+                        text: '修改',
+                        iconCls: 'icon-ok',
+                        handler: update
+                    }]
                 });
             }
+
             function update() {
                 $('#editForm').form('submit', {
-                    onSubmit:function(){
+                    onSubmit: function () {
                         return $(this).form('validate');
                     },
-                    success : function(data) {
-                        var json=eval("("+data+")");
-                        if(json.result=='1') {
+                    success: function (data) {
+                        var json = eval("(" + data + ")");
+                        if (json.result == '1') {
                             $.messager.alert('提示', '保存成功', 'warning');
-                        }else{
+                        } else {
                             $.messager.alert('提示', '保存失败', 'warning');
                         }
                         $.closeWin(updateWin);
@@ -207,24 +201,25 @@
                     }
                 });
             }
+
             function del() {
                 var select = infolist.datagrid('getSelected');
                 if (select) {
-                    $.messager.confirm('警告', '确认删除么?', function(f) {
+                    $.messager.confirm('警告', '确认删除么?', function (f) {
                         if (f) {
-                            $.ajax( {
-                                type : "POST",
-                                url : basePath+"/disa/delete",
-                                data : "id=" + select.id,
-                                dataType : "text",
-                                cache : false,
-                                success : function(msg) {
+                            $.ajax({
+                                type: "POST",
+                                url: basePath + "/qgorga/delete",
+                                data: "id=" + select.id,
+                                dataType: "text",
+                                cache: false,
+                                success: function (msg) {
                                     var json = eval("(" + msg + ")");
-                                    if(json.result=='0') {
+                                    if (json.result == '0') {
                                         $.messager.alert('提示', '有智能锁不能删除', 'warning');
-                                    }else if(json.result=='1') {
+                                    } else if (json.result == '1') {
                                         $.messager.alert('提示', '有采集器不能删除', 'warning');
-                                    }else{
+                                    } else {
                                         $.messager.alert('提示', '删除成功', 'warning');
                                     }
 //                                    $.messager.alert('提示', '删除成功!', 'warning');
@@ -238,25 +233,26 @@
                 }
             }
 
-            function search(){
-                addWin = $.createWin( {
-                    title : "查询条件",
-                    contents: "<table style='font-size:12px;'><tr><td>站点名称：</td><td><input id='dissName' /></td></tr></table>",
-                    width : 300,
-                    buttons : [ {
-                        text : '查询',
-                        iconCls : 'icon-search',
-                        handler : query
-                    } ]
+            function search() {
+                addWin = $.createWin({
+                    title: "查询条件",
+                    contents: "<table style='font-size:12px;'><tr><td>地区名称：</td><td><input id='name' /></td></tr></table>",
+                    width: 300,
+                    buttons: [{
+                        text: '查询',
+                        iconCls: 'icon-search',
+                        handler: query
+                    }]
                 });
             }
+
             function query() {
-                infolist.datagrid( {
-                    url : basePath+'/disa/list',
-                    queryParams:{
-                        'dissName':$('#dissName').val()
+                infolist.datagrid({
+                    url: basePath + '/qgorga/list',
+                    queryParams: {
+                        'name': $('#name').val()
                     },
-                    loadMsg : '数据装载中......'
+                    loadMsg: '数据装载中......'
                 });
                 infolist.datagrid("clearSelections");
                 displayMsg();
@@ -265,12 +261,12 @@
 
             $('#tree').tree({
                 checkbox: false,
-                url: basePath+'/dept/getChildren',
-                onBeforeExpand:function(node,param){
-                    $('#tree').tree('options').url = basePath+"/dept/getChildren?parentId=" + node.id;
+                url: '${basePath}/areainfo/findAreaByCode',
+                onBeforeExpand: function (node, param) {
+                    $('#tree').tree('options').url = basePath + "/areainfo/findAreaByParentId?parentId=" + node.id;
                 },
-                onClick:function(node){
-                    deptId = node.id;
+                onClick: function (node) {
+                    areacode = node.id;
                     refresh();
                 }
             });

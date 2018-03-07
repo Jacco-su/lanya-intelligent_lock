@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -125,24 +126,18 @@ public class CollectorAction {
 
 
     @RequestMapping("/prUpdate")
-    public String prUpdate(String id, ModelMap model,String deptId, String dissName, Pager pager) {
+    public String prUpdate(String id, ModelMap model, String deptId, String dissName, Pager pager) throws ParseException {
         Collector collector = collectorDao.find(Collector.class, id);
 
 
-       /* for(int i=0;i<list.size();i++){
-            temp = list.get(i).getCeDate().toString();
-            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
-            String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-            list.get(i).setCeDate(str);
-        }*/
-//        String temp = collector.getCdate();
+        String temp = collector.getCdate();
 //        System.out.println(temp+"ffffffffff");
-        /*Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
-        String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);*/
-        /*SimpleDateFormat sdf = new SimpleDateFormat(temp.toString());
-        String dateString = sdf.format(new Date());*/
+//        Date date = null;
 
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
 
+        String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+        collector.setCdate(str);
 
         model.addAttribute("collectora", collector);
 

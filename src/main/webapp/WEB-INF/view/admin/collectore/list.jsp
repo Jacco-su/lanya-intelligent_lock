@@ -236,11 +236,6 @@
                         var v = $(this).form('validate');
                         if (v) {
                         }
-                        var p = $("#ceMAC").val();
-                        if (!p.match(/[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}/)) {
-//            alert("请输入8位数字！");
-                            $.messager.alert('提示', '请输入正确格式的MAC！', 'warning');
-                        }
                         return v;
                         return $(this).form('validate');
                     },
@@ -250,14 +245,6 @@
                         $.closeWin(updateWin);
                         refresh();
 
-////                        if(json.result=='0') {
-////                            $.messager.alert('提示', '保存成功', 'warning');
-////                        }else{
-////                            $.messager.alert('提示', '保存失败', 'warning');
-////                        }
-//
-//                        $.closeWin(updateWin);
-//                        infolist.datagrid('reload');
                     }
                 });
             }

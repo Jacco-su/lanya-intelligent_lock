@@ -10,23 +10,23 @@
 <table class="mytable" align="center">
 	<tr>
         <td>区域名称:</td>
-		<td>${orga.name}</td>
+        <td>${qgorga.name}</td>
 	</tr>
 	<tr>
         <td>区域地址:</td>
 		<td>
-		${orga.address}
+            ${qgorga.address}
 		</td>
 	</tr>	
 	<tr>
 		<td width="100">管辖地区:</td>
 		<td>
-				${orga.areaname}	
+            ${qgorga.areaname}
 		</td>
 	</tr>
 	<tr>
 		<td>排序:</td>
-		<td>${orga.sortorder}
+        <td>${qgorga.sortorder}
 		</td>
 	</tr>
 </table>

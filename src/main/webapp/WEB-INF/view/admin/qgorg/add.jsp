@@ -7,7 +7,7 @@
 	response.setDateHeader("Expires", 0);
 %>
 <div>
-<form name="addForm" id="addForm" action="${basePath}/orga/add" method="post">
+	<form name="addForm" id="addForm" action="${basePath}/qgorga/add" method="post">
 <table class="mytable" align="center">
 	<tr>
         <td>区域名称:</td>

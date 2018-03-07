@@ -98,7 +98,6 @@
             $.messager.alert('提示', '输入超过8位！', 'warning');
         }
 
-
     };
 
 

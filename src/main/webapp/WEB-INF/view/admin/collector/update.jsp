@@ -16,7 +16,8 @@
                 <td>
                     <input type="hidden" name="id" value="${collectora.id}"/>
                     <input name="dept.id" type="hidden" value="${collectora.dis.id}"/>
-                    <input name="ccode" value="${collectora.ccode}" class="easyui-validatebox" required="true"/></td>
+                    <input name="ccode" value="${collectora.ccode}" class="easyui-validatebox" required="true"
+                           onblur="ce()"/></td>
             </tr>
 
             <tr>
@@ -28,12 +29,12 @@
                     <select id="dissname" name="dis.id" style="width:180px;" ></select>
                 </td>
             </tr>
-            <tr>
-                <td>IP地址:</td>
-                <td>
-                    <input name="cip" value="${collectora.cip}" class="easyui-validatebox" required="true"/>
-                </td>
-            </tr>
+            <%--<tr>--%>
+            <%--<td>IP地址:</td>--%>
+            <%--<td>--%>
+            <%--<input name="cip" value="${collectora.cip}" class="easyui-validatebox" required="true"/>--%>
+            <%--</td>--%>
+            <%--</tr>--%>
             <tr>
                 <td>日期:</td>
                 <td><input name="cdate" value="${collectora.cdate}" class="easyui-validatebox" required="true"/>
@@ -52,5 +53,18 @@
             $('#dissname').append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
         }
     });
+
+    function ce() {
+        var p = $("#ccode").val();
+        if (!p.match(/\d{8}$/)) {
+//            alert("请输入8位数字！");
+            $.messager.alert('提示', '请输入8位数字！', 'warning');
+        }
+        if (p.length > 8) {
+            $.messager.alert('提示', '输入超过8位！', 'warning');
+        }
+
+
+    };
 
 </script>

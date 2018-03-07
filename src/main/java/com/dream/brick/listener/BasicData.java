@@ -10,6 +10,7 @@ import com.dream.brick.admin.dao.IUserDao;
 import com.dream.brick.admin.dao.SyslogDao;
 import com.dream.brick.equipment.bean.*;
 import com.dream.brick.equipment.dao.*;
+import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 
 import java.util.HashMap;
@@ -132,9 +133,9 @@ public class BasicData {
 //    	return iauthorizationDao.findAllAuthorization();}
 	//*******
 
-	public static List<Qgorg> findQgorgByAreacode(String areacode){
-		return qgorgDao.findQgorgByAreacode(areacode);
-	}
+    public static List<Qgorg> findQgorgByAreacode(String areacode, Pager pager) {
+        return qgorgDao.findQgorgByAreacode(areacode, pager);
+    }
 	public static Qgorg findQgorgById(String id){
 		return (Qgorg)qgorgDao.find(Qgorg.class,id);
 	}
