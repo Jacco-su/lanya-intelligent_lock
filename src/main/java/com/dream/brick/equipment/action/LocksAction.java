@@ -21,7 +21,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 门锁操作 类
@@ -77,7 +79,21 @@ public class LocksAction {
 //        locks.setLockNum(locks.getLockNum());
 //        locks.setLockCode(locks.getLockCode());
         //locks.setQgdis();
-        System.out.println(locks.getAddress()+"dddddddddddddddddddddddd");
+        Map<String,String> params=new HashMap<>();
+        params.put("lockCode",locks.getLockCode());
+        List<Locks> list=ilocksDao.findLocks(params);
+
+        if(list.size()>0){
+            return StringUtil.jsonValue("0", "门锁识别码重复,禁止添加！");
+        }
+        params=new HashMap<>();
+
+        params.put("lockNum",locks.getLockNum());
+        params.put("dissId",locks.getQgdis().getId());
+        list=ilocksDao.findLocks(params);
+        if(list.size()>0){
+            return StringUtil.jsonValue("0", "相同配电房下面不能存在一样的门锁编号！");
+        }
         locks.setLockDate(FormatDate.getYMdHHmmss());
         try {
             ilocksDao.save(locks);

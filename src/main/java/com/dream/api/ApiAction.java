@@ -61,6 +61,7 @@ public class ApiAction {
 	@ResponseBody
 	public String keyssList(@ModelAttribute KeyssList keyssList){
 		try {
+			keyssList.setCreateTime(FormatDate.getYMdHHmmss());
 			IKeysListDao.save(keyssList);
 			return  StringUtil.jsonValue("1", "添加成功！");
 		}catch (Exception e){

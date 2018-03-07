@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 数据库 接口实现类
@@ -51,6 +52,33 @@ public class LocksDaoImpl extends BaseDaoImpl implements ILocksDao {
         return query(hql, pager);
     }
 
+    @Override
+    public List<Locks> findLocks(Map<String,String> params) {
+        StringBuilder hql=new StringBuilder();
+        hql.append("from Locks t where 1=1");
+        if(StringUtils.isNotEmpty(params.get("lockCode"))){
+            hql.append(" and t.lockCode ='").append(params.get("lockCode")).append("'");
+        }
+        if(StringUtils.isNotEmpty(params.get("lockNum"))&&StringUtils.isNotEmpty(params.get("dissId"))){
+            hql.append(" and t.lockNum ='").append(params.get("lockNum")).append("'");
+            hql.append(" and t.qgdis.id =").append(params.get("dissId"));
+        }
 
+        return findList(hql.toString());
+    }
+
+    @Override
+    public List<Locks> findLocks(Locks locks) {
+        StringBuilder hql=new StringBuilder();
+        hql.append("from Locks t where 1=1");
+        if(StringUtils.isNotEmpty(locks.getLockCode())){
+            hql.append(" and t.lockCode ='").append(locks.getLockCode()).append("'");
+        }
+        if(StringUtils.isNotEmpty(locks.getLockNum())&&StringUtils.isNotEmpty(locks.getQgdis().getId())){
+            hql.append(" and t.lockNum ='").append(locks.getLockNum()).append("'");
+            hql.append(" and t.qgdis.id=").append(locks.getQgdis().getId());
+        }
+        return findList(hql.toString());
+    }
 
 }

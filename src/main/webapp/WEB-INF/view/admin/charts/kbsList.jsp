@@ -37,7 +37,7 @@
                 collapsible : false,
                 fitColumns : true,
                 singleSelect : true,
-                url : '${basePath}/user/list',
+                url : '${basePath}/chart/kbsReport',
                 queryParams:{
                     'deptId':deptId
                 },
@@ -76,7 +76,7 @@
 
             function refresh() {
                 infolist.datagrid( {
-                    url : '${basePath}/user/list',
+                    url : '${basePath}/chart/kbsList',
                     queryParams:{
                         'deptId':deptId
                     },
@@ -85,6 +85,7 @@
                 infolist.datagrid("clearSelections");
                 displayMsg();
             }
+            
             function displayMsg() {
                 infolist.datagrid('getPager').pagination( {
                     beforePageText : '第',
@@ -131,29 +132,27 @@
             });
 
         });
+        function searchRpt() {
+			
+        }
 	</script>
 </head>
 <body>
 <table style='font-size:12px;'>
 	<tr>
-		<td>区域：</td>
-		<td><input id=areaCode" />
-		</td>
+		<td>站点：</td>
+		<td><input value="" name="disId"/></td>
+	<td>开始日期：</td>
+		<td>
+		<input id="authStartTime" name="authStartTime" class="easyui-validatebox"  value=""/>
+		<img onclick="WdatePicker({el:'authStartTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+		-<input id="authEndTime" name="authEndTime" class="easyui-validatebox"    value=""/>
+		<img onclick="WdatePicker({el:'authEndTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+	</td>
+	<td><button onclick="searchRpt()">查询</button></td>
 	</tr>
+
 </table>
-<table width="100%" border="0" cellpadding="0" cellspacing="0" >
-	<tr>
-		<td width="12%" valign="top" style="border: 1px solid #99bbe8; border-right: 0;">
-			<div style="width: 100%;">
-				<div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
-				<ul id="tree" style="margin-top: 10px;  height: 500px; overflow: scroll;">
-				</ul>
-			</div>
-		</td>
-		<td valign="top">
-			<table id="infolist"></table>
-		</td>
-	</tr>
-</table>
+<table id="infolist"></table>
 </body>
 </html>
