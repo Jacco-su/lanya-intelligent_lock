@@ -187,6 +187,8 @@
         }
         
         function getMAC() {
+            alert("暂不支持自动获取!");
+            return;
             var key = $('#collector').combobox('getText') + ","
                 + "13" + ","
                 + $('#collectore').combobox('getText') + ",";

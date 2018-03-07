@@ -380,66 +380,13 @@
                                 <input width="180px" style="width: 200px" name="authName" id="authName">
                             </td>
                         </tr>
-                        <%--          <tr>
-                                      <td>站点:</td>
-                                      <td colspan="3">
-                                          <select class="easyui-combobox" name="disa" id="disa" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
-                                              <option value="0">---请选择---</option>
-                                          </select>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>采集器:</td>
-                                      <td colspan="3">
-                                          <select class="easyui-combobox" id="collector" name="collector" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
-                                              <option value="0">---请选择---</option>
-                                          </select>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>控制器:</td>
-                                      <td colspan="3">
-                                          <select class="easyui-combobox" name="collectore" id="collectore" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
-                                              <option value="0">---请选择---</option>
-                                          </select>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>选择钥匙:</td>
-                                      <td colspan="3">
-                                          <select class="easyui-combobox"  id="keys" name="keys" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
-                                              <option value="0">---请选择---</option>
-
-                                          </select></td>
-                                  </tr>
-                                  <tr>
-                                      <td>选择锁具:</td>
-                                      <td colspan="3">
-                                          <select class="easyui-combobox"  name="locks" id="locks" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
-                                              <option value="0">---请选择---</option>
-                                          </select></td>
-                                  </tr>--%>
-
                         <tr>
                             <td width="100">授权时间:</td>
                             <td colspan="3">
-                                <input id="authStartTime" name="authStartTime" class="easyui-validatebox"  value=""/>
-                                <img onclick="WdatePicker({el:'authStartTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
-                                -
-                                <input id="authEndTime" name="authEndTime" class="easyui-validatebox"    value=""/>
-                                <img onclick="WdatePicker({el:'authEndTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+                                <input id="authStartTime" name="authStartTime" class="easyui-validatebox"  value=""/><img onclick="WdatePicker({el:'authStartTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+                                -<input id="authEndTime" name="authEndTime" class="easyui-validatebox"    value=""/><img onclick="WdatePicker({el:'authEndTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
                             </td>
                         </tr>
-                        <%--<tr>
-                            <td>被授权人:</td>
-                            <td colspan="3">
-                                <select class="easyui-combobox"  name="users" id="users" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-                                </select></td>
-                        </tr>--%>
-                        <%--<tr>
-                            <td> <button class="easyui-linkbutton" onclick="onlineAuth()">离线授权</button></td>
-                        </tr>--%>
                         <tr>
                             <td><button class="easyui-linkbutton" onclick="stepAuth(2)">下一步</button></td>
                         </tr>

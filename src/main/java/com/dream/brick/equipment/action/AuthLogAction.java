@@ -61,12 +61,12 @@ public class AuthLogAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, Pager pager)
+    public String list(int page, int rows,String authName,String authStartTime,String authEndTime, String userId,Pager pager)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        List<AuthLog> list = authLogDao.findList(pager);
+        List<AuthLog> list = authLogDao.findList(authName,authStartTime,authEndTime,userId,pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();

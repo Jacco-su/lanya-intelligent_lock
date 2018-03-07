@@ -13,6 +13,7 @@ import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.RedisTemplateUtil;
 import com.dream.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,19 +56,23 @@ public class RedisAction {
             //采集器id:指令字:控制器mac地址
             authModel=new AuthModel(new byte[]{1},AuthModel.toData(1,1),Constants.KEY).toString();
         }else if("2".equals(keys[1])){
-            //初始化锁      key=0000000002,2,DF:98:deptId,
-            Object value=redisTemplateUtil.get("lanya-lock-client");
-            String lockNum="";
-            if(value==null){
-                lockNum="41"+keys[3];
-                lockNum=addZeroForNum(lockNum,16);
-                redisTemplateUtil.set("lanya-lock-client",lockNum);
-            }else{
-                lockNum=String.valueOf(Long.parseLong(value.toString())+1);
-                redisTemplateUtil.set("lanya-lock-client",lockNum);
+            //初始化锁      key=0000000002,2,DF:98:deptId,lockCode
+            String lockNum = "";
+            if(key.length()==5){
+                lockNum=keys[4];
+            }else {
+                Object value = redisTemplateUtil.get("lanya-lock-client");
+                if (value == null) {
+                    lockNum = "41" + keys[3];
+                    lockNum = addZeroForNum(lockNum, 16);
+                    redisTemplateUtil.set("lanya-lock-client", lockNum);
+                } else {
+                    lockNum = String.valueOf(Long.parseLong(value.toString()) + 1);
+                    redisTemplateUtil.set("lanya-lock-client", lockNum);
+                }
             }
-            System.out.println(lockNum+"lockNum");
-          authModel=new AuthModel(new byte[]{2},AuthModel.toLockData(32,lockNum),Constants.KEY).toString();
+            authModel=new AuthModel(new byte[]{2},AuthModel.toLockData(32,lockNum),Constants.KEY).toString();
+
         }else if("13".equals(keys[1])){
             //获取钥匙Mac地址
             authModel = new AuthModel(new byte[]{13}).toString();
@@ -90,7 +95,7 @@ public class RedisAction {
             }
         }
         try {
-            Thread.sleep(15000);
+            Thread.sleep(7000);
             Object o = redisTemplateUtil.get(authKey);
             if (o == null) {
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);

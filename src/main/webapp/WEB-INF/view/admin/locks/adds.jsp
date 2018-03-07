@@ -250,8 +250,6 @@
                 success: function (data) {
                     var json = eval("(" + data + ")");
                     $.messager.alert('提示', json.message, 'warning');
-                    $.closeWin(addWin);
-                    refresh();
                 }
             });
         }

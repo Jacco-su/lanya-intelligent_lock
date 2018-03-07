@@ -155,13 +155,24 @@
                 });
             }
         });
+       function initLock() {
+           var lockCode=$("#lockCode").val();
+           if(lockCode==""){
+               alert("请填写锁识别码!");
+               return
+           }
+           if(lockCode.length!=16){
+               alert("请输入正确的识别码");
+               return;
+           }
+           getLock(2,lockCode);
+       }
 
-
-        function getLock(t) {
+        function getLock(t,lockCode) {
             $("#lockCode").val("");
             var key = $('#collector').combobox('getText') + ","
                 + t + ","
-                + $('#collectore').combobox('getText')+","+deptId;
+                + $('#collectore').combobox('getText')+","+deptId+","+lockCode;
             var data = {
                 "key": key
             };
@@ -178,12 +189,7 @@
                             alert(data.message);
                         } else {
                             $("#locks").empty();
-                            var collectorData = []; //创建数组
                             var lockNum = data.message.split(";")[1];
-                            collectorData.push({
-                                "id": lockNum,
-                                "text": lockNum
-                            });
                             $("#lockCode").val(lockNum);
                         }
                     } else {
@@ -253,9 +259,11 @@
                                     <td colspan="2">
                                         <input id="lockCode" name="lockCode" style="width: 200px;" required="true"/>
                                         <a class="easyui-linkbutton"
-                                           onclick="getLock(2)">初始化</a>
+                                           onclick="getLock(1,'')">获取</a>
                                         <a class="easyui-linkbutton"
-                                           onclick="getLock(1)">获取</a>
+                                           onclick="getLock(2,'')">初始化</a>
+                                        <a class="easyui-linkbutton"
+                                           onclick="initLock(3)">初始化锁识别码</a>
                                 </tr>
 
                                 <tr>
@@ -300,7 +308,7 @@
                 return false;
             }
             if ($("#lockNum").val() == null || $("#lockNum").val() == "") {
-                $.messager.alert('提示', "请选择正确站点", 'warning');
+                $.messager.alert('提示', "请选择门锁编号", 'warning');
                 dis.focus();
                 return false;
             }
@@ -321,13 +329,6 @@
                     "lockDate": $("#lockDate").val(),
                     "lockNum": $("#lockNum").val(),
                 };
-//        if($('#disa').value()==null) {
-//            $.messager.alert('提示', data.message, '');
-//        }else {
-
-//            if($('#disa').value('getValue')!=0 || $('#disa').value('getValue')!="") {
-
-
                 $.ajax({
                     type: "post",
 //                url: basePath+"/redis/get",
@@ -338,7 +339,10 @@
                     dataType: "json",
                     success: function (data) {
                         if (data.result == "1") {
-
+                            $("#lockNum").val("");
+                            $("#lockCode").val("");
+                            $("#lockDate").val("");
+                            $("#address").val("");
                             $.messager.alert('提示', data.message, 'success');
                         } else {
                             $.messager.alert('提示', data.message, 'warning');

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 数据库访问 接口实现类
@@ -42,5 +43,14 @@ public class KeyssDaoImpl extends BaseDaoImpl implements IKeyssDao {
     public List<Keyss> findKeyssUserList(String userId) {
         String     hql = "from Keyss where userId="+userId;
         return findList(hql);
+    }
+    @Override
+    public List<Keyss> findkeys(Map<String,String> params) {
+        StringBuilder hql=new StringBuilder();
+        hql.append("from Keyss t where 1=1");
+        if(StringUtils.isNotEmpty(params.get("keyssMAC"))){
+            hql.append(" and t.keyssMAC ='").append(params.get("keyssMAC")).append("'");
+        }
+        return findList(hql.toString());
     }
 }

@@ -16,7 +16,7 @@
     <script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
-
+    <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
     <script type="text/javascript">
         var basePath = "${basePath}";
         $(function () {
@@ -110,19 +110,14 @@
                 pagination: true,
                 rownumbers: true,
                 toolbar: [
-                    {
-                        text: '详情',
-                        iconCls: 'icon-view',
-                        handler: seedetail
-                    },
-                    '-', {
-                        text: '修改',
-                        iconCls: 'icon-edit',
-                        handler: edit
-                    }, '-', {
+                     {
                         text: '删除',
                         iconCls: 'icon-remove',
                         handler: del
+                    },'-', {
+                        text : '查询',
+                        iconCls : 'icon-search',
+                        handler : search
                     }]
             });
             displayMsg();
@@ -272,8 +267,11 @@
             function search() {
                 addWin = $.createWin({
                     title: "查询条件",
-                    contents: "<table style='font-size:12px;'><tr><td>用户姓名：</td><td><input id=username /></td></tr></table>",
-                    width: 300,
+                    contents: "<table style='font-size:12px;'>" +
+                    "<tr><td>授权名称：</td><td><input id=authName /></td></tr>" +
+                    "<tr><td>授权日期：</td><td><input id=\"authStartTime\" name=\"authStartTime\" class=\"easyui-validatebox\"  value=\"\"/><img onclick=\"WdatePicker({el:'authStartTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})\" src=\"${basePath}/js/calendar/skin/datePicker.gif\" width=\"16\" height=\"22\" align=\"absmiddle\">-<input id=\"authEndTime\" name=\"authEndTime\" class=\"easyui-validatebox\"    value=\"\"/><img onclick=\"WdatePicker({el:'authEndTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})\" src=\"${basePath}/js/calendar/skin/datePicker.gif\" width=\"16\" height=\"22\" align=\"absmiddle\"></td></tr>" +
+                    "<tr><td>授权人员：</td><td><input id=userId /></td></tr></table>",
+                    width: 500,
                     buttons: [{
                         text: '查询',
                         iconCls: 'icon-search',
@@ -284,15 +282,18 @@
 
             function uquery() {
                 infolist.datagrid({
-                    url: basePath + '/user/list',
+                    url: '${basePath}/authlog/list',
                     queryParams: {
-                        'username': $('#username').val()
+                        'authName': $('#authName').val(),
+                        'authStartTime': $('#authStartTime').val(),
+                        'authEndTime': $('#authEndTime').val(),
+                        'userId':$('#userId').val()
                     },
                     loadMsg: '数据装载中......'
                 });
                 infolist.datagrid("clearSelections");
                 displayMsg();
-                $.closeWin(seeuWin);
+                $.closeWin(addWin);
             }
 
             $('#infolist').tree({
@@ -306,19 +307,6 @@
                     refresh();
                 }
             });
-            
-            function query() {
-                infolist.datagrid({
-                    url: basePath + '/user/list',
-                    queryParams: {
-                        'username': $('#username').val()
-                    },
-                    loadMsg: '数据装载中......'
-                });
-                infolist.datagrid("clearSelections");
-                displayMsg();
-                $.closeWin(seeuWin);
-            };
 
         });
 

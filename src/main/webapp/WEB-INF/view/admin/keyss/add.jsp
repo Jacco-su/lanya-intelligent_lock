@@ -28,6 +28,8 @@
 
 
     function getMVC() {
+        alert("暂不支持自动获取!");
+        return;
         var key = ",13,,,";
         var data = {
             "key": key
