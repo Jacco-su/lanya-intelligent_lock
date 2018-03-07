@@ -22,7 +22,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 钥匙 操作类
@@ -56,11 +58,13 @@ public class KeyssAction {
         JSONObject datas = new JSONObject();
         List<Keyss> list = ikeyssDao.findKeyssList(deptId,pager);
         String temp = "";
-        for (int i = 0; i < list.size(); i++) {
-            temp = list.get(i).getKeyssDate().toString();
-            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
-            String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-            list.get(i).setKeyssDate(str);
+        if(list!=null&&list.size()>0) {
+            for (int i = 0; i < list.size(); i++) {
+                temp = list.get(i).getKeyssDate().toString();
+                Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
+                String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+                list.get(i).setKeyssDate(str);
+            }
         }
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
@@ -89,6 +93,12 @@ public class KeyssAction {
     public String add(@ModelAttribute Keyss keyss) {
         String message = "";
         try {
+            Map<String,String> params=new HashMap<>();
+            params.put("keyssMAC",keyss.getKeyssMAC());
+            List<Keyss> keyssList=ikeyssDao.findkeys(params);
+            if(keyssList.size()>0){
+                return  StringUtil.jsonValue("0", "钥匙Mac地址存在重复，禁止添加！");
+            }
             keyss.setKeyssDate(FormatDate.getYMdHHmmss());
             ikeyssDao.save(keyss);
             message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);

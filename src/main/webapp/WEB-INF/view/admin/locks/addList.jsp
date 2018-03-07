@@ -259,9 +259,9 @@
                                     <td colspan="2">
                                         <input id="lockCode" name="lockCode" style="width: 200px;" required="true"/>
                                         <a class="easyui-linkbutton"
-                                           onclick="getLock(2,'')">初始化</a>
-                                        <a class="easyui-linkbutton"
                                            onclick="getLock(1,'')">获取</a>
+                                        <a class="easyui-linkbutton"
+                                           onclick="getLock(2,'')">初始化</a>
                                         <a class="easyui-linkbutton"
                                            onclick="initLock(3)">初始化锁识别码</a>
                                 </tr>
@@ -329,13 +329,6 @@
                     "lockDate": $("#lockDate").val(),
                     "lockNum": $("#lockNum").val(),
                 };
-//        if($('#disa').value()==null) {
-//            $.messager.alert('提示', data.message, '');
-//        }else {
-
-//            if($('#disa').value('getValue')!=0 || $('#disa').value('getValue')!="") {
-
-
                 $.ajax({
                     type: "post",
 //                url: basePath+"/redis/get",
@@ -346,7 +339,10 @@
                     dataType: "json",
                     success: function (data) {
                         if (data.result == "1") {
-
+                            $("#lockNum").val("");
+                            $("#lockCode").val("");
+                            $("#lockDate").val("");
+                            $("#address").val("");
                             $.messager.alert('提示', data.message, 'success');
                         } else {
                             $.messager.alert('提示', data.message, 'warning');

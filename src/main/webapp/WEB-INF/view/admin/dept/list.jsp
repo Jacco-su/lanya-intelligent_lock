@@ -19,6 +19,7 @@
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
     <script type="text/javascript">
+        var parentId="";
         $(function () {
             var addWin;
             $('#tree').tree({
@@ -44,6 +45,8 @@
 
             function refresh() {
                 $('#tree').tree({url: '${basePath}/dept/getChildren'});
+                var node = $('#tt').tree('find',parentId);
+                $('#tt').tree('expandTo', node.target).tree('select', node.target);
             }
 
             function save() {
@@ -91,6 +94,7 @@
                     handler: function () {
                         var selected = $('#tree').tree('getSelected');
                         if (selected) {
+                            parentId=selected.id;
                             add(selected.id);
                         } else {
                             $.messager.alert('警告', '请选择父节点', 'warning');

@@ -58,7 +58,7 @@ public class RedisAction {
         }else if("2".equals(keys[1])){
             //初始化锁      key=0000000002,2,DF:98:deptId,lockCode
             String lockNum = "";
-            if(StringUtils.isNotEmpty(keys[4])){
+            if(key.length()==5){
                 lockNum=keys[4];
             }else {
                 Object value = redisTemplateUtil.get("lanya-lock-client");
@@ -95,7 +95,7 @@ public class RedisAction {
             }
         }
         try {
-            Thread.sleep(15000);
+            Thread.sleep(7000);
             Object o = redisTemplateUtil.get(authKey);
             if (o == null) {
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
