@@ -100,9 +100,7 @@ public class DeptAction {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String add(@ModelAttribute Department dept) {
-
         String message = "";
-
         try {
             if (StringUtils.isBlank(dept.getParentId())) {
                 dept.setParentId("null");
@@ -126,7 +124,6 @@ public class DeptAction {
         deptDao.update(dept);
         return "success";
     }
-
 
     @RequestMapping("/delete")
 	@ResponseBody
@@ -176,7 +173,6 @@ public class DeptAction {
 		}
 		return message;
 	}
-
 
 	@RequestMapping("/getDeptTree")
 	@ResponseBody
