@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public class AreaInfoDaoImpl extends BaseDaoImpl implements AreaInfoDao {
     public List<Area> findAreaByParentId(String parentcode){
-        String hql="select t from Area t where t.parentcode='"+parentcode+"'   order by t.areacode";
+        String hql = "select t from Area t where t.parentcode='" + parentcode + "'order by t.areacode";
         return findList(hql);
     }
     public List<Area> findAreaByCode(String areacode){
