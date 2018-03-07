@@ -54,7 +54,6 @@
                 <td><input name="keyssMAC" value="${keyss.keyssMAC}" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
-
             <tr>
                 <td width="100">领用人：</td>
                 <td>
