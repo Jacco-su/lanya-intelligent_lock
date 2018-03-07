@@ -2,9 +2,12 @@ package com.dream.brick.admin.action;
 
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.dao.IDeptDao;
+import com.dream.brick.equipment.bean.Area;
 import com.dream.brick.equipment.bean.Qgorg;
+import com.dream.brick.equipment.dao.AreaInfoDao;
 import com.dream.brick.listener.BasicData;
 import com.dream.brick.listener.SessionData;
+import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -37,6 +40,10 @@ public class DeptAction {
 
 	@Resource
 	private IDeptDao deptDao;
+
+
+    private AreaInfoDao areaInfoDao;
+
 
 	@RequestMapping("/index")
 	public String index(String orgId, HttpServletRequest request)
@@ -78,11 +85,13 @@ public class DeptAction {
 	}
 
 	@RequestMapping("/prUpdate")
-	public String prUpdate(String id, ModelMap model, HttpServletRequest request){
-		Department dept = deptDao.find(Department.class, id);
-//		String areacode= SessionData.getAreacode(request);
-//		List<Qgorg> qgorgList=BasicData.findQgorgByAreacode(areacode);
+    public String prUpdate(String id, ModelMap model, HttpServletRequest request, Pager pager) {
+        Department dept = deptDao.find(Department.class, id);
+        String areacode = SessionData.getAreacode(request);
+        List<Qgorg> qgorgList = BasicData.findQgorgByAreacode(areacode, pager);
+        List<Area> areaList = areaInfoDao.findAreaByCode(areacode);
 //		model.addAttribute("qgorgList", qgorgList);
+        model.addAttribute("areaList", areaList);
         model.addAttribute("dept", dept);
 		return "admin/dept/update";
 	}

@@ -68,7 +68,7 @@
                                 <%--data-options="editable:false,valueField:'id', textField:'text'">--%>
                             <%--<option value="0">---请选择---</option>--%>
                         <%--</select>--%>
-
+                        <%--<input name="keyssDate" value="${keyss.keyssDate}" class="easyui-validatebox" required="true"/>--%>
                 </td>
             </tr>
         </table>
