@@ -78,7 +78,7 @@ public class DeptAction {
 //		String areacode= SessionData.getAreacode(request);
 //		List<Qgorg> qgorgList= BasicData.findQgorgByAreacode(areacode);
 //		model.addAttribute("qgorgList", qgorgList);
-		if (parentId != null && parentId != "null") {
+		if (!"null".equals(parentId)) {
 			Department dept = deptDao.find(Department.class, parentId);
 			Area area = areaInfoDao.find(Area.class, dept.getAreacode());
 			model.addAttribute("area", area);
