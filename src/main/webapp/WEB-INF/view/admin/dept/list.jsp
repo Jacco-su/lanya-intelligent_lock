@@ -45,8 +45,8 @@
 
             function refresh() {
                 $('#tree').tree({url: '${basePath}/dept/getChildren'});
-                var node = $('#tt').tree('find',parentId);
-                $('#tt').tree('expandTo', node.target).tree('select', node.target);
+                //var node = $('#tree').tree('find',parentId);
+                //$('#tree').tree('expandTo', node.target).tree('select', node.target);
             }
 
             function save() {
@@ -68,6 +68,7 @@
             }
 
             function add(parentId) {
+                $('#tempDeptId').val('');
                 addWin = $.createWin({
                     title: "区域添加",
                     url: '${basePath}/dept/prAdd?parentId=' + parentId,
@@ -111,6 +112,11 @@
                             success: function (data) {
                                 refresh();
                                 $.messager.alert('提示', '修改成功!', 'warning');
+
+                                /*         var json = eval("(" + data + ")");
+                                         $.messager.alert('提示', json.message, 'warning');
+                                         $.messager.alert('提示', '修改成功!', 'warning');*/
+
                             }
 
                         });
@@ -163,51 +169,19 @@
                     $('#diqutree').tree('options').url = "${basePath}/areainfo/findAreaByParentId?parentId=" + node.id;// change the url
                     return true;
                 },
-//            onClick:function(node){
-//                areacode = node.id;
-//                refresh();
-//            }
             });
-
-            function refresh() {
-                infolist.datagrid("clearSelections");
-                infolist.datagrid("reload");
-                displayMsg();
-            }
-
-
-
-
-            var fullname = "";
-
-            function getAreaname(node) {
-//                if (node == null) return;					//改动
-                fullname = node.text + " " + fullname;
-                if (node.attributes.parentcode == 0) {
-                    return;
-                }
-                var abc = $('#tree').tree('getParent', node.target);
-                getAreaname(abc);
-            }
-
-
         });
 
-        function setToarea() {
-            debugger;
-            var id = "";
-            var show = "";
-            fullname = "";
-            var selections = $('#tree').tree('getSelected');
-            console.log(selections);
+        function setArea() {
+            var selections = $('#diqutree').tree('getSelected');
             if (selections) {
-                id = selections.id;
-                show = selections.attributes.areaname;
-
-                $("#areacode").val(id);
-                //getAreaname(selections);
-                fullname = show.substring(0, fullname.length - 1);
-                $("#areaname").val(selections.areaname);
+                if ($('#tempDeptId').val() == "") {
+                    $('#addareacode').val(selections.id);
+                    $('#addareaname').val(selections.text);
+                } else {
+                    $("#areacode").val(selections.id);
+                    $('#areaname').val(selections.text);
+                }
             }
             $('#selectArea').window('close');
         }
@@ -235,7 +209,7 @@
             <ul id="diqutree" style="margin-top: 10px;"></ul>
         </div>
         <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
-            <a class="easyui-linkbutton" icon="icon-ok" onclick="setToarea();">确定</a>
+            <a class="easyui-linkbutton" icon="icon-ok" onclick="setArea();">确定</a>
             <a class="easyui-linkbutton" icon="icon-cancel" onclick="$('#selectArea').window('close');">关闭</a>
         </div>
     </div>

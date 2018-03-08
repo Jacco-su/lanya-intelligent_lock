@@ -3,9 +3,7 @@ package com.dream.brick.admin.action;
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.equipment.bean.Area;
-import com.dream.brick.equipment.bean.Qgorg;
 import com.dream.brick.equipment.dao.AreaInfoDao;
-import com.dream.brick.listener.BasicData;
 import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
@@ -42,7 +40,7 @@ public class DeptAction {
 	private IDeptDao deptDao;
 
 	@Resource
-    private AreaInfoDao areaInfoDao;
+	private AreaInfoDao areaInfoDao;
 
 
 	@RequestMapping("/index")
@@ -76,24 +74,30 @@ public class DeptAction {
 	}
 
 	@RequestMapping("/prAdd")
-	public String prAdd(String parentId, ModelMap model, HttpServletRequest request){
+	public String prAdd(String parentId, ModelMap model, HttpServletRequest request, String id) {
 //		String areacode= SessionData.getAreacode(request);
-//		List<Qgorg> qgorgList=BasicData.findQgorgByAreacode(areacode);
+//		List<Qgorg> qgorgList= BasicData.findQgorgByAreacode(areacode);
 //		model.addAttribute("qgorgList", qgorgList);
-        model.addAttribute("parentId", parentId);
+		if (parentId != null && parentId != "null") {
+			Department dept = deptDao.find(Department.class, parentId);
+			Area area = areaInfoDao.find(Area.class, dept.getAreacode());
+			model.addAttribute("area", area);
+		}
+		model.addAttribute("parentId", parentId);
 		return "admin/dept/add";
 	}
 
 	@RequestMapping("/prUpdate")
     public String prUpdate(String id, ModelMap model, HttpServletRequest request, Pager pager) {
         Department dept = deptDao.find(Department.class, id);
-        String areacode = SessionData.getAreacode(request);
-        List<Qgorg> qgorgList = BasicData.findQgorgByAreacode(areacode, pager);
-        List<Area> areaList = areaInfoDao.findAreaByCode(areacode);
+//        String areacode = SessionData.getAreacode(request);
+//        List<Qgorg> qgorgList = BasicData.findQgorgByAreacode(areacode, pager);
+//        List<Area> areaList = areaInfoDao.findAreaByCode(areacode);
 //		model.addAttribute("qgorgList", qgorgList);
-		Area area=areaInfoDao.find(Area.class,dept.getAreacode());
-        model.addAttribute("area", area);
-        model.addAttribute("dept", dept);
+//        model.addAttribute("areaList", areaList);
+		Area area = areaInfoDao.find(Area.class, dept.getAreacode());
+		model.addAttribute("area", area);
+		model.addAttribute("dept", dept);
 		return "admin/dept/update";
 	}
 
@@ -105,10 +109,10 @@ public class DeptAction {
             if (StringUtils.isBlank(dept.getParentId())) {
                 dept.setParentId("null");
             }
-	        dept.setQgorgId("1001");
-	        dept.setAreacode("4101");
-            deptDao.save(dept);
-            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+//	        dept.setQgorgId("1001");
+//	        dept.setAreacode("4101");
+			deptDao.save(dept);
+			message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
             message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
@@ -121,9 +125,14 @@ public class DeptAction {
     public String update(@ModelAttribute Department dept) {
 //		Qgorg qgorg=BasicData.findQgorgById(dept.getQgorgId());
 //		dept.setAreacode(qgorg.getAreacode());
-        deptDao.update(dept);
-        return "success";
-    }
+		try {
+			deptDao.update(dept);
+
+		} catch (Exception e) {
+
+		}
+		return "success";
+	}
 
     @RequestMapping("/delete")
 	@ResponseBody
