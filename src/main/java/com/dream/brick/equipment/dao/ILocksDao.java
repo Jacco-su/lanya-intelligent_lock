@@ -17,7 +17,7 @@ public interface ILocksDao extends BaseDao {
 
     List<Locks> findLocksByDis(String disId);
     public List<Locks> findLocksList(Pager pager);
-    public List<Locks> findLocksList(String deptId,Pager pager);
+    public List<Locks> findLocksList(String deptId,String dissName,Pager pager);
     List<Locks> findLocks(Map<String,String> params);
     List<Locks> findLocks(Locks locks);
 }

@@ -57,7 +57,7 @@ public class KeyssAction {
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
         List<Keyss> list = ikeyssDao.findKeyssList(deptId,pager);
-        String temp = "";
+       /* String temp = "";
         if(list!=null&&list.size()>0) {
             for (int i = 0; i < list.size(); i++) {
                 temp = list.get(i).getKeyssDate().toString();
@@ -65,7 +65,7 @@ public class KeyssAction {
                 String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
                 list.get(i).setKeyssDate(str);
             }
-        }
+        }*/
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
 
@@ -113,7 +113,7 @@ public class KeyssAction {
     public String Update(String id, ModelMap modelMap,String deptId, String dissName, Pager pager) throws Exception {
         Keyss keyss = ikeyssDao.find(Keyss.class, id);
         modelMap.addAttribute("keyss", keyss);
-        modelMap.addAttribute("userList", JSON.toJSONString(userDao.keyssUser(deptId,pager)));
+        //modelMap.addAttribute("userList", userDao.findAllUser());
         return "admin/keyss/update";
     }
 
@@ -122,7 +122,7 @@ public class KeyssAction {
     public String update(@ModelAttribute Keyss keyss) {
         String message = "";
         try {
-//            keyss.setKeyssDate(FormatDate.getYMdHHmmss());
+           keyss.setKeyssDate(FormatDate.getYMdHHmmss());
             ikeyssDao.update(keyss);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {

@@ -61,7 +61,16 @@
                         title: '授权类型',
                         field: 'authType',
                         width: $(this).width() * 0.1,
-                        align: 'center'
+                        align: 'center',
+                        formatter: function (value, rowData, rowIndx) {
+                            if(value=="0"){
+                                value="离线授权";
+                            }
+                            if(value=="1"){
+                                value="在线授权";
+                            }
+                            return value;
+                        }
                     },
                     {
                         title: '授权人员',

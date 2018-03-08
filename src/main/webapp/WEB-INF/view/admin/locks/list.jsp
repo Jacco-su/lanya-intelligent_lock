@@ -19,8 +19,8 @@
     <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
     <script type="text/javascript">
         var basePath = "${basePath}";
+        var deptId="";
         $(function () {
-            var deptId="";
             var infolist = $('#infolist');
             infolist.datagrid({
                 title: '智能锁列表',
@@ -88,11 +88,6 @@
                         iconCls: 'icon-view',
                         handler: seedetail
                     },
-//                    {
-//                        iconCls: "icon-add",
-//                        text: "添加",
-//                        handler: add
-//                    },
                     '-', {
                         text: '修改',
                         iconCls: 'icon-edit',
@@ -101,7 +96,8 @@
                         text: '删除',
                         iconCls: 'icon-remove',
                         handler: del
-                    }]
+                    }
+                ]
             });
             displayMsg();
 
@@ -112,7 +108,30 @@
                     displayMsg: '当前显示从{from}到{to}共{total}记录'
                 });
             }
-
+            function search(){
+                addWin = $.createWin( {
+                    title : "查询条件",
+                    contents:"",
+                    width : 300,
+                    buttons : [ {
+                        text : '查询',
+                        iconCls : 'icon-search',
+                        handler : query
+                    } ]
+                });
+            }
+            function query() {
+                infolist.datagrid( {
+                    url : basePath+'/locks/list',
+                    queryParams:{
+                        'dissName':$('#dissName').val()
+                    },
+                    loadMsg : '数据装载中......'
+                });
+                infolist.datagrid("clearSelections");
+                displayMsg();
+                $.closeWin(addWin);
+            }
             var addWin;
             var seeWin;
             var updateWin;
@@ -181,9 +200,22 @@
                 onClick:function(node){
                     deptId = node.id;
                     refresh();
+                    getDiss(node.id);
                 }
             });
-
+           //获取站点
+            function getDiss(obj) {
+                var data={
+                    "disaId":obj
+                };
+                $('#dissName').empty();
+                $.post(basePath+"/authorization/distribution",data,function(data){
+                    var d=JSON.parse(data);
+                    for(var i=0;i<d.length;i++){
+                        $('#dissName').append("<option value='" + d[i].id + "'>" + d[i].name + "</option>");
+                    }
+                });
+            }
 
             function refresh() {
                 infolist.datagrid( {
@@ -288,6 +320,25 @@
             var abc = $('#tree2').tree('getParent', node.target);
             getDisname(abc);
         }
+        function searLockByDiss() {
+            $('#infolist').datagrid( {
+                url : basePath+'/locks/list',
+                queryParams:{
+                    'dissName':$('#dissName').val(),
+                    'deptId':deptId
+                },
+                loadMsg : '数据装载中......'
+            });
+            $('#infolist').datagrid("clearSelections");
+            displayMsg();
+        }
+        function displayMsg() {
+            $('#infolist').datagrid('getPager').pagination({
+                beforePageText: '第',
+                afterPageText: '页，共{pages}页',
+                displayMsg: '当前显示从{from}到{to}共{total}记录'
+            });
+        }
     </script>
 </head>
 <body>
@@ -299,6 +350,14 @@
                 <ul id="tree" style="margin-top: 10px;"></ul>
             </td>
             <td valign="top" style="border: 1px solid #99bbe8;">
+                <table style='font-size:12px;'>
+                    <tr>
+                        <td>站点：</td>
+                        <td><select id='dissName' style='width: 150px;'></select>
+                        </td>
+                        <td><button onclick="searLockByDiss()">查询</button></td>
+                    </tr>
+                </table>
                 <table id="infolist"></table>
             </td>
         </tr>

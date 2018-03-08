@@ -1,7 +1,11 @@
 package com.dream.api;
 
 import com.alibaba.fastjson.JSON;
+import com.dream.brick.admin.bean.User;
+import com.dream.brick.equipment.bean.AuthLog;
 import com.dream.brick.equipment.bean.Authorization;
+import com.dream.brick.equipment.bean.Qgdis;
+import com.dream.brick.equipment.dao.IAuthLogDao;
 import com.dream.brick.equipment.dao.IAuthorizationDao;
 import com.dream.brick.listener.SessionData;
 import com.dream.socket.entity.AuthModel;
@@ -32,6 +36,8 @@ public class RedisAction {
     @Resource
     private IAuthorizationDao authorizationDao;
 
+    @Resource
+    private IAuthLogDao authLogDao;
     @RequestMapping(value = "/get", method = {RequestMethod.POST})
     @ResponseBody
     public String get(String key,HttpServletRequest request) {
@@ -48,8 +54,24 @@ public class RedisAction {
            authModel=new AuthModel(new byte[]{12},AuthModel.toData(12,14),Constants.LOCK_KEY).toString();//校时成功
         }else if("5".equals(keys[1])){
             //开始授权
-            //采集器id:指令字:控制器mac地址:钥匙mac地址:锁识别号:开始日期:结束日期:用户id
-            System.out.println(keys[7]);
+            //采集器id:指令字:控制器mac地址:钥匙mac地址:锁识别号:开始日期:结束日期:用户id:站点ID
+            AuthLog authLog = new AuthLog();
+            authLog.setCreateTime(FormatDate.getYMdHHmmss());
+            authLog.setAuthStartTime(keys[6]);
+            authLog.setAuthName("在线授权!");
+            User user=new User();
+            user.setId(keys[7]);
+            authLog.setUser(user);
+            authLog.setAuthType(2);
+            authLog.setAuthKeysId(keys[3]);
+            authLog.setAuthKeys(keys[3]);
+            authLog.setAuthLocks(keys[4]);
+            authLog.setAuthLocksId(keys[4]);
+            authLog.setAuthEndTime(FormatDate.dateSdfHHmmssParse(keys[6]));
+            Qgdis qgdis=new Qgdis();
+            qgdis.setId(keys[8]);
+            authLog.setQgdis(qgdis);
+            authLogDao.save(authLog);
             authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keys[7],8)),keys[4],keys[2],keys[5],keys[6]),Constants.LOCK_KEY).toString();//
         }else if("1".equals(keys[1])){
             //获取门锁信息  key=0000000002,1,DF:98,
@@ -95,7 +117,7 @@ public class RedisAction {
             }
         }
         try {
-            Thread.sleep(7000);
+            Thread.sleep(10000);
             Object o = redisTemplateUtil.get(authKey);
             if (o == null) {
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);

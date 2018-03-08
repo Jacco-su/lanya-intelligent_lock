@@ -46,6 +46,7 @@ public class AuthLogDaoImpl extends BaseDaoImpl implements IAuthLogDao {
         if(StringUtils.isNotEmpty(userId)){
             hql.append(" and t.user.username  like '%").append(authEndTime).append("%'");
         }
+        hql.append(" order by t.createTime desc");
         return query(hql.toString(),pager);
     }
 }
