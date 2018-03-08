@@ -62,7 +62,8 @@ public class UserAction {
 		JSONObject datas = new JSONObject();
 		List<User> userList = new ArrayList<User>();
 		if (StringUtils.isNotBlank(deptId)) {
-			userList = userDao.list(pager, deptId);
+		Department department =deptDao.find(Department.class,deptId);
+			userList = userDao.list(pager, department.getAreacode());
 		}else if(StringUtils.isNotBlank(username)){
 			userList = userDao.query(pager, username);
 		}

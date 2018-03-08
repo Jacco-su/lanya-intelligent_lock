@@ -34,6 +34,6 @@ public class AuthorizationDaoImpl extends BaseDaoImpl implements IAuthorizationD
     }
 
     public List<Authorization> findListDisa(String disa){
-        return findList("from Qgdis where deptId="+disa);
+        return findList("from Qgdis where dept.areacode like '"+disa+"%'");
     }
 }

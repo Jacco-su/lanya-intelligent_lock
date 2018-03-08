@@ -46,7 +46,7 @@ public class LocksDaoImpl extends BaseDaoImpl implements ILocksDao {
         StringBuilder hql=new StringBuilder();
         hql.append(" from Locks t where 1=1 ");
         if(StringUtils.isNotEmpty(deptId)){
-            hql.append(" and qgdis.dept.id=").append(deptId);
+            hql.append(" and qgdis.dept.areacode like '").append(deptId).append("%'");
         }
         if(StringUtils.isNotEmpty(dissName)){
             hql.append(" and qgdis.id=").append(dissName);

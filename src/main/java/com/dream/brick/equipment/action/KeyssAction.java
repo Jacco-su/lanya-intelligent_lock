@@ -1,6 +1,8 @@
 package com.dream.brick.equipment.action;
 
 import com.alibaba.fastjson.JSON;
+import com.dream.brick.admin.bean.Department;
+import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.admin.dao.impl.UserDao;
 import com.dream.brick.equipment.bean.Keyss;
 import com.dream.brick.equipment.dao.CollectorDao;
@@ -9,6 +11,7 @@ import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -42,7 +45,8 @@ public class KeyssAction {
     private CollectorDao collectorDao;
     @Resource
     private UserDao userDao;
-
+    @Resource
+    private IDeptDao deptDao;
 
     @RequestMapping("/prList")
     public String prList(String keyssId, HttpServletRequest request) throws Exception {
@@ -56,16 +60,11 @@ public class KeyssAction {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
+        if(StringUtils.isNotEmpty(deptId)){
+            Department department =deptDao.find(Department.class,deptId);
+            deptId=department.getAreacode();
+        }
         List<Keyss> list = ikeyssDao.findKeyssList(deptId,pager);
-       /* String temp = "";
-        if(list!=null&&list.size()>0) {
-            for (int i = 0; i < list.size(); i++) {
-                temp = list.get(i).getKeyssDate().toString();
-                Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
-                String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-                list.get(i).setKeyssDate(str);
-            }
-        }*/
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
 

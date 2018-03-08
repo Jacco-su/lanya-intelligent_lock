@@ -70,8 +70,7 @@ public class QgdisDaoImpl extends BaseDaoImpl implements QgdisDao {
         StringBuilder hql=new StringBuilder();
         hql.append("from Qgdis t  where 1=1 ");
         if(StringUtils.isNotEmpty(deptId)){
-            hql.append("and t.dept.id =").append(deptId);
-            hql.append("or t.dept.parentId =").append(deptId);
+            hql.append("and t.dept.areacode  like '").append(deptId).append("%'");
         }
         if(StringUtils.isNotEmpty(dissName)){
             hql.append("and t.name like '%").append(dissName).append("%'");

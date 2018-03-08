@@ -45,8 +45,8 @@
 
             function refresh() {
                 $('#tree').tree({url: '${basePath}/dept/getChildren'});
-                //var node = $('#tree').tree('find',parentId);
-                //$('#tree').tree('expandTo', node.target).tree('select', node.target);
+                var node = $('#tree').tree('find',parentId);
+                $('#tree').tree('expandTo', node.target).tree('select', node.target);
             }
 
             function save() {
