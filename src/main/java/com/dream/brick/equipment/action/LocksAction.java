@@ -46,20 +46,13 @@ public class LocksAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, Pager pager,String deptId) throws Exception {
+    public String list(int page, int rows, Pager pager,String deptId,String dissName) throws Exception {
 
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
 
-        List<Locks> list = ilocksDao.findLocksList(deptId,pager);
-        String temp = "";
-        for (int i = 0; i < list.size(); i++) {
-            temp = list.get(i).getLockDate().toString();
-            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
-            String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-            list.get(i).setLockDate(str);
-        }
+        List<Locks> list = ilocksDao.findLocksList(deptId,dissName,pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
 
