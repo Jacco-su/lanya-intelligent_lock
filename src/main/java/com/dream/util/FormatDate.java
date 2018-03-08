@@ -202,7 +202,7 @@ public class FormatDate {
 /**
        * 字符串解析成时间对象
        * @param dateTimeString String
-       * @return
+       * @return 2018-03-04 10:30:30
        * @throws ParseException
        */
       public static String dateParse(String dateTimeString){
@@ -214,8 +214,20 @@ public class FormatDate {
 		      return null;
 	      }
       }
+      //20180304103030
+	public static String dateSdfHHmmssParse(String dateTimeString){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		try {
+			return sdfHHmmss.format(sdf.parse(dateTimeString));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	public static void main(String[] args){
 		System.out.println("0012".substring(2,4));
 		System.out.println(FormatDate.dateParse("2018-03-04 10:30:30"));
+		System.out.println(FormatDate.dateSdfHHmmssParse("20180304103030"));
+
 	}
 }

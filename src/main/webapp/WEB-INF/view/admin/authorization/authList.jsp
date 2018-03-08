@@ -209,7 +209,8 @@
                 +$('#locks').val()+","
                 +$('#startDate').val()+","
                 +$('#endDate').val()+","
-                +$('#users').combobox('getValue');
+                +$('#users').combobox('getValue')+","
+                +$('#disa').combobox('getValue');
             var data={
                 "key":key
             };

@@ -234,7 +234,7 @@
                     title: "修改",
                     url: '${basePath}/keyss/prUpdate?deptId='+deptId,
                     data: 'id=' + id,
-                    height: 350,
+                    height: 550,
                     width: 550,
                     buttons: [{
                         text: '修改',
@@ -242,7 +242,6 @@
                         handler: update
                     }]
                 });
-
             }
 
             function del() {

@@ -58,7 +58,7 @@ public class LocksAction {
             temp = list.get(i).getLockDate().toString();
             Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
             String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-            list.get(i).setLockCode(str);
+            list.get(i).setLockDate(str);
         }
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);

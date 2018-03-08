@@ -207,8 +207,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				addWin = $.createWin( {
 					title : "用户添加",
 					url : basePath+'/user/prAdd?deptId='+deptId,
-					height : 550,
-					width : 800,
+					height : 350,
+					width : 550,
 					buttons : [ {
 						text : '保存',
 						iconCls : 'icon-ok',
