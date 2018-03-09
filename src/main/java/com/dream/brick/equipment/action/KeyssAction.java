@@ -60,9 +60,9 @@ public class KeyssAction {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        if(StringUtils.isNotEmpty(deptId)){
-            Department department =deptDao.find(Department.class,deptId);
-            deptId=department.getAreacode();
+        if (StringUtils.isNotEmpty(deptId)) {
+            Department department = deptDao.find(Department.class, deptId);
+            deptId = department.getAreacode();
         }
         List<Keyss> list = ikeyssDao.findKeyssList(deptId,pager);
         datas.put("total", pager.getTotalRow());

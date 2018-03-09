@@ -183,7 +183,7 @@
                         buttons : [ {
                             text : '保存',
                             iconCls : 'icon-ok',
-                            handler: save()
+                            handler: save
                         } ]
                     });
                 }else{

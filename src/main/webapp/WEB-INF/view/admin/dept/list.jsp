@@ -18,6 +18,7 @@
     <script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
+    <script type="text/javascript" src="${basePath}/js/areacode.js"></script>
     <script type="text/javascript">
         var parentId="";
         $(function () {
@@ -45,7 +46,7 @@
 
             function refresh() {
                 $('#tree').tree({url: '${basePath}/dept/getChildren'});
-                var node = $('#tree').tree('find',parentId);
+                var node = $('#tree').tree('find', parentId);
                 $('#tree').tree('expandTo', node.target).tree('select', node.target);
             }
 

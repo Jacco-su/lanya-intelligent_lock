@@ -212,11 +212,11 @@
 }
 .datagrid-row-over{
 	background:#efefef;
-	background1:#FBEC88;
+    background1: #fbe373;
 	cursor:default;
 }
 .datagrid-row-selected{
-	background:#FBEC88;
+    background: #fbda66;
 }
 .datagrid-resize-proxy{
 	position:absolute;

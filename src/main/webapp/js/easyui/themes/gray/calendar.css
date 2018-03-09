@@ -96,11 +96,11 @@
 	border:1px solid red;
 }
 .calendar-selected{
-	background:#FBEC88;
+    background: #fbe56e;
 	border:1px solid red;
 }
 .calendar-nav-hover{
-	background-color:#FBEC88;
+    background-color: #fbda66;
 }
 
 
@@ -144,7 +144,7 @@
 	background:url('images/calendar_nextyear.gif') no-repeat 5px 6px;
 }
 .calendar-menu-hover{
-	background-color:#FBEC88;
+    background-color: #fbd54c;
 }
 .calendar-menu-month-inner table{
 	width:100%;

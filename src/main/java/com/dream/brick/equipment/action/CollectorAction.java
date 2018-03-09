@@ -55,16 +55,16 @@ public class CollectorAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, Pager pager,String deptId)
+    public String list(int page, int rows, Pager pager, String deptId)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        if(StringUtils.isNotEmpty(deptId)){
-            Department department =deptDao.find(Department.class,deptId);
-            deptId=department.getAreacode();
+        if (StringUtils.isNotEmpty(deptId)) {
+            Department department = deptDao.find(Department.class, deptId);
+            deptId = department.getAreacode();
         }
-        List<Collector> list = collectorDao.findCollectorList(deptId,pager);
+        List<Collector> list = collectorDao.findCollectorList(deptId, pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
@@ -72,8 +72,8 @@ public class CollectorAction {
 
 
     @RequestMapping("/prAdd")
-    public String prAdd(ModelMap model,String deptId, String dissName, Pager pager) {
-        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
+    public String prAdd(ModelMap model, String deptId, String dissName, Pager pager) {
+        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId, dissName, pager)));
         return "admin/collector/add";
     }
 
@@ -149,7 +149,7 @@ public class CollectorAction {
         model.addAttribute("collectora", collector);
 
 
-        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
+        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId, dissName, pager)));
 
 
         return "admin/collector/update";

@@ -179,8 +179,8 @@ public class AuthorizationAction {
     @ResponseBody
     public String getDistributionAction(String disaId){
         if (StringUtils.isNotEmpty(disaId)) {
-            Department department =deptDao.find(Department.class,disaId);
-            disaId=department.getAreacode();
+            Department department = deptDao.find(Department.class, disaId);
+            disaId = department.getAreacode();
             return JSON.toJSONString(authorizationDao.findListDisa(disaId));
         } else {
 
@@ -199,11 +199,11 @@ public class AuthorizationAction {
     @RequestMapping("/user")
     @ResponseBody
     public String getUserAction(String disaId){
-        if(StringUtils.isNotEmpty(disaId)){
-            Department department =deptDao.find(Department.class,disaId);
-            disaId=department.getAreacode();
+        if (StringUtils.isNotEmpty(disaId)) {
+            Department department = deptDao.find(Department.class, disaId);
+            disaId = department.getAreacode();
         }
-        return JSON.toJSONString(authorizationDao.findList("from User where dept.areacode like '"+disaId+"%'"));
+        return JSON.toJSONString(authorizationDao.findList("from User where dept.areacode like '" + disaId + "%'"));
     }
     @RequestMapping("/disa/collector")
     @ResponseBody

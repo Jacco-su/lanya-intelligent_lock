@@ -3,7 +3,6 @@ package com.dream.api;
 import com.alibaba.fastjson.JSON;
 import com.dream.brick.admin.bean.User;
 import com.dream.brick.equipment.bean.AuthLog;
-import com.dream.brick.equipment.bean.Authorization;
 import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.IAuthLogDao;
 import com.dream.brick.equipment.dao.IAuthorizationDao;
@@ -17,7 +16,6 @@ import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.RedisTemplateUtil;
 import com.dream.util.StringUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -117,23 +115,23 @@ public class RedisAction {
             }
         }*/
         redisTemplateUtil.setList("lanya-lite", authKey);
-        int time=15000;
+        int time = 15000;
         try {
-            Thread.sleep(time-2000);
+            Thread.sleep(time - 2000);
             Object o = null;
-            while (time>0){
+            while (time > 0) {
                 o = redisTemplateUtil.get(authKey);
-                if(o==null){
+                if (o == null) {
                     redisTemplateUtil.setList("lanya-lite", authKey);
-                    Thread.sleep(time-1000);
-                }else{
-                    int t=o.toString().lastIndexOf("*")+1;
-                    if(keys[1].equals(t)){
+                    Thread.sleep(time - 1000);
+                } else {
+                    int t = o.toString().lastIndexOf("*") + 1;
+                    if (keys[1].equals(t)) {
                         break;
-                    }else{
-                        o=null;
+                    } else {
+                        o = null;
                         redisTemplateUtil.setList("lanya-lite", authKey);
-                        Thread.sleep(time-1000);
+                        Thread.sleep(time - 1000);
                     }
                 }
             }
