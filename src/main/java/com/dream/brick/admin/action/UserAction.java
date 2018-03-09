@@ -63,10 +63,10 @@ public class UserAction {
 		JSONObject datas = new JSONObject();
 		List<User> userList = new ArrayList<User>();
 		if (StringUtils.isNotBlank(deptId)) {
-		Department department =deptDao.find(Department.class,deptId);
-			userList = userDao.list(pager, department.getAreacode());
-		}else if(StringUtils.isNotBlank(username)){
-			userList = userDao.query(pager, username);
+            Department department = deptDao.find(Department.class, deptId);
+            userList = userDao.list(pager, department.getAreacode());
+        } else if (StringUtils.isNotBlank(username)) {
+            userList = userDao.query(pager, username);
 		}
 		Map<String,List<Role>> urmap=userDao.findAllUserRoles();
 		for(User user:userList){

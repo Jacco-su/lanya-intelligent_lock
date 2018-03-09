@@ -31,9 +31,9 @@ public class UserDao extends BaseDaoImpl implements IUserDao {
 
 	@Override
 	public List<User> list(IPager pager, String deptId) throws Exception {
-		String hql = "from User where dept.areacode like '"+deptId+"%' and id!='"+deptId+"' and name != 'admin' and name != 'alluser' and status!=0 order by orderId , rdate asc";
-		return query(hql, pager);
-	}
+        String hql = "from User where dept.areacode like '" + deptId + "%' and id!='" + deptId + "' and name != 'admin' and name != 'alluser' and status!=0 order by orderId , rdate asc";
+        return query(hql, pager);
+    }
 
 	@Override
 	public List<User> listAll(IPager pager) throws Exception {

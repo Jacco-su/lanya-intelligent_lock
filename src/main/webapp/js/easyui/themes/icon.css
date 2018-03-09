@@ -89,12 +89,12 @@ float: right; cursor: hand;
 		width:95%;
 	 }
 	.mytable td{
-      border:1px solid #99BBE8;
+        border: 1px solid #7baee8;
       padding:5px;
 	}
 	.width100{width:100px;}
 	.mytable tr{
-	    border:1px solid #99BBE8;
+        border: 1px solid #7baee8;
 	}
 a.download{ color:#436493; text-decoration:none;}
 a.download:hover{ color:Red; text-decoration:underline;}

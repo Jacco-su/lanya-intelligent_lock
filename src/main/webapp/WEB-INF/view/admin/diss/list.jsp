@@ -16,6 +16,7 @@
     <script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
+    <script type="text/javascript" src="${basePath}/js/areacode.js"></script>
     <script type="text/javascript">
         var basePath="${basePath}";
         $(function() {
