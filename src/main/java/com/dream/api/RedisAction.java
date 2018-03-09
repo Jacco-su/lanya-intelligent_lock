@@ -109,20 +109,38 @@ public class RedisAction {
         jsonDataProtocol.setDataType("client");
         System.out.println(dataProtocol.toString());
         String authKey=JSON.toJSONString(jsonDataProtocol)+";"+SessionData.getAdminId(request);
-        if("2".equals(keys[1])){
+        /*if("2".equals(keys[1])){
             redisTemplateUtil.setList("lanya-lite", authKey);
         }else {
             for (int i = 0; i < 3; i++) {
                 redisTemplateUtil.setList("lanya-lite", authKey);
             }
-        }
+        }*/
+        redisTemplateUtil.setList("lanya-lite", authKey);
+        int time=15000;
         try {
-            Thread.sleep(10000);
-            Object o = redisTemplateUtil.get(authKey);
+            Thread.sleep(time-2000);
+            Object o = null;
+            while (time>0){
+                o = redisTemplateUtil.get(authKey);
+                if(o==null){
+                    redisTemplateUtil.setList("lanya-lite", authKey);
+                    Thread.sleep(time-1000);
+                }else{
+                    int t=o.toString().lastIndexOf("*")+1;
+                    if(keys[1].equals(t)){
+                        break;
+                    }else{
+                        o=null;
+                        redisTemplateUtil.setList("lanya-lite", authKey);
+                        Thread.sleep(time-1000);
+                    }
+                }
+            }
             if (o == null) {
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
             } else {
-                if("5".equals(keys[1])){
+               /* if("5".equals(keys[1])){
                     if("授权成功!".equals(o.toString())){
                         Authorization authorization=new Authorization();
                         authorization.setType("client");
@@ -135,7 +153,7 @@ public class RedisAction {
                         authorization.setAdate(FormatDate.getYMdHHmmss());
                         authorizationDao.save(authorization);
                     }
-                }
+                }*/
                 return  StringUtil.jsonValue("1", o.toString());
             }
         } catch (InterruptedException e) {
