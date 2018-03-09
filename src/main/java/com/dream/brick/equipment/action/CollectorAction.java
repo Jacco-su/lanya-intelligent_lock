@@ -51,12 +51,12 @@ public class CollectorAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, Pager pager,String deptId)
+    public String list(int page, int rows, Pager pager, String deptId)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        List<Collector> list = collectorDao.findCollectorList(deptId,pager);
+        List<Collector> list = collectorDao.findCollectorList(deptId, pager);
 //        System.out.println(list.get(0).getCdate()+"dddddddddd");
         String temp = "";
         for (int i = 0; i < list.size(); i++) {
@@ -72,8 +72,8 @@ public class CollectorAction {
 
 
     @RequestMapping("/prAdd")
-    public String prAdd(ModelMap model,String deptId, String dissName, Pager pager) {
-        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
+    public String prAdd(ModelMap model, String deptId, String dissName, Pager pager) {
+        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId, dissName, pager)));
         return "admin/collector/add";
     }
 
@@ -82,15 +82,22 @@ public class CollectorAction {
     public String add(@ModelAttribute Collector collector) {
         String message = "";
 
-        try {
-            collector.setCdate(FormatDate.getYMdHHmmss());
-            collectorDao.save(collector);
-            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+        if (collector.getDis() == null) {
+            message = StringUtil.jsonValue("3", "请选择站点");
+            System.out.println(collector.getDis());
+
+        } else {
+            try {
+                collector.setCdate(FormatDate.getYMdHHmmss());
+                collectorDao.save(collector);
+                message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+            } catch (Exception e) {
+                e.printStackTrace();
+                message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+            }
         }
         return message;
+
     }
 
 //    public void initRolea(Collector collector, String[] disIdList) {
@@ -142,7 +149,7 @@ public class CollectorAction {
         model.addAttribute("collectora", collector);
 
 
-        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
+        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId, dissName, pager)));
 
 
         return "admin/collector/update";

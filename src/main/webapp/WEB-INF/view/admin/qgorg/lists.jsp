@@ -66,7 +66,7 @@
                     {
                         title: '区域编号',
                         field: 'id',
-                        width: 300,
+                        width: $(this).width() * 0.1,
                         align: 'left'
                     },
                 ]],

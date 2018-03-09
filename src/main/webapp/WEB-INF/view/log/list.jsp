@@ -55,7 +55,7 @@
 				{
 					title : '类型',
 					field : 'type',
-					width : $(this).width() * 0.2,
+                    width: $(this).width() * 0.1,
 					align : 'left',
 					formatter : function(value,rowData,rowIndx) {
 						if(value==0)value="登录";
@@ -69,7 +69,7 @@
                 {
                     title : '用户',
                     field : 'username',
-                    width : $(this).width() * 0.2,
+                    width: $(this).width() * 0.1,
                     align : 'left'
                 },
 				{
@@ -81,7 +81,7 @@
 				{
 					title : 'ip',
 					field : 'ip',
-					width : $(this).width() * 0.2,
+                    width: $(this).width() * 0.1,
 					align : 'left'
 				},
 				{

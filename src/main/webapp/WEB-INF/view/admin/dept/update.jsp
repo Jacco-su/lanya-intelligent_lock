@@ -48,7 +48,7 @@
                 <td>
                     <%--<input name="areac" coords="" href="" alt="" value="${dept.areacode}"/>--%>
 
-                    <input type="text" name="areaname" id="areaname" value="${area.areaname}"/>
+                    <input type="text" name="areaname" id="areaname" value="${area.areaname}" readonly/>
                     <%--readonly/>--%>
                     <a class="easyui-linkbutton" id="area" onclick="addArea()">选择</a>
                     <input type="hidden" name="areacode" id="areacode" value="${dept.areacode}"/>

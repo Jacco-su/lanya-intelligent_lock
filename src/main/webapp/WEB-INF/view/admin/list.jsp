@@ -106,7 +106,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					});
 					return t;
 				},
-				width : $(this).width() * 0.2,
+                    width: $(this).width() * 0.1,
 				rowspan : 2,
 				align : 'center'
 			} ] ],

@@ -260,8 +260,8 @@
                     title: "修改",
                     url: basePath + '/locks/prUpdate',
                     data: 'id=' + id,
-                    height: 550,
-                    width: 800,
+                    height: 350,
+                    width: 500,
                     buttons: [{
                         text: '修改',
                         iconCls: 'icon-ok',

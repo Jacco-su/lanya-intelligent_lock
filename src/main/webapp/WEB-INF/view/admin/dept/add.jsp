@@ -22,9 +22,9 @@
 	<tr>
 		<td width="100">所属行政区:</td>
 		<td>
-			<input type="text" name="areaname" id="addareaname" required="true"/>
+            <input type="text" name="areaname" id="addareaname" value="" required="true"/>
 			<a class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>
-			<input type="" name="areacode" id="addareacode"/>
+            <input type="hidden" name="areacode" id="addareacode" value="" required="true"/>
 		</td>
 	</tr>
 
