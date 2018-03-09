@@ -51,6 +51,9 @@ public class KeyssDaoImpl extends BaseDaoImpl implements IKeyssDao {
         if(StringUtils.isNotEmpty(params.get("keyssMAC"))){
             hql.append(" and t.keyssMAC ='").append(params.get("keyssMAC")).append("'");
         }
+        if(StringUtils.isNotEmpty(params.get("userId"))){
+            hql.append(" and t.user.id ='").append(params.get("userId")).append("'");
+        }
         return findList(hql.toString());
     }
 }
