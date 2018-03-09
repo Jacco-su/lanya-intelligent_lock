@@ -25,7 +25,7 @@
     }
 </style>
 <div>
-    <form name="addForm" id="addForm" action="${basePath}/collector/add" method="post" onsubmit="cip()">
+    <form name="addForm" id="addForm" action="${basePath}/collector/add" method="post">
         <table class="mytable" align="center">
 
             <tr>
@@ -39,7 +39,7 @@
             <tr>
                 <td>IP地址:</td>
                 <td>
-                    <input name="cip" value="" class="easyui-validatebox" required="true" onblur="cip()"/>
+                    <input name="cip" value="" class="easyui-validatebox" required="true"/>
                     <%--<a class="easyui-linkbutton"--%>
                     <%--onclick="$('#').window('open');">获取</a>--%>
 

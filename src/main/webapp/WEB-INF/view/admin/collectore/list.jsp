@@ -87,13 +87,13 @@
                         title: '添加日期 ',
                         field: 'ceDate',
                         width: $(this).width() * 0.2,
-                        align: 'left',
+                        align: 'left'
 //                        formatter:function(date)
 //                        { /* 调用函数显示时间 */
 ////                            SimpleDateFormat c = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 //                            return format(date);
 //                        }
-                    },
+                    }
                 ]],
                 pagination: true,
                 rownumbers: true,
@@ -151,6 +151,11 @@
             }
 
             function save() {
+                var p = $("#ceMAC").val();
+                if (!p.match(/[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}/)) {
+                    $.messager.alert('提示', '请输入正确格式的MAC！', 'warning');
+                    return;
+                }
                 $('#addForm').form('submit', {
                     onSubmit: function () {
                         return $(this).form('validate');
@@ -208,14 +213,14 @@
             });
 
             function refresh() {
-                infolist.datagrid( {
+               /* infolist.datagrid( {
                     url: '${basePath}/collectore/list',
                     queryParams: {
                         'deptId': deptId
                     },
                     loadMsg : '数据装载中......'
                 });
-                infolist.datagrid("clearSelections");
+                infolist.datagrid("clearSelections");*/
                 infolist.datagrid("reload");
                 displayMsg();
             }
@@ -230,8 +235,12 @@
             }
 
             function update() {
+                var p = $("#ceMAC").val();
+                if (!p.match(/[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}/)) {
+                    $.messager.alert('提示', '请输入正确格式的MAC！', 'warning');
+                    return;
+                }
                 $('#editForm').form('submit', {
-
                     onSubmit: function () {
                         var v = $(this).form('validate');
                         if (v) {

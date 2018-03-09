@@ -73,6 +73,10 @@ public class CollectorAction {
 
     @RequestMapping("/prAdd")
     public String prAdd(ModelMap model,String deptId, String dissName, Pager pager) {
+        if(StringUtils.isNotEmpty(deptId)){
+            Department department =deptDao.find(Department.class,deptId);
+            deptId=department.getAreacode();
+        }
         model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
         return "admin/collector/add";
     }

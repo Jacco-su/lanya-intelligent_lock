@@ -47,7 +47,7 @@ public List<Collector> findCollectorByQgdisid(String disId) {
     public List<Collector> findCollectorList(String deptId, Pager pager) {
         String hql=null;
         if(StringUtils.isNotEmpty(deptId)){
-            hql = "from Collector where dis.dept.id= "+deptId;
+            hql = "from Collector where dis.dept.areacode  like '"+deptId+"%'";
         }else{
             hql = "from Collector";
         }

@@ -80,14 +80,14 @@
                         title: '添加日期 ',
                         field: 'cdate',
                         width: $(this).width() * 0.2,
-                        align: 'left',
+                        align: 'left'
 //                        formatter:function(date)
 //                        { /* 调用函数显示时间 */
 ////                            SimpleDateFormat c = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 //                            return format(date);
 //
 //                        }
-                    },
+                    }
                 ]],
                 pagination : true,
                 rownumbers : true,
@@ -140,18 +140,31 @@
                     $.messager.alert('警告', '请选择一行数据', 'warning');
                 }
             }
-
+            function add() {
+                if (deptId != "") {
+                    addWin = $.createWin( {
+                        title: "采集器添加",
+                        url : basePath+'/collector/prAdd?deptId='+deptId,
+                        height: 350,
+                        width: 500,
+                        buttons : [ {
+                            text : '保存',
+                            iconCls : 'icon-ok',
+                            handler: save
+                        } ]
+                    });
+                }else{
+                    $.messager.alert('警告', '请选择一个区域', 'warning');
+                }
+            }
 
             function save() {
-                var a = $('#dissName').val()
-
-                if (a == null) {
+                var a = $('#dissname').val();
+                if (a =="") {
                     $.messager.alert('提示', '请先选择站点!', 'warning');
                     alert('请先选择站点!');
-
-                } else {
-
-
+                    return;
+                }
                     $('#addForm').form('submit', {
                         onSubmit:function(){
                             return $(this).form('validate');
@@ -171,25 +184,7 @@
                         }
                     });
                 }
-            }
 
-            function add() {
-                if (deptId != "") {
-                    addWin = $.createWin( {
-                        title: "采集器添加",
-                        url : basePath+'/collector/prAdd?deptId='+deptId,
-                        height: 350,
-                        width: 500,
-                        buttons : [ {
-                            text : '保存',
-                            iconCls : 'icon-ok',
-                            handler: save()
-                        } ]
-                    });
-                }else{
-                    $.messager.alert('警告', '请选择一个区域', 'warning');
-                }
-            }
             function edit() {
                 var select = infolist.datagrid('getSelected');
                 if (select) {
@@ -286,9 +281,23 @@
                 onClick:function(node){
                     deptId = node.id;
                     refresh();
+                    //getDiss(node.id);
                 }
             });
-
+//获取站点
+            function getDiss(obj) {
+                var data={
+                    "disaId":obj
+                };
+                console.log($('#dissname'));
+                $('#dissname').empty();
+                $.post(basePath+"/authorization/distribution",data,function(data){
+                    var d=JSON.parse(data);
+                    for(var i=0;i<d.length;i++){
+                        $('#dissname').append("<option value='" + d[i].id + "'>" + d[i].name + "</option>");
+                    }
+                });
+            }
         });
     </script>
 </head>

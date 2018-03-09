@@ -42,15 +42,16 @@
             <tr>
                 <td>MAC地址:</td>
                 <td>
+                    <input name="ceDate" value="${collectore.ceDate}" class="easyui-validatebox" type="hidden"/>
                     <input name="ceMAC" value="${collectore.ceMAC}" class="easyui-validatebox" required="true"
-                           onblur=""/>
+                           />
                 </td>
             </tr>
-            <tr>
+          <%--  <tr>
                 <td>日期:</td>
-                <td><input name="ceDate" value="${collectore.ceDate}" class="easyui-validatebox" required="true"/>
+                <td><input name="ceDate" value="${collectore.ceDate}" class="easyui-validatebox" type="hidden"/>
                 </td>
-            </tr>
+            </tr>--%>
         </table>
         <%--<div id="selectct">--%>
             <%--<div class="easyui-layout" fit="true">--%>
@@ -73,7 +74,7 @@
         $('#cid').empty();
         <%--$("#cid").prepend("<option value='0'>${collectore.collector.ccode}</option>");   //为Select插入一个Option(第一个位置)--%>
         for (var i = 0; i < data.length; i++) {
-            $('#cid').append("<option value='" + data[i].id + "'>" + data[i].ccode + "</option>");
+            $('#cid').append("<option value='" + data[i].id + "'>" +data[i].dis.name+"-"+ data[i].ccode + "</option>");
         }
     });
 

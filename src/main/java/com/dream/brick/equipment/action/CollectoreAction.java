@@ -69,6 +69,10 @@ public class CollectoreAction {
 
     @RequestMapping("/prAdd")
     public String prAdd(ModelMap modelMap,String deptId, Pager pager) {
+        if(StringUtils.isNotEmpty(deptId)){
+            Department department =deptDao.find(Department.class,deptId);
+            deptId=department.getAreacode();
+        }
         modelMap.addAttribute("collectorList",JSON.toJSONString(collectorDao.findCollectorList(deptId,pager)));
         return "admin/collectore/add";
     }
