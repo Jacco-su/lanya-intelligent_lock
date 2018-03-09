@@ -50,20 +50,33 @@
                 //$('#tree').tree('expandTo', node.target).tree('select', node.target);
             }
 
+//            function save() {
+//                $('#addForm').form('submit', {
+//                    onSubmit: function () {
+//                        return $(this).form('validate');
+//                    },
+//                    success: function (data) {
+//                        $.messager.show({
+//                            title: '温馨提示:',
+//                            msg: '添加成功!',
+//                            timeout: 5000,
+//                            showType: 'slide'
+//                        });
+//                        refresh();
+//                        $.closeWin(addWin);
+//                    }
+//                });
+//            }
             function save() {
                 $('#addForm').form('submit', {
                     onSubmit: function () {
                         return $(this).form('validate');
                     },
                     success: function (data) {
-                        $.messager.show({
-                            title: '温馨提示:',
-                            msg: '添加成功!',
-                            timeout: 5000,
-                            showType: 'slide'
-                        });
-                        refresh();
+                        var json = eval("(" + data + ")");
+                        $.messager.alert('提示', json.message, 'warning');
                         $.closeWin(addWin);
+                        refresh();
                     }
                 });
             }

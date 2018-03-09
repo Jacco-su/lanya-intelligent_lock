@@ -58,10 +58,10 @@
         var p = $("#ccode").val();
         if (!p.match(/\d{8}$/)) {
 //            alert("请输入8位数字！");
-            $.messager.alert('提示', '请输入8位数字！', 'warning');
+            $.messager.alert('提示', '请输入8位数字的采集器ID！', 'warning');
         }
         if (p.length > 8) {
-            $.messager.alert('提示', '输入超过8位！', 'warning');
+            $.messager.alert('提示', '采集器ID输入超过8位！', 'warning');
         }
 
 

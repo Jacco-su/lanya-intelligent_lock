@@ -482,7 +482,7 @@ a.active{outline: none;}
 .datagrid-body .datagrid-editable .datagrid-editable-input{
 	width:100%;
 	font-size:12px;
-	border:1px solid #A4BED4;
+	border: 1px solid #6c91b1;
 	padding:3px 2px;
 }
 .datebox .combo-arrow{
@@ -1384,7 +1384,7 @@ a.s-btn-plain-active .s-btn-downarrow{
 }
 .window .window-body{
 	background:#fff;
-	border:1px solid #99BBE8;
+	border: 1px solid #e86034;
 	border-top-width:0px;
 }
 .window .window-header .panel-icon{

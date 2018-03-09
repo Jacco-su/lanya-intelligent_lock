@@ -10,7 +10,7 @@
     <table class="mytable" align="center">
         <tr>
             <td>控制器编号:</td>
-            <td>${collectorea.ceCode}</td>
+            <td>${collectorea.cename}</td>
         </tr>
         <tr>
             <td>控制器ID</td>

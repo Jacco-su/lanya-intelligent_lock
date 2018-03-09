@@ -140,25 +140,37 @@
                     $.messager.alert('警告', '请选择一行数据', 'warning');
                 }
             }
-            function save() {
-                $('#addForm').form('submit', {
-                    onSubmit:function(){
-                        return $(this).form('validate');
-                    },
-                    success : function(data) {
-                        var json=eval("("+data+")");
-                        if(json.result=='1'){
-                            $.messager.alert('提示', '保存成功', 'warning');
-                            $.closeWin(addWin);
-                            refresh();
-                        }else{
-                            $.messager.alert('提示', '保存失败', 'warning');
-                            $.closeWin(addWin);
-                            refresh();
-                        }
 
-                    }
-                });
+
+            function save() {
+                var a = $('#dissName').val()
+
+                if (a == null) {
+                    $.messager.alert('提示', '请先选择站点!', 'warning');
+                    alert('请先选择站点!');
+
+                } else {
+
+
+                    $('#addForm').form('submit', {
+                        onSubmit:function(){
+                            return $(this).form('validate');
+                        },
+                        success : function(data) {
+                            var json=eval("("+data+")");
+                            if(json.result=='1'){
+                                $.messager.alert('提示', '保存成功', 'warning');
+                                $.closeWin(addWin);
+                                refresh();
+                            }else{
+                                $.messager.alert('提示', '保存失败', 'warning');
+                                $.closeWin(addWin);
+                                refresh();
+                            }
+
+                        }
+                    });
+                }
             }
 
             function add() {
@@ -171,7 +183,7 @@
                         buttons : [ {
                             text : '保存',
                             iconCls : 'icon-ok',
-                            handler : save
+                            handler: save()
                         } ]
                     });
                 }else{

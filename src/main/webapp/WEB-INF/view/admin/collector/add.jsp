@@ -25,7 +25,7 @@
     }
 </style>
 <div>
-    <form name="addForm" id="addForm" action="${basePath}/collector/add" method="post">
+    <form name="addForm" id="addForm" action="${basePath}/collector/add" method="post" onsubmit="cip()">
         <table class="mytable" align="center">
 
             <tr>
@@ -39,7 +39,7 @@
             <tr>
                 <td>IP地址:</td>
                 <td>
-                    <input name="cip" value="" class="easyui-validatebox" required="true"/>
+                    <input name="cip" value="" class="easyui-validatebox" required="true" onblur="cip()"/>
                     <%--<a class="easyui-linkbutton"--%>
                     <%--onclick="$('#').window('open');">获取</a>--%>
 
@@ -92,10 +92,41 @@
         var p = $("#ccode").val();
         if (!p.match(/\d{8}$/)) {
 //            alert("请输入8位数字！");
-            $.messager.alert('提示', '请输入8位数字！', 'warning');
+            $.messager.alert('提示', '请输入8位数字的采集器ID！', 'warning');
         }
         if (p.length > 8) {
-            $.messager.alert('提示', '输入超过8位！', 'warning');
+            $.messager.alert('提示', '采集器ID输入超过8位！', 'warning');
+        }
+
+    };
+
+    //    $(document).ready(function (){
+    //        /**
+    //         *    最简洁的IP判断正则表达式
+    //         *  25[0-5]                     250-255
+    //         *  2[0-4]\d                    200-249
+    //         *  [01]?\d\d?                 000-199(0-9 \d)(10-99 \d\d)(100-99 1\d\d)
+    //         *  ($|(?!\.$)\.)               结束 或者 不以.结束的加上.
+    //         *  (?!^0{1,3}(\.0{1,3}){3}$)     排除 0.0.0.0 /^(?!^0{1,3}(\.0{1,3}){3}$)((25[0-5]|2[0-4]\d|[01]?\d\d?)($|(?!\.$)\.)){4}$/
+    //         *  (?!^255(\.255){3}$)           排除 255.255.255.255
+    //         */
+    //        function validateIP(str){
+    //            return !!str.match(/^((25[0-5]|2[0-4]\d|[01]?\d\d?)($|(?!\.$)\.)){4}$/);
+    //        }
+    //        $("#cip").blur(function(){
+    //            var m = validateIP($(this).val());
+    //            m = m || 'null';
+    ////            $("#result").val(m);
+    //            if(m=='null'){
+    //            $.messager.alert('提示', '请输入正确格式的IP！', 'warning');}
+    //        });
+    //    });
+
+    function cip() {
+        var p = $("#cip").val();
+        if (!p.match(/^((25[0-5]|2[0-4]\d|[01]?\d\d?)($|(?!\.$)\.)){4}$/)) {
+//            alert("请输入8位数字！");
+            $.messager.alert('提示', '请输入正确格式的IP！', 'warning');
         }
 
     };

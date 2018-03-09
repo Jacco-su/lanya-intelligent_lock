@@ -177,8 +177,8 @@ a:hover{ color:Red; text-decoration:underline;}
     background-position: -340px -240px;
 }
 
-.icon-quyutj {
-    background-position: -320px -80px;
+.icon-baiq {
+    background-position: -320px -400px;
 }
 
 .icon-baiheiq {
@@ -195,6 +195,10 @@ a:hover{ color:Red; text-decoration:underline;}
 
 .icon-diqiu {
     background-position: -160px -500px;
+}
+
+.icon-taiyangqiu {
+    background-position: -120px -500px;
 }
 
 .icon-zd {

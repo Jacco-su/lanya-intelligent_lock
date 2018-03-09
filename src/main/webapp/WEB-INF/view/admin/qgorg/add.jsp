@@ -20,7 +20,7 @@
 		</td>
 	</tr>	
 	<tr>
-        <td width="100">上级区域</td>
+        <td width="100">上级地区</td>
 		<td>
             <input type="text" name="areaname" id="areaname" value="" readonly/>
             <a class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>

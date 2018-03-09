@@ -82,15 +82,22 @@ public class CollectorAction {
     public String add(@ModelAttribute Collector collector) {
         String message = "";
 
-        try {
-            collector.setCdate(FormatDate.getYMdHHmmss());
-            collectorDao.save(collector);
-            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+        if (collector.getDis() == null) {
+            message = StringUtil.jsonValue("3", "请选择站点");
+            System.out.println(collector.getDis());
+
+        } else {
+            try {
+                collector.setCdate(FormatDate.getYMdHHmmss());
+                collectorDao.save(collector);
+                message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+            } catch (Exception e) {
+                e.printStackTrace();
+                message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+            }
         }
         return message;
+
     }
 
 //    public void initRolea(Collector collector, String[] disIdList) {
