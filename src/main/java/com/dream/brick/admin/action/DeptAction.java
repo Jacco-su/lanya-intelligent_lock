@@ -62,6 +62,7 @@ public class DeptAction {
 			tempMap.put("id", dept.getId());
 			tempMap.put("text", dept.getName());
 			tempMap.put("iconCls", "icon-ok");
+			//tempMap.put("state", "open");
 			for(Department d:deptAll){
 				if((dept.getId()).equals(d.getParentId())){
 					tempMap.put("state", "closed");

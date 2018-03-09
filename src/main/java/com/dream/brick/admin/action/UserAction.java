@@ -8,6 +8,8 @@ import com.dream.brick.admin.dao.DBBarkDao;
 import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.admin.dao.IRoleDao;
 import com.dream.brick.admin.dao.IUserDao;
+import com.dream.brick.equipment.bean.Keyss;
+import com.dream.brick.equipment.dao.IKeyssDao;
 import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppData;
@@ -28,10 +30,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 用户操作实现类
@@ -53,6 +52,8 @@ public class UserAction {
 	private DBBarkDao dbBarkDao;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+	@Resource
+	private IKeyssDao ikeyssDao;
 	@RequestMapping("/list")
 	@ResponseBody
 	public String list(int page, int rows, String deptId, String username, Pager pager)
@@ -299,12 +300,18 @@ public class UserAction {
 		if (StringUtils.isNotBlank(ids)) {
 			for (String id : ids.split(",")) {
 				if (!id.equals("admin")) {
+
+					Map<String,String> params=new HashMap<>();
+					params.put("userId",id);
+					List<Keyss>	list = ikeyssDao.findkeys(params);
+					if(list.size()>0){
+						return AppMsg.getMessage("user103");
+					}
 					User user =userDao.find(User.class, id);
 					user.setStatus(0);
 					userDao.deleteUser(user);
 				} else {
 					msg = AppMsg.getMessage("user100");
-					//admin用户不能被删除! AppMsg.UPDATE_ERROR
 				}
 			}
 		}
