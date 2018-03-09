@@ -300,7 +300,6 @@ public class UserAction {
 		if (StringUtils.isNotBlank(ids)) {
 			for (String id : ids.split(",")) {
 				if (!id.equals("admin")) {
-
 					Map<String,String> params=new HashMap<>();
 					params.put("userId",id);
 					List<Keyss>	list = ikeyssDao.findkeys(params);
