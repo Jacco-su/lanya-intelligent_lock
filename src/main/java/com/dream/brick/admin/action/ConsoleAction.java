@@ -71,12 +71,12 @@ public class ConsoleAction {
 				if(!"null".equals(dept.getParentId())){
 					dept = deptDao.find(Department.class, dept.getParentId());
 				}
-				String qgorgId=dept.getQgorgId();
-				Qgorg qgorg=deptDao.find(Qgorg.class, qgorgId);
+				//String qgorgId=dept.getQgorgId();
+				//Qgorg qgorg=deptDao.find(Qgorg.class, qgorgId);
 				request.getSession().setAttribute("admin", admin);
 				request.getSession().setAttribute("dept", dept);
-				request.getSession().setAttribute("seqgorg",qgorg);
-				request.getSession().setAttribute("seareacode", qgorg.getAreacode());    //**
+				//request.getSession().setAttribute("seqgorg",qgorg);
+				request.getSession().setAttribute("seareacode", "41");    //**
                 admin.setRoles(userDao.findRoles(admin.getId()));
 				List<Role> roles = admin.getRoles();
 				if(roles.size()==0){

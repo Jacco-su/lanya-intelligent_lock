@@ -1,6 +1,8 @@
 package com.dream.brick.equipment.action;
 
 
+import com.dream.brick.admin.bean.Department;
+import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.equipment.bean.Collector;
 import com.dream.brick.equipment.bean.Locks;
 import com.dream.brick.equipment.bean.Qgdis;
@@ -9,6 +11,7 @@ import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -40,6 +43,9 @@ public class DistributionAction {
     @Resource
     private QgdisDao disDao;
 
+    @Resource
+    private IDeptDao deptDao;
+
     @RequestMapping("/prList")
     public String prList(String disId, HttpServletRequest request)
             throws Exception {
@@ -53,18 +59,11 @@ public class DistributionAction {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        List<Qgdis> list = disDao.findQgdisList(deptId, dissName, pager);
-        if (list.size() > 0) {
-            String temp = "";
-            temp = list.get(0).getCreateTime().toString();
-            for (int i = 0; i < list.size(); i++) {
-                temp = list.get(i).getCreateTime().toString();
-
-                Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
-                String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-                list.get(i).setCreateTime(str);
-            }
+        if(StringUtils.isNotEmpty(deptId)){
+            Department department =deptDao.find(Department.class,deptId);
+            deptId=department.getAreacode();
         }
+        List<Qgdis> list = disDao.findQgdisList(deptId, dissName, pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();

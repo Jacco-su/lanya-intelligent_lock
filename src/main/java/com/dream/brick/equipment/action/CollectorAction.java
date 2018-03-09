@@ -2,6 +2,8 @@ package com.dream.brick.equipment.action;
 
 
 import com.alibaba.fastjson.JSON;
+import com.dream.brick.admin.bean.Department;
+import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.equipment.bean.Collector;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.QgdisDao;
@@ -9,6 +11,7 @@ import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -38,7 +41,8 @@ public class CollectorAction {
 
     @Resource
     private CollectorDao collectorDao;
-
+    @Resource
+    private IDeptDao deptDao;
     @Resource
     private QgdisDao qgdisDao;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -51,20 +55,16 @@ public class CollectorAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, Pager pager, String deptId)
+    public String list(int page, int rows, Pager pager,String deptId)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        List<Collector> list = collectorDao.findCollectorList(deptId, pager);
-//        System.out.println(list.get(0).getCdate()+"dddddddddd");
-        String temp = "";
-        for (int i = 0; i < list.size(); i++) {
-            temp = list.get(i).getCdate().toString();
-            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
-            String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-            list.get(i).setCdate(str);
+        if(StringUtils.isNotEmpty(deptId)){
+            Department department =deptDao.find(Department.class,deptId);
+            deptId=department.getAreacode();
         }
+        List<Collector> list = collectorDao.findCollectorList(deptId,pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
@@ -72,8 +72,8 @@ public class CollectorAction {
 
 
     @RequestMapping("/prAdd")
-    public String prAdd(ModelMap model, String deptId, String dissName, Pager pager) {
-        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId, dissName, pager)));
+    public String prAdd(ModelMap model,String deptId, String dissName, Pager pager) {
+        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
         return "admin/collector/add";
     }
 
@@ -149,7 +149,7 @@ public class CollectorAction {
         model.addAttribute("collectora", collector);
 
 
-        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId, dissName, pager)));
+        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
 
 
         return "admin/collector/update";

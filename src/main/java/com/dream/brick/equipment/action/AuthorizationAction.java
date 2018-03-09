@@ -2,6 +2,8 @@ package com.dream.brick.equipment.action;
 
 
 import com.alibaba.fastjson.JSON;
+import com.dream.brick.admin.bean.Department;
+import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.equipment.bean.*;
 import com.dream.brick.equipment.dao.*;
 import com.dream.brick.listener.SessionData;
@@ -60,6 +62,9 @@ public class AuthorizationAction {
     private RedisTemplateUtil redisTemplateUtil = null;
 
     private boolean checkTime=true;
+
+    @Resource
+    private IDeptDao deptDao;
     @RequestMapping("/prList")
     public String prList(String authorizationId, HttpServletRequest request)
             throws Exception {
@@ -174,6 +179,8 @@ public class AuthorizationAction {
     @ResponseBody
     public String getDistributionAction(String disaId){
         if (StringUtils.isNotEmpty(disaId)) {
+            Department department =deptDao.find(Department.class,disaId);
+            disaId=department.getAreacode();
             return JSON.toJSONString(authorizationDao.findListDisa(disaId));
         } else {
 
@@ -192,7 +199,11 @@ public class AuthorizationAction {
     @RequestMapping("/user")
     @ResponseBody
     public String getUserAction(String disaId){
-        return JSON.toJSONString(authorizationDao.findList("from User where deptId="+disaId));
+        if(StringUtils.isNotEmpty(disaId)){
+            Department department =deptDao.find(Department.class,disaId);
+            disaId=department.getAreacode();
+        }
+        return JSON.toJSONString(authorizationDao.findList("from User where dept.areacode like '"+disaId+"%'"));
     }
     @RequestMapping("/disa/collector")
     @ResponseBody
