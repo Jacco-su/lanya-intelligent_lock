@@ -5,11 +5,16 @@ import com.dream.brick.admin.bean.User;
 import com.dream.brick.admin.dao.IUserDao;
 import com.dream.brick.equipment.bean.Keyss;
 import com.dream.brick.equipment.bean.KeyssList;
+import com.dream.brick.equipment.bean.Locks;
+import com.dream.brick.equipment.bean.OpenLog;
 import com.dream.brick.equipment.dao.IKeyssDao;
 import com.dream.brick.equipment.dao.IKeysListDao;
+import com.dream.brick.equipment.dao.ILocksDao;
+import com.dream.brick.equipment.dao.IOpenLogDao;
 import com.dream.brick.listener.BasicData;
 import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 陶乐乐(wangyiqianyi@qq.com)
@@ -31,12 +39,15 @@ import javax.annotation.Resource;
 public class ApiAction {
 	@Resource
 	private IKeyssDao ikeyssDao;
-
+	@Resource
+	private ILocksDao ilocksDao;
 	@Resource
 	private IKeysListDao IKeysListDao;
 
 	@Resource
 	private IUserDao userDao;
+	@Resource
+	private IOpenLogDao openLogDao;
 	@RequestMapping("keys")
 	@ResponseBody
 	public String addKeyss(@ModelAttribute Keyss keyss){
@@ -89,5 +100,41 @@ public class ApiAction {
 		}
 		syslog.setCreateTime(FormatDate.getYMdHHmmss());
 		BasicData.saveSyslog(syslog);
+	}
+	/**
+	 * @author       陶乐乐(wangyiqianyi@qq.com)
+	 * @Description: 添加开锁日志
+	 * @date         2018-03-01 09:58:25
+	 * @params
+	 * @return
+	 * @throws
+	 */
+	@RequestMapping("open/log")
+	@ResponseBody
+	public void apiLog(@ModelAttribute OpenLog openlog){
+		String[] arr = openlog.getUser().getId().split("");
+		String userId=arr[1]+arr[3]+arr[5]+arr[7];
+		openlog.setCreateTime(FormatDate.getYMdHHmmss());
+		User user=userDao.findUserById(userId);
+		openlog.setUser(user);
+
+		if(StringUtils.isNotEmpty(openlog.getLockNum())){
+			Map<String,String> map=new HashMap<>();
+			map.put("lockCode",openlog.getLockNum());
+          List<Locks> list= ilocksDao.findLocks(map);
+          if(list.size()>0){
+	          openlog.setLockName(list.get(0).getLockNum());
+          }
+		}
+
+		openLogDao.save(openlog);
+		/*String[] arr = syslog.getUsername().split("");
+		String userId=arr[1]+arr[3]+arr[5]+arr[7];
+		User user=userDao.findUserById(userId);
+		if(user!=null){
+			syslog.setUsername(userDao.findUserById(userId).getUsername());
+		}
+		syslog.setCreateTime(FormatDate.getYMdHHmmss());
+		BasicData.saveSyslog(syslog);*/
 	}
 }

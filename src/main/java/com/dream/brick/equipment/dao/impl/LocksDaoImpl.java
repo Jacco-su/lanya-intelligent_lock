@@ -65,7 +65,6 @@ public class LocksDaoImpl extends BaseDaoImpl implements ILocksDao {
             hql.append(" and t.lockNum ='").append(params.get("lockNum")).append("'");
             hql.append(" and t.qgdis.id =").append(params.get("dissId"));
         }
-
         return findList(hql.toString());
     }
 

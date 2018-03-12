@@ -61,7 +61,7 @@
                     区域编号:
                 </td>
                 <td>
-                    <input value="${dept.id}" disabled="true "/>
+                    <input value="${dept.areacode}" disabled="true "/>
                 </td>
             </tr>
         </table>

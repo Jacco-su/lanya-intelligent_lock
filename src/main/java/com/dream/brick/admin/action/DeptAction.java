@@ -111,7 +111,6 @@ public class DeptAction {
                 dept.setParentId("null");
             }
             dept.setQgorgId("1001");
-//	        dept.setAreacode("4101");
 			deptDao.save(dept);
 			message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {

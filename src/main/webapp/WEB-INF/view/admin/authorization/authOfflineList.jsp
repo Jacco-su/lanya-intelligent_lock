@@ -288,8 +288,18 @@
         }
         //离线授权
         function offlineAuth() {
-            var userId=$("#userList").datagrid("getChecked")[0].id;
-            var keysId=$("#keysList").datagrid("getChecked")[0].id;
+            var userRow = $("#userList").datagrid("getChecked");
+            var keysRow = $("#keysList").datagrid("getChecked");
+            if(userRow==""){
+                $.messager.alert('警告', '请选择一个用户', 'warning');
+                return;
+            }
+            if(keysRow==""){
+                $.messager.alert('警告', '请选择一个钥匙', 'warning');
+                return;
+            }
+            var userId=userRow[0].id;
+            var keysId=keysRow[0].id;
             var dissRow=$("#dissList").datagrid("getChecked");
             var locksRows=$("#locksList").datagrid("getChecked");
             if(dissRow==""){

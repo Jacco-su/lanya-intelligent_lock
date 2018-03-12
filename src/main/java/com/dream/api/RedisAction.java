@@ -67,7 +67,9 @@ public class RedisAction {
             authLog.setAuthKeys(keys[3]);
             authLog.setAuthLocks(keys[4]);
             authLog.setAuthLocksId(keys[4]);
-            authLog.setAuthEndTime(FormatDate.dateSdfHHmmssParse(keys[6]));
+            if(!"".equals(keys[6])) {
+                authLog.setAuthEndTime(FormatDate.dateSdfHHmmssParse(keys[6]));
+            }
             Qgdis qgdis=new Qgdis();
             qgdis.setId(keys[8]);
             authLog.setQgdis(qgdis);
@@ -117,23 +119,25 @@ public class RedisAction {
             }
         }*/
         redisTemplateUtil.setList("lanya-lite", authKey);
-        int time=15000;
+        int time=12000;
         try {
-            Thread.sleep(time-2000);
+            Thread.sleep(3000);
             Object o = null;
             while (time>0){
                 o = redisTemplateUtil.get(authKey);
                 if(o==null){
                     redisTemplateUtil.setList("lanya-lite", authKey);
-                    Thread.sleep(time-1000);
+                    time-=3000;
+                    Thread.sleep(3000);
                 }else{
                     int t=o.toString().lastIndexOf("*")+1;
-                    if(keys[1].equals(t)){
+                    if(keys[1].equals(t+"")){
                         break;
                     }else{
+                        time-=3000;
                         o=null;
                         redisTemplateUtil.setList("lanya-lite", authKey);
-                        Thread.sleep(time-1000);
+                        Thread.sleep(3000);
                     }
                 }
             }
@@ -154,7 +158,7 @@ public class RedisAction {
                         authorizationDao.save(authorization);
                     }
                 }*/
-                return  StringUtil.jsonValue("1", o.toString());
+                return  StringUtil.jsonValue("1", o.toString().replace("*",""));
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -184,6 +188,7 @@ public class RedisAction {
     }
     public static void main(String[] args) {
 
+        System.out.println("*********塑封袋".replace("*",""));
         System.out.println(addZeroForNum("4110003",16));
         //34313130303033303030303030303031
         System.out.println(ByteUtil.bytesToHex("".getBytes()));

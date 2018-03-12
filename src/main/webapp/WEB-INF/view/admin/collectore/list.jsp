@@ -213,15 +213,15 @@
             });
 
             function refresh() {
-               /* infolist.datagrid( {
+                infolist.datagrid( {
                     url: '${basePath}/collectore/list',
                     queryParams: {
                         'deptId': deptId
                     },
                     loadMsg : '数据装载中......'
                 });
-                infolist.datagrid("clearSelections");*/
-                infolist.datagrid("reload");
+                //infolist.datagrid("clearSelections");
+                //infolist.datagrid("reload");
                 displayMsg();
             }
 
