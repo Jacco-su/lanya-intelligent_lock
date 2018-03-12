@@ -76,7 +76,7 @@
                         </tr>--%>
                         <tr>
                             <td>钥匙MAC:</td>
-                            <td><input name="keyssMAC" value="${keyss.keyssMAC}" class="easyui-validatebox" required="true"/>
+                            <td><input name="keyssMAC" disabled  readonly value="${keyss.keyssMAC}" class="easyui-validatebox" required="true"/>
                             </td>
                         </tr>
                         <tr>

@@ -103,11 +103,7 @@
                     text : '删除',
                     iconCls : 'icon-remove',
                     handler : del
-                },'-', {
-                    text : '查询',
-                    iconCls : 'icon-search',
-                    handler : search
-                } ]
+                }]
             });
             displayMsg();
 
@@ -236,7 +232,8 @@
                                 dataType : "text",
                                 cache : false,
                                 success : function(msg) {
-                                    $.messager.alert('提示', '删除成功!', 'warning');
+                                    var json = eval("(" + msg + ")");
+                                    $.messager.alert('提示', json.message, 'warning');
                                     infolist.datagrid('reload');
                                 }
                             });

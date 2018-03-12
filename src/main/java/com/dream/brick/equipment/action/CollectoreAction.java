@@ -95,16 +95,14 @@ public class CollectoreAction {
     }
 
     @RequestMapping("/prUpdate")
-    public String prUpdate(String id, ModelMap model,String deptId,Pager pager) {
+    public String prUpdate(String id, ModelMap model,String deptId) {
         Collectore collectore = collectoreDao.find(Collectore.class, id);
         model.addAttribute("collectore", collectore);
-        String str = JSON.toJSONString(collectorDao.findCollectorList(deptId,pager));
-        if(str.equals("")||str==null){
-            model.addAttribute("collectorList", "该站点下没有采集器");
-        }else {
-            model.addAttribute("collectorList", JSON.toJSONString(collectorDao.findCollectorList(deptId,pager)));
+        if(StringUtils.isNotEmpty(deptId)){
+            Department department =deptDao.find(Department.class,deptId);
+            deptId=department.getAreacode();
         }
-
+        model.addAttribute("collectorList", JSON.toJSONString(collectorDao.findCollectorList(deptId)));
         return "admin/collectore/update";
     }
 

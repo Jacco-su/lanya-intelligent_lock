@@ -19,4 +19,5 @@ public interface QgdisDao extends BaseDao {
 
     public List<Qgdis> findQgdisList(String deptId,String dissName,Pager pager);
     void addDis(Qgdis qgdis);
+    List<Qgdis> findQgdisList(String deptId, String dissName);
 }

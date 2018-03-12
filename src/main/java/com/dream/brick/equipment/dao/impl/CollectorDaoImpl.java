@@ -62,4 +62,13 @@ public List<Collector> findCollectorByQgdisid(String disId) {
 //            save(ur);
         //       }
     }
+    public List<Collector> findCollectorList(String deptId) {
+        String hql=null;
+        if(StringUtils.isNotEmpty(deptId)){
+            hql = "from Collector where dis.dept.areacode  like '"+deptId+"%'";
+        }else{
+            hql = "from Collector";
+        }
+        return findList(hql);
+    }
 }

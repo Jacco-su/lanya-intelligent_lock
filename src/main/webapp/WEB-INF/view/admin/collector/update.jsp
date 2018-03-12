@@ -50,7 +50,11 @@
         $('#dissname').empty();
         <%--$("#usersname").prepend("<option value='0'>${collectora.dis.name}</option>");   //为Select插入一个Option(第一个位置)--%>
         for (var i = 0; i < data.length; i++) {
-            $('#dissname').append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
+            if('${collectora.dis.id}'==data[i].id){
+                $('#dissname').append("<option selected value='" + data[i].id + "'>" + data[i].name + "</option>");
+            }else {
+                $('#dissname').append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
+            }
         }
     });
 

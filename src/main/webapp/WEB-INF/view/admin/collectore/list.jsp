@@ -134,12 +134,10 @@
             var updateWin;
 
             function add() {
+                if (deptId != "") {
                 addWin = $.createWin({
                     title: "添加",
                     url: '${basePath}/collectore/prAdd?deptId='+deptId,
-                    /*queryParams: {
-                        'deptId': deptId
-                    },*/
                     height: 350,
                     width: 500,
                     buttons: [{
@@ -148,6 +146,9 @@
                         handler: save
                     }]
                 });
+                }else{
+                    $.messager.alert('警告', '请选择一个区域', 'warning');
+                }
             }
 
             function save() {

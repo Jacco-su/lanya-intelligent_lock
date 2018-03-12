@@ -78,7 +78,7 @@ public class AuthLogAction {
         try {
             authLog.setCreateTime(FormatDate.getYMdHHmmss());
             authLogDao.save(authLog);
-            message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+            message = StringUtil.jsonValue("1", "添加授权任务成功！");
         } catch (Exception e) {
             e.printStackTrace();
             message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);

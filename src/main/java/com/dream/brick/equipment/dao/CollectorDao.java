@@ -24,4 +24,5 @@ public List<Collector> findCollectorByQgdisid(String deptid);
     /*List<Collector>*/
 
 //    public void addCollector(Collector collector);
+List<Collector> findCollectorList(String deptId);
 }

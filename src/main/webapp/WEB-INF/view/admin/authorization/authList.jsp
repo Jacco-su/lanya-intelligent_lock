@@ -202,6 +202,18 @@
             });
         }
         function onlineAuth() {
+            if($('#startDate').val()==""){
+               alert("请选择授权开始时间!");
+               return;
+            }
+            if($('#endDate').val()==""){
+                alert("请选择授权结束时间!");
+                return;
+            }
+            if($('#locks').val()==""){
+                alert("请填写锁序列号");
+                return;
+            }
             var key=$('#collector').combobox('getText')
                 + ",5,"
                 +$('#collectore').combobox('getText')+","

@@ -137,23 +137,15 @@ public class CollectorAction {
 
 
     @RequestMapping("/prUpdate")
-    public String prUpdate(String id, ModelMap model, String deptId, String dissName, Pager pager) throws ParseException {
+    public String prUpdate(String id, ModelMap model, String deptId, String dissName) throws ParseException {
         Collector collector = collectorDao.find(Collector.class, id);
 
-
-        String temp = collector.getCdate();
-//        System.out.println(temp+"ffffffffff");
-//        Date date = null;
-
-        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(temp);
-
-        String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-        collector.setCdate(str);
-
         model.addAttribute("collectora", collector);
-
-
-        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
+        if(StringUtils.isNotEmpty(deptId)){
+            Department department =deptDao.find(Department.class,deptId);
+            deptId=department.getAreacode();
+        }
+        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName)));
 
 
         return "admin/collector/update";
@@ -190,13 +182,13 @@ public class CollectorAction {
     @ResponseBody
     public String delete(String id) {
         String message = "";
-//        String hql = "select count(*) from collectore t where t.collectoreId=?";
-//        int count = collectorDao.getResultNumber(hql, id);
-//        if (count > 0) {
-//            message = StringUtil.jsonValue("0", AppMsg.getMessage("collector101"));
-//            //101该采集器有控制器，不允许删除
-//            return message;
-//        }
+        String hql = "select count(1) from Collectore t where t.collector.id=?";
+        int count = collectorDao.getResultNumber(hql, id);
+        if (count > 0) {
+            message = StringUtil.jsonValue("0", "该采集器有控制器，不允许删除！");
+            //101该采集器有控制器，不允许删除
+            return message;
+        }
         try {
             Collector collector = collectorDao.find(Collector.class, id);
             collectorDao.delete(collector);
