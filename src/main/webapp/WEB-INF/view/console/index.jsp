@@ -260,13 +260,13 @@ request.setAttribute("basePath",path);
 <div style=" position:absolute; z-index:100000; height:2046px;top:0px;left:0px; width:100%; background:white; text-align:center;">
     <img src="${basePath}/images/framework/images/noscript.gif" alt='抱歉，请开启脚本支持!' />
 </div></noscript>
-    <div style="position:relative;roverflow: hidden; height: 120px;">
-    	<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background: url(${basePath}/images/login2/index_09_m.jpg) repeat-x">
+    <div style="position:relative;roverflow: hidden; height: 34px;">
+    	<%--<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background: url(${basePath}/images/login2/index_09_m.jpg) repeat-x">
     		<tr>
     		    <td height="86" width="900" style="background:url(${basePath}/images/login2/index_09_l.jpg) no-repeat"></td>
     			<td height="86" style="background:url(${basePath}/images/login2/index_09_r.jpg) no-repeat"><span id="msgcount" style="float:right;margin-right:300px;">&nbsp;</span></td>
     		</tr>
-    	</table>
+    	</table>--%>
         <div style="position:absolute;bottom:0px; right: 0px; left:0px;background-color:#2668A4">
         	<div style="position:absolute;bottom: 0px;">
 	        <ul id="css3menu">

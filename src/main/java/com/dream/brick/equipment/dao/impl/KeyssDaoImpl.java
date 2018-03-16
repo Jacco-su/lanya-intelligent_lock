@@ -20,12 +20,12 @@ import java.util.Map;
 public class KeyssDaoImpl extends BaseDaoImpl implements IKeyssDao {
 
     public List<Keyss> findAllKeyss() {
-        String hql = "from Keyss t order by t.sortorder";
+        String hql = "from Keyss t order by t.keyssDate desc";
         return findList(hql);
     }
 
     public List<Keyss> findKeyssList(Pager pager) {
-        String hql = "from Keyss t order by t.sortorder";
+        String hql = "from Keyss t order by t.keyssDate desc";
         return query(hql, pager);
     }
 
@@ -33,10 +33,11 @@ public class KeyssDaoImpl extends BaseDaoImpl implements IKeyssDao {
     public List<Keyss> findKeyssList(String deptId,Pager pager) {
         String hql=null;
         if(StringUtils.isNotEmpty(deptId)){
-            hql = "from Keyss where user.dept.id= "+deptId;
+            hql = "from Keyss where user.dept.areacode like '"+deptId+"%' order by keyssDate desc";
         }else{
-            hql = "from Keyss";
+            hql = "from Keyss order by keyssDate desc";
         }
+
         return query(hql, pager);
     }
     @Override

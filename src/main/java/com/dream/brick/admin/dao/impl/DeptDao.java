@@ -21,10 +21,13 @@ public class DeptDao extends BaseDaoImpl implements IDeptDao {
 
 	@Override
 	public List<Department> getChildren(String parentId, String areacode) {
-		if (parentId == null)
-			parentId = "null";
-        return query("from Department where parentId = ? and areacode like '" + areacode + "%' order by Id asc",
-                0, 0, parentId);
+		if (parentId == null){
+			return findList("from Department where  areacode like '" + areacode + "%' order by Id asc");
+		}else{
+			return query("from Department where parentId = ? and areacode like '" + areacode + "%' order by Id asc",
+					0, 0, parentId);
+		}
+
     }
 
     public List<Department> findDeptIdAndName(){

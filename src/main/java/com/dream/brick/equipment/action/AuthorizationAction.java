@@ -2,6 +2,7 @@ package com.dream.brick.equipment.action;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.equipment.bean.*;
@@ -30,7 +31,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
+
+import static com.dream.brick.listener.BasicData.qgdisDao;
 
 /**
  * 授权记录 操作 实现类
@@ -102,6 +106,11 @@ public class AuthorizationAction {
     @RequestMapping("/prViewOfflineAuth")
     public String prViewOfflineAuth( ModelMap model) {
         return "admin/authorization/authOfflineList";
+    }
+    //离线区域授权
+    @RequestMapping("/prViewAreaOfflineAuth")
+    public String prViewAreaOfflineAuth( ModelMap model) {
+        return "admin/authorization/authAreaOfflineList";
     }
     //区域授权
     @RequestMapping("/prAreaAuth")
@@ -203,7 +212,7 @@ public class AuthorizationAction {
             Department department =deptDao.find(Department.class,disaId);
             disaId=department.getAreacode();
         }
-        return JSON.toJSONString(authorizationDao.findList("from User where dept.areacode like '"+disaId+"%'"));
+        return JSON.toJSONString(authorizationDao.findList("from User where  name != 'admin' and name != 'alluser' and status!=0 and dept.areacode like '"+disaId+"%'"));
     }
     @RequestMapping("/disa/collector")
     @ResponseBody
@@ -249,6 +258,18 @@ public class AuthorizationAction {
 
         return JSON.toJSONString(ikeyssDao.findKeyssUserList(userId));
     }
+
+
+    @RequestMapping("/allCollector")
+    @ResponseBody
+    public String allCollector(String deptId) throws ParseException {
+        if(StringUtils.isNotEmpty(deptId)){
+            Department department =deptDao.find(Department.class,deptId);
+            deptId=department.getAreacode();
+        }
+        return JSON.toJSONString(collectorDao.findCollectorList(deptId), SerializerFeature.DisableCircularReferenceDetect);
+    }
+
 
     @RequestMapping("/areaAuth")
     @ResponseBody
@@ -324,8 +345,9 @@ public class AuthorizationAction {
                 return   "";
             } else {
                 if("5".equals(t)){
-                    if("授权成功!".equals(o.toString())){
-                    }
+                   /* if("授权成功!".equals(o.toString())){
+                    }*/
+
                 }
                 return  StringUtil.jsonValue("1", o.toString());
             }

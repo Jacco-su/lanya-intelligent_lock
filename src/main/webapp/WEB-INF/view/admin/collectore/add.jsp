@@ -81,7 +81,6 @@
     $(function () {
         var data = '${collectorList}';
         data = JSON.parse(data);
-       // console.log(data);
         $('#ccode').empty();
         for (var i = 0; i < data.length; i++) {
             $('#ccode').append("<option value='" + data[i].id + "'>" +data[i].dis.name+"-"+data[i].ccode + "</option>");

@@ -14,7 +14,7 @@ import java.util.List;
 public class OpenLogDaoImpl extends BaseDaoImpl implements IOpenLogDao {
 	public List<OpenLog> findLockLogList(String deptId, Pager pager) {
 		StringBuilder hql=new StringBuilder();
-		hql.append(" from OpenLog t where 1=1 ");
+		hql.append(" from OpenLog t where 1=1 order by t.createTime desc");
 		return query(hql.toString(), pager);
 	}
 }

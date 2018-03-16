@@ -1,5 +1,6 @@
 package com.dream.brick.admin.action;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.equipment.bean.Area;
@@ -7,7 +8,9 @@ import com.dream.brick.equipment.dao.AreaInfoDao;
 import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
+import com.dream.util.MenuTree;
 import com.dream.util.StringUtil;
+import com.dream.util.TreeNoteUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,9 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 部门操作实现类
@@ -53,25 +55,47 @@ public class DeptAction {
 	@ResponseBody
 	public String getChildren(String parentId, HttpServletRequest request)
 			throws Exception {
-		JSONArray datas = new JSONArray();
+		List<MenuTree> list = new ArrayList<MenuTree>();
+		//用于把接收到的数据改造成EasyUI tree认识的数据格式
+		List<MenuTree> menuTrees = new ArrayList<MenuTree>();
+		//JSONArray datas = new JSONArray();
 		String areacode= SessionData.getAreacode(request);
 		List<Department> children = deptDao.getChildren(parentId,areacode);
-		List<Department> deptAll=deptDao.findDeptIdAndName();
-		for (Department dept : children) {
+		for(Department dept : children){
+			MenuTree menuTree=new MenuTree();
+			menuTree.setId(dept.getId());
+			menuTree.setpId(dept.getParentId());
+			menuTree.setState("icon");
+			menuTree.setIconCls("icon-ok");
+			menuTree.setText(dept.getName());
+			menuTrees.add(menuTree);
+		}
+		//List<Department> deptAll=deptDao.findDeptIdAndName();
+		/*for (Department dept : children) {
 			Map<String, Object> tempMap = new HashMap<String, Object>();
 			tempMap.put("id", dept.getId());
 			tempMap.put("text", dept.getName());
 			tempMap.put("iconCls", "icon-ok");
-			//tempMap.put("state", "open");
-			for(Department d:deptAll){
+			//tempMap.put("state", "icon");
+			*//*for(Department d:deptAll){
 				if((dept.getId()).equals(d.getParentId())){
 					tempMap.put("state", "closed");
 					break;
 				}
-			}
+			}*//*
 			datas.put(tempMap);
+		}*/
+		try {
+			parentId=SessionData.getDept(request).getParentId();
+			if(parentId==null||StringUtils.isEmpty(parentId)||"null".equals(parentId)){
+				list = TreeNoteUtil.getFatherNode(menuTrees);
+			}else{
+				list = TreeNoteUtil.getChildrenNode(parentId,menuTrees);
+			}
+		}catch (Exception e){
+           e.printStackTrace();
 		}
-		return datas.toString();
+		return com.alibaba.fastjson.JSONObject.toJSONString(list,SerializerFeature.DisableCircularReferenceDetect);
 	}
 
 	@RequestMapping("/prAdd")

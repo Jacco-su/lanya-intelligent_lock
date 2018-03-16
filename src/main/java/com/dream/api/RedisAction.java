@@ -82,7 +82,7 @@ public class RedisAction {
         }else if("2".equals(keys[1])){
             //初始化锁      key=0000000002,2,DF:98:deptId,lockCode
             String lockNum = "";
-            if(key.length()==5){
+            if(keys.length==5){
                 lockNum=keys[4];
             }else {
                 Object value = redisTemplateUtil.get("lanya-lock-client");
@@ -119,11 +119,11 @@ public class RedisAction {
             }
         }*/
         redisTemplateUtil.setList("lanya-lite", authKey);
-        int time=12000;
+        int time=10000;
         try {
-            Thread.sleep(3000);
-            Object o = null;
-            while (time>0){
+            Thread.sleep(time);
+            Object o = redisTemplateUtil.get(authKey);
+            /*while (time>0){
                 o = redisTemplateUtil.get(authKey);
                 if(o==null){
                     redisTemplateUtil.setList("lanya-lite", authKey);
@@ -140,7 +140,7 @@ public class RedisAction {
                         Thread.sleep(3000);
                     }
                 }
-            }
+            }*/
             if (o == null) {
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
             } else {
@@ -193,5 +193,6 @@ public class RedisAction {
         //34313130303033303030303030303031
         System.out.println(ByteUtil.bytesToHex("".getBytes()));
         System.out.println(ByteUtil.hexStr2Str("30343031303230323030303030303030"));
+        System.out.println("0000000002,2,DF:98:deptId,2".split(",").length);
     }
 }

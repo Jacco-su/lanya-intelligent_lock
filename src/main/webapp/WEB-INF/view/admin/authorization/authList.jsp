@@ -29,6 +29,8 @@
                 },
                 onClick:function(node){
                     refresh(node.id);
+                },onLoadSuccess: function (node, data) {
+                    $('#tree').tree('expandAll');
                 }
             });
             //获取钥匙
@@ -55,7 +57,6 @@
                 };
                 $.post(basePath + "/authorization/distribution", data, function (data) {
                     var d = JSON.parse(data);
-                    $('#disa').empty();
                     var disaData = []; //创建数组
                     for (var i = 0; i < d.length; i++) {
                         disaData.push({
@@ -66,6 +67,13 @@
                     if (d[0] != null) {
                         $("#disa").combobox("clear")//下拉框加载数据,设置默认值为
                             .combobox("loadData", disaData).combobox("setValue", d[0].id);
+                    }else{
+                        $("#disa").combobox("clear")//下拉框加载数据,设置默认值为
+                            .combobox("loadData", disaData);
+                        $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
+                            .combobox("loadData", []);
+                        $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
+                            .combobox("loadData", []);
                     }
                 });
                 //获取使用人
@@ -93,7 +101,6 @@
                             $('#collectore').empty();
                             $.post(basePath+"/authorization/disa/collector",data,function(data){
                                 var d=JSON.parse(data);
-                                $('#collector').empty();
                                 var collectorData = []; //创建数组
                                 for(var i=0;i<d.length;i++){
                                     collectorData.push({
@@ -104,6 +111,11 @@
                                 if( d[0]!=null) {
                                     $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
                                         .combobox("loadData", collectorData).combobox("setValue", d[0].id);
+                                }else{
+                                    $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
+                                        .combobox("loadData", collectorData);
+                                    $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
+                                        .combobox("loadData", []);
                                 }
                             });
                             //获取锁具
@@ -145,6 +157,9 @@
                                 if( d[0]!=null){
                                     $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
                                         .combobox("loadData", collectorData).combobox("setValue", d[0].id);
+                                }else{
+                                    $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
+                                        .combobox("loadData", collectorData);
                                 }
                             });
                         }

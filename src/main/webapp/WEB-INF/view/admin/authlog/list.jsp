@@ -69,6 +69,9 @@
                             if(value=="1"){
                                 value="在线授权";
                             }
+                            if(value=="2"){
+                                value="在线授权";
+                            }
                             return value;
                         }
                     },
@@ -112,7 +115,12 @@
                         width: $(this).width() * 0.1,
                         align: 'left',
                         formatter: function (value, rowData, rowIndx) {
-                            return "已授权";
+                                if(value=="1"){
+                                    value="已授权";
+                                }else{
+                                    value="未授权";
+                                }
+                                return value;
                         }
                     }
                 ]],

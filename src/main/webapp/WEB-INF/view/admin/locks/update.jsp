@@ -23,7 +23,7 @@
             <tr>
                 <td>识别码:</td>
                 <td>
-                    <input name="lockCode" disabled  readonly value="${locks.lockCode}" class="easyui-validatebox" required="true"/>
+                    <input name="lockCode"   readonly value="${locks.lockCode}" class="easyui-validatebox" required="true"/>
                 </td>
             </tr>
 

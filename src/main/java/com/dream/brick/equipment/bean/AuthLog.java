@@ -26,8 +26,8 @@ public class AuthLog {
 	private String authKeysId;
 	private String authLocksId;
 	private Qgdis qgdis;
+	private String collectorId;//采集器ID
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public String getId() {
 		return id;
 	}
@@ -132,5 +132,13 @@ public class AuthLog {
 
 	public void setQgdis(Qgdis qgdis) {
 		this.qgdis = qgdis;
+	}
+
+	public String getCollectorId() {
+		return collectorId;
+	}
+
+	public void setCollectorId(String collectorId) {
+		this.collectorId = collectorId;
 	}
 }

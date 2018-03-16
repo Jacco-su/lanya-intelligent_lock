@@ -2,8 +2,10 @@ package com.dream.brick.equipment.action;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.dao.IDeptDao;
+import com.dream.brick.equipment.bean.Collector;
 import com.dream.brick.equipment.bean.Collectore;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.CollectoreDao;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -68,15 +72,24 @@ public class CollectoreAction {
 
 
     @RequestMapping("/prAdd")
-    public String prAdd(ModelMap modelMap,String deptId, Pager pager) {
+    public String prAdd(ModelMap modelMap,String deptId) {
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
         }
-        modelMap.addAttribute("collectorList",JSON.toJSONString(collectorDao.findCollectorList(deptId,pager)));
+        modelMap.addAttribute("collectorList",JSON.toJSONString(collectorDao.findCollectorList(deptId), SerializerFeature.DisableCircularReferenceDetect));
         return "admin/collectore/add";
     }
-
+/*
+    @RequestMapping("/all")
+    @ResponseBody
+    public String all(String deptId) {
+        if(StringUtils.isNotEmpty(deptId)){
+            Department department =deptDao.find(Department.class,deptId);
+            deptId=department.getAreacode();
+        }
+        return JSON.toJSONString(collectorDao.findCollectorList(deptId),SerializerFeature.DisableCircularReferenceDetect);
+    }*/
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -102,7 +115,7 @@ public class CollectoreAction {
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
         }
-        model.addAttribute("collectorList", JSON.toJSONString(collectorDao.findCollectorList(deptId)));
+        model.addAttribute("collectorList", JSON.toJSONString(collectorDao.findCollectorList(deptId),SerializerFeature.DisableCircularReferenceDetect));
         return "admin/collectore/update";
     }
 

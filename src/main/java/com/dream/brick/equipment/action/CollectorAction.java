@@ -11,6 +11,7 @@ import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -72,15 +73,14 @@ public class CollectorAction {
 
 
     @RequestMapping("/prAdd")
-    public String prAdd(ModelMap model,String deptId, String dissName, Pager pager) {
+    public String prAdd(ModelMap model,String deptId, String dissName) {
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
         }
-        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName,pager)));
+        model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName)));
         return "admin/collector/add";
     }
-
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String add(@ModelAttribute Collector collector) {
@@ -103,38 +103,6 @@ public class CollectorAction {
         return message;
 
     }
-
-//    public void initRolea(Collector collector, String[] disIdList) {
-////        if(list==null){
-////            list=new String[0];
-////        }
-//        if (disIdList == null) {
-//            disIdList = new String[0];
-//        }
-////        List<UserRole> roleList=new ArrayList<UserRole>();
-////        for(String roleId:list){
-////            if("".equals(roleId)){
-////                continue;
-////            }
-////            UserRole ur=new UserRole();
-////            Role role=new Role();
-////            role.setRoId(roleId);
-////            ur.setRole(role);
-////            ur.setUser(user);
-////            roleList.add(ur);
-////        }
-//        // user.setRoleList(roleList);
-//        StringBuilder sb = new StringBuilder("");
-//        for (String disId : disIdList) {
-//            sb.append(disId).append(",");
-//        }
-//        String disIds = sb.toString();
-//        if (disIds.length() > 0) {
-//            disIds = disIds.substring(0, disIds.length() - 1);
-//        }
-//        collector.setCollectorDiss(disIds);
-//    }
-
 
     @RequestMapping("/prUpdate")
     public String prUpdate(String id, ModelMap model, String deptId, String dissName) throws ParseException {

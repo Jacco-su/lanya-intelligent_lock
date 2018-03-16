@@ -44,7 +44,11 @@
                 var d=JSON.parse(data);
                 $('#usersname').empty();
                 for(var i=0;i<d.length;i++){
-                    $('#usersname').append("<option value='" + d[i].id + "'>" + d[i].username + "</option>");
+                    if(${keyss.user.id == d[i].id}){
+                        $('#usersname').append("<option selected value='" + d[i].id + "'>" + d[i].username + "</option>");
+                    }else{
+                        $('#usersname').append("<option value='" + d[i].id + "'>" + d[i].username + "</option>");
+                    }
 
                 }
             });
@@ -76,7 +80,7 @@
                         </tr>--%>
                         <tr>
                             <td>钥匙MAC:</td>
-                            <td><input name="keyssMAC" disabled  readonly value="${keyss.keyssMAC}" class="easyui-validatebox" required="true"/>
+                            <td><input name="keyssMAC"  readonly value="${keyss.keyssMAC}" class="easyui-validatebox" required="true"/>
                             </td>
                         </tr>
                         <tr>

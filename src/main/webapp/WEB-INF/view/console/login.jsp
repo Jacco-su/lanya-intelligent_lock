@@ -144,7 +144,7 @@
 			background-image: url(<%=path %>/images/xlogin/loginbg.jpg);
 			background-repeat: no-repeat;
             background-position: center top;
-			background-color:#F2F2F2;
+			background-color:#000000;
             background-size: contain;
             /*width:1366px;*/
             height: 100%;

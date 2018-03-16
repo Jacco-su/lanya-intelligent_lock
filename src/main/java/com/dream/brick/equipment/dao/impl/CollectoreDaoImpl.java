@@ -53,9 +53,9 @@ public class CollectoreDaoImpl extends BaseDaoImpl implements CollectoreDao {
     public List<Collectore> findCollectoreList(String deptId, Pager pager) {
         String hql=null;
         if(StringUtils.isNotEmpty(deptId)){
-            hql = "from Collectore where collector.dis.dept.areacode like  '"+deptId+"%'";
+            hql = "from Collectore where collector.dis.dept.areacode like  '"+deptId+"%' order by ceDate desc";
         }else{
-            hql = "from Collectore";
+            hql = "from Collectore order by ceDate desc ";
         }
         return query(hql, pager);
     }

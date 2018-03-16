@@ -20,8 +20,8 @@
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
     <script type="text/javascript">
+        var deptId = "";
         $(function () {
-            var deptId = "";
             var infolist = $('#infolist');
             infolist.datagrid({
                 title: '控制器列表',

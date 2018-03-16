@@ -1,5 +1,6 @@
 package com.dream.brick.listener;
 
+import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.bean.Syslog;
 import com.dream.brick.admin.bean.User;
 import com.dream.brick.equipment.bean.Qgorg;
@@ -61,7 +62,12 @@ public class SessionData {
 		}
 		return null;
 	}
-	
+	public static Department getDept(HttpServletRequest request){
+		if (request.getSession().getAttribute("dept")!=null) {
+			return (Department)request.getSession().getAttribute("dept");
+		}
+		return null;
+	}
 	public static void createSyslog(HttpServletRequest request, int type, String content){
 		if(request.getSession().getAttribute("admin")!=null){
 			User user=(User)request.getSession().getAttribute("admin");

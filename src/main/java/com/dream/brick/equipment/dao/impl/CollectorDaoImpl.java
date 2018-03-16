@@ -47,9 +47,9 @@ public List<Collector> findCollectorByQgdisid(String disId) {
     public List<Collector> findCollectorList(String deptId, Pager pager) {
         String hql=null;
         if(StringUtils.isNotEmpty(deptId)){
-            hql = "from Collector where dis.dept.areacode  like '"+deptId+"%'";
+            hql = "from Collector where dis.dept.areacode  like '"+deptId+"%'  order by cdate desc";
         }else{
-            hql = "from Collector";
+            hql = "from Collector order by cdate desc";
         }
         return query(hql, pager);
     }
@@ -65,9 +65,9 @@ public List<Collector> findCollectorByQgdisid(String disId) {
     public List<Collector> findCollectorList(String deptId) {
         String hql=null;
         if(StringUtils.isNotEmpty(deptId)){
-            hql = "from Collector where dis.dept.areacode  like '"+deptId+"%'";
+            hql = "from Collector where dis.dept.areacode  like '"+deptId+"%' order by cdate desc";
         }else{
-            hql = "from Collector";
+            hql = "from Collector order by cdate desc";
         }
         return findList(hql);
     }

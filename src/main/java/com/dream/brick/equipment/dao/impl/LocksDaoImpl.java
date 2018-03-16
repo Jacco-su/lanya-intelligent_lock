@@ -51,6 +51,7 @@ public class LocksDaoImpl extends BaseDaoImpl implements ILocksDao {
         if(StringUtils.isNotEmpty(dissName)){
             hql.append(" and qgdis.id=").append(dissName);
         }
+        hql.append(" order by t.lockDate desc");
         return query(hql.toString(), pager);
     }
 

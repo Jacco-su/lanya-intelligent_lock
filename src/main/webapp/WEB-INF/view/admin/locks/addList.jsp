@@ -56,7 +56,6 @@
                 };
                 $.post(basePath + "/authorization/distribution", data, function (data) {
                     var d = JSON.parse(data);
-                    $('#disa').empty();
                     var disaData = []; //创建数组
                     for (var i = 0; i < d.length; i++) {
                         disaData.push({
@@ -67,6 +66,13 @@
                     if (d[0] != null) {
                         $("#disa").combobox("clear")//下拉框加载数据,设置默认值为
                             .combobox("loadData", disaData).combobox("setValue", d[0].id);
+                    }else{
+                        $("#disa").combobox("clear")//下拉框加载数据,设置默认值为
+                            .combobox("loadData", disaData);
+                        $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
+                            .combobox("loadData", []);
+                        $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
+                            .combobox("loadData", []);
                     }
                 });
                 //获取人
@@ -106,10 +112,15 @@
                                 if (d[0] != null) {
                                     $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
                                         .combobox("loadData", collectorData).combobox("setValue", d[0].id);
+                                }else{
+                                    $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
+                                        .combobox("loadData", []);
+                                    $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
+                                        .combobox("loadData", []);
                                 }
                             });
                             //获取锁具
-                            $.post(basePath + "/authorization/disa/locks", data, function (data) {
+                           /* $.post(basePath + "/authorization/disa/locks", data, function (data) {
                                 var d = JSON.parse(data);
                                 $('#locks').empty();
                                 var collectorData = []; //创建数组
@@ -123,7 +134,7 @@
                                     $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
                                         .combobox("loadData", collectorData).combobox("setValue", d[0].id);
                                 }
-                            });
+                            });*/
                         }
                     }
                 });
@@ -148,6 +159,9 @@
                                 if (d[0] != null) {
                                     $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
                                         .combobox("loadData", collectorData).combobox("setValue", d[0].id);
+                                }else{
+                                    $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
+                                        .combobox("loadData", []);
                                 }
                             });
                         }
@@ -188,7 +202,6 @@
                         if (t == 2) {
                             alert(data.message);
                         } else {
-                            $("#locks").empty();
                             var lockNum = data.message.split(";")[1];
                             $("#lockCode").val(lockNum);
                         }
@@ -265,21 +278,11 @@
                                         <a class="easyui-linkbutton"
                                            onclick="initLock(3)">初始化锁识别码</a>
                                 </tr>
-
-                                <tr>
-                                    <td width="100">添加时间:</td>
-                                    <td colspan="2">
-                                        <input id="lockDate" name="lockDate" class="easyui-validatebox" required="true"
-                                               value=""/>
-                                        <img onclick="WdatePicker({el:'lockDate'})"
-                                             src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22"
-                                             align="absmiddle">
-                                </tr>
                                 <tr>
                                     <td width="100">详细地址:</td>
                                     <td colspan="2">
                     <textarea name="address" class="easyui-validatebox" id="address" cols="30" rows="3"
-                              required="true"></textarea>
+                              ></textarea>
                                 </tr>
                                 <tr>
                                     <td>
