@@ -68,17 +68,27 @@
 //                });
 //            }
             function save() {
-                $('#addForm').form('submit', {
-                    onSubmit: function () {
-                        return $(this).form('validate');
-                    },
-                    success: function (data) {
-                        var json = eval("(" + data + ")");
-                        $.messager.alert('提示', json.message, 'warning');
-                        $.closeWin(addWin);
-                        refresh();
-                    }
-                });
+                var a = $('#addareaname').val();
+                alert(a);
+
+                if (a == null || a == "") {
+                    $.messager.alert('提示', '请先选择行政区!', 'warning');
+                    alert('请先选择行政区!');
+//                    return;
+
+                } else {
+                    $('#addForm').form('submit', {
+                        onSubmit: function () {
+                            return $(this).form('validate');
+                        },
+                        success: function (data) {
+                            var json = eval("(" + data + ")");
+                            $.messager.alert('提示', json.message, 'warning');
+                            $.closeWin(addWin);
+                            refresh();
+                        }
+                    });
+                }
             }
 
             function add(parentId) {

@@ -60,9 +60,9 @@ public class UserDao extends BaseDaoImpl implements IUserDao {
 	@Override
 	public User findByPhone(String phone) throws Exception {
 		Session session = getSession();
-		String sql = "from User where phone=? and name != 'admin' and status!=0 order by orderId , rdate asc";
-		try {
-			Query query = session.createQuery(sql);
+        String sql = "from User where phone=? and name != 'admin' and status !=0 order by orderId , rdate asc";
+        try {
+            Query query = session.createQuery(sql);
 			query.setString(0, phone);
 			List<User> list = query.list();
 			if (list.size() > 0) {

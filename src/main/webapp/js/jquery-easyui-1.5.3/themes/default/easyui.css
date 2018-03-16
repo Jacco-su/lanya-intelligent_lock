@@ -134,21 +134,21 @@
 
 .panel-header,
 .panel-body {
-    border-color: #95B8E7;
+    border-color: #ffffff;
 }
 
 .panel-header {
     background-color: #E0ECFF;
-    background: -webkit-linear-gradient(top, #EFF5FF 0, #E0ECFF 100%);
+    background: -webkit-linear-gradient(top, #fcfdff 0, #f9a6a657 100%);
     background: -moz-linear-gradient(top, #EFF5FF 0, #E0ECFF 100%);
     background: -o-linear-gradient(top, #EFF5FF 0, #E0ECFF 100%);
-    background: linear-gradient(to bottom, #EFF5FF 0, #E0ECFF 100%);
+    background: linear-gradient(to bottom, #388bbced 0, #ffffff 100%);
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EFF5FF, endColorstr=#E0ECFF, GradientType=0);
 }
 
 .panel-body {
-    background-color: #ffffff;
+    background-color: #eef6fb;
     color: #000000;
     font-size: 12px;
 }
@@ -156,7 +156,7 @@
 .panel-title {
     font-size: 12px;
     font-weight: bold;
-    color: #0E2D5F;
+    color: #3876af;
     height: 16px;
     line-height: 16px;
 }

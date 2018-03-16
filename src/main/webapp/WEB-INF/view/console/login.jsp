@@ -372,10 +372,10 @@
     </div>
 
 
-    <div class="bottom2016">
-        Copyrigth@郑州市海威光电技术有限公司&nbsp;&nbsp;&nbsp;&nbsp;技术支持： <a href="http://www.haiweir.com" class="reglink"
-                                                                target="_blank">郑州海威光电</a> 服务电话:0371-85512855
-    </div>
+    <%--<div class="bottom2016">--%>
+    <%--Copyrigth@郑州市海威光电技术有限公司&nbsp;&nbsp;&nbsp;&nbsp;技术支持： <a href="http://www.haiweir.com" class="reglink"--%>
+    <%--target="_blank">郑州海威光电</a> 服务电话:0371-85512855--%>
+    <%--</div>--%>
 </div>
 </body>
 </html>
