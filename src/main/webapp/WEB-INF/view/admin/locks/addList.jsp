@@ -21,6 +21,7 @@
     <script type="text/javascript">
         var basePath = "${basePath}";
         var deptId="";
+        var deptAreaCode="";
         $(function () {
             $('#tree').tree({
                 checkbox: false,
@@ -31,6 +32,7 @@
                 onClick: function (node) {
                     refresh(node.id);
                     deptId=node.id;
+                    deptAreaCode=node.areacode;
                 }
             });
             //获取钥匙
@@ -186,7 +188,7 @@
             $("#lockCode").val("");
             var key = $('#collector').combobox('getText') + ","
                 + t + ","
-                + $('#collectore').combobox('getText')+","+deptId+","+lockCode;
+                + $('#collectore').combobox('getText')+","+deptAreaCode+","+lockCode;
             var data = {
                 "key": key
             };

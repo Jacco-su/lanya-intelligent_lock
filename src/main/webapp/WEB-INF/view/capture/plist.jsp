@@ -13,13 +13,10 @@
     response.setHeader("Cache-Control", "No-Cache");
     response.setDateHeader("Expires", 0);
 %>
-
-
 <html>
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>智能锁信息</title>
+    <title>监控照片</title>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
@@ -28,44 +25,13 @@
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
     <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
-
-
     <script type="text/javascript" src="${basePath}/js/uploadify/jquery.uploadify.v2.1.4.min.js"></script>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/uploadify/uploadify.css"/>
     <script type="text/javascript" src="${basePath}js/resources/js/jquery-1.8.2.min.js"></script>
-
-
 </head>
 <body>
 
 <p>图片列表</p>
-
-
-<%--<div>--%>
-<%--<c:forEach var="me" items="${fileNameMap}">--%>
-<%--<c:url value="/uploads/" var="downurl">--%>
-<%--&lt;%&ndash;<c:param name="filename" value="${me.key}"></c:param>&ndash;%&gt;--%>
-<%--</c:url>--%>
-<%--${me.value}<a href="${downurl}">下载</a>--%>
-<%--<br/>--%>
-<%--</c:forEach>--%>
-
-
-<%--<img alt="image" src="${fileUrl}">--%>
-<%--</div>--%>
-<div>
-    <%--<%--%>
-    <%--int length = (Integer) request.getAttribute("length");--%>
-    <%--String[] picNames = (String[])--%>
-    <%--request.getAttribute("picNames");--%>
-    <%--%>--%>
-    <%--<% for (int i = 0; i<length; i++) {%>--%>
-    <%--<img src=<%=picNames[i]%>--%>
-    <%--<%}%>--%>
-
-
-
-</div>
 
 <table border="2" width="500" height="300">
     <tr>
@@ -86,49 +52,9 @@
     <tr>
         <td>
             4访问FTP <img src=""/>
-
-        </td>
-    </tr>
-    <tr>
-        <td>
-            5<img src=”ftp://sdzdz:'hlxx@2017'@218.28.166.165:19999/zdzjpg/”>
-        </td>
-        <td>
-            6 ${"fileList"}
-        </td>
-        <td>
-            <img src="${src}">
         </td>
     </tr>
 </table>
-<div>
-    8<input type="file" id="input" size="10" style="visibility:hidden;" onchange="selectImage(this.files)"/>
-</div>
-<script type="text/javascript">
-    ImageCropper.prototype.loadImage = function (file) {
-        if (!this.isAvaiable() || !this.isImage(file)) return;
-        var reader = new FileReader();
-        var me = this;
-        reader.readAsDataURL(file);
-        reader.onload = function (evt) {
-            if (!me.image) me.image = new Image();
-            me.image.onload = function (e) {
-                me._init()
-            };
-            me.image.src = evt.target.result;
-        }
-    };
-
-    ImageCropper.prototype.loadImage2 = function (url) {
-        var me = this;
-        if (!me.image) me.image = new Image();
-        me.image.onload = function (e) {
-            me._init()
-        };
-        me.image.src = url;
-    }
-
-</script>
 </body>
 </html>
 

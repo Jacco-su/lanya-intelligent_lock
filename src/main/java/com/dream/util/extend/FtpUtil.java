@@ -16,7 +16,7 @@ public class FtpUtil {
     private static Logger logger = Logger.getLogger(com.dream.util.extend.FtpUtil.class);
 
     private static FTPClient ftpClient;
-    public final static String path = "/zdzjpg/";//aaa路径
+    public final static String path = "/zdzjpg/192.168.3.108/2018-03-16/001/jpg";//aaa路径
 
     /**
      * 获取ftp连接
@@ -28,10 +28,7 @@ public class FtpUtil {
         ftpClient = new FTPClient();
         boolean flag = false;
         int reply;
-
         try {
-
-
             ftpClient.connect("218.28.166.165", 19999);//ip地址 ,//端口号
             //ftp登陆
             ftpClient.login("sdzdz", "hlxx@2017");//用户名,//密码
@@ -114,17 +111,21 @@ public class FtpUtil {
                 if (changedir) {
                     ftpClient.setControlEncoding("GBK");
                     files = ftpClient.listFiles();
-                    for (int i = 0; i < files.length; i++) {
+                    for (FTPFile file:files) {
+                        if (file.isDirectory()) {
+                            startDown(localBaseDir, remoteBaseDir+"/"+file.getName());
+                        }else{
+                            downloadFile(file,localBaseDir,remoteBaseDir+"/"+file.getName());
+                        }
+                    }
+                    /*for (int i = 0; i < files.length; i++) {
                         try {
-//                                if(filename.equals(files[i].getName())){
                             downloadFile(files[i], localBaseDir, remoteBaseDir);
-//                                    return true;
-//                                }
                         } catch (Exception e) {
                             logger.error(e);
                             logger.error("<" + files[i].getName() + ">下载失败");
                         }
-                    }
+                    }*/
                 }
             } catch (Exception e) {
                 logger.error(e);
@@ -147,61 +148,33 @@ public class FtpUtil {
      * @param relativeRemotePath
      */
     private static void downloadFile(FTPFile ftpFile, String relativeLocalPath, String relativeRemotePath) {
-        if (ftpFile.isFile()) {
-            if (ftpFile.getName().indexOf("?") == -1) {
-                OutputStream outputStream = null;
-                try {
-                    File entryDir = new File(relativeLocalPath);
-                    //如果文件夹路径不存在，则创建文件夹
-                    if (!entryDir.exists() || !entryDir.isDirectory()) {
-                        entryDir.mkdirs();
-                    }
-                    File locaFile = new File(relativeLocalPath + ftpFile.getName());
-                    //判断文件是否存在，存在则返回
-                    if (locaFile.exists()) {
-                        return;
-                    } else {
-                        outputStream = new FileOutputStream(relativeLocalPath + ftpFile.getName());
-                        ftpClient.retrieveFile(ftpFile.getName(), outputStream);
-                        outputStream.flush();
-                        outputStream.close();
-                    }
-                } catch (Exception e) {
-                    logger.error(e);
-                } finally {
-                    try {
-                        if (outputStream != null) {
-                            outputStream.close();
-                        }
-                    } catch (IOException e) {
-                        logger.error("输出文件流异常");
-                    }
-                }
+        OutputStream outputStream = null;
+        try {
+            File entryDir = new File(relativeLocalPath);
+            //如果文件夹路径不存在，则创建文件夹
+            if (!entryDir.exists() || !entryDir.isDirectory()) {
+                entryDir.mkdirs();
             }
-        } else {
-            String newlocalRelatePath = relativeLocalPath + ftpFile.getName();
-            String newRemote = new String(relativeRemotePath + ftpFile.getName().toString());
-            File fl = new File(newlocalRelatePath);
-            if (!fl.exists()) {
-                fl.mkdirs();
+            relativeLocalPath= relativeLocalPath + ftpFile.getTimestamp().getTime().getTime()+".jpg";
+            File locaFile = new File(relativeLocalPath);
+            //判断文件是否存在，存在则返回
+            if (locaFile.exists()) {
+                return;
+            } else {
+                outputStream = new FileOutputStream(relativeLocalPath);
+                ftpClient.retrieveFile(relativeRemotePath, outputStream);
+                outputStream.flush();
+                outputStream.close();
             }
+        } catch (Exception e) {
+            logger.error(e);
+        } finally {
             try {
-                newlocalRelatePath = newlocalRelatePath + '/';
-                newRemote = newRemote + "/";
-                String currentWorkDir = ftpFile.getName().toString();
-                boolean changedir = ftpClient.changeWorkingDirectory(currentWorkDir);
-                if (changedir) {
-                    FTPFile[] files = null;
-                    files = ftpClient.listFiles();
-                    for (int i = 0; i < files.length; i++) {
-                        downloadFile(files[i], newlocalRelatePath, newRemote);
-                    }
+                if (outputStream != null) {
+                    outputStream.close();
                 }
-                if (changedir) {
-                    ftpClient.changeToParentDirectory();
-                }
-            } catch (Exception e) {
-                logger.error(e);
+            } catch (IOException e) {
+                logger.error("输出文件流异常");
             }
         }
     }
@@ -227,12 +200,12 @@ public class FtpUtil {
     }
 
 
-//        public static void main(String[] args) {
-//            try {
-//               FtpUtil.downfile("/uploads/");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
+        public static void main(String[] args) {
+            try {
+               FtpUtil.downfile("/uploads/");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
 }

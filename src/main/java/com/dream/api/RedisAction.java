@@ -87,7 +87,7 @@ public class RedisAction {
             }else {
                 Object value = redisTemplateUtil.get("lanya-lock-client");
                 if (value == null) {
-                    lockNum = "41" + keys[3];
+                    lockNum = "00" + keys[3];
                     lockNum = addZeroForNum(lockNum, 16);
                     redisTemplateUtil.set("lanya-lock-client", lockNum);
                 } else {
