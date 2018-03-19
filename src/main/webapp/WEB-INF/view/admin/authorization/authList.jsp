@@ -230,15 +230,15 @@
             });
         }
         function onlineAuth() {
-            if($('#startDate').val()==""){
-               alert("请选择授权开始时间!");
-               return;
+            if ($('#startDate').val() == "") {
+                alert("请选择授权开始时间!");
+                return;
             }
-            if($('#endDate').val()==""){
+            if ($('#endDate').val() == "") {
                 alert("请选择授权结束时间!");
                 return;
             }
-            if($('#locks').val()==""){
+            if ($('#locks').val() == "") {
                 alert("请填写锁序列号");
                 return;
             }

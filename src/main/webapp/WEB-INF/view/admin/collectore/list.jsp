@@ -135,18 +135,18 @@
 
             function add() {
                 if (deptId != "") {
-                addWin = $.createWin({
-                    title: "添加",
-                    url: '${basePath}/collectore/prAdd?deptId='+deptId,
-                    height: 350,
-                    width: 500,
-                    buttons: [{
-                        text: '保存',
-                        iconCls: 'icon-ok',
-                        handler: save
-                    }]
-                });
-                }else{
+                    addWin = $.createWin({
+                        title: "添加",
+                        url: '${basePath}/collectore/prAdd?deptId=' + deptId,
+                        height: 350,
+                        width: 500,
+                        buttons: [{
+                            text: '保存',
+                            iconCls: 'icon-ok',
+                            handler: save
+                        }]
+                    });
+                } else {
                     $.messager.alert('警告', '请选择一个区域', 'warning');
                 }
             }
@@ -214,12 +214,12 @@
             });
 
             function refresh() {
-                infolist.datagrid( {
+                infolist.datagrid({
                     url: '${basePath}/collectore/list',
                     queryParams: {
                         'deptId': deptId
                     },
-                    loadMsg : '数据装载中......'
+                    loadMsg: '数据装载中......'
                 });
                 //infolist.datagrid("clearSelections");
                 //infolist.datagrid("reload");

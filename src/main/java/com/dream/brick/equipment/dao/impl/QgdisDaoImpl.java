@@ -77,14 +77,15 @@ public class QgdisDaoImpl extends BaseDaoImpl implements QgdisDao {
         }
         return query(hql.toString(), pager);
     }
+
     @Override
     public List<Qgdis> findQgdisList(String deptId, String dissName) {
-        StringBuilder hql=new StringBuilder();
+        StringBuilder hql = new StringBuilder();
         hql.append("from Qgdis t  where 1=1 ");
-        if(StringUtils.isNotEmpty(deptId)){
+        if (StringUtils.isNotEmpty(deptId)) {
             hql.append("and t.dept.areacode  like '").append(deptId).append("%'");
         }
-        if(StringUtils.isNotEmpty(dissName)){
+        if (StringUtils.isNotEmpty(dissName)) {
             hql.append("and t.name like '%").append(dissName).append("%'");
         }
         return findList(hql.toString());

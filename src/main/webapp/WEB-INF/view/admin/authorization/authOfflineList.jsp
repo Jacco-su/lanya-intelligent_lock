@@ -248,16 +248,16 @@
         function offlineAuth() {
             var userRow = $("#userList").datagrid("getChecked");
             var keysRow = $("#keysList").datagrid("getChecked");
-            if(userRow==""){
+            if (userRow == "") {
                 $.messager.alert('警告', '请选择一个用户', 'warning');
                 return;
             }
-            if(keysRow==""){
+            if (keysRow == "") {
                 $.messager.alert('警告', '请选择一个钥匙', 'warning');
                 return;
             }
-            var userId=userRow[0].id;
-            var keysId=keysRow[0].id;
+            var userId = userRow[0].id;
+            var keysId = keysRow[0].id;
             var dissRow=$("#dissList").datagrid("getChecked");
             var locksRows=$("#locksList").datagrid("getChecked");
             if(dissRow==""){

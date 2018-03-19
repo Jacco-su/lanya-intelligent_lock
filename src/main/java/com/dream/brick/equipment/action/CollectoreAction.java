@@ -117,12 +117,12 @@ public class CollectoreAction {
     }
 
     @RequestMapping("/prUpdate")
-    public String prUpdate(String id, ModelMap model,String deptId) {
+    public String prUpdate(String id, ModelMap model, String deptId) {
         Collectore collectore = collectoreDao.find(Collectore.class, id);
         model.addAttribute("collectore", collectore);
-        if(StringUtils.isNotEmpty(deptId)){
-            Department department =deptDao.find(Department.class,deptId);
-            deptId=department.getAreacode();
+        if (StringUtils.isNotEmpty(deptId)) {
+            Department department = deptDao.find(Department.class, deptId);
+            deptId = department.getAreacode();
         }
         model.addAttribute("collectorList", JSON.toJSONString(collectorDao.findCollectorList(deptId),SerializerFeature.DisableCircularReferenceDetect));
         return "admin/collectore/update";
