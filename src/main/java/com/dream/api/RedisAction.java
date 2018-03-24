@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/redis")
@@ -55,7 +56,10 @@ public class RedisAction {
         }else if("5".equals(keys[1])){
             //开始授权
             //采集器id:指令字:控制器mac地址:钥匙mac地址:锁识别号:开始日期:结束日期:用户id:站点ID
+            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+
             AuthLog authLog = new AuthLog();
+            authLog.setId(uuid);
             authLog.setCreateTime(FormatDate.getYMdHHmmss());
             authLog.setAuthStartTime(keys[6]);
             authLog.setAuthName("在线授权!");
