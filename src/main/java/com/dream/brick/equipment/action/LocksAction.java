@@ -44,7 +44,7 @@ public class LocksAction {
 
 
     @RequestMapping("/prList")
-    public String prList(String locksId, HttpServletRequest request) throws Exception {
+    public String prList() throws Exception {
         return "admin/locks/list";
     }
 

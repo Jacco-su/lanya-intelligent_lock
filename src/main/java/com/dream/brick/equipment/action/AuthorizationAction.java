@@ -252,6 +252,18 @@ public class AuthorizationAction {
         }
         return null;
     }
+    @RequestMapping("/dept/locks")
+    @ResponseBody
+    public String getLocksByDeptAction(String deptId) {
+        if(StringUtils.isNotEmpty(deptId)) {
+            Department department =deptDao.find(Department.class,deptId);
+            deptId=department.getAreacode();
+            if (!deptId.contains("请选择")) {
+                return JSON.toJSONString(authorizationDao.findList("from Locks where qgdis.dept.areacode like '" + deptId+"%'"));
+            }
+        }
+        return null;
+    }
     @RequestMapping("/keys/user")
     @ResponseBody
     public String getKeysUserAction(String userId){

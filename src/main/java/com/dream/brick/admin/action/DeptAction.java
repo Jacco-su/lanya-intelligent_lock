@@ -100,26 +100,19 @@ public class DeptAction {
 
 	@RequestMapping("/prAdd")
 	public String prAdd(String parentId, ModelMap model, HttpServletRequest request, String id) {
-//		String areacode= SessionData.getAreacode(request);
-//		List<Qgorg> qgorgList= BasicData.findQgorgByAreacode(areacode);
-//		model.addAttribute("qgorgList", qgorgList);
 		if (!"null".equals(parentId)) {
 			Department dept = deptDao.find(Department.class, parentId);
 			Area area = areaInfoDao.find(Area.class, dept.getAreacode());
 			model.addAttribute("area", area);
 		}
 		model.addAttribute("parentId", parentId);
+		SessionData.createSyslog(request,1, "添加区域");
 		return "admin/dept/add";
 	}
 
 	@RequestMapping("/prUpdate")
-    public String prUpdate(String id, ModelMap model, HttpServletRequest request, Pager pager) {
+    public String prUpdate(String id, ModelMap model, HttpServletRequest request) {
         Department dept = deptDao.find(Department.class, id);
-//        String areacode = SessionData.getAreacode(request);
-//        List<Qgorg> qgorgList = BasicData.findQgorgByAreacode(areacode, pager);
-//        List<Area> areaList = areaInfoDao.findAreaByCode(areacode);
-//		model.addAttribute("qgorgList", qgorgList);
-//        model.addAttribute("areaList", areaList);
 		Area area = areaInfoDao.find(Area.class, dept.getAreacode());
 		model.addAttribute("area", area);
 		model.addAttribute("dept", dept);
@@ -146,12 +139,10 @@ public class DeptAction {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public String update(@ModelAttribute Department dept) {
-//		Qgorg qgorg=BasicData.findQgorgById(dept.getQgorgId());
-//		dept.setAreacode(qgorg.getAreacode());
+    public String update(@ModelAttribute Department dept, HttpServletRequest request) {
 		try {
 			deptDao.update(dept);
-
+			SessionData.createSyslog(request,2, "更新区域");
 		} catch (Exception e) {
 
 		}
@@ -162,14 +153,6 @@ public class DeptAction {
 	@ResponseBody
 	public String delete(String ids, HttpServletRequest request){
 		String message="";
-//		String areacode= SessionData.getAreacode(request);
-//		List<Department> children = deptDao.getChildren(ids,areacode);
-//		if(children.size()>0){
-//            message = StringUtil.jsonValue("0", AppMsg.getMessage("dept"));
-////			message="该地区拥有区域，不允许删除";
-//            //100该部门拥有子部门，不允许删除
-//			return message;
-//		}
         String parentId = SessionData.getAreacode(request);
         List<Department> children = deptDao.getChildren(ids, parentId);
         if(children.size()>0){
@@ -178,7 +161,7 @@ public class DeptAction {
             //100该部门拥有子部门，不允许删除
             return message;
 		}
-		String hql="select count(*) from User t where t.dept.id=?";
+		String hql="select count(1) from User t where t.dept.id=?";
 		
 		int count=deptDao.getResultNumber(hql,ids);
 		if(count>0){
@@ -187,7 +170,7 @@ public class DeptAction {
             //101该区域拥有人员，不允许删除
             return message;
         }
-        String hqldis = "select count(*) from Qgdis t where t.dept.id=?";
+        String hqldis = "select count(1) from Qgdis t where t.dept.id=?";
 
         int count2 = deptDao.getResultNumber(hqldis, ids);
         if (count2 > 0) {
@@ -201,6 +184,7 @@ public class DeptAction {
 			dept.setId(ids);
 			deptDao.delete(dept);
 			message=StringUtil.jsonValue("1",AppMsg.DEL_SUCCESS);
+			SessionData.createSyslog(request,3, "删除区域");
 		}catch(Exception e){
 			message=StringUtil.jsonValue("0",AppMsg.DEL_ERROR);
 		}

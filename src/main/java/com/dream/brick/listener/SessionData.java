@@ -1,5 +1,6 @@
 package com.dream.brick.listener;
 
+import com.alibaba.druid.sql.visitor.functions.Char;
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.bean.Syslog;
 import com.dream.brick.admin.bean.User;
@@ -80,5 +81,22 @@ public class SessionData {
 			syslog.setCreateTime(FormatDate.getYMdHHmmss());
 			BasicData.saveSyslog(syslog);
 		}
+	}
+	public void test() {
+		try {
+			//oneMethod();
+			System.out.println("condition 1");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("condition 2");
+		} catch(Exception e) {
+			System.out.println("condition 3");
+		} finally {
+			System.out.println("finally");
+		}
+	}
+	public static void main(String[] args) {
+		char c=66;
+		SessionData s=new SessionData();
+		s.test();
 	}
 }

@@ -69,7 +69,7 @@
                     $('#dissList').datagrid('loadData', disaData);
                 });
             };
-            //获取站点
+            //获取控制器
             function getCollector(obj) {
                 var data={
                     "deptId":obj
