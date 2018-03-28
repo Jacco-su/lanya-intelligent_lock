@@ -1,6 +1,7 @@
 package com.dream.util.extend;
 
 
+import com.dream.util.Const;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
@@ -16,7 +17,7 @@ public class FtpUtil {
     private static Logger logger = Logger.getLogger(com.dream.util.extend.FtpUtil.class);
 
     private static FTPClient ftpClient;
-    public final static String path = "/zdzjpg/192.168.3.108/2018-03-16/001/jpg";//aaa路径
+    public final static String path = "/410100000502";//aaa路径
 
     /**
      * 获取ftp连接
@@ -29,9 +30,9 @@ public class FtpUtil {
         boolean flag = false;
         int reply;
         try {
-            ftpClient.connect("218.28.166.165", 19999);//ip地址 ,//端口号
+            ftpClient.connect(Const.FTP_IP, Const.FTP_PORT);//ip地址 ,//端口号
             //ftp登陆
-            ftpClient.login("sdzdz", "hlxx@2017");//用户名,//密码
+            ftpClient.login(Const.FTP_USER_NAME, Const.FTP_PASSWORD);//用户名,//密码
             //设置文件传输类型
             ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
             //检查延时

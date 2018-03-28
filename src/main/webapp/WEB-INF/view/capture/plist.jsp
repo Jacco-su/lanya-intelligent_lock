@@ -37,23 +37,11 @@
     <tr>
         <td>
             <div>
-                1<img alt="图片资源" src="${basePath}/uploads/workticket/00129.jpg">
+                <c:forEach items="${pictureList}" var="picture" varStatus="s">
+                    <img alt="图片资源" src="${basePath}/${picture}">
+                </c:forEach>
             </div>
         </td>
-        <td>
-            2<img alt="image" src="/capture/seekExperts"><br>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            3<img border=0 src="downPhoto.do?fileId=${"fileList"}">
-        </td>
-    </tr>
-    <tr>
-        <td>
-            4访问FTP <img src=""/>
-        </td>
-    </tr>
 </table>
 </body>
 </html>

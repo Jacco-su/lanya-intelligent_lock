@@ -1,6 +1,5 @@
 package com.dream.brick.listener;
 
-import com.alibaba.druid.sql.visitor.functions.Char;
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.bean.Syslog;
 import com.dream.brick.admin.bean.User;

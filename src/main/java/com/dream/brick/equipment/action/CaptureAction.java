@@ -1,15 +1,13 @@
 package com.dream.brick.equipment.action;
 
-import com.dream.framework.dao.Pager;
 import com.dream.util.extend.FtpUtil;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
@@ -19,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static javax.xml.crypto.dsig.Transform.BASE64;
 
@@ -27,12 +26,15 @@ import static javax.xml.crypto.dsig.Transform.BASE64;
 @Scope("prototype")
 @RequestMapping("/capture")
 public class CaptureAction {
+    private static List<String> filelist = new ArrayList<>();
 
     @RequestMapping("/iList")
-    public String iList(HttpServletRequest request) {
+    public String iList(HttpServletRequest request,ModelMap model) {
         ServletContext servletContext = request.getServletContext();//获取ServletContext的对象 代表当前WEB应用
         try {
             FtpUtil.downfile(servletContext.getRealPath("/uploads/pictures/"));
+            System.out.println(getFileList(servletContext.getRealPath("/uploads/pictures/")));
+            model.addAttribute("pictureList",servletContext.getRealPath("/uploads/pictures/"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -124,9 +126,26 @@ public class CaptureAction {
     }
     @RequestMapping("/eList")
 
-    public String List(Pager pager) {
+    public String List() {
         return "/capture/elist";
     }
 
+    public static List<String> getFileList(String strPath) {
+        File dir = new File(strPath);
+        File[] files = dir.listFiles(); // 该文件目录下文件全部放入数组
+        if (files != null) {
+            for (int i = 0; i < files.length; i++) {
+                String fileName = files[i].getName();
+                if (files[i].isDirectory()) { // 判断是文件还是文件夹
+                    getFileList(files[i].getAbsolutePath()); // 获取文件绝对路径
+                } else if (fileName.endsWith("jpg")) { // 判断文件名是否以.avi结尾
+                    filelist.add(files[i].getPath().split("uploads/")[1]);
+                } else {
+                    continue;
+                }
+            }
 
+        }
+        return filelist;
+    }
 }

@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>授权记录信息</title>
+    <title>开关门信息</title>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
@@ -23,7 +23,7 @@
             var deptId="";
             var infolist = $('#infolist');
             infolist.datagrid({
-                title: '授权记录列表',
+                title: '开门记录列表',
                 iconCls: 'icon-users',
                 width: '95%',
                 height: 500,
@@ -33,10 +33,7 @@
                 striped: true,
                 collapsible: false,
                 fitColumns: true,
-                url: '${basePath}/openlog/list',
-                queryParams:{
-                    'deptId':deptId
-                },
+                url: '${basePath}/opendoor/list',
                 loadMsg: '数据装载中......',
                 remoteSort: false,
                 singleSelect: true,
@@ -47,22 +44,7 @@
                 },
                 columns: [[
                     {
-                        title: '开锁人员',
-                        field: 'userName',
-                        formatter: function (value, rowData, rowIndx) {
-                            return rowData.user.username;
-                        },
-                        width: $(this).width() * 0.1,
-                        align: 'center'
-                    },
-                    {
-                        title: '日志编号',
-                        field: 'logNum',
-                        width: $(this).width() * 0.1,
-                        align: 'left'
-                    },
-                    {
-                        title: '开锁时间',
+                        title: '开门时间',
                         field: 'openTime',
                         width: $(this).width() * 0.1,
                         align: 'left'

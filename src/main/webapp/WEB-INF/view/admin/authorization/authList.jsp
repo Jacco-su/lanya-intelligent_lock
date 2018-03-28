@@ -168,31 +168,36 @@
             }
         });
         function keyBinding() {
-            var key=$('#collector').combobox('getText')
-                +",7,"
-                +$('#collectore').combobox('getText')+","
-                +""
-                +","
-                +$('#users').combobox('getValue');
-            var data={
-                "key":key
-            };
-            $.ajax({
-                type: "post",
-                url: basePath+"/redis/get",
-                cache:false,
-                async:false,
-                data:data,
-                dataType: "json",
-                success: function(data){
-                    if (data.result == "1") {
-                        alert(data.message);
-                    } else {
-                        alert("绑定蓝牙钥匙失败");
-                    }
-                }
+            var userName=$('#users').combobox('getText');
+            $.messager.confirm('警告', '确定要绑定钥匙给'+userName+"?", function (f) {
+                if (f) {
+                    var key=$('#collector').combobox('getText')
+                        +",7,"
+                        +$('#collectore').combobox('getText')+","
+                        +""
+                        +","
+                        +$('#users').combobox('getValue');
+                    var data={
+                        "key":key
+                    };
+                    $.ajax({
+                        type: "post",
+                        url: basePath+"/redis/get",
+                        cache:false,
+                        async:false,
+                        data:data,
+                        dataType: "json",
+                        success: function(data){
+                            if (data.result == "1") {
+                                alert(data.message);
+                            } else {
+                                alert("绑定蓝牙钥匙失败");
+                            }
+                        }
 
-            });
+                    });
+                }
+                });
         }
         function keyTiming() {
             var key=$('#collector').combobox('getText')+",12,"+$('#collectore').combobox('getText')+","+""+",";
@@ -367,7 +372,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>选择锁具:</td>
+                            <td>门锁识别码:</td>
                             <td>
                                 <input width="180px" name="locks" id="locks">
                                <%-- <select class="easyui-combobox" name="locks" id="locks" style="width: 180px;"
@@ -375,10 +380,10 @@
                                     <option value="0">---请选择---</option>
                                 </select></td>--%>
                             <td>
-                                <button class="easyui-linkbutton" onclick="getLock(2)">初始门锁</button>
+                                <button class="easyui-linkbutton" onclick="getLock(2)">初始化门锁</button>
                             </td>
                             <td>
-                                <button class="easyui-linkbutton" onclick="getLock(1)">在线门锁信息</button>
+                                <button class="easyui-linkbutton" onclick="getLock(1)">获取门锁识别码</button>
                             </td>
                         </tr>
 
