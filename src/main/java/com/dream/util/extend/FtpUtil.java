@@ -107,7 +107,7 @@ public class FtpUtil {
      * @param remoteBaseDir 远程目录
      * @throws Exception
      */
-    public static boolean startDown(String localBaseDir, String remoteBaseDir) throws Exception {
+    public static boolean startDown(String localBaseDir, String remoteBaseDir,String openTime) throws Exception {
         if (FtpUtil.connectFtp()) {
             try {
                 FTPFile[] files = null;
@@ -117,10 +117,10 @@ public class FtpUtil {
                     files = ftpClient.listFiles();
                     for (FTPFile file:files) {
                         if (file.isDirectory()) {
-                            startDown(localBaseDir, remoteBaseDir+"/"+file.getName());
+                            startDown(localBaseDir, remoteBaseDir+"/"+file.getName(),openTime);
                         }else{
-                            if(file_count<9)
-                            downloadFile(file,localBaseDir,remoteBaseDir+"/"+file.getName());
+                           if(file_count<9)
+                            downloadFile(file,localBaseDir,remoteBaseDir+"/"+file.getName(),openTime);
                         }
                     }
                     /*for (int i = 0; i < files.length; i++) {
@@ -152,21 +152,25 @@ public class FtpUtil {
      * @param relativeLocalPath
      * @param relativeRemotePath
      */
-    private static void downloadFile(FTPFile ftpFile, String relativeLocalPath, String relativeRemotePath) {
+    private static void downloadFile(FTPFile ftpFile, String relativeLocalPath, String relativeRemotePath,String openTime) {
         OutputStream outputStream = null;
         try {
+            if(relativeRemotePath.indexOf(openTime)<0){
+                return;
+            }
             File entryDir = new File(relativeLocalPath);
             //如果文件夹路径不存在，则创建文件夹
             if (!entryDir.exists() || !entryDir.isDirectory()) {
                 entryDir.mkdirs();
             }
-            relativeLocalPath= relativeLocalPath + DateUtil.formatDateYmdhms(ftpFile.getTimestamp().getTime())+".jpg";
+            System.out.println(ftpFile.getName());
+            relativeLocalPath= relativeLocalPath + ftpFile.getName();
             File locaFile = new File(relativeLocalPath);
             //判断文件是否存在，存在则返回
             if (locaFile.exists()) {
                 return;
             } else {
-                file_count++;
+               //file_count++;
                 outputStream = new FileOutputStream(relativeLocalPath);
                 ftpClient.retrieveFile(relativeRemotePath, outputStream);
                 outputStream.flush();
@@ -192,12 +196,12 @@ public class FtpUtil {
      * @return
      * @throws Exception
      */
-    public static boolean downfile(String savepath,String deviceNum) throws Exception {
+    public static boolean downfile(String savepath,String deviceNum,String openTime) throws Exception {
         try {
 
             //File file = new File("F:/test/com/test/Testng.java");
             //FtpUtil.upload(file);//把文件上传在ftp上
-            return FtpUtil.startDown(savepath, deviceNum);//下载ftp文件测试
+            return FtpUtil.startDown(savepath, deviceNum,openTime);//下载ftp文件测试
 
         } catch (Exception e) {
             throw new Exception(e.getMessage());
@@ -208,7 +212,7 @@ public class FtpUtil {
 
         public static void main(String[] args) {
             try {
-               FtpUtil.downfile("/Users/taller/Documents/tomcat-8.5.24/webapps/ROOT/uploads/hlxx/00000006/","/00000005");
+               FtpUtil.downfile("/Users/taller/Documents/tomcat-8.5.24/webapps/ROOT/uploads/hlxx/00000005/20180329/","/00000005","20180329");
             } catch (Exception e) {
                 e.printStackTrace();
             }

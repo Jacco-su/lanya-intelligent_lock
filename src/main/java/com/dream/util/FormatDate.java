@@ -29,6 +29,8 @@ public class FormatDate {
 	public static SimpleDateFormat YYYYMMDDHHMMSS_DEFAULT_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
 
 
+	public static SimpleDateFormat YYYYMMDDHHMM_DEFAULT_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
+
 	private static final int year;
 	static {
 		Calendar a= Calendar.getInstance();
@@ -199,7 +201,8 @@ public class FormatDate {
 			return null;
 		}
 	}
-/**
+
+      /**
        * 字符串解析成时间对象
        * @param dateTimeString String
        * @return 2018-03-04 10:30:30
@@ -214,6 +217,21 @@ public class FormatDate {
 		      return null;
 	      }
       }
+	/**
+	 * 字符串解析成时间对象
+	 * @param dateTimeString String
+	 * @return 2018-03-04 10:30:30
+	 * @throws ParseException
+	 */
+	public static String dateMinuteParse(String dateTimeString){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			return YYYYMMDDHHMM_DEFAULT_FORMAT.format(sdf.parse(dateTimeString));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
       //20180304103030
 	public static String dateSdfHHmmssParse(String dateTimeString){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -224,10 +242,27 @@ public class FormatDate {
 			return null;
 		}
 	}
+	public static String addDateMinut(String day, int x){
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+		Date date = null;
+		try {
+			date = format.parse(day);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		if (date == null)
+			return "";
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.MINUTE, x);// 24小时制
+		date = cal.getTime();
+		cal = null;
+		return format.format(date);
+	}
 	public static void main(String[] args){
 		System.out.println("0012".substring(2,4));
-		System.out.println(FormatDate.dateParse("2018-03-04 10:30:30"));
-		System.out.println(FormatDate.dateSdfHHmmssParse("20180304103030"));
+		System.out.println(FormatDate.dateMinuteParse("2018-03-04 10:30:30"));
+		System.out.println(FormatDate.addDateMinut("201803041030",-1));
 
 	}
 }

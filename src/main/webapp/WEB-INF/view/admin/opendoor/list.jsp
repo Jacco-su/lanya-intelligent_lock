@@ -39,8 +39,9 @@
                 singleSelect: true,
                 onDblClickRow: function (rowIndex, field, value) {
                     var rows = infolist.datagrid("getRows");
-                    var id = rows[rowIndex].id;
-                    detail(id);
+                    var rtuId = rows[rowIndex].rtuId;
+                    var openTime = rows[rowIndex].openTime;
+                    detail(rtuId,openTime);
                 },
                 columns: [[
                     {
@@ -104,7 +105,7 @@
             function detail(deviceNum,openTime) {
                 updateWin = $.createWin({
                     title: "监控",
-                    url: '${basePath}/opendoor/picture?deviceNum='+deviceNum+'&openTime="'+openTime+'"',
+                    url: '${basePath}/opendoor/picture?deviceNum='+deviceNum+'&openTime='+openTime+'',
                     height: 550,
                     width: 800
                 });
