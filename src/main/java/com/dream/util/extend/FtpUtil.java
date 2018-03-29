@@ -1,6 +1,7 @@
 package com.dream.util.extend;
 
 
+import com.dream.socket.utils.DateUtil;
 import com.dream.util.Const;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -17,7 +18,9 @@ public class FtpUtil {
     private static Logger logger = Logger.getLogger(com.dream.util.extend.FtpUtil.class);
 
     private static FTPClient ftpClient;
-    public final static String path = "/410100000502";//aaa路径
+    //public final static String path = "/410100000502";//aaa路径
+
+    private   static   int file_count=0;
 
     /**
      * 获取ftp连接
@@ -42,7 +45,7 @@ public class FtpUtil {
                 ftpClient.disconnect();
                 return flag;
             }
-            ftpClient.changeWorkingDirectory(path);
+            ftpClient.changeWorkingDirectory("/");
             ftpClient.enterLocalPassiveMode();
             flag = true;
             return flag;
@@ -116,6 +119,7 @@ public class FtpUtil {
                         if (file.isDirectory()) {
                             startDown(localBaseDir, remoteBaseDir+"/"+file.getName());
                         }else{
+                            if(file_count<9)
                             downloadFile(file,localBaseDir,remoteBaseDir+"/"+file.getName());
                         }
                     }
@@ -156,12 +160,13 @@ public class FtpUtil {
             if (!entryDir.exists() || !entryDir.isDirectory()) {
                 entryDir.mkdirs();
             }
-            relativeLocalPath= relativeLocalPath + ftpFile.getTimestamp().getTime().getTime()+".jpg";
+            relativeLocalPath= relativeLocalPath + DateUtil.formatDateYmdhms(ftpFile.getTimestamp().getTime())+".jpg";
             File locaFile = new File(relativeLocalPath);
             //判断文件是否存在，存在则返回
             if (locaFile.exists()) {
                 return;
             } else {
+                file_count++;
                 outputStream = new FileOutputStream(relativeLocalPath);
                 ftpClient.retrieveFile(relativeRemotePath, outputStream);
                 outputStream.flush();
@@ -187,12 +192,12 @@ public class FtpUtil {
      * @return
      * @throws Exception
      */
-    public static boolean downfile(String savepath) throws Exception {
+    public static boolean downfile(String savepath,String deviceNum) throws Exception {
         try {
 
             //File file = new File("F:/test/com/test/Testng.java");
             //FtpUtil.upload(file);//把文件上传在ftp上
-            return FtpUtil.startDown(savepath, path);//下载ftp文件测试
+            return FtpUtil.startDown(savepath, deviceNum);//下载ftp文件测试
 
         } catch (Exception e) {
             throw new Exception(e.getMessage());
@@ -203,7 +208,7 @@ public class FtpUtil {
 
         public static void main(String[] args) {
             try {
-               FtpUtil.downfile("/uploads/");
+               FtpUtil.downfile("/Users/taller/Documents/tomcat-8.5.24/webapps/ROOT/uploads/hlxx/00000006/","/00000005");
             } catch (Exception e) {
                 e.printStackTrace();
             }

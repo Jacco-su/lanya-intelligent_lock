@@ -42,6 +42,7 @@ public class BasicData {
 
     public static IAuthLogDao authLogDao;
     public static IOpenLogDao openLogDao;
+    public static IOpenDoorDao openDoorDao;
 
 	public static SpringUtil getSprintUtil()
 	{
@@ -63,7 +64,7 @@ public class BasicData {
 		IKeysListDao = (IKeysListDao) SpringUtil.getObject("keysListDaoImpl");
 		authLogDao=(IAuthLogDao) SpringUtil.getObject("authLogDaoImpl");
 		openLogDao=(IOpenLogDao) SpringUtil.getObject("openLogDaoImpl");
-
+		openDoorDao=(IOpenDoorDao) SpringUtil.getObject("openDoorDaoImpl");
 	}
 	/**
 	 * files 指fileid字符串,格式如'1111.txt;1112.doc;1113.png'

@@ -50,14 +50,14 @@
                         align: 'left'
                     },
                     {
-                        title: '锁具编号',
-                        field: 'lockNum',
+                        title: '类型',
+                        field: 'messageType',
                         width: $(this).width() * 0.2,
                         align: 'left'
                     },
                     {
-                        title: '锁具名称',
-                        field: 'lockName',
+                        title: '内容',
+                        field: 'context',
                         width: $(this).width() * 0.2,
                         align: 'left'
                     },
@@ -69,7 +69,12 @@
                     }
                 ]],
                 pagination: true,
-                rownumbers: true
+                rownumbers: true,
+                toolbar : [{
+                    text : '监控',
+                    iconCls : 'icon-search',
+                    handler : edit
+                } ]
             });
             displayMsg();
 
@@ -86,51 +91,22 @@
             var updateWin;
             var seeuWin;
 
-            function add() {
-                addWin = $.createWin({
-                    title: "添加",
-                    url: '${basePath}/keyss/prAdd',
-                    height: 350,
-                    width: 800,
-                    buttons: [{
-                        text: '保存',
-                        iconCls: 'icon-ok',
-                        handler: save
-                    }]
-                });
-            }
-
-            function save() {
-                $('#addForm').form('submit', {
-                    onSubmit: function () {
-                        return $(this).form('validate');
-                    },
-                    success: function (data) {
-                        var json = eval("(" + data + ")");
-                        $.messager.alert('提示', json.message, 'warning');
-                        $.closeWin(addWin);
-                        refresh();
-                    }
-                });
-            }
 
             function seedetail() {
                 var select = infolist.datagrid('getSelected');
                 if (select) {
-                    detail(select.id);
+                    detail(select.rtuId,select.openTime);
                 } else {
                     $.messager.alert('警告', '请选择一行数据', 'warning');
                 }
             }
 
-            function detail(id) {
-                seeWin = $.createWin({
-                    title: "详情",
-                    url: '${basePath}/keyss/prView',
-                    data: 'id=' + id,
+            function detail(deviceNum,openTime) {
+                updateWin = $.createWin({
+                    title: "监控",
+                    url: '${basePath}/opendoor/picture?deviceNum='+deviceNum+'&openTime="'+openTime+'"',
                     height: 550,
-                    width: 800,
-                    buttons: []
+                    width: 800
                 });
             }
 
@@ -157,7 +133,7 @@
             function edit() {
                 var select = infolist.datagrid('getSelected');
                 if (select) {
-                    showEdit(select.id);
+                    showEdit(select.rtuId,select.openTime);
                 } else {
                     $.messager.alert('警告', '请选择一行数据', 'warning');
                 }
@@ -180,18 +156,12 @@
                 });
             }
 
-            function showEdit(id) {
+            function showEdit(deviceNum,openTime) {
                 updateWin = $.createWin({
-                    title: "修改",
-                    url: '${basePath}/keyss/prUpdate',
-                    data: 'id=' + id,
+                    title: "监控",
+                    url: '${basePath}/opendoor/picture?deviceNum='+deviceNum+'&openTime='+openTime,
                     height: 550,
-                    width: 800,
-                    buttons: [{
-                        text: '修改',
-                        iconCls: 'icon-ok',
-                        handler: update
-                    }]
+                    width: 800
                 });
 
             }

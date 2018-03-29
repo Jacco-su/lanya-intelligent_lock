@@ -141,17 +141,6 @@
                 }
             }
 
-            function detail(id) {
-                seeWin = $.createWin({
-                    title: "详情",
-                    url: '${basePath}/keyss/prView',
-                    data: 'id=' + id,
-                    height: 550,
-                    width: 800,
-                    buttons: []
-                });
-            }
-
             $('#selectUser').window({
                 title: '领用人',
                 width: 800,

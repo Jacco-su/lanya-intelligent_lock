@@ -3,14 +3,8 @@ package com.dream.api;
 import com.dream.brick.admin.bean.Syslog;
 import com.dream.brick.admin.bean.User;
 import com.dream.brick.admin.dao.IUserDao;
-import com.dream.brick.equipment.bean.Keyss;
-import com.dream.brick.equipment.bean.KeyssList;
-import com.dream.brick.equipment.bean.Locks;
-import com.dream.brick.equipment.bean.OpenLog;
-import com.dream.brick.equipment.dao.IKeyssDao;
-import com.dream.brick.equipment.dao.IKeysListDao;
-import com.dream.brick.equipment.dao.ILocksDao;
-import com.dream.brick.equipment.dao.IOpenLogDao;
+import com.dream.brick.equipment.bean.*;
+import com.dream.brick.equipment.dao.*;
 import com.dream.brick.listener.BasicData;
 import com.dream.util.FormatDate;
 import com.dream.util.StringUtil;
@@ -48,6 +42,9 @@ public class ApiAction {
 	private IUserDao userDao;
 	@Resource
 	private IOpenLogDao openLogDao;
+
+	@Resource
+	private IOpenDoorDao openDoorDao;
 	@RequestMapping("keys")
 	@ResponseBody
 	public String addKeyss(@ModelAttribute Keyss keyss){
@@ -136,5 +133,23 @@ public class ApiAction {
 		}
 		syslog.setCreateTime(FormatDate.getYMdHHmmss());
 		BasicData.saveSyslog(syslog);*/
+	}
+	/**
+	 * @author       陶乐乐(wangyiqianyi@qq.com)
+	 * @Description: 添加开锁日志
+	 * @date         2018-03-01 09:58:25
+	 * @params
+	 * @return
+	 * @throws
+	 */
+	@RequestMapping("open/door")
+	@ResponseBody
+	public void apiDoor(@ModelAttribute OpenDoor openDoor){
+		openDoor.setCreateTime(FormatDate.getYMdHHmmss());
+		try {
+			openDoorDao.save(openDoor);
+		}catch (Exception e){
+
+		}
 	}
 }

@@ -32,7 +32,7 @@ public class CaptureAction {
     public String iList(HttpServletRequest request,ModelMap model) {
         ServletContext servletContext = request.getServletContext();//获取ServletContext的对象 代表当前WEB应用
         try {
-            FtpUtil.downfile(servletContext.getRealPath("/uploads/pictures/"));
+            //FtpUtil.downfile(servletContext.getRealPath("/uploads/pictures/"));
             System.out.println(getFileList(servletContext.getRealPath("/uploads/pictures/")));
             model.addAttribute("pictureList",servletContext.getRealPath("/uploads/pictures/"));
         } catch (Exception e) {

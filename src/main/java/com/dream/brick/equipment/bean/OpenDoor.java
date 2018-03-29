@@ -14,11 +14,16 @@ public class OpenDoor {
 	private String id;
 	private String createTime;
     private String deviceName;
+    private String deviceNum;
 	private char status;// 0开门，1关门
 	private String openTime;
 
+	private String context;
+	private String messageType;
+
+	private String rtuId;
+
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	public String getId() {
 		return id;
 	}
@@ -57,5 +62,37 @@ public class OpenDoor {
 
 	public void setOpenTime(String openTime) {
 		this.openTime = openTime;
+	}
+
+	public String getDeviceNum() {
+		return deviceNum;
+	}
+
+	public void setDeviceNum(String deviceNum) {
+		this.deviceNum = deviceNum;
+	}
+
+	public String getContext() {
+		return context;
+	}
+
+	public void setContext(String context) {
+		this.context = context;
+	}
+
+	public String getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+
+	public String getRtuId() {
+		return rtuId;
+	}
+
+	public void setRtuId(String rtuId) {
+		this.rtuId = rtuId;
 	}
 }
