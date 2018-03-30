@@ -6,8 +6,6 @@ import java.io.*;
 import java.util.Enumeration;
 import java.util.TooManyListenersException;
 
-import static com.sun.activation.registries.LogSupport.log;
-
 /**
  * ${DESCRIPTION}
  *
