@@ -1,9 +1,13 @@
+package com.dream.serial;
+
 import com.dream.socket.utils.ByteUtil;
 import com.dream.util.ResponseSocketUtil;
 import gnu.io.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.TooManyListenersException;
 
 /**
@@ -46,6 +50,24 @@ public class ReadSerialPortData implements Runnable, SerialPortEventListener {
                 System.out.println(cpid.getName() + ", " + cpid.getCurrentOwner());
             }
         }
+    }
+    /**
+     * 查找所有可用端口
+     *
+     * @return 可用端口名称列表
+     */
+    @SuppressWarnings("unchecked")
+    public static final List<String> findPort() {
+        // 获得当前所有可用串口
+        Enumeration<CommPortIdentifier> portList = CommPortIdentifier
+                .getPortIdentifiers();
+        List<String> portNameList = new ArrayList<>();
+        // 将可用串口名添加到List并返回该List
+        while (portList.hasMoreElements()) {
+            String portName = portList.nextElement().getName();
+            portNameList.add(portName);
+        }
+        return portNameList;
     }
     /**
      63      * @方法名称 :selectPort
@@ -249,7 +271,7 @@ public class ReadSerialPortData implements Runnable, SerialPortEventListener {
                 }
         }
        // System.out.println(resultString);\
-        responseString= ResponseSocketUtil.V(resultString);
+        responseString= resultString;
     }
 
 

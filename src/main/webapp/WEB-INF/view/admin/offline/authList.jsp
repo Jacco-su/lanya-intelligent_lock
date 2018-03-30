@@ -33,49 +33,11 @@
                     $('#tree').tree('expandAll');
                 }
             });
-            //获取钥匙
-            function getkeys() {
-                $.post(basePath+"/authorization/keys",null,function(data){
-                    var d=JSON.parse(data);
-                    $('#keys').empty();
-                    var keyData = []; //创建数组
-                    for(var i=0;i<d.length;i++){
-                        keyData.push({
-                            "id": d[i].keyssMAC,
-                            "text": d[i].keyssCode
-                        });
-                    }
-                    $("#keys").combobox("clear")//下拉框加载数据,设置默认值为
-                        .combobox("loadData", keyData).combobox("setValue", d[0].keyssMAC);
-                });
-            }
-
             //获取站点
             function refresh(obj) {
                 var data={
                     "disaId":obj
                 };
-                $.post(basePath + "/authorization/distribution", data, function (data) {
-                    var d = JSON.parse(data);
-                    var disaData = []; //创建数组
-                    for (var i = 0; i < d.length; i++) {
-                        disaData.push({
-                            "id": d[i].id,
-                            "text": d[i].name
-                        });
-                    }
-                    if (d[0] != null) {
-                        $("#disa").combobox("clear")//下拉框加载数据,设置默认值为
-                            .combobox("loadData", disaData).combobox("setValue", d[0].id);
-                    }else{
-                        $("#disa").combobox("clear")//下拉框加载数据,设置默认值为
-                            .combobox("loadData", disaData);
-                        $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
-                            .combobox("loadData", []);
-                        $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
-                            .combobox("loadData", []);
-                    }
-                });
                 //获取使用人
                 $.post(basePath+"/authorization/user",data,function(data){
                     var d=JSON.parse(data);
@@ -92,97 +54,47 @@
                             .combobox("loadData", userData).combobox("setValue", d[0].id);
                     }
                 });
-                $('#disa').combobox({
-                    onSelect: function (row) {
-                        if (row != null) {
-                            var data={
-                                "disaId":row.id
-                            };
-                            $('#collectore').empty();
-                            $.post(basePath+"/authorization/disa/collector",data,function(data){
-                                var d=JSON.parse(data);
-                                var collectorData = []; //创建数组
-                                for(var i=0;i<d.length;i++){
-                                    collectorData.push({
-                                        "id": d[i].id,
-                                        "text": d[i].ccode
-                                    });
-                                }
-                                if( d[0]!=null) {
-                                    $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", collectorData).combobox("setValue", d[0].id);
-                                }else{
-                                    $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", collectorData);
-                                    $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", []);
-                                }
-                            });
-                            //获取锁具
-                           /* $.post(basePath+"/authorization/disa/locks",data,function(data){
-                                var d=JSON.parse(data);
-                                $('#locks').empty();
-                                var collectorData = []; //创建数组
-                                for(var i=0;i<d.length;i++){
-                                    collectorData.push({
-                                        "id": d[i].id,
-                                        "text": d[i].lockCode
-                                    });
-                                }
-                                if( d[0]!=null) {
-                                    $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", collectorData).combobox("setValue", d[0].id);
-                                }
-                            });*/
-                        }
-                    }
-                });
-                $('#collector').combobox({
-                    onSelect: function (row) {
-                        if (row != null) {
-                            var data={
-                                "collectorId":row.id
-                            };
-                            $.post(basePath+"/authorization/collector/collectore",data,function(data){
-                                var d=JSON.parse(data);
-                                $('#collectore').empty();
-                                var collectorData = []; //创建数组
-                                for(var i=0;i<d.length;i++){
-                                    collectorData.push({
-                                        "id": d[i].id,
-                                        "text": d[i].ceMAC
-                                    });
-                                }
-                                //console.log(collectorData);
-                                if( d[0]!=null){
-                                    $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", collectorData).combobox("setValue", d[0].id);
-                                }else{
-                                    $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", collectorData);
-                                }
-                            });
-                        }
-                    }
-                });
             }
+            //获取可用串口
+            $.post(basePath+"/offline/serial",null,function(data){
+                var d=JSON.parse(data);
+                $('#serials').empty();
+                var serialData = []; //创建数组
+                for(var i=0;i<d.length;i++){
+                    serialData.push({
+                        "id": d[i],
+                        "text": d[i]
+                    });
+                }
+                if( d[0]!=null) {
+                    $("#serials").combobox("clear")//下拉框加载数据,设置默认值为
+                        .combobox("loadData", serialData).combobox("setValue", d[0]);
+                }
+            });
         });
+
         function keyBinding() {
             var userName=$('#users').combobox('getText');
             $.messager.confirm('警告', '确定要绑定钥匙给'+userName+"?", function (f) {
                 if (f) {
-                    var key=$('#collector').combobox('getText')
-                        +",7,"
-                        +$('#collectore').combobox('getText')+","
-                        +""
-                        +","
-                        +$('#users').combobox('getValue');
+                    var serial=$('#serials').combobox('getValue');
+                    if(serial==""){
+                        alert("请选择串口!");
+                        return;
+                    }
+                    var userId=$('#users').combobox('getValue');
+                    if(userId=="0"||userId==""){
+                        alert("请选择用户!");
+                        return;
+                    }
                     var data={
-                        "key":key
+                        "serial":serial,
+                        "T":7,
+                        "userId":userId
                     };
                     $.ajax({
                         type: "post",
-                        url: basePath+"/redis/get",
+                        url: basePath+"/offline/read",
                         cache:false,
                         async:false,
                         data:data,
@@ -191,7 +103,7 @@
                             if (data.result == "1") {
                                 alert(data.message);
                             } else {
-                                alert("绑定蓝牙钥匙失败");
+                                alert("绑定蓝牙钥匙失败!");
                             }
                         }
 
@@ -200,13 +112,18 @@
                 });
         }
         function keyTiming() {
-            var key=$('#collector').combobox('getText')+",12,"+$('#collectore').combobox('getText')+","+""+",";
+            var serial=$('#serials').combobox('getValue');
+            if(serial==""){
+                alert("请选择串口!");
+                return;
+            }
             var data={
-                "key":key
+                "serial":serial,
+                "T":12
             };
             $.ajax({
                 type: "post",
-                url: basePath+"/redis/get",
+                url: basePath+"/offline/read",
                 cache:false,
                 async:false,
                 data:data,
@@ -222,33 +139,42 @@
             });
         }
         function onlineAuth() {
-            if($('#startDate').val()==""){
+            var startDate=$('#startDate').val();
+            if(startDate==""){
                alert("请选择授权开始时间!");
                return;
             }
-            if($('#endDate').val()==""){
+            var endDate=$('#endDate').val();
+            if(endDate==""){
                 alert("请选择授权结束时间!");
                 return;
             }
-            if($('#locks').val()==""){
-                alert("请填写锁序列号");
+            var lockNum=$('#locks').val();
+            if(lockNum==""){
+                alert("请填写锁识别码!");
                 return;
             }
-            var key=$('#collector').combobox('getText')
-                + ",5,"
-                +$('#collectore').combobox('getText')+","
-                +""+","
-                +$('#locks').val()+","
-                +$('#startDate').val()+","
-                +$('#endDate').val()+","
-                +$('#users').combobox('getValue')+","
-                +$('#disa').combobox('getValue');
+            var serial=$('#serials').combobox('getValue');
+           if(serial==""){
+               alert("请选择串口!");
+               return;
+           }
+            var userId=$('#users').combobox('getValue');
+            if(userId=="0"||userId==""){
+                alert("请选择用户!");
+                return;
+            }
             var data={
-                "key":key
+                "serial":serial,
+                "T":5,
+                "startDate":startDate,
+                "endDate":endDate,
+                "lockNum":lockNum,
+                "userId":userId
             };
             $.ajax({
                 type: "post",
-                url: basePath+"/redis/get",
+                url: basePath+"/offline/read",
                 cache:false,
                 async:false,
                 data:data,
@@ -265,20 +191,19 @@
             });
         }
         function getLock(t) {
-            var key=$('#collector').combobox('getText') +","
-                +t+","
-                +$('#collectore').combobox('getText')+","
-                +""+","
-                +$('#locks').val()+","
-                +$('#startDate').val()+","
-                +$('#endDate').val()+","
-                +$('#users').combobox('getValue');
+            var serial=$('#serials').combobox('getValue');
+            if(serial==""){
+                alert("请选择串口!");
+                return;
+            }
             var data={
-                "key":key
+                "serial":serial,
+                "T":t,
+                "lockNum":""
             };
             $.ajax({
                 type: "post",
-                url: basePath+"/redis/get",
+                url: basePath+"/offline/read",
                 cache:false,
                 async:false,
                 data:data,
@@ -327,41 +252,14 @@
                 <div style="padding:10px 60px 20px 60px">
                     <table cellpadding="5">
                         <tr>
-                            <td>站点:</td>
+                            <td>串口:</td>
                             <td colspan="3">
-                                <select class="easyui-combobox" name="disa" id="disa" style="width: 180px;"
+                                <select class="easyui-combobox" name="serials" id="serials" style="width: 180px;"
                                         data-options="editable:false,valueField:'id', textField:'text'">
                                     <option value="0">---请选择---</option>
                                 </select>
                             </td>
                         </tr>
-                        <tr>
-                            <td>采集器:</td>
-                            <td colspan="3">
-                                <select class="easyui-combobox" id="collector" name="collector" style="width: 180px;"
-                                        data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>控制器:</td>
-                            <td colspan="3">
-                                <select class="easyui-combobox" name="collectore" id="collectore" style="width: 180px;"
-                                        data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-                                </select>
-                            </td>
-                        </tr>
-                <%--        <tr>
-                            <td>选择钥匙:</td>
-                            <td colspan="3">
-                                <select class="easyui-combobox" id="keys" name="keys" style="width: 180px;"
-                                        data-options="editable:false,valueField:'id', textField:'text'">
-                                    <option value="0">---请选择---</option>
-
-                                </select></td>
-                        </tr>--%>
                         <tr>
                             <td>
                                 操作钥匙:
@@ -402,7 +300,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>被授权人:</td>
+                            <td>用户:</td>
                             <td colspan="3">
                                 <select class="easyui-combobox" name="users" id="users" style="width: 180px;"
                                         data-options="editable:false,valueField:'id', textField:'text'">
