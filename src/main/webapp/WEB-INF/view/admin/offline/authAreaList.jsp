@@ -27,11 +27,6 @@
                     getkeys(row.id);
                 }
             });
-            $('#dissList').datagrid({
-                onCheck:function(index, row){
-                    getLocks(row.id,0);
-                }
-            });
             //获取钥匙
             function getkeys(userId) {
                 var data={
@@ -51,31 +46,30 @@
                 });
                 console.log(keyData);
             }
-            //获取站点
-            function getDiss(obj) {
+            function getUsers(obj) {
                 var data={
                     "disaId":obj
                 };
-                $('#dissList').empty();
-                $.post(basePath+"/authorization/distribution",data,function(data){
+                //获取使用人
+                $.post(basePath+"/authorization/user",data,function(data){
                     var d=JSON.parse(data);
-                    var disaData = []; //创建数组
+                    var userData = []; //创建数组
                     for(var i=0;i<d.length;i++){
-                        disaData.push({
+                        userData.push({
                             "id": d[i].id,
-                            "name": d[i].name
+                            "name": d[i].username
                         });
                     }
-                    $('#dissList').datagrid('loadData', disaData);
+                    $('#userList').datagrid('loadData', userData);
                 });
             }
             //获取门锁
             function getLocks(obj) {
                 var data={
-                    "disaId":obj
+                    "deptId":obj
                 };
                 //获取锁具
-                $.post(basePath+"/authorization/disa/locks",data,function(data){
+                $.post(basePath+"/authorization/dept/locks",data,function(data){
                     var d=JSON.parse(data);
                     $('#locksList').empty();
                     var locksData = []; //创建数组
@@ -100,118 +94,28 @@
                     //refresh(node.id);
                     deptId=node.id;
                     getUsers(deptId);
-                    getDiss(deptId);
-                    //getLocks(deptId);
+                    getLocks(deptId);
                 },onLoadSuccess: function (node, data) {
                     $('#tree').tree('expandAll');
                 }
             });
-
-
-            //获取站点
-            function refresh(obj) {
-
-                $('#disa').combobox({
-                    onSelect: function (row) {
-                        if (row != null) {
-                            var data={
-                                "disaId":row.id
-                            };
-                            $('#collectore').empty();
-                            $.post(basePath+"/authorization/disa/collector",data,function(data){
-                                var d=JSON.parse(data);
-                                $('#collector').empty();
-                                var collectorData = []; //创建数组
-                                for(var i=0;i<d.length;i++){
-                                    collectorData.push({
-                                        "id": d[i].id,
-                                        "text": d[i].ccode
-                                    });
-                                }
-                                if( d[0]!=null) {
-                                    $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", collectorData).combobox("setValue", d[0].id);
-                                }
-                            });
-
-                        }
-                    }
-                });
-                $('#collector').combobox({
-                    onSelect: function (row) {
-                        if (row != null) {
-                            var data={
-                                "collectorId":row.id
-                            };
-                            $.post(basePath+"/authorization/collector/collectore",data,function(data){
-                                var d=JSON.parse(data);
-                                $('#collectore').empty();
-                                var collectorData = []; //创建数组
-                                for(var i=0;i<d.length;i++){
-                                    collectorData.push({
-                                        "id": d[i].id,
-                                        "text": d[i].ceMAC
-                                    });
-                                }
-                                //console.log(collectorData);
-                                if( d[0]!=null){
-                                    $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", collectorData).combobox("setValue", d[0].id);
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        });
-        function onlineAuth() {
-            var key=$('#collector').combobox('getText')
-                +",5,"
-                +$('#collectore').combobox('getText')+","
-                +$('#keys').combobox('getText')+","
-                +$('#locks').combobox('getText')+","
-                +$('#startDate').val()+","
-                +$('#endDate').val()+","
-                +$('#users').combobox('getValue');
-            var data={
-                "key":key
-            };
-            $.ajax({
-                type: "post",
-                url: basePath+"/redis/get",
-                cache:false,
-                async:true,
-                data:data,
-                dataType: "json",
-                success: function(data){
-                    if(data.result=="1"){
-                        alert(data.message);
-
-                    }else{
-                        alert("授权失败!");
-                    }
-                }
-
-            });
-        }
-
-        function getUsers(obj) {
-            var data={
-                "disaId":obj
-            };
-            //获取使用人
-            $.post(basePath+"/authorization/user",data,function(data){
+            //获取可用串口
+            $.post(basePath+"/offline/serial",null,function(data){
                 var d=JSON.parse(data);
-                var userData = []; //创建数组
+                $('#serials').empty();
+                var serialData = []; //创建数组
                 for(var i=0;i<d.length;i++){
-                    userData.push({
-                        "id": d[i].id,
-                        "name": d[i].username
+                    serialData.push({
+                        "id": d[i],
+                        "text": d[i]
                     });
                 }
-                $('#userList').datagrid('loadData', userData);
+                if( d[0]!=null) {
+                    $("#serials").combobox("clear")//下拉框加载数据,设置默认值为
+                        .combobox("loadData", serialData).combobox("setValue", d[0]);
+                }
             });
-        }
+        });
         function stepAuth(num) {
             if(num==1){
                 $("#stepOne").panel('open');
@@ -258,12 +162,7 @@
             }
             var userId=userRow[0].id;
             var keysId=keysRow[0].id;
-            var dissRow=$("#dissList").datagrid("getChecked");
             var locksRows=$("#locksList").datagrid("getChecked");
-            if(dissRow==""){
-                $.messager.alert('警告', '请选择一个站点', 'warning');
-                return;
-            }
             if(locksRows==""){
                 $.messager.alert('警告', '请至少选择一个锁具', 'warning');
                 return;
@@ -283,6 +182,11 @@
                 $.messager.alert('警告', '请填写授权结束时间', 'warning');
                 return;
             }
+            var serial=$('#serials').combobox('getValue');
+            if(serial==""){
+                alert("请选择串口!");
+                return;
+            }
             var authLocks="";
             var authLocksId="";
             for(var i=0;i<locksRows.length;i++){
@@ -298,14 +202,13 @@
                 "authEndTime":authEndTime,
                 "authKeys":$("#keysList").datagrid("getChecked")[0].keyssCode,
                 "authKeysId":keysId,
-                "disId":dissRow[0].id,
                 "authLocks":authLocks,
-                "authLocksId":authLocksId
+                "authLocksId":authLocksId,
+                "serial":serial
             };
-            console.log(data);
             $.ajax({
                 type: "post",
-                url: basePath + "/authlog/save",
+                url: basePath + "/offline/save",
                 cache: false,
                 async: true,
                 data: data,
@@ -334,6 +237,15 @@
             <div class="easyui-panel" title="开始授权" style="width:900px" id="stepOne">
                 <div style="padding:10px 60px 20px 60px">
                     <table cellpadding="5">
+                        <tr>
+                            <td>串口:</td>
+                            <td colspan="3">
+                                <select class="easyui-combobox" name="serials" id="serials" style="width: 180px;"
+                                        data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option value="0">---请选择---</option>
+                                </select>
+                            </td>
+                        </tr>
                         <tr>
                             <td>授权类型:</td>
                             <td colspan="5">
@@ -369,16 +281,16 @@
                                 <%--<select class="easyui-combobox"  name="users" id="users" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
                                     <option value="0">---请选择---</option>
                                 </select>--%>
-                                    <table class="easyui-datagrid" id="userList"  data-options="singleSelect:true" title = "用户列表" style="width:350px;height:250px">
-                                        <thead>
-                                        <tr>
-                                            <th data-options="field:'id',checkbox:true"></th>
-                                            <th data-options="field:'name'" width="520px">姓名</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                                <table class="easyui-datagrid" id="userList"  data-options="singleSelect:true" title = "用户列表" style="width:350px;height:250px">
+                                    <thead>
+                                    <tr>
+                                        <th data-options="field:'id',checkbox:true"></th>
+                                        <th data-options="field:'name'" width="520px">姓名</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </td>
                             <td colspan="3">
                                 <table class="easyui-datagrid" id="keysList" data-options="singleSelect:true" title = "钥匙列表" style="width:350px;height:250px">
@@ -401,24 +313,11 @@
                     </table>
                 </div>
             </div>
-            <div class="easyui-panel" title="变电站->门锁" style="width:800px" id="stepThere">
+            <div class="easyui-panel" title="门锁->采集器" style="width:800px" id="stepThere">
                 <div style="padding:10px 60px 20px 60px">
                     <table cellpadding="5">
                         <tr>
-                            <td colspan="3">
-                                <table class="easyui-datagrid" id="dissList"  title = "站点列表" style="width:350px;height:250px">
-                                    <thead>
-                                    <tr>
-                                        <th data-options="field:'id',checkbox:true"></th>
-                                        <th data-options="field:'name'" width="520px">站点</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td colspan="3">
+                            <td colspan="6">
                                 <table class="easyui-datagrid" title = "门锁列表" id="locksList"  style="width:350px;height:250px">
                                     <thead>
                                     <tr>
@@ -431,14 +330,6 @@
                                     </tbody>
                                 </table>
                             </td>
-                           <%-- <td colspan="2">
-                                <div class="easyui-panel" title="已选中门锁列表">
-                                    <div style="padding:10px 60px 20px 60px">
-                                        <table cellpadding="5" style="width:300px;">
-                                        </table>
-                                    </div>
-                                </div>
-                            </td>--%>
                         </tr>
                         <tr>
                             <td><button class="easyui-linkbutton" onclick="stepAuth(2)">上一步</button></td>

@@ -74,9 +74,6 @@ public class RedisAction {
             if(!"".equals(keys[6])) {
                 authLog.setAuthEndTime(FormatDate.dateSdfHHmmssParse(keys[6]));
             }
-            Qgdis qgdis=new Qgdis();
-            qgdis.setId(keys[8]);
-            authLog.setQgdis(qgdis);
             authLogDao.save(authLog);
             authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keys[7],8)),keys[4],keys[2],keys[5],keys[6]),Constants.LOCK_KEY).toString();//
         }else if("1".equals(keys[1])){

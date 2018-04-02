@@ -5,24 +5,25 @@ import com.dream.brick.admin.bean.User;
 import com.dream.brick.equipment.bean.AuthLog;
 import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.IAuthLogDao;
+import com.dream.brick.listener.SessionData;
 import com.dream.serial.ReadSerialPortData;
 import com.dream.socket.entity.AuthModel;
 import com.dream.socket.utils.ByteUtil;
 import com.dream.socket.utils.Constants;
-import com.dream.util.FormatDate;
-import com.dream.util.RedisTemplateUtil;
-import com.dream.util.ResponseSocketUtil;
-import com.dream.util.StringUtil;
+import com.dream.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -115,14 +116,10 @@ public class OfflineAction {
                 authLog.setAuthLocks(lockNum);
                 authLog.setAuthLocksId(lockNum);
                 authLog.setAuthEndTime(endDate);
-                Qgdis qgdis=new Qgdis();
-                qgdis.setId("135");
-                authLog.setQgdis(qgdis);
                 authLogDao.save(authLog);
                 macAddress="EE:56:8A:87:D9:5F";
                 authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(userId,8)),lockNum,macAddress,startDate,endDate),Constants.LOCK_KEY).toString();
             }
-            serialPortData.listPort();
             serialPortData.setResponseString("");
             serialPortData.selectPort(serial);
             serialPortData.write(authModel);
@@ -143,6 +140,66 @@ public class OfflineAction {
         try{
             String responseStr= ResponseSocketUtil.V(serialPortData.getResponseString());
             responseStr=responseStr.replace("*","");
+            return  StringUtil.jsonValue("1",responseStr);
+        }catch (Exception e){
+            return  StringUtil.jsonValue("0","操作失败，请重新获取!");
+        }
+    }
+    @RequestMapping("/prViewAreaOfflineAuth")
+    public String prViewAreaOfflineAuth(){
+        return "admin/offline/authAreaList";
+    }
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ResponseBody
+    public String add(@ModelAttribute AuthLog authLog,String serial) {
+        String message = "";
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        try {
+            authLog.setId(uuid);
+            authLog.setAuthStatus("0");
+            authLog.setCreateTime(FormatDate.getYMdHHmmss());
+            authLogDao.save(authLog);
+            message = StringUtil.jsonValue("1", "添加授权任务成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+        }
+        auth(authLog,uuid,serial);
+        return message;
+    }
+    private void auth(AuthLog authLog,String uuid,String serial) {
+        if (StringUtils.isNotEmpty(authLog.getAuthLocksId())) {
+            String[] locks = authLog.getAuthLocksId().split(",");
+            for (int i = 0; i < locks.length; i++) {
+                if (StringUtils.isNotEmpty(locks[i])) {
+                    String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(authLog.getUser().getId(), 8)), locks[i], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime())), Constants.LOCK_KEY).toString();//
+                    auth(authModel,serial,uuid);
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }
+    }
+    private String  auth(String authModel,String serial,String uuid){
+        ReadSerialPortData serialPortData=new ReadSerialPortData();
+        serialPortData.setResponseString("");
+        serialPortData.selectPort(serial);
+        serialPortData.write(authModel);
+        serialPortData.startRead(2);
+        try{
+            Thread.sleep(2000);
+            String responseStr= ResponseSocketUtil.V(serialPortData.getResponseString());
+            responseStr=responseStr.replace("*","");
+            if(responseStr.indexOf("授权成功")>-1){
+                System.out.println("第二次授权开始");
+                AuthLog authLog=authLogDao.find(AuthLog.class,uuid);
+                authLog.setAuthStatus("1");
+                authLogDao.update(authLog);
+            }
             return  StringUtil.jsonValue("1",responseStr);
         }catch (Exception e){
             return  StringUtil.jsonValue("0","操作失败，请重新获取!");
