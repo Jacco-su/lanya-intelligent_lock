@@ -32,7 +32,7 @@
                 onClick: function (node) {
                     refresh(node.id);
                     deptId=node.id;
-                    deptAreaCode=node.areacode;
+                    deptAreaCode=node.areaCode;
                 }
             });
             //获取钥匙
@@ -274,11 +274,11 @@
                                     <td colspan="2">
                                         <input id="lockCode" name="lockCode" style="width: 200px;" required="true"/>
                                         <a class="easyui-linkbutton"
-                                           onclick="getLock(1,'')">获取门锁识别</a>
+                                           onclick="getLock(1,'')">获取门锁识别码</a>
                                         <a class="easyui-linkbutton"
                                            onclick="getLock(2,'')">初始化门锁</a>
                                         <a class="easyui-linkbutton"
-                                           onclick="initLock(3)">初始化门锁识别码</a>
+                                           onclick="initLock(3)">添加门锁识别码(初始化)</a>
                                 </tr>
                                 <tr>
                                     <td width="100">详细地址:</td>

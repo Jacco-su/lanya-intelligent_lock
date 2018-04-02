@@ -33,6 +33,8 @@ public class MenuTree implements Serializable {
 	private List<MenuTree> children; //子节点数据
 	private String iconCls;
 
+	private String areaCode;
+
 	public String getId() {
 		return id;
 	}
@@ -95,5 +97,13 @@ public class MenuTree implements Serializable {
 
 	public void setIconCls(String iconCls) {
 		this.iconCls = iconCls;
+	}
+
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
 	}
 }

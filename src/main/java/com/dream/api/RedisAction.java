@@ -145,20 +145,11 @@ public class RedisAction {
             if (o == null) {
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
             } else {
-               /* if("5".equals(keys[1])){
-                    if("授权成功!".equals(o.toString())){
-                        Authorization authorization=new Authorization();
-                        authorization.setType("client");
-                        authorization.setLocksid(keys[4]);
-                        authorization.setKeyssid(keys[3]);
-                        authorization.setAid(SessionData.getAdminId(request));
-                        authorization.setUid(keys[7]);
-                        authorization.setStarttime(FormatDate.getYMdHHmmss(keys[5]));
-                        authorization.setEndtime(FormatDate.getYMdHHmmss(keys[6]));
-                        authorization.setAdate(FormatDate.getYMdHHmmss());
-                        authorizationDao.save(authorization);
+                if("5".equals(keys[1])){
+                    if(o.toString().indexOf("授权成功")>-1){
+
                     }
-                }*/
+                }
                 return  StringUtil.jsonValue("1", o.toString().replace("*",""));
             }
         } catch (InterruptedException e) {

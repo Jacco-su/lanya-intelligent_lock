@@ -263,6 +263,7 @@ public class FormatDate {
 		System.out.println("0012".substring(2,4));
 		System.out.println(FormatDate.dateMinuteParse("2018-03-04 10:30:30"));
 		System.out.println(FormatDate.addDateMinut("201803041030",-1));
+		System.out.println(FormatDate.dateSdfHHmmssParse("20180402173038"));
 
 	}
 }

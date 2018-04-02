@@ -89,7 +89,7 @@ public class AuthLogAction {
         }
         String adminId= SessionData.getAdminId(request);
         if(StringUtils.isNotEmpty(authLog.getCollectorId())){
-            auth(authLog,adminId,uuid,authLog.getCollectorId());
+            auth(authLog,adminId,uuid);
         }else{
             auth(authLog,adminId,uuid);
         }
