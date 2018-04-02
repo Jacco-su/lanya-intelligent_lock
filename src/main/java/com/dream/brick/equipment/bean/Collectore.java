@@ -15,7 +15,6 @@ public class Collectore {
      *
      */
     private String id;
-    private String ceCode; //控制器ID
     private String ceMAC;// 控制器蓝牙地址
     private String cename;  //控制器名称
 
@@ -33,13 +32,6 @@ public class Collectore {
         this.id = id;
     }
 
-    public String getCeCode() {
-        return ceCode;
-    }
-
-    public void setCeCode(String ceCode) {
-        this.ceCode = ceCode;
-    }
 
     public String getCeMAC() {
         return ceMAC;
