@@ -92,7 +92,7 @@ public class RedisAction {
                 Object value = redisTemplateUtil.get("lanya-lock-client");
                 if (value == null) {
                     lockNum = "00" + keys[3];
-                    lockNum = addZeroForNum(lockNum, 16);
+                    lockNum = StringUtil.addZeroForNum(lockNum, 16);
                     redisTemplateUtil.set("lanya-lock-client", lockNum);
                 } else {
                     lockNum = String.valueOf(Long.parseLong(value.toString()) + 1);
@@ -178,25 +178,13 @@ public class RedisAction {
         redisTemplateUtil.set(key, value);
         return StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
     }
-    public static String addZeroForNum(String str, int strLength) {
-        int strLen = str.length();
-        StringBuffer sb = null;
-        while (strLen < strLength) {
-            sb = new StringBuffer();
-            //sb.append("0").append(str);// 左补0
-            sb.append(str).append("0");//右补0
-            str = sb.toString();
-            strLen = str.length();
-        }
-        return str;
-    }
     public static void main(String[] args) {
 
         System.out.println("*********塑封袋".replace("*",""));
-        System.out.println(addZeroForNum("4110003",16));
+        System.out.println(StringUtil.addZeroForNum("4110003",16));
         //34313130303033303030303030303031
         System.out.println(ByteUtil.bytesToHex("".getBytes()));
         System.out.println(ByteUtil.hexStr2Str("30343031303230323030303030303030"));
-        System.out.println("0000000002,2,DF:98:deptId,2".split(",").length);
+        System.out.println(new AuthModel(new byte[]{13}).toString());
     }
 }

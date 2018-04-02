@@ -15,7 +15,6 @@ import com.dream.socket.entity.JsonDataProtocol;
 import com.dream.socket.utils.ByteUtil;
 import com.dream.socket.utils.Constants;
 import com.dream.util.AppMsg;
-import com.dream.util.FormatDate;
 import com.dream.util.RedisTemplateUtil;
 import com.dream.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -33,8 +32,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.List;
-
-import static com.dream.brick.listener.BasicData.qgdisDao;
 
 /**
  * 授权记录 操作 实现类
