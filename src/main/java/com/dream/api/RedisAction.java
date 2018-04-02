@@ -45,6 +45,7 @@ public class RedisAction {
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         String [] keys=key.split(",");
         String  authModel=null;
+        String lockNum = "";
         //钥匙绑定
         if("7".equals(keys[1])){
             ////采集器id:指令字:mac地址:钥匙mac地址:用户id
@@ -82,18 +83,16 @@ public class RedisAction {
             authModel=new AuthModel(new byte[]{1},AuthModel.toData(1,1),Constants.KEY).toString();
         }else if("2".equals(keys[1])){
             //初始化锁      key=0000000002,2,DF:98:deptId,lockCode
-            String lockNum = "";
             if(keys.length==5){
                 lockNum=keys[4];
             }else {
-                Object value = redisTemplateUtil.get("lanya-lock-client");
+                Object value = redisTemplateUtil.get("lanya-lock-client"+keys[3]);
                 if (value == null) {
-                    lockNum = "00" + keys[3];
-                    lockNum = StringUtil.addZeroForNum(lockNum, 16);
-                    redisTemplateUtil.set("lanya-lock-client", lockNum);
+                    lockNum = StringUtil.addZeroForNum(keys[3], 16);
+                    redisTemplateUtil.set("lanya-lock-client"+keys[3], lockNum);
                 } else {
                     lockNum = String.valueOf(Long.parseLong(value.toString()) + 1);
-                    redisTemplateUtil.set("lanya-lock-client", lockNum);
+                    redisTemplateUtil.set("lanya-lock-client"+keys[3], lockNum);
                 }
             }
             authModel=new AuthModel(new byte[]{2},AuthModel.toLockData(32,lockNum),Constants.KEY).toString();
@@ -143,8 +142,18 @@ public class RedisAction {
                 }
             }*/
             if (o == null) {
+                if("2".equals(keys[1])) {
+                    lockNum = String.valueOf(Long.parseLong(lockNum) - 1);
+                    redisTemplateUtil.set("lanya-lock-client" + keys[3], lockNum);
+                }
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
             } else {
+                if("2".equals(keys[1])) {
+                    if(o.toString().indexOf("初始化成功")==-1) {
+                        lockNum = String.valueOf(Long.parseLong(lockNum) - 1);
+                        redisTemplateUtil.set("lanya-lock-client" + keys[3], lockNum);
+                    }
+                }
                 if("5".equals(keys[1])){
                     if(o.toString().indexOf("授权成功")>-1){
 

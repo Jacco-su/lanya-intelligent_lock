@@ -134,22 +134,37 @@ public class OfflineAction {
             return  StringUtil.jsonValue("0","操作失败，请重新获取!");
         }
         try {
-            Thread.sleep(3000);
+            Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();
             return  StringUtil.jsonValue("0","操作失败，请重新获取!");
         }
         try{
             String responseStr= ResponseSocketUtil.V(serialPortData.getResponseString());
-            System.out.println(responseStr+"XXX");
-            responseStr=responseStr.replace("*","");
-            if(responseStr.indexOf("授权成功")>-1){
-                KeysAuth keysAuth=new KeysAuth();
-                keysAuth.setKeysId(keysId);
-                keysAuth.setLockName("测试");
-                keysAuth.setLockNum(lockNum);
-                keysAuthDao.save(keysAuth);
-            }
+            System.out.println(responseStr+"PPPP");
+           if(StringUtils.isNotEmpty(responseStr)){
+               responseStr=responseStr.replace("*","");
+               if(responseStr.indexOf("授权成功")>-1){
+                   KeysAuth keysAuth=new KeysAuth();
+                   keysAuth.setKeysId(keysId);
+                   keysAuth.setLockName("测试");
+                   keysAuth.setLockNum(lockNum);
+                   keysAuthDao.save(keysAuth);
+               }
+               if("2".equals(T)) {
+                   if(responseStr.indexOf("初始化成功")==-1) {
+                       lockNum = String.valueOf(Long.parseLong(lockNum) - 1);
+                       redisTemplateUtil.set("lanya-lock-client" + deptId, lockNum);
+                   }
+               }
+           }else{
+               responseStr="暂未获取到信息，请重试！";
+              /* if("2".equals(T)) {
+                   lockNum = String.valueOf(Long.parseLong(lockNum) - 1);
+                   redisTemplateUtil.set("lanya-lock-client" + deptId, lockNum);
+               }*/
+           }
+
             return  StringUtil.jsonValue("1",responseStr);
         }catch (Exception e){
             e.printStackTrace();

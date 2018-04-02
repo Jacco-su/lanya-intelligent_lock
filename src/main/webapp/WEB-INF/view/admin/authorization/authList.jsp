@@ -19,6 +19,7 @@
     <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
     <script type="text/javascript">
         var basePath="${basePath}";
+        var deptAreaCode="";
         $(function() {
            // getkeys();
             $('#tree').tree({
@@ -29,6 +30,7 @@
                 },
                 onClick:function(node){
                     refresh(node.id);
+                    deptAreaCode=node.areaCode;
                 },onLoadSuccess: function (node, data) {
                     $('#tree').tree('expandAll');
                 }
@@ -265,10 +267,14 @@
             });
         }
         function getLock(t) {
+            if(deptAreaCode==""){
+                alert("请先选择区域!");
+                return;
+            }
             var key=$('#collector').combobox('getText') +","
                 +t+","
                 +$('#collectore').combobox('getText')+","
-                +""+","
+                +deptAreaCode+","
                 +$('#locks').val()+","
                 +$('#startDate').val()+","
                 +$('#endDate').val()+","

@@ -185,6 +185,10 @@
        }
 
         function getLock(t,lockCode) {
+            if(deptAreaCode==""){
+                alert("请先选择区域!");
+                return;
+            }
             $("#lockCode").val("");
             var key = $('#collector').combobox('getText') + ","
                 + t + ","
