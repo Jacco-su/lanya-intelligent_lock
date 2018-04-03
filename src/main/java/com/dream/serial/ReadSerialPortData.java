@@ -108,7 +108,7 @@ public class ReadSerialPortData implements Runnable, SerialPortEventListener {
             try{
                 serialPort = (SerialPort)commPort.open(appName, timeout);
                 // 设置串口的波特率等参数
-                serialPort.setSerialPortParams(9600,
+                    serialPort.setSerialPortParams(9600,
                         SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
                         SerialPort.PARITY_NONE);
                 log("实例 SerialPort 成功！");
@@ -278,7 +278,7 @@ public class ReadSerialPortData implements Runnable, SerialPortEventListener {
     @Override
     public void run() {
         try{
-            Thread.sleep(threadTime);
+            Thread.sleep(10000);
             serialPort.close();
             log(String.format("端口''监听关闭了！", commPort.getName()));
         }catch(Exception e){

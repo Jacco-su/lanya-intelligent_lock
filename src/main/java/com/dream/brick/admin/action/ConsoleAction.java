@@ -309,11 +309,11 @@ public class ConsoleAction {
 		return AppMsg.getMessage("login"+key);
 	}
 
-	@RequestMapping(value = "/userlogin", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/userlogin", method = RequestMethod.GET)
 	public String userlogin() {
 
 		return "/console/login";
 	}
-
+*/
 
 }

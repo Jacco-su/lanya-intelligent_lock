@@ -76,9 +76,9 @@ public class OfflineAction {
     }
     @ResponseBody
     @RequestMapping("/read")
-    public String readAuth(String serial,String T,String userId,String lockNum,String deptId,String startDate,String endDate,String keysId) {
+    public String readAuth(String serial,String T,String userId,String lockNum,String deptId,String startDate,String endDate,String keysId,HttpServletRequest request) {
         String  authModel=null;
-        ReadSerialPortData serialPortData=new ReadSerialPortData();
+        //ReadSerialPortData serialPortData=new ReadSerialPortData();
         try {
             //钥匙绑定
             if("7".equals(T)){
@@ -125,45 +125,45 @@ public class OfflineAction {
                 //获取钥匙Mac地址
                 authModel = new AuthModel(new byte[]{13}).toString();
             }
-            serialPortData.setResponseString("");
-            serialPortData.selectPort(serial);
-            serialPortData.write(authModel);
-            serialPortData.startRead(3);
+//            serialPortData.setResponseString("");
+//            serialPortData.selectPort(serial);
+//            serialPortData.write(authModel);
+//            serialPortData.startRead(3);
         }catch (Exception e){
             e.printStackTrace();
             return  StringUtil.jsonValue("0","操作失败，请重新获取!");
         }
+        redisTemplateUtil.setList("lanya-lite-client-server", authModel+";"+request.getSession().getId());
+
         try {
-            Thread.sleep(4000);
+            Thread.sleep(7000);
         } catch (InterruptedException e) {
             e.printStackTrace();
             return  StringUtil.jsonValue("0","操作失败，请重新获取!");
         }
         try{
-            String responseStr= ResponseSocketUtil.V(serialPortData.getResponseString());
+            String responseStr="";
+            Object o = redisTemplateUtil.get(authModel+";"+request.getSession().getId());
+            if(o==null){
+                responseStr="暂未获取到信息，请重试！";
+            }else{
+                responseStr= ResponseSocketUtil.V(o.toString());
+                responseStr=responseStr.replace("*","");
+                if(responseStr.indexOf("授权成功")>-1){
+                    KeysAuth keysAuth=new KeysAuth();
+                    keysAuth.setKeysId(keysId);
+                    keysAuth.setLockName("测试");
+                    keysAuth.setLockNum(lockNum);
+                    keysAuthDao.save(keysAuth);
+                }
+                if("2".equals(T)) {
+                    if(responseStr.indexOf("初始化成功")==-1) {
+                        lockNum = String.valueOf(Long.parseLong(lockNum) - 1);
+                        redisTemplateUtil.set("lanya-lock-client" + deptId, lockNum);
+                    }
+                }
+            }
             System.out.println(responseStr+"PPPP");
-           if(StringUtils.isNotEmpty(responseStr)){
-               responseStr=responseStr.replace("*","");
-               if(responseStr.indexOf("授权成功")>-1){
-                   KeysAuth keysAuth=new KeysAuth();
-                   keysAuth.setKeysId(keysId);
-                   keysAuth.setLockName("测试");
-                   keysAuth.setLockNum(lockNum);
-                   keysAuthDao.save(keysAuth);
-               }
-               if("2".equals(T)) {
-                   if(responseStr.indexOf("初始化成功")==-1) {
-                       lockNum = String.valueOf(Long.parseLong(lockNum) - 1);
-                       redisTemplateUtil.set("lanya-lock-client" + deptId, lockNum);
-                   }
-               }
-           }else{
-               responseStr="暂未获取到信息，请重试！";
-              /* if("2".equals(T)) {
-                   lockNum = String.valueOf(Long.parseLong(lockNum) - 1);
-                   redisTemplateUtil.set("lanya-lock-client" + deptId, lockNum);
-               }*/
-           }
 
             return  StringUtil.jsonValue("1",responseStr);
         }catch (Exception e){
@@ -244,5 +244,10 @@ public class OfflineAction {
     @RequestMapping("/prViewOfflineAuth")
     public String prViewOfflineAuth(){
         return "admin/offline/authOfflineList";
+    }
+    //串口离线添加钥匙
+    @RequestMapping("/prAddKeys")
+    public String prAddKeys() {
+        return "admin/offline/addLockList";
     }
 }
