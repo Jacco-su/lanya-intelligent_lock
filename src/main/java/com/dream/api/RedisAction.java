@@ -45,6 +45,7 @@ public class RedisAction {
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         String [] keys=key.split(",");
         String  authModel=null;
+        String lockNum = "";
         //钥匙绑定
         if("7".equals(keys[1])){
             ////采集器id:指令字:mac地址:钥匙mac地址:用户id
@@ -74,9 +75,6 @@ public class RedisAction {
             if(!"".equals(keys[6])) {
                 authLog.setAuthEndTime(FormatDate.dateSdfHHmmssParse(keys[6]));
             }
-            Qgdis qgdis=new Qgdis();
-            qgdis.setId(keys[8]);
-            authLog.setQgdis(qgdis);
             authLogDao.save(authLog);
             authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keys[7],8)),keys[4],keys[2],keys[5],keys[6]),Constants.LOCK_KEY).toString();//
         }else if("1".equals(keys[1])){
@@ -85,18 +83,16 @@ public class RedisAction {
             authModel=new AuthModel(new byte[]{1},AuthModel.toData(1,1),Constants.KEY).toString();
         }else if("2".equals(keys[1])){
             //初始化锁      key=0000000002,2,DF:98:deptId,lockCode
-            String lockNum = "";
             if(keys.length==5){
                 lockNum=keys[4];
             }else {
-                Object value = redisTemplateUtil.get("lanya-lock-client");
+                Object value = redisTemplateUtil.get("lanya-lock-client"+keys[3]);
                 if (value == null) {
-                    lockNum = "00" + keys[3];
-                    lockNum = StringUtil.addZeroForNum(lockNum, 16);
-                    redisTemplateUtil.set("lanya-lock-client", lockNum);
+                    lockNum = StringUtil.addZeroForNum(keys[3], 16);
+                    redisTemplateUtil.set("lanya-lock-client"+keys[3], lockNum);
                 } else {
                     lockNum = String.valueOf(Long.parseLong(value.toString()) + 1);
-                    redisTemplateUtil.set("lanya-lock-client", lockNum);
+                    redisTemplateUtil.set("lanya-lock-client"+keys[3], lockNum);
                 }
             }
             authModel=new AuthModel(new byte[]{2},AuthModel.toLockData(32,lockNum),Constants.KEY).toString();
@@ -146,22 +142,23 @@ public class RedisAction {
                 }
             }*/
             if (o == null) {
+                if("2".equals(keys[1])) {
+                    lockNum = String.valueOf(Long.parseLong(lockNum) - 1);
+                    redisTemplateUtil.set("lanya-lock-client" + keys[3], lockNum);
+                }
                 return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
             } else {
-               /* if("5".equals(keys[1])){
-                    if("授权成功!".equals(o.toString())){
-                        Authorization authorization=new Authorization();
-                        authorization.setType("client");
-                        authorization.setLocksid(keys[4]);
-                        authorization.setKeyssid(keys[3]);
-                        authorization.setAid(SessionData.getAdminId(request));
-                        authorization.setUid(keys[7]);
-                        authorization.setStarttime(FormatDate.getYMdHHmmss(keys[5]));
-                        authorization.setEndtime(FormatDate.getYMdHHmmss(keys[6]));
-                        authorization.setAdate(FormatDate.getYMdHHmmss());
-                        authorizationDao.save(authorization);
+                if("2".equals(keys[1])) {
+                    if(o.toString().indexOf("初始化成功")==-1) {
+                        lockNum = String.valueOf(Long.parseLong(lockNum) - 1);
+                        redisTemplateUtil.set("lanya-lock-client" + keys[3], lockNum);
                     }
-                }*/
+                }
+                if("5".equals(keys[1])){
+                    if(o.toString().indexOf("授权成功")>-1){
+
+                    }
+                }
                 return  StringUtil.jsonValue("1", o.toString().replace("*",""));
             }
         } catch (InterruptedException e) {

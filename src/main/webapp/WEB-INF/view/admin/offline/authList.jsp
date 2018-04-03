@@ -19,6 +19,7 @@
     <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
     <script type="text/javascript">
         var basePath="${basePath}";
+        var deptId="";
         $(function() {
            // getkeys();
             $('#tree').tree({
@@ -29,6 +30,7 @@
                 },
                 onClick:function(node){
                     refresh(node.id);
+                    deptId=node.areaCode;
                 },onLoadSuccess: function (node, data) {
                     $('#tree').tree('expandAll');
                 }
@@ -164,13 +166,19 @@
                 alert("请选择用户!");
                 return;
             }
+            var keys=$('#keys').val();
+            if(keys==""){
+                alert("请先获取钥匙地址！!");
+                return;
+            }
             var data={
                 "serial":serial,
                 "T":5,
                 "startDate":startDate,
                 "endDate":endDate,
                 "lockNum":lockNum,
-                "userId":userId
+                "userId":userId,
+                "keysId":keys
             };
             $.ajax({
                 type: "post",
@@ -182,7 +190,6 @@
                 success: function(data){
                     if(data.result=="1"){
                         alert(data.message);
-
                     }else{
                         alert("授权失败!");
                     }
@@ -196,10 +203,15 @@
                 alert("请选择串口!");
                 return;
             }
+            if(deptId==""){
+                alert("请先选择区域!");
+                return;
+            }
             var data={
                 "serial":serial,
                 "T":t,
-                "lockNum":""
+                "lockNum":"",
+                "deptId":deptId
             };
             $.ajax({
                 type: "post",
@@ -232,6 +244,34 @@
                         }else{
                             alert("读取门锁信息失败!");
                         }
+                    }
+                }
+
+            });
+        }
+        function findKeys() {
+            var serial=$('#serials').combobox('getValue');
+            if(serial==""){
+                alert("请选择串口!");
+                return;
+            }
+            var data={
+                "serial":serial,
+                "T":13
+            };
+            $.ajax({
+                type: "post",
+                url: basePath+"/offline/read",
+                cache:false,
+                async:false,
+                data:data,
+                dataType: "json",
+                success: function(data){
+                    if(data.result=="1"){
+                        //alert(data.message);
+                        $('#keys').val(data.message.split("->")[1]);
+                    }else{
+                        alert("蓝牙钥匙获取失败，请重试！");
                     }
                 }
 
@@ -270,9 +310,21 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>钥匙Mac地址:</td>
+                            <td>
+                                <input width="180px" name="keys" id="keys" readonly>
+                                <%-- <select class="easyui-combobox" name="locks" id="locks" style="width: 180px;"
+                                         data-options="editable:false,valueField:'id', textField:'text'">
+                                     <option value="0">---请选择---</option>
+                                 </select></td>--%>
+                            <td>
+                                <button class="easyui-linkbutton" onclick="findKeys()">获取钥匙信息</button>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>门锁识别码:</td>
                             <td>
-                                <input width="180px" name="locks" id="locks">
+                                <input width="180px" name="locks" id="locks" readonly>
                                <%-- <select class="easyui-combobox" name="locks" id="locks" style="width: 180px;"
                                         data-options="editable:false,valueField:'id', textField:'text'">
                                     <option value="0">---请选择---</option>

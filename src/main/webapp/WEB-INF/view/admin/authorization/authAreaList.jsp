@@ -208,7 +208,7 @@
                 "authEndTime":authEndTime,
                 "authKeys":$("#keysList").datagrid("getChecked")[0].keyssCode,
                 "authKeysId":keysId,
-                "qgdis.id":collectorListRow[0].disId,
+                "disId":collectorListRow[0].disId,
                 "authLocks":authLocks,
                 "authLocksId":authLocksId,
                 "collectorId":collectorId

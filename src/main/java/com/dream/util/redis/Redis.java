@@ -8,8 +8,7 @@ public class Redis {
         Jedis jedis = new Jedis("192.168.100.102", 6379);
         jedis.auth("myredis123");
         jedis.set("XX","PPP");
-        System.out.println(jedis.get("XX"));
-        System.out.println(jedis);
+       // System.out.println(jedis.get));
         System.out.println("连接成功");
         //查看服务是否运行
         System.out.println("服务正在运行..:");

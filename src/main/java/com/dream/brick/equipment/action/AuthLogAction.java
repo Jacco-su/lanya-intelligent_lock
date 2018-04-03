@@ -89,7 +89,7 @@ public class AuthLogAction {
         }
         String adminId= SessionData.getAdminId(request);
         if(StringUtils.isNotEmpty(authLog.getCollectorId())){
-            auth(authLog,adminId,uuid,authLog.getCollectorId());
+            auth(authLog,adminId,uuid);
         }else{
             auth(authLog,adminId,uuid);
         }
@@ -123,7 +123,7 @@ public class AuthLogAction {
     }
    private void auth(AuthLog authLog,String adminId,String uuid){
        //读取采集器
-       List<Collector> collectorList=collectorDao.findCollectorByQgdisid(authLog.getQgdis().getId());
+       List<Collector> collectorList=collectorDao.findCollectorByQgdisid(authLog.getDisId());
        if(collectorList!=null&&collectorList.size()>0) {
            for (int j = 0; j < collectorList.size(); j++) {
                Collector collector = collectorList.get(j);

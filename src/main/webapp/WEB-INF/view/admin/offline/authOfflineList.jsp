@@ -163,38 +163,23 @@
                     }
                 });
             }
-        });
-        function onlineAuth() {
-            var key=$('#collector').combobox('getText')
-                +",5,"
-                +$('#collectore').combobox('getText')+","
-                +$('#keys').combobox('getText')+","
-                +$('#locks').combobox('getText')+","
-                +$('#startDate').val()+","
-                +$('#endDate').val()+","
-                +$('#users').combobox('getValue');
-            var data={
-                "key":key
-            };
-            $.ajax({
-                type: "post",
-                url: basePath+"/redis/get",
-                cache:false,
-                async:true,
-                data:data,
-                dataType: "json",
-                success: function(data){
-                    if(data.result=="1"){
-                        alert(data.message);
-
-                    }else{
-                        alert("授权失败!");
-                    }
+            //获取可用串口
+            $.post(basePath+"/offline/serial",null,function(data){
+                var d=JSON.parse(data);
+                $('#serials').empty();
+                var serialData = []; //创建数组
+                for(var i=0;i<d.length;i++){
+                    serialData.push({
+                        "id": d[i],
+                        "text": d[i]
+                    });
                 }
-
+                if( d[0]!=null) {
+                    $("#serials").combobox("clear")//下拉框加载数据,设置默认值为
+                        .combobox("loadData", serialData).combobox("setValue", d[0]);
+                }
             });
-        }
-
+        });
         function getUsers(obj) {
             var data={
                 "disaId":obj
@@ -283,6 +268,11 @@
                 $.messager.alert('警告', '请填写授权结束时间', 'warning');
                 return;
             }
+            var serial=$('#serials').combobox('getValue');
+            if(serial==""){
+                alert("请选择串口!");
+                return;
+            }
             var authLocks="";
             var authLocksId="";
             for(var i=0;i<locksRows.length;i++){
@@ -300,12 +290,13 @@
                 "authKeysId":keysId,
                 "disId":dissRow[0].id,
                 "authLocks":authLocks,
-                "authLocksId":authLocksId
+                "authLocksId":authLocksId,
+                "serial":serial
             };
             console.log(data);
             $.ajax({
                 type: "post",
-                url: basePath + "/authlog/save",
+                url: basePath + "/offline/save",
                 cache: false,
                 async: true,
                 data: data,
@@ -334,6 +325,15 @@
             <div class="easyui-panel" title="开始授权" style="width:900px" id="stepOne">
                 <div style="padding:10px 60px 20px 60px">
                     <table cellpadding="5">
+                        <tr>
+                            <td>串口:</td>
+                            <td colspan="3">
+                                <select class="easyui-combobox" name="serials" id="serials" style="width: 180px;"
+                                        data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option value="0">---请选择---</option>
+                                </select>
+                            </td>
+                        </tr>
                         <tr>
                             <td>授权类型:</td>
                             <td colspan="5">
