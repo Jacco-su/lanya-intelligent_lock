@@ -93,7 +93,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 		validator : function(value, param) {
 			return safePassword(value);
 		},
-		message : '密码由字母和数字组成，至少6位'
+		message : '密码由字母,数字和特殊字符组成，至少8位'
 	},
 	equalTo : {
 		validator : function(value, param) {
@@ -151,7 +151,8 @@ $.extend($.fn.validatebox.defaults.rules, {
 
 /* 密码由字母和数字组成，至少6位 */
 var safePassword = function(value) {
-	return !(/^(([A-Z]*|[a-z]*|\d*|[-_\~!@#\$%\^&\*\.\(\)\[\]\{\}<>\?\\\/\'\"]*)|.{0,5})$|\s/
+	//^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)(?![\W_]+$)\S{8,16}$
+    return !(/^(([A-Z]*|[a-z]*|\d*|[-_\~!@#\$%\^&\*\.\(\)\[\]\{\}<>\?\\\/\'\"]*)|.{0,5})$|\s/
 			.test(value));
 };
 

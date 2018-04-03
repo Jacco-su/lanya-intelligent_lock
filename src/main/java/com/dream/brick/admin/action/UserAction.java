@@ -322,11 +322,11 @@ public class UserAction {
 	public String initPassword(String id){
 		User user=new User();
 		user.setId(id);
-		user.setPassword(MD5.encrytion("111aaa"));
+		user.setPassword(MD5.encrytion("1111aaaa"));
 		String message="";
 		try{
 			userDao.updatePassword(user);
-			message=StringUtil.jsonValue("1",AppMsg.getMessage("user101")+"111aaa");
+			message=StringUtil.jsonValue("1",AppMsg.getMessage("user101")+"1111aaaa");
 			//密码重置成功，新密码为
 		}catch(Exception e){
 			message=StringUtil.jsonValue("0",AppMsg.getMessage("user102"));

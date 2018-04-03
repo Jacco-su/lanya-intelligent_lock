@@ -20,11 +20,11 @@
 		
 	<tr>
 		<td>密码:</td>
-		<td><input size="40"  class="easyui-validatebox" type="password" id="password" name="password" required="true" validType="password" value="111aaa"/></td>
+		<td><input size="40"  class="easyui-validatebox" type="password" id="password" name="password" required="true" validType="password" value="1111aaaa"/></td>
 	</tr>
 	<tr>
 		<td>重复密码:</td>
-		<td><input size="40" class="easyui-validatebox" type="password" required="true" validType="equalTo['#password']" value="111aaa"/></td>
+		<td><input size="40" class="easyui-validatebox" type="password" required="true" validType="equalTo['#password']" value="1111aaaa"/></td>
 	</tr>
 	<%--<tr>
 		<td>绩效考核:</td>

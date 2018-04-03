@@ -49,6 +49,18 @@ public class LoginInterceptor implements HandlerInterceptor {
 				){
 			return true;
 		}
+		if(action.contains(".exe")){
+			return false;
+		}
+		if(action.contains(".zip")){
+			return false;
+		}
+		if(action.contains(".mdb")){
+			return false;
+		}
+		if(action.contains(".tgz")){
+			return false;
+		}
 		/*if(action.contains("api")){
 			return SecurityChecker.getInstance().check(request,response);
 		}*/

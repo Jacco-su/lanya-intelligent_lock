@@ -85,7 +85,7 @@ request.setAttribute("basePath",path);
             var contents='<form action="${basePath}/log/alterPass" method="post" id="alterPassForm" name="alterPassForm">\
 		    	<table class="mytable" align="center">\
 		    		<tr>\
-						<td width="25%">原密码--:</td>\
+						<td width="25%">原密码:</td>\
 						<td><input type="password" name="oldpwd" size="30" class="easyui-validatebox" required="true" /></td>\
 					</tr>\
 		    		<tr>\
