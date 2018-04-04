@@ -4,17 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.dream.brick.admin.bean.User;
 import com.dream.brick.equipment.bean.AuthLog;
 import com.dream.brick.equipment.bean.KeysAuth;
-import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.IAuthLogDao;
 import com.dream.brick.equipment.dao.IKeysAuthDao;
-import com.dream.brick.listener.SessionData;
-import com.dream.serial.ReadSerialPortData;
 import com.dream.socket.entity.AuthModel;
 import com.dream.socket.utils.ByteUtil;
 import com.dream.socket.utils.Constants;
 import com.dream.util.*;
 import org.apache.commons.lang3.StringUtils;
-import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -26,8 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -76,16 +70,16 @@ public class OfflineAction {
         //return JSON.toJSONString(list);
         redisTemplateUtil.setList("lanya-lite-client-server", "FAFB"+";"+request.getSession().getId()+";findPort");
         try {
-            Thread.sleep(7000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
             return  StringUtil.jsonValue("0","操作失败，请重新获取!");
         }
         Object o = redisTemplateUtil.get("FAFB"+";"+request.getSession().getId()+";findPort");
-        if(o==null){
+        if(o==null||o.toString()==""){
             return  StringUtil.jsonValue("0","操作失败，请重新获取!");
         }else {
-            return  StringUtil.jsonValue("1",o.toString());
+            return o.toString().replace("[","").replace("]","");
         }
     }
     @ResponseBody
@@ -147,7 +141,7 @@ public class OfflineAction {
             e.printStackTrace();
             return  StringUtil.jsonValue("0","操作失败，请重新获取!");
         }
-        redisTemplateUtil.setList("lanya-lite-client-server", authModel+";"+request.getSession().getId());
+        redisTemplateUtil.setList("lanya-lite-client-server", authModel+";"+request.getSession().getId()+";"+serial);
 
         try {
             Thread.sleep(7000);
@@ -157,7 +151,7 @@ public class OfflineAction {
         }
         try{
             String responseStr="";
-            Object o = redisTemplateUtil.get(authModel+";"+request.getSession().getId());
+            Object o = redisTemplateUtil.get(authModel+";"+request.getSession().getId()+";"+serial);
             if(o==null||o.toString()==""){
                 responseStr="暂未获取到信息，请重试！";
             }else{
@@ -191,7 +185,7 @@ public class OfflineAction {
     }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public String add(@ModelAttribute AuthLog authLog,String serial) {
+    public String add(@ModelAttribute AuthLog authLog,String serial,HttpServletRequest request) {
         String message = "";
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         try {
@@ -205,19 +199,19 @@ public class OfflineAction {
             message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
         }
         if(StringUtils.isNotEmpty(authLog.getDisId())){
-            auth(authLog,serial);
+            auth(authLog,serial,request);
         }else{
-            auth(authLog,serial);
+            auth(authLog,serial,request);
         }
         return message;
     }
-    private void auth(AuthLog authLog,String serial) {
+    private void auth(AuthLog authLog,String serial,HttpServletRequest request) {
         if (StringUtils.isNotEmpty(authLog.getAuthLocksId())) {
             String[] locks = authLog.getAuthLocksId().split(",");
             for (int i = 0; i < locks.length; i++) {
                 if (StringUtils.isNotEmpty(locks[i])) {
                     String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(authLog.getUser().getId(), 8)), locks[i], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime())), Constants.LOCK_KEY).toString();//
-                    auth(authModel,serial,authLog,locks[i],authLog.getAuthKeysId());
+                    auth(authModel,serial,authLog,locks[i],authLog.getAuthKeysId(),request);
                     try {
                         Thread.sleep(1500);
                     } catch (InterruptedException e) {
@@ -228,26 +222,32 @@ public class OfflineAction {
 
         }
     }
-    private String  auth(String authModel,String serial,AuthLog authLogFirst,String lockNum,String keysId){
-        ReadSerialPortData serialPortData=new ReadSerialPortData();
+    private String  auth(String authModel,String serial,AuthLog authLogFirst,String lockNum,String keysId,HttpServletRequest request){
+        /*ReadSerialPortData serialPortData=new ReadSerialPortData();
         serialPortData.setResponseString("");
         serialPortData.selectPort(serial);
         serialPortData.write(authModel);
-        serialPortData.startRead(2);
+        serialPortData.startRead(2);*/
+        redisTemplateUtil.setList("lanya-lite-client-server", authModel+";"+request.getSession().getId()+";"+serial);
         try{
-            Thread.sleep(2000);
-            String responseStr= ResponseSocketUtil.V(serialPortData.getResponseString());
-            responseStr=responseStr.replace("*","");
-            if(responseStr.indexOf("授权成功")>-1){
-                System.out.println("第二次授权开始");
-                AuthLog authLog=authLogDao.find(AuthLog.class,authLogFirst.getId());
-                authLog.setAuthStatus("1");
-                authLogDao.update(authLog);
-                KeysAuth keysAuth=new KeysAuth();
-                keysAuth.setKeysId(keysId);
-                keysAuth.setLockName("测试");
-                keysAuth.setLockNum(lockNum);
-                keysAuthDao.save(keysAuth);
+            Thread.sleep(7000);
+            String responseStr="";
+            Object o = redisTemplateUtil.get(authModel+";"+request.getSession().getId()+";"+serial);
+            if(o==null||o.toString()==""){
+                responseStr="暂未获取到信息，请重试！";
+            }else {
+                responseStr = o.toString().replace("*", "");
+                if (responseStr.indexOf("授权成功") > -1) {
+                    System.out.println("第二次授权开始");
+                    AuthLog authLog = authLogDao.find(AuthLog.class, authLogFirst.getId());
+                    authLog.setAuthStatus("1");
+                    authLogDao.update(authLog);
+                    KeysAuth keysAuth = new KeysAuth();
+                    keysAuth.setKeysId(keysId);
+                    keysAuth.setLockName("测试");
+                    keysAuth.setLockNum(lockNum);
+                    keysAuthDao.save(keysAuth);
+                }
             }
             return  StringUtil.jsonValue("1",responseStr);
         }catch (Exception e){
@@ -267,5 +267,10 @@ public class OfflineAction {
     @RequestMapping("/prAddLock")
     public String prAddLock() {
         return "admin/offline/addLockList";
+    }
+
+    public static void main(String[] args) {
+        String xx="xx,pp";
+        System.out.println(JSON.toJSONString(xx));
     }
 }

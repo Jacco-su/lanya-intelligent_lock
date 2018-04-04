@@ -37,7 +37,7 @@
             });
             //获取可用串口
             $.post(basePath+"/offline/serial",null,function(data){
-                var d=JSON.parse(data);
+                var d=data.split(",");
                 $('#serials').empty();
                 var serialData = []; //创建数组
                 for(var i=0;i<d.length;i++){
@@ -290,20 +290,14 @@
             alert("请选择串口!");
             return;
         }
-        var data={
-            "serial":serial,
-            "T":t,
-            "lockNum":lockCode,
-            "deptId":deptAreaCode
-        };
+
         var data = {
             "qgdis.id": $('#disa').combobox('getValue'),
             "collector": '',
             "collectore": '',
             "lockNum": $("#lockNum").val(),
             "lockCode": $("#lockCode").val(),
-            "lockDate": $("#lockDate").val(),
-            "lockNum": $("#lockNum").val(),
+            "lockDate": $("#lockDate").val()
         };
         $.ajax({
             type: "post",

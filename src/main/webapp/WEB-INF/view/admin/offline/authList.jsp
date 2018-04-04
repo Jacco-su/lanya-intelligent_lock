@@ -59,7 +59,8 @@
             }
             //获取可用串口
             $.post(basePath+"/offline/serial",null,function(data){
-                var d=JSON.parse(data);
+                //var d=JSON.parse(data);
+                var d=data.split(",");
                 $('#serials').empty();
                 var serialData = []; //创建数组
                 for(var i=0;i<d.length;i++){
