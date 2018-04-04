@@ -139,18 +139,18 @@
                 });
             }
         });
-       function initLock() {
-           var lockCode=$("#lockCode").val();
-           if(lockCode==""){
-               alert("请填写锁识别码!");
-               return
-           }
-           if(lockCode.length!=16){
-               alert("请输入正确的识别码");
-               return;
-           }
-           getLock(2,lockCode);
-       }
+        function initLock() {
+            var lockCode=$("#lockCode").val();
+            if(lockCode==""){
+                alert("请填写锁识别码!");
+                return
+            }
+            if(lockCode.length!=16){
+                alert("请输入正确的识别码");
+                return;
+            }
+            getLock(2,lockCode);
+        }
 
         function getLock(t,lockCode) {
             if(deptAreaCode==""){
@@ -159,7 +159,7 @@
             }
             $("#lockCode").val("");
             var serial=$('#serials').combobox('getValue');
-            if(serial==""){
+            if(serial==""||serial=="0"){
                 alert("请选择串口!");
                 return;
             }
@@ -209,66 +209,54 @@
             <td valign="top" style="border: 1px solid #99bbe8;">
                 <div class="easyui-panel" title="添加门锁" style="width:800px">
                     <div style="padding:10px 60px 20px 60px">
-                            <table cellpadding="5">
-                                <tr>
-                                    <td>站点:</td>
-                                    <td colspan="2">
-                                        <select class="easyui-combobox" name="qgdis.id" id="disa" style="width: 180px;"
-                                                data-options="editable:false,valueField:'id', textField:'text'"
-                                                required="true">
-                                            <option>---请选择---</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>选择采集器:</td>
-                                    <td colspan="2">
-                                        <select class="easyui-combobox" id="collector" name="collector"
-                                                style="width: 180px;"
-                                                data-options="editable:false,valueField:'id', textField:'text'">
-                                            <option>---请选择---</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>控制器:</td>
-                                    <td colspan="2">
-                                        <select class="easyui-combobox" name="collectore" id="collectore"
-                                                style="width: 200px;"
-                                                data-options="editable:false,valueField:'id', textField:'text'"
-                                                required>
-                                            <option>---请选择---</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100">门锁编号:</td>
-                                    <td colspan="2">
-                                        <input id="lockNum" name="lockNum" style="width: 200px;" required="true"/>
-                                </tr>
-                                <tr>
-                                    <td width="100">门锁识别码:</td>
-                                    <td colspan="2">
-                                        <input id="lockCode" name="lockCode" style="width: 200px;" required="true"/>
-                                        <a class="easyui-linkbutton"
-                                           onclick="getLock(1,'')">获取门锁识别码</a>
-                                        <a class="easyui-linkbutton"
-                                           onclick="getLock(2,'')">初始化门锁</a>
-                                        <a class="easyui-linkbutton"
-                                           onclick="initLock(3)">添加门锁识别码(初始化)</a>
-                                </tr>
-                                <tr>
-                                    <td width="100">详细地址:</td>
-                                    <td colspan="2">
+                        <table cellpadding="5">
+                            <tr>
+                                <td>串口:</td>
+                                <td colspan="3">
+                                    <select class="easyui-combobox" name="serials" id="serials" style="width: 180px;"
+                                            data-options="editable:false,valueField:'id', textField:'text'">
+                                        <option value="0">---请选择---</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>站点:</td>
+                                <td colspan="2">
+                                    <select class="easyui-combobox" name="qgdis.id" id="disa" style="width: 180px;"
+                                            data-options="editable:false,valueField:'id', textField:'text'"
+                                            required="true">
+                                        <option>---请选择---</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100">门锁编号:</td>
+                                <td colspan="2">
+                                    <input id="lockNum" name="lockNum" style="width: 200px;" required="true"/>
+                            </tr>
+                            <tr>
+                                <td width="100">门锁识别码:</td>
+                                <td colspan="2">
+                                    <input id="lockCode" name="lockCode" style="width: 200px;" required="true"/>
+                                    <a class="easyui-linkbutton"
+                                       onclick="getLock(1,'')">获取门锁识别码</a>
+                                    <a class="easyui-linkbutton"
+                                       onclick="getLock(2,'')">初始化门锁</a>
+                                    <a class="easyui-linkbutton"
+                                       onclick="initLock(3)">添加门锁识别码(初始化)</a>
+                            </tr>
+                            <tr>
+                                <td width="100">详细地址:</td>
+                                <td colspan="2">
                     <textarea name="address" class="easyui-validatebox" id="address" cols="30" rows="3"
-                              ></textarea>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <button class="easyui-linkbutton" onclick="save()">确认添加</button>
-                                    </td>
-                                </tr>
-                            </table>
+                    ></textarea>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="easyui-linkbutton" onclick="save()">确认添加</button>
+                                </td>
+                            </tr>
+                        </table>
                         <%--</form>--%>
                     </div>
                 </div>
@@ -280,63 +268,63 @@
 <script>
     //        保存
     function save() {
-        sb1();
-        function sb1() {
-            var dis = $('#disa').combobox('getValue');
-            var lockCode = $("#lockCode").val();
-            if (dis == null || dis == "" || dis == 0 || dis == "---请选择---") {
-                $.messager.alert('提示', "请选择正确站点", 'warning');
-                dis.focus();
-                return false;
-            }
-            if ($("#lockNum").val() == null || $("#lockNum").val() == "") {
-                $.messager.alert('提示', "请选择门锁编号", 'warning');
-                dis.focus();
-                return false;
-            }
-            if (lockCode == null || lockCode == "") {
-                $.messager.alert('提示', "请获取门锁识别码", 'warning');
-//                alert("请获取门锁识别码");
-                lockCode.focus();
-                return false;
-            } else {
-
-//            return true;
-                var data = {
-                    "qgdis.id": $('#disa').combobox('getValue'),
-                    "collector": $('#collector').combobox('getValue'),
-                    "collectore": $('#collectore').combobox('getValue'),
-                    "lockNum": $("#lockNum").val(),
-                    "lockCode": $("#lockCode").val(),
-                    "lockDate": $("#lockDate").val(),
-                    "lockNum": $("#lockNum").val(),
-                };
-                $.ajax({
-                    type: "post",
-//                url: basePath+"/redis/get",
-                    url: basePath + "/locks/add",
-                    cache: false,
-                    async: false,
-                    data: data,
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.result == "1") {
-                            $("#lockNum").val("");
-                            $("#lockCode").val("");
-                            $("#lockDate").val("");
-                            $("#address").val("");
-                            $.messager.alert('提示', data.message, 'success');
-                        } else {
-                            $.messager.alert('提示', data.message, 'warning');
-                        }
-                    }
-                });
-//            }else {  $.messager.alert('提示', data.message, 'warning');
-//        }
-            }
+        var dis = $('#disa').combobox('getValue');
+        var lockCode = $("#lockCode").val();
+        if (dis == null || dis == "" || dis == 0 || dis == "---请选择---") {
+            $.messager.alert('提示', "请选择正确站点", 'warning');
+            dis.focus();
+            return false;
         }
-
-
+        if ($("#lockNum").val() == null || $("#lockNum").val() == "") {
+            $.messager.alert('提示', "请选择门锁编号", 'warning');
+            dis.focus();
+            return ;
+        }
+        if (lockCode == null || lockCode == "") {
+            $.messager.alert('提示', "请获取门锁识别码", 'warning');
+            lockCode.focus();
+            return ;
+        }
+        var serial=$('#serials').combobox('getValue');
+        if(serial==""||serial=="0"){
+            alert("请选择串口!");
+            return;
+        }
+        var data={
+            "serial":serial,
+            "T":t,
+            "lockNum":lockCode,
+            "deptId":deptAreaCode
+        };
+        var data = {
+            "qgdis.id": $('#disa').combobox('getValue'),
+            "collector": '',
+            "collectore": '',
+            "lockNum": $("#lockNum").val(),
+            "lockCode": $("#lockCode").val(),
+            "lockDate": $("#lockDate").val(),
+            "lockNum": $("#lockNum").val(),
+        };
+        $.ajax({
+            type: "post",
+//                url: basePath+"/redis/get",
+            url: basePath + "/locks/add",
+            cache: false,
+            async: false,
+            data: data,
+            dataType: "json",
+            success: function (data) {
+                if (data.result == "1") {
+                    $("#lockNum").val("");
+                    $("#lockCode").val("");
+                    $("#lockDate").val("");
+                    $("#address").val("");
+                    $.messager.alert('提示', data.message, 'success');
+                } else {
+                    $.messager.alert('提示', data.message, 'warning');
+                }
+            }
+        });
     }
 </script>
 </html>

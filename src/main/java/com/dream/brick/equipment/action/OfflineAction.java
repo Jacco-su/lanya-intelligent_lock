@@ -158,7 +158,7 @@ public class OfflineAction {
         try{
             String responseStr="";
             Object o = redisTemplateUtil.get(authModel+";"+request.getSession().getId());
-            if(o==null){
+            if(o==null||o.toString()==""){
                 responseStr="暂未获取到信息，请重试！";
             }else{
                 responseStr= ResponseSocketUtil.V(o.toString());

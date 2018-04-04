@@ -188,7 +188,7 @@
         
         function getMAC() {
             var serial=$('#serials').combobox('getValue');
-            if(serial==""){
+            if(serial==""||serial=="0"){
                 alert("请选择串口!");
                 return;
             }
@@ -205,7 +205,7 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.result == "1") {
-                        $('#keys').val(data.message.split("->")[1]);
+                        $('#keyssMAC').val(data.message.split("->")[1]);
                     } else {
                         alert("读取钥匙信息失败!");
                     }
