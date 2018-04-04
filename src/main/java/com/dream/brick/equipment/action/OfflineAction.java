@@ -62,8 +62,9 @@ public class OfflineAction {
     **/
     @ResponseBody
     @RequestMapping("/serial")
-    public String serial() {
-        ReadSerialPortData serialPortData=new ReadSerialPortData();
+    public String serial(HttpServletRequest request) {
+        redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
+       /* ReadSerialPortData serialPortData=new ReadSerialPortData();
         List<String> list=serialPortData.findPort();
         List<JSONObject> jsonObjects=new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
@@ -71,14 +72,28 @@ public class OfflineAction {
             json.put("id", list.get(i));
             json.put("name", list.get(i));
             jsonObjects.add(json);
+        }*/
+        //return JSON.toJSONString(list);
+        redisTemplateUtil.setList("lanya-lite-client-server", "FAFB"+";"+request.getSession().getId()+";findPort");
+        try {
+            Thread.sleep(7000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return  StringUtil.jsonValue("0","操作失败，请重新获取!");
         }
-        return JSON.toJSONString(list);
+        Object o = redisTemplateUtil.get("FAFB"+";"+request.getSession().getId()+";findPort");
+        if(o==null){
+            return  StringUtil.jsonValue("0","操作失败，请重新获取!");
+        }else {
+            return  StringUtil.jsonValue("1",o.toString());
+        }
     }
     @ResponseBody
     @RequestMapping("/read")
     public String readAuth(String serial,String T,String userId,String lockNum,String deptId,String startDate,String endDate,String keysId,HttpServletRequest request) {
         String  authModel=null;
         //ReadSerialPortData serialPortData=new ReadSerialPortData();
+        redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         try {
             //钥匙绑定
             if("7".equals(T)){
@@ -90,7 +105,6 @@ public class OfflineAction {
                 //获取门锁信息  key=0000000002,1,DF:98,
                 authModel = new AuthModel(new byte[]{1}, AuthModel.toData(1, 1), Constants.KEY).toString();
             }else if("2".equals(T)){
-                redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
                 //初始化锁      key=0000000002,2,DF:98:deptId,lockCode
                 if(StringUtils.isEmpty(lockNum)){
                     Object value = redisTemplateUtil.get("lanya-lock-client"+deptId);
@@ -248,6 +262,10 @@ public class OfflineAction {
     //串口离线添加钥匙
     @RequestMapping("/prAddKeys")
     public String prAddKeys() {
+        return "admin/offline/addKeysList";
+    }
+    @RequestMapping("/prAddLock")
+    public String prAddLock() {
         return "admin/offline/addLockList";
     }
 }
