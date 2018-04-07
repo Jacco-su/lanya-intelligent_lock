@@ -68,16 +68,16 @@ public class OfflineAction {
             jsonObjects.add(json);
         }*/
         //return JSON.toJSONString(list);
-        redisTemplateUtil.setList("lanya-lite-client-server", "FAFB"+";"+request.getSession().getId()+";findPort");
+        redisTemplateUtil.setList("lanya-lite-client-server", "FAFB"+";"+request.getSession().getAttribute("userUUID")+";findPort");
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return  StringUtil.jsonValue("0","操作失败，请重新获取!");
+            return  "";
         }
-        Object o = redisTemplateUtil.get("FAFB"+";"+request.getSession().getId()+";findPort");
+        Object o = redisTemplateUtil.get("FAFB"+";"+request.getSession().getAttribute("userUUID")+";findPort");
         if(o==null||o.toString()==""){
-            return  StringUtil.jsonValue("0","操作失败，请重新获取!");
+            return  "";
         }else {
             return o.toString().replace("[","").replace("]","");
         }
@@ -141,7 +141,7 @@ public class OfflineAction {
             e.printStackTrace();
             return  StringUtil.jsonValue("0","操作失败，请重新获取!");
         }
-        redisTemplateUtil.setList("lanya-lite-client-server", authModel+";"+request.getSession().getId()+";"+serial);
+        redisTemplateUtil.setList("lanya-lite-client-server", authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
 
         try {
             Thread.sleep(7000);
@@ -151,7 +151,7 @@ public class OfflineAction {
         }
         try{
             String responseStr="";
-            Object o = redisTemplateUtil.get(authModel+";"+request.getSession().getId()+";"+serial);
+            Object o = redisTemplateUtil.get(authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
             if(o==null||o.toString()==""){
                 responseStr="暂未获取到信息，请重试！";
             }else{
@@ -228,11 +228,11 @@ public class OfflineAction {
         serialPortData.selectPort(serial);
         serialPortData.write(authModel);
         serialPortData.startRead(2);*/
-        redisTemplateUtil.setList("lanya-lite-client-server", authModel+";"+request.getSession().getId()+";"+serial);
+        redisTemplateUtil.setList("lanya-lite-client-server", authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
         try{
             Thread.sleep(7000);
             String responseStr="";
-            Object o = redisTemplateUtil.get(authModel+";"+request.getSession().getId()+";"+serial);
+            Object o = redisTemplateUtil.get(authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
             if(o==null||o.toString()==""){
                 responseStr="暂未获取到信息，请重试！";
             }else {

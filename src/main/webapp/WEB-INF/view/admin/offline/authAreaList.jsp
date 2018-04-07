@@ -313,7 +313,7 @@
                     </table>
                 </div>
             </div>
-            <div class="easyui-panel" title="门锁->采集器" style="width:800px" id="stepThere">
+            <div class="easyui-panel" title="门锁->离线授权" style="width:800px" id="stepThere">
                 <div style="padding:10px 60px 20px 60px">
                     <table cellpadding="5">
                         <tr>

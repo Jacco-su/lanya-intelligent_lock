@@ -75,7 +75,9 @@ public class ConsoleAction {
 				//Qgorg qgorg=deptDao.find(Qgorg.class, qgorgId);
 				request.getSession().setAttribute("admin", admin);
 				request.getSession().setAttribute("dept", dept);
-				//request.getSession().setAttribute("seqgorg",qgorg);
+				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+
+				request.getSession().setAttribute("userUUID",uuid);
 				request.getSession().setAttribute("seareacode", dept.getAreacode());    //**
                 admin.setRoles(userDao.findRoles(admin.getId()));
 				List<Role> roles = admin.getRoles();
