@@ -68,7 +68,7 @@ public class OfflineAction {
             jsonObjects.add(json);
         }*/
         //return JSON.toJSONString(list);
-        redisTemplateUtil.setList("lanya-lite-client-server", "FAFB"+";"+request.getSession().getAttribute("userUUID")+";findPort");
+        redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, "FAFB"+";"+request.getSession().getAttribute("userUUID")+";findPort");
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -141,7 +141,7 @@ public class OfflineAction {
             e.printStackTrace();
             return  StringUtil.jsonValue("0","操作失败，请重新获取!");
         }
-        redisTemplateUtil.setList("lanya-lite-client-server", authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
+        redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
 
         try {
             Thread.sleep(7000);
@@ -228,7 +228,7 @@ public class OfflineAction {
         serialPortData.selectPort(serial);
         serialPortData.write(authModel);
         serialPortData.startRead(2);*/
-        redisTemplateUtil.setList("lanya-lite-client-server", authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
+        redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
         try{
             Thread.sleep(7000);
             String responseStr="";
