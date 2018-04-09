@@ -8,12 +8,14 @@ import com.dream.brick.equipment.bean.Keyss;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.IKeyssDao;
 import com.dream.framework.dao.Pager;
-import com.dream.util.AppMsg;
-import com.dream.util.FormatDate;
-import com.dream.util.StringUtil;
+import com.dream.socket.entity.AuthModel;
+import com.dream.socket.utils.ByteUtil;
+import com.dream.socket.utils.Constants;
+import com.dream.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,6 +49,10 @@ public class KeyssAction {
     private UserDao userDao;
     @Resource
     private IDeptDao deptDao;
+
+    @Resource
+    private RedisTemplate redisTemplate;
+    private RedisTemplateUtil redisTemplateUtil = null;
 
     @RequestMapping("/prList")
     public String prList(String keyssId, HttpServletRequest request) throws Exception {
@@ -89,7 +95,7 @@ public class KeyssAction {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(@ModelAttribute Keyss keyss) {
+    public String add(@ModelAttribute Keyss keyss,HttpServletRequest request) {
         String message = "";
         try {
             Map<String,String> params=new HashMap<>();
@@ -98,6 +104,11 @@ public class KeyssAction {
             if(keyssList.size()>0){
                 return  StringUtil.jsonValue("0", "钥匙Mac地址存在重复，禁止添加！");
             }
+            redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
+            String   authModel=new AuthModel(new byte[]{7}, AuthModel.toBingKeyData(14, ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keyss.getUser().getId(),8))), Constants.KEY).toString();
+
+            redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel+";"+request.getSession().getAttribute("userUUID")+";"+"COM1");
+
             keyss.setKeyssDate(FormatDate.getYMdHHmmss());
             ikeyssDao.save(keyss);
             message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
@@ -118,10 +129,13 @@ public class KeyssAction {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public String update(@ModelAttribute Keyss keyss) {
+    public String update(@ModelAttribute Keyss keyss,HttpServletRequest request) {
+        redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         String message = "";
         try {
            keyss.setKeyssDate(FormatDate.getYMdHHmmss());
+            String  authModel=new AuthModel(new byte[]{7}, AuthModel.toBingKeyData(14, ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keyss.getUser().getId(),8))), Constants.KEY).toString();
+            redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel+";"+request.getSession().getAttribute("userUUID")+";"+"COM1");
             ikeyssDao.update(keyss);
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {

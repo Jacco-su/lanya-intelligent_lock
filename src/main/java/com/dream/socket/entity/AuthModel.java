@@ -261,6 +261,9 @@ public class AuthModel {
 		}
 		return arrayOfInt;
 	}
+
+
+
 	/**
 	 * @author       陶乐乐(wangyiqianyi@qq.com)
 	 * @Description:  length=95
@@ -271,7 +274,7 @@ public class AuthModel {
 	 * @return
 	 * @throws
 	 */
-	public  static int [] AuthorizationKey(byte[] userCode,String lockNum,String macAddress,String startDate,String endDate){
+	public  static int [] AuthorizationKey(byte[] userCode,String lockNum,String macAddress,String startDate,String endDate,int status){
 		byte[] lockCode=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(lockNum.getBytes()));
 		String db=lockNum.substring(12,16);
 		int[] arrayOfInt = new int[64];
@@ -314,7 +317,7 @@ public class AuthModel {
 			for (int j= 0; j < 4; j++) {
 				arrayOfInt[j+64] = userCode[j];
 			}
-			arrayOfInt[68] = 1;//操作类型 添加
+			arrayOfInt[68] = status;//操作类型 1:添加  0 清除
 			 i = 69;
 			while (i < 85)
 			{

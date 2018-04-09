@@ -28,7 +28,7 @@ public class ResponseSocketUtil {
     public static String V(String data) {
        // System.out.println(data + "XXXXX");
         if("".equals(data))return "";
-        if(L(data)*2!=data.length())return "";
+        //if(L(data)*2!=data.length())return "";
         String str = "";
         int t = T(data);//指令
         if (t == 6) {//获取电量

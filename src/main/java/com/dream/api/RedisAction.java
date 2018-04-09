@@ -76,7 +76,7 @@ public class RedisAction {
                 authLog.setAuthEndTime(FormatDate.dateSdfHHmmssParse(keys[6]));
             }
             authLogDao.save(authLog);
-            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keys[7],8)),keys[4],keys[2],keys[5],keys[6]),Constants.LOCK_KEY).toString();//
+            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keys[7],8)),keys[4],keys[2],keys[5],keys[6],1),Constants.LOCK_KEY).toString();//
         }else if("1".equals(keys[1])){
             //获取门锁信息  key=0000000002,1,DF:98,
             //采集器id:指令字:控制器mac地址
