@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.admin.dao.impl.UserDao;
+import com.dream.brick.equipment.bean.AuthLog;
 import com.dream.brick.equipment.bean.Keyss;
 import com.dream.brick.equipment.dao.CollectorDao;
+import com.dream.brick.equipment.dao.IAuthLogDao;
 import com.dream.brick.equipment.dao.IKeyssDao;
 import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
@@ -54,6 +56,9 @@ public class KeyssAction {
     @Resource
     private RedisTemplate redisTemplate;
     private RedisTemplateUtil redisTemplateUtil = null;
+
+    @Resource
+    private IAuthLogDao authLogDao;
 
     @RequestMapping("/prList")
     public String prList(String keyssId, HttpServletRequest request) throws Exception {
@@ -154,6 +159,14 @@ public class KeyssAction {
     public String View(String id, ModelMap modelMap) {
         Keyss keyss = ikeyssDao.find(Keyss.class, id);
         modelMap.addAttribute("keyss", keyss);
+       StringBuilder sb=new StringBuilder();
+       sb.append("from AuthLog where 1=1 ");
+       sb.append(" and authKeysId ='").append(keyss.getKeyssMAC()).append("'");
+       sb.append(" order by createTime desc");
+       List<AuthLog> authLogList=authLogDao.findList(sb.toString());
+       if(authLogList!=null&&authLogList.size()>0){
+           modelMap.addAttribute("authLog", authLogList.get(0));
+       }
         return "admin/keyss/view";
     }
 

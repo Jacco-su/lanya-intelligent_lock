@@ -79,14 +79,9 @@
                 rownumbers: true,
                 toolbar: [
                     {
-                        text: '详情',
+                        text: '锁具详情',
                         iconCls: 'icon-view',
                         handler: seedetail
-                    },
-                    {
-                        iconCls: "icon-add",
-                        text: "授权记录",
-                        handler: authSearch
                     },
                     '-', {
                         text: '修改',
@@ -150,7 +145,7 @@
             }
             function authKey(id) {
                 seeWin = $.createWin({
-                    title: "详情",
+                    title: "钥匙详情",
                     url: '${basePath}/authlog/keys',
                     data: 'id=' + id,
                     height: 550,

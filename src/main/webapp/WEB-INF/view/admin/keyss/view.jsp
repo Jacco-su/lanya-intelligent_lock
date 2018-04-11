@@ -35,5 +35,17 @@
             <td>${keyss.keyssDate}
             </td>
         </tr>
+        <tr>
+            <td>授权锁具:</td>
+            <td>${authLog.authLocks}</td>
+        </tr>
+        <tr>
+            <td>授权开始时间:</td>
+            <td>${authLog.authStartTime}</td>
+        </tr>
+        <tr>
+            <td>授权开始时间:</td>
+            <td>${authLog.authEndTime}</td>
+        </tr>
     </table>
 </div>

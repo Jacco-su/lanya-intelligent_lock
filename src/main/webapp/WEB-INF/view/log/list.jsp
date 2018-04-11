@@ -63,6 +63,7 @@
 						if(value==2)value="更新";
 						if(value==3)value="删除";
                         if(value==4)value="设备";
+                        if(value==9)value="其它";
 						return value;
 					}
 				},

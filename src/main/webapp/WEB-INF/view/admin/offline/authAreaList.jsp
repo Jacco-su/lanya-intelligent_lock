@@ -216,7 +216,7 @@
                 type: "post",
                 url: basePath+"/offline/read/user",
                 cache:false,
-                async:false,
+                async:true,
                 data:data,
                 dataType: "json",
                 success: function(data){
