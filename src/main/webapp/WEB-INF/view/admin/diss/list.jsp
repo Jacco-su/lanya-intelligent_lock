@@ -69,6 +69,13 @@
                         align : 'center'
                     },
                     {
+                        title: '站点序号',
+                        field : 'orderNum',
+                        width : $(this).width() * 0.1,
+                        rowspan : 2,
+                        align : 'center'
+                    },
+                    {
                         title: '站点地址',
                         field : 'address',
                         width : $(this).width() * 0.1,

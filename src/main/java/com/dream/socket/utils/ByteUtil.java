@@ -591,4 +591,9 @@ public class ByteUtil {
 		}
 		return string;
 	}
+
+	public static void main(String[] args) {
+		String str = String.format("%04d", 10);
+		System.out.println(str);
+	}
 }

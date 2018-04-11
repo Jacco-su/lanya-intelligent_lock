@@ -21,6 +21,12 @@
                 <input name="name" class="easyui-validatebox"  required="true" width="280px"/></td>
         </tr>
         <tr>
+            <td>序号:</td>
+            <td>
+                <input name="orderNum" class="easyui-validatebox" value="" required="true"/>
+            </td>
+        </tr>
+        <tr>
             <td>所在地址:</td>
             <td>
                 <textarea name="address" class="easyui-validatebox" id="address" cols="25" rows="3"

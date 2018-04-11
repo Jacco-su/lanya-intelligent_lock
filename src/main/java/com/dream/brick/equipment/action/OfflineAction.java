@@ -5,9 +5,11 @@ import com.dream.brick.admin.bean.User;
 import com.dream.brick.equipment.bean.AuthLog;
 import com.dream.brick.equipment.bean.KeysAuth;
 import com.dream.brick.equipment.bean.Keyss;
+import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.IAuthLogDao;
 import com.dream.brick.equipment.dao.IKeysAuthDao;
 import com.dream.brick.equipment.dao.IKeyssDao;
+import com.dream.brick.equipment.dao.QgdisDao;
 import com.dream.socket.entity.AuthModel;
 import com.dream.socket.utils.ByteUtil;
 import com.dream.socket.utils.Constants;
@@ -48,6 +50,8 @@ public class OfflineAction {
     private IKeysAuthDao keysAuthDao;
     @Resource
     private IKeyssDao ikeyssDao;
+    @Resource
+    private QgdisDao disDao;
     //在线授权
     @RequestMapping("/prViewAuth")
     public String prViewAuth( ModelMap model) {
@@ -77,7 +81,7 @@ public class OfflineAction {
         //return JSON.toJSONString(list);
         redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, "FAFB"+";"+request.getSession().getAttribute("userUUID")+";findPort");
         try {
-            Thread.sleep(7000);
+            Thread.sleep(6000);
         } catch (InterruptedException e) {
             e.printStackTrace();
             return  "";
@@ -137,7 +141,16 @@ public class OfflineAction {
 
     @ResponseBody
     @RequestMapping("/read")
-    public String readAuth(String serial,String T,String userId,String lockNum,String deptId,String startDate,String endDate,String keysId,HttpServletRequest request) {
+    public String readAuth(String serial,
+                           String T,
+                           String userId,
+                           String lockNum,
+                           String deptId,
+                           String startDate,
+                           String endDate,
+                           String keysId,
+                           String disId,
+                           HttpServletRequest request) {
         String  authModel=null;
         //ReadSerialPortData serialPortData=new ReadSerialPortData();
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
@@ -152,18 +165,19 @@ public class OfflineAction {
                 //获取门锁信息  key=0000000002,1,DF:98,
                 authModel = new AuthModel(new byte[]{1}, AuthModel.toData(1, 1), Constants.KEY).toString();
             }else if("2".equals(T)){
-                //初始化锁      key=0000000002,2,DF:98:deptId,lockCode
-                if(StringUtils.isEmpty(lockNum)){
-                    Object value = redisTemplateUtil.get("lanya-lock-client"+deptId);
-                    if (value == null) {
-                        lockNum = StringUtil.addZeroForNum(deptId, 16);
-                        redisTemplateUtil.set("lanya-lock-client"+deptId, lockNum);
-                    } else {
-                        lockNum = String.valueOf(Long.parseLong(value.toString()) + 1);
-                        redisTemplateUtil.set("lanya-lock-client"+deptId, lockNum);
-                    }
+                if(StringUtils.isEmpty(disId)){
+                    disId="135";
                 }
-                authModel=new AuthModel(new byte[]{2},AuthModel.toLockData(32,lockNum),Constants.KEY).toString();
+                Qgdis qgdis= disDao.find(Qgdis.class,disId);
+                String str = String.format("%04d", qgdis.getOrderNum());
+                lockNum=deptId+"-"+str;
+                if(qgdis.getLockCount()==null){
+                    lockNum+="-0001";
+                }else{
+                    str = String.format("%04d", qgdis.getLockCount()+1);
+                    lockNum+="-"+str;
+                }
+                authModel=new AuthModel(new byte[]{2},AuthModel.toLockDataByte(32,lockNum),Constants.KEY).toString();
             }else if("5".equals(T)){
                 String uuid = UUID.randomUUID().toString().replaceAll("-", "");
                 AuthLog authLog = new AuthLog();
@@ -181,10 +195,10 @@ public class OfflineAction {
                 authLog.setAuthLocksId(lockNum);
                 authLog.setAuthEndTime(FormatDate.dateSdfHHmmssParse(endDate));
                 authLogDao.save(authLog);
-                authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(userId,8)),lockNum,keysId,startDate,endDate,1),Constants.LOCK_KEY).toString();
+                authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,1),Constants.LOCK_KEY).toString();
 
 
-                 String   clearAuthModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(userId,8)),lockNum,keysId,startDate,endDate,0),Constants.LOCK_KEY).toString();
+                 String   clearAuthModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,0),Constants.LOCK_KEY).toString();
 
                 redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, clearAuthModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
                 Thread.sleep(5000);
@@ -223,15 +237,8 @@ public class OfflineAction {
                     keysAuth.setLockNum(lockNum);
                     keysAuthDao.save(keysAuth);
                 }
-                if("2".equals(T)) {
-                    if(responseStr.indexOf("初始化成功")==-1) {
-                        lockNum = String.valueOf(Long.parseLong(lockNum) - 1);
-                        redisTemplateUtil.set("lanya-lock-client" + deptId, lockNum);
-                    }
-                }
             }
             System.out.println(responseStr+"PPPP");
-
             return  StringUtil.jsonValue("1",responseStr);
         }catch (Exception e){
             e.printStackTrace();

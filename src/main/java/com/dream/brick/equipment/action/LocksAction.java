@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.equipment.bean.Locks;
+import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.ILocksDao;
 import com.dream.brick.equipment.dao.QgdisDao;
 import com.dream.framework.dao.Pager;
@@ -97,6 +98,12 @@ public class LocksAction {
         locks.setLockDate(FormatDate.getYMdHHmmss());
         try {
             ilocksDao.save(locks);
+            Qgdis qgdis= disDao.find(Qgdis.class,locks.getQgdis().getId());
+            if(qgdis.getLockCount()==null)
+            qgdis.setLockCount(1);
+            else
+                qgdis.setLockCount(qgdis.getLockCount()+1);
+            disDao.update(qgdis);
             message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

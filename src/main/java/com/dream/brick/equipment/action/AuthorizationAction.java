@@ -306,6 +306,7 @@ public class AuthorizationAction {
                                     String macAddess=collectore.getCeMAC().replace(":","");
                                     macAddess="00000000000000000000"+macAddess;
                                     String  authModel=null;
+                                   List<Locks> locksList=ilocksDao.findLocksByDis(qgdis.getId());
                                     if(checkTime){
                                         //钥匙绑定
                                         authModel=new AuthModel(new byte[]{7}, AuthModel.toData(7,14), Constants.KEY).toString();
@@ -314,12 +315,11 @@ public class AuthorizationAction {
                                         auth("12",macAddess,collector.getCcode(),adminId,authModel);
                                         checkTime=false;
                                     }
-                                   List<Locks> locksList=ilocksDao.findLocksByDis(qgdis.getId());
                                     if(locksList!=null&&locksList.size()>0) {
                                         for (int ii = 0; ii < locksList.size(); ii++) {
                                             Locks locks=locksList.get(ii);
                                             System.out.println(locks.getLockCode());
-                                            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(userId,8)),locks.getLockCode(),collectore.getCeMAC(),startDate,endDate,1),Constants.LOCK_KEY).toString();//
+                                            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,locks.getLockCode(),collectore.getCeMAC(),startDate,endDate,1),Constants.LOCK_KEY).toString();//
                                             System.out.println("开始授权！");
                                             auth("5",macAddess,collector.getCcode(),adminId,authModel);
                                         }

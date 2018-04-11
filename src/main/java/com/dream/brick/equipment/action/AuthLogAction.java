@@ -13,10 +13,7 @@ import com.dream.socket.entity.DataProtocol;
 import com.dream.socket.entity.JsonDataProtocol;
 import com.dream.socket.utils.ByteUtil;
 import com.dream.socket.utils.Constants;
-import com.dream.util.AppMsg;
-import com.dream.util.FormatDate;
-import com.dream.util.RedisTemplateUtil;
-import com.dream.util.StringUtil;
+import com.dream.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -60,6 +57,12 @@ public class AuthLogAction {
         return "admin/authlog/list";
     }
 
+    @RequestMapping("/keys")
+    public String keys(String keyId)
+            throws Exception {
+        return "admin/authlog/keys";
+    }
+
     @RequestMapping("/list")
     @ResponseBody
     public String list(int page, int rows,String authName,String authStartTime,String authEndTime, String userId,Pager pager)
@@ -96,6 +99,7 @@ public class AuthLogAction {
         return message;
     }
     private void auth(AuthLog authLog,String adminId,String uuid,String collectorId){
+        redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         //读取控制器
         List<Collectore> collectoreList = collectoreDao.findCollectoreByCollector(collectorId);
         // System.out.println(collectoreList);
@@ -107,11 +111,20 @@ public class AuthLogAction {
                     macAddess="00000000000000000000"+macAddess;
                     if(StringUtils.isNotEmpty(authLog.getAuthLocksId())) {
                         String [] locks=authLog.getAuthLocksId().split(",");
+                        String  checkTimeAuthModel=new AuthModel(new byte[]{12},AuthModel.toData(12,14),Constants.LOCK_KEY).toString();//校时成功
+                        redisTemplateUtil.setList("lanya-lite", checkTimeAuthModel+";"+adminId);
+                        String cleatAuthModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[0], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),0), Constants.LOCK_KEY).toString();//
+                        redisTemplateUtil.setList("lanya-lite", cleatAuthModel+";"+adminId);
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         for (int i = 0; i <locks.length ; i++) {
                             if(StringUtils.isNotEmpty(locks[i])){
                                 System.out.println(locks[i]);
                                 System.out.println(ByteUtil.bytesToHex(locks[i].getBytes()));
-                                String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(authLog.getUser().getId(),8)), locks[i], collectore.getCeMAC(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1), Constants.LOCK_KEY).toString();//
+                                String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[i], collectore.getCeMAC(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1), Constants.LOCK_KEY).toString();//
                                 System.out.println("开始授权！");
                                 auth("5", macAddess,collectore.getCollector().getCcode(), adminId, authModel,uuid);//ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(keys[4].getBytes()))
                             }

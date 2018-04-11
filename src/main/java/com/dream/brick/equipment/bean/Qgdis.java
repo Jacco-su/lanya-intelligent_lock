@@ -27,6 +27,9 @@ public class Qgdis implements java.io.Serializable {
 
     private String createTime;//创建时间
 
+    private int orderNum;//序号
+    private Integer lockCount;//次数
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public String getId() {
@@ -68,5 +71,21 @@ public class Qgdis implements java.io.Serializable {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public int getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(int orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public Integer getLockCount() {
+        return lockCount;
+    }
+
+    public void setLockCount(Integer lockCount) {
+        this.lockCount = lockCount;
     }
 }

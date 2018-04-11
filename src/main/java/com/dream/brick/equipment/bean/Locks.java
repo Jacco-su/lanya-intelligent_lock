@@ -23,7 +23,7 @@ public class Locks implements Serializable {
      * 常显
      */
     private int alwaysShow;
-
+    private int lockType;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -94,6 +94,13 @@ public class Locks implements Serializable {
 //    }
 
 
+    public int getLockType() {
+        return lockType;
+    }
+
+    public void setLockType(int lockType) {
+        this.lockType = lockType;
+    }
 }
 
 

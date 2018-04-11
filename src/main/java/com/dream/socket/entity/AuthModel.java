@@ -78,7 +78,27 @@ public class AuthModel {
 		int ccc=Integer.parseInt(cc,16);
 		this.C=ByteUtil.toHH((short)~ccc);
 	}
-
+	public AuthModel(byte[] t,byte[] arrayOfInt,String key){
+		this.S= new byte[]{(byte) 0xfa, (byte) 0xfb};
+		this.T=t;
+		byte[] arrayOfByte = new byte[8 * (1 + (arrayOfInt.length - 1) / 8)];
+		for (int j = 0; j < arrayOfInt.length; j++) {
+			arrayOfByte[j] = arrayOfInt[j];
+		}
+		try {
+			this.V= Des.encrypt(arrayOfByte,key.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		short st=(short) (getV().length+2);
+		this.L=ByteUtil.toHH(st);
+		String cc=ByteUtil.bytesToHex(getT())
+				+ByteUtil.bytesToHex(getL())
+				+ByteUtil.bytesToHex(getV());
+		cc=ByteUtil.makeChecksum(cc);
+		int ccc=Integer.parseInt(cc,16);
+		this.C=ByteUtil.toHH((short)~ccc);
+	}
 	public byte[] getS() {
 		return S;
 	}
@@ -182,6 +202,18 @@ public class AuthModel {
 		}
 		return arrayOfInt;
 	}
+	public  static byte [] toLockDataByte(int length,String lockNum){
+		lockNum=lockNum.replace("-","");
+		if(lockNum.length()<length){
+			int index=length-lockNum.length();
+			while (index-->0){
+				lockNum+="0";
+			}
+		}
+		String data=Constants.OLD_KEY+"11111111";
+		//System.out.println(ByteUtil.bytesToHex(data.getBytes())+lockNum);
+		return ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(data.getBytes())+lockNum);
+	}
 	public  static int [] toData(int t,int length){
 		int[] arrayOfInt = new int[length];
 		if(t==12||t==9){//length=14
@@ -276,7 +308,7 @@ public class AuthModel {
 	 */
 	public  static int [] AuthorizationKey(byte[] userCode,String lockNum,String macAddress,String startDate,String endDate,int status){
 		byte[] lockCode=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(lockNum.getBytes()));
-		String db=lockNum.substring(12,16);
+		String db=lockNum.substring(4,6)+lockNum.substring(14,16);
 		int[] arrayOfInt = new int[64];
 		for (int i = 0; i < 4; i++) {
 			arrayOfInt[i] =  userCode[i];
@@ -319,6 +351,158 @@ public class AuthModel {
 			}
 			arrayOfInt[68] = status;//操作类型 1:添加  0 清除
 			 i = 69;
+			while (i < 85)
+			{
+				arrayOfInt[i] = lockCode[i - 69];
+				i += 1;
+			}
+			i = 0;
+			String macString []=macAddress.split(":");
+			while (i < 6)
+			{
+				arrayOfInt[(i + 85)] = Integer.parseInt(macString[i], 16);
+				i += 1;
+			}
+			arrayOfInt[91] = Integer.parseInt(db.substring(0,2));//存储位置
+			arrayOfInt[92] = Integer.parseInt(db.substring(2,4));//存储位置
+			arrayOfInt[93] = 10;//
+			arrayOfInt[94] = 10;//
+			//arrayOfInt[95] = 0xff;//次数 待定
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new int[95];
+		}
+
+		return arrayOfInt;
+	}
+	/**
+	 * @author       陶乐乐(wangyiqianyi@qq.com)
+	 * @Description:  length=95
+	 * @date         2018-01-30 10:10:10
+	 * @params       userCode 用户编号
+	 *               lockCode 锁识别号
+	 *               macAddress MAC地址
+	 * @return
+	 * @throws
+	 */
+	public  static byte [] AuthorizationKeyToByte(String userCode,String lockNum,String macAddress,String startDate,String endDate,int status){
+		//00410001001200210001FFFFFFFFFFFF
+		lockNum=lockNum.replace("-","");
+		String data=ByteUtil.bytesToHex(userCode.getBytes())+lockNum+ByteUtil.bytesToHex(startDate.getBytes())+ByteUtil.bytesToHex(endDate.getBytes())+ByteUtil.bytesToHex(startDate.getBytes());
+		String db=lockNum.substring(14,16)+lockNum.substring(18,20);
+		System.out.println(db+"XXX");
+		byte[] arrayOfInt = ByteUtil.hexStrToByteArray(data);
+		byte[] arrayOfByte = new byte[8 * (1 + (ByteUtil.hexStrToByteArray(data).length - 1) / 8)];
+		System.out.println(arrayOfInt.length);
+		for (int j = 0; j < arrayOfInt.length; j++) {
+			arrayOfByte[j] = arrayOfInt[j];
+		}
+		try {
+			byte[] localObject= Des.encrypt(arrayOfByte, Constants.OLD_KEY.getBytes());//可能有问题
+			arrayOfInt=new byte[96];
+			int i = 0;
+			while (i < 64) {
+				arrayOfInt[i] =localObject[i];
+				i++;
+			}
+			byte userCodeByte []=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(userCode.getBytes()));
+			System.out.println(userCodeByte.length);
+			for (int j= 0; j < 4; j++) {
+				arrayOfInt[j+64] = userCodeByte[j];
+			}
+			byte [] statusBytes=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(String.valueOf(status).getBytes()));
+			System.out.println(statusBytes.length);
+			for (int j= 0; j < 1; j++) {
+				arrayOfInt[j+68] = 1;
+			}
+			byte[] lockNumByte=ByteUtil.hexStrToByteArray(lockNum);
+			for (int j= 0; j < 16; j++) {
+				arrayOfInt[j+69] = lockNumByte[j];
+			}
+			i = 0;
+			String macString=macAddress.replace(":","");
+			byte[] macByte=ByteUtil.hexStrToByteArray(macString);
+			while (i < 6)
+			{
+				arrayOfInt[(i + 84)] = macByte[i];
+				i += 1;
+			}
+			byte [] dbBytes=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(String.valueOf(db).getBytes()));
+			i=0;
+			arrayOfInt[91] = 1;
+			arrayOfInt[92] = 8;
+			arrayOfInt[93] = 0;
+			arrayOfInt[94] = 1;
+			/*while (i < 4)
+			{
+				arrayOfInt[(i + 90)] = dbBytes[i];
+				i += 1;
+			}*/
+			arrayOfInt[94] = 10;//
+			arrayOfInt[95] = 10;//
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new byte[95];
+		}
+		return arrayOfInt;
+	}
+	/**
+	 * @author       陶乐乐(wangyiqianyi@qq.com)
+	 * @Description:  length=95
+	 * @date         2018-01-30 10:10:10
+	 * @params       userCode 用户编号
+	 *               lockCode 锁识别号
+	 *               macAddress MAC地址
+	 * @return
+	 * @throws
+	 */
+	public  static int [] AuthorizationKeyX(String userCode,String lockNum,String macAddress,String startDate,String endDate,int status){
+		lockNum=lockNum.replace("-","");
+		String db=lockNum.substring(4,6)+lockNum.substring(14,16);
+		byte []lockCode=ByteUtil.hexStr2Str(lockNum).getBytes();
+		//byte [] userByteCode=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(userCode.getBytes()));
+		int[] arrayOfInt = new int[64];
+		for (int i = 0; i < 4; i++) {
+			arrayOfInt[i] =  userCode.charAt(i);
+		}
+		int i = 4;
+		while (i < 20) {
+			arrayOfInt[i] =lockCode[i - 4];
+			i += 1;
+		}
+		i = 0;
+		while (i < 14) {
+			arrayOfInt[(i + 20)] =startDate.charAt(i);
+			i += 1;
+		}
+		i = 0;
+		while (i < 14) {
+			arrayOfInt[(i + 34)] =endDate.charAt(i);
+			i += 1;
+		}
+		i = 0;
+		while (i < 14) {
+			arrayOfInt[(i + 48)] =  startDate.charAt(i);
+			i += 1;
+		}
+		try {
+			byte[] arrayOfByte = new byte[8 * (1 + (arrayOfInt.length - 1) / 8)];
+			for (int j = 0; j < arrayOfInt.length; j++) {
+				arrayOfByte[j] = (byte) arrayOfInt[j];
+			}
+			byte[] localObject= Des.encrypt(arrayOfByte, Constants.OLD_KEY.getBytes());//可能有问题
+
+			arrayOfInt=new int[95];
+			i = 0;
+			while (i < 64) {
+				arrayOfInt[i] =localObject[i];
+				i++;
+			}
+			for (int j= 0; j < 4; j++) {
+				arrayOfInt[j+64] = userCode.charAt(j);
+			}
+			arrayOfInt[68] = status;//操作类型 1:添加  0 清除
+			i = 69;
 			while (i < 85)
 			{
 				arrayOfInt[i] = lockCode[i - 69];
@@ -412,5 +596,50 @@ public class AuthModel {
 		}
 		String xx="7B224461746154797065223A22446576696365222C22436F6C6C6563746F724964223A223030303030303032222C22436F6E74656E74223A6E756C6C2C22537461747573436F6465223A2231354234227D";
 		System.out.println(ByteUtil.hexStr2Str(xx));
+		String lockNum="00410001001200210001FFFFFFFFFFFF";
+		String bankString = "";
+		for(int i=0;i<lockNum.length();i++){
+			if(i%4==0 && i>0){
+				bankString +="-";
+			}
+			bankString += lockNum.charAt(i);
+		}
+		//lockNum=lockNum.replace("-","");
+		System.out.println(bankString);
+		System.out.println(lockNum.getBytes().length);
+       byte a[]=toLockDataByte(32,"0041-0001-0011-0019-0001");
+		System.out.println(a.length);
+
+		//00410001001200210001FFFFFFFFFFFF
+		String num="00410001001200210001FFFFFFFFFFFF";
+		System.out.println(num);
+		String db=lockNum.substring(14,16)+lockNum.substring(18,20);
+		System.out.println(db);
+		System.out.println(ByteUtil.bytesToHex(userCode.getBytes()));
+		System.out.println(ByteUtil.bytesToHex("2101".getBytes()));
+
+		String authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX("1071","0041-0001-0011-0019-0004-0000-0000-0000","EE:56:8A:87:D9:5F","20180411101525","20180412101527",1),Constants.LOCK_KEY).toString();
+
+
+		//String authModel2=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyToByte("1071","0041-0001-0011-0018-0001-0000-0000-0000","EE:56:8A:87:D9:5F","20180411101525","20180412101527",1),Constants.LOCK_KEY).toString();
+
+		System.out.println(authModel);
+
+		//System.out.println(authModel2);
+		System.out.println(ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(String.valueOf("1").getBytes())).length);
+	}
+	private static void toStringMethod(int[] arr) {
+		// 自定义一个字符缓冲区，
+		StringBuilder sb = new StringBuilder();
+		sb.append("[ ");
+		//遍历int数组，并将int数组中的元素转换成字符串储存到字符缓冲区中去
+		for(int i=0;i<arr.length;i++)
+		{
+			if(i!=arr.length-1)
+				sb.append(arr[i]+" ,");
+			else
+				sb.append(arr[i]+" ]");
+		}
+		System.out.println(sb);
 	}
 }

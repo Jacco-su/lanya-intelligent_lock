@@ -189,12 +189,18 @@
                 alert("请先选择区域!");
                 return;
             }
+            var dis = $('#disa').combobox('getValue');
+            if (dis == null || dis == "" || dis == 0 || dis == "---请选择---") {
+                $.messager.alert('提示', "请选择正确站点", 'warning');
+                return false;
+            }
             $("#lockCode").val("");
             var key = $('#collector').combobox('getText') + ","
                 + t + ","
-                + $('#collectore').combobox('getText')+","+deptAreaCode+","+lockCode;
+                + $('#collectore').combobox('getText')+","+deptAreaCode+","+lockCode+","+dis;
             var data = {
-                "key": key
+                "key": key,
+                "lockNum":lockCode
             };
             $.ajax({
                 type: "post",
@@ -274,6 +280,20 @@
                                         <input id="lockNum" name="lockNum" style="width: 200px;" required="true"/>
                                 </tr>
                                 <tr>
+                                    <td>门锁类型:</td>
+                                    <td colspan="3">
+                                        <select class="easyui-combobox" name="lockType" id="lockType" style="width: 180px;"
+                                                data-options="editable:false,valueField:'id', textField:'text'">
+                                            <option value="0">挂锁</option>
+                                            <option value="1">机柜锁</option>
+                                            <option value="2">箱变锁</option>
+                                            <option value="3">暗梁锁</option>
+                                            <option value="4">防火门锁</option>
+                                            <option value="5">防盗门锁</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td width="100">门锁识别码:</td>
                                     <td colspan="2">
                                         <input id="lockCode" name="lockCode" style="width: 200px;" required="true"/>
@@ -337,6 +357,7 @@
                     "lockCode": $("#lockCode").val(),
                     "lockDate": $("#lockDate").val(),
                     "lockNum": $("#lockNum").val(),
+                    "lockType":$('#lockType').combobox('getValue')
                 };
                 $.ajax({
                     type: "post",

@@ -6,6 +6,8 @@ import com.dream.brick.equipment.dao.IAuthLogDao;
 import com.dream.brick.equipment.dao.IChartsDao;
 import com.dream.framework.dao.BaseDaoImpl;
 import com.dream.framework.dao.Pager;
+import com.dream.socket.utils.DateUtil;
+import com.dream.util.FormatDate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,10 +39,12 @@ public class AuthLogDaoImpl extends BaseDaoImpl implements IAuthLogDao {
             hql.append("and t.authName like '%").append(authName).append("%'");
         }
         if(StringUtils.isNotEmpty(authStartTime)){
+            //authStartTime= FormatDate.dateParse(authStartTime);
             hql.append(" and t.authStartTime  >='").append(authStartTime).append("'");
 
         }
         if(StringUtils.isNotEmpty(authEndTime)){
+            //authEndTime= FormatDate.dateParse(authEndTime);
             hql.append(" and t.authEndTime  <= '").append(authEndTime).append("'");
         }
         if(StringUtils.isNotEmpty(userId)){

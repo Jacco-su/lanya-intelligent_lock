@@ -212,7 +212,8 @@
                 "serial":serial,
                 "T":t,
                 "lockNum":"",
-                "deptId":deptId
+                "deptId":deptId,
+                "disId":""
             };
             $.ajax({
                 type: "post",

@@ -271,14 +271,17 @@
                 alert("请先选择区域!");
                 return;
             }
+            var dis = $('#disa').combobox('getValue');
+            if (dis == null || dis == "" || dis == 0 || dis == "---请选择---") {
+                $.messager.alert('提示', "请选择正确站点", 'warning');
+                return false;
+            }
             var key=$('#collector').combobox('getText') +","
                 +t+","
                 +$('#collectore').combobox('getText')+","
                 +deptAreaCode+","
                 +$('#locks').val()+","
-                +$('#startDate').val()+","
-                +$('#endDate').val()+","
-                +$('#users').combobox('getValue');
+                +dis;
             var data={
                 "key":key
             };
@@ -295,17 +298,8 @@
                             alert(data.message);
                         }else{
                             $("#locks").empty();
-                            var collectorData = []; //创建数组
                             var lockNum=data.message.split(";")[1];
                             $("#locks").val(lockNum);
-                           /* collectorData.push({
-                                "id": lockNum,
-                                "text":lockNum
-                            });
-                            console.log(data.message.split(";")[1]);
-                            console.log(collectorData);
-                            $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
-                                .combobox("loadData", collectorData).combobox("setValue",lockNum);*/
                         }
                     }else{
                         if(t==2){

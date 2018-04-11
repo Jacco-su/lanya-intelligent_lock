@@ -83,11 +83,11 @@
                         iconCls: 'icon-view',
                         handler: seedetail
                     },
-//                    {
-//                        iconCls: "icon-add",
-//                        text: "添加",
-//                        handler: add
-//                    },
+                    {
+                        iconCls: "icon-add",
+                        text: "授权记录",
+                        handler: authSearch
+                    },
                     '-', {
                         text: '修改',
                         iconCls: 'icon-edit',
@@ -140,7 +140,24 @@
                     }
                 });
             }
-
+            function authSearch() {
+                var select = infolist.datagrid('getSelected');
+                if (select) {
+                    authKey(select.id);
+                } else {
+                    $.messager.alert('警告', '请选择一行数据', 'warning');
+                }
+            }
+            function authKey(id) {
+                seeWin = $.createWin({
+                    title: "详情",
+                    url: '${basePath}/authlog/keys',
+                    data: 'id=' + id,
+                    height: 550,
+                    width: 800,
+                    buttons: []
+                });
+            }
             function seedetail() {
                 var select = infolist.datagrid('getSelected');
                 if (select) {

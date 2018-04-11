@@ -71,70 +71,6 @@
                     }else{
                         $("#disa").combobox("clear")//下拉框加载数据,设置默认值为
                             .combobox("loadData", disaData);
-                        $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
-                            .combobox("loadData", []);
-                        $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
-                            .combobox("loadData", []);
-                    }
-                });
-                //获取采集器
-                $('#disa').combobox({
-                    onSelect: function (row) {
-                        if (row != null) {
-                            var data = {
-                                "disaId": row.id
-                            };
-                            $('#collectore').empty();
-                            $.post(basePath + "/authorization/disa/collector", data, function (data) {
-                                var d = JSON.parse(data);
-                                $('#collector').empty();
-                                var collectorData = []; //创建数组
-                                for (var i = 0; i < d.length; i++) {
-                                    collectorData.push({
-                                        "id": d[i].id,
-                                        "text": d[i].ccode
-                                    });
-                                }
-                                if (d[0] != null) {
-                                    $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", collectorData).combobox("setValue", d[0].id);
-                                }else{
-                                    $("#collector").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", []);
-                                    $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", []);
-                                }
-                            });
-                        }
-                    }
-                });
-                //获取控制器
-                $('#collector').combobox({
-                    onSelect: function (row) {
-                        if (row != null) {
-                            var data = {
-                                "collectorId": row.id
-                            };
-                            $.post(basePath + "/authorization/collector/collectore", data, function (data) {
-                                var d = JSON.parse(data);
-                                $('#collectore').empty();
-                                var collectorData = []; //创建数组
-                                for (var i = 0; i < d.length; i++) {
-                                    collectorData.push({
-                                        "id": d[i].id,
-                                        "text": d[i].ceMAC
-                                    });
-                                }
-                                //console.log(collectorData);
-                                if (d[0] != null) {
-                                    $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", collectorData).combobox("setValue", d[0].id);
-                                }else{
-                                    $("#collectore").combobox("clear")//下拉框加载数据,设置默认值为
-                                        .combobox("loadData", []);
-                                }
-                            });
-                        }
                     }
                 });
             }
@@ -158,6 +94,11 @@
                 return;
             }
             $("#lockCode").val("");
+            var dis = $('#disa').combobox('getValue');
+            if (dis == null || dis == "" || dis == 0 || dis == "---请选择---") {
+                $.messager.alert('提示', "请选择正确站点", 'warning');
+                return false;
+            }
             var serial=$('#serials').combobox('getValue');
             if(serial==""||serial=="0"){
                 alert("请选择串口!");
@@ -167,7 +108,8 @@
                 "serial":serial,
                 "T":t,
                 "lockNum":lockCode,
-                "deptId":deptAreaCode
+                "deptId":deptAreaCode,
+                "disId":dis
             };
             $.ajax({
                 type: "post",
@@ -235,6 +177,20 @@
                                     <input id="lockNum" name="lockNum" style="width: 200px;" required="true"/>
                             </tr>
                             <tr>
+                                <td>门锁类型:</td>
+                                <td colspan="3">
+                                    <select class="easyui-combobox" name="lockType" id="lockType" style="width: 180px;"
+                                            data-options="editable:false,valueField:'id', textField:'text'">
+                                        <option value="0">挂锁</option>
+                                        <option value="1">机柜锁</option>
+                                        <option value="2">箱变锁</option>
+                                        <option value="3">暗梁锁</option>
+                                        <option value="4">防火门锁</option>
+                                        <option value="5">防盗门锁</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td width="100">门锁识别码:</td>
                                 <td colspan="2">
                                     <input id="lockCode" name="lockCode" style="width: 200px;" required="true"/>
@@ -268,11 +224,10 @@
 <script>
     //        保存
     function save() {
-        var dis = $('#disa').combobox('getValue');
         var lockCode = $("#lockCode").val();
+        var dis = $('#disa').combobox('getValue');
         if (dis == null || dis == "" || dis == 0 || dis == "---请选择---") {
             $.messager.alert('提示', "请选择正确站点", 'warning');
-            dis.focus();
             return false;
         }
         if ($("#lockNum").val() == null || $("#lockNum").val() == "") {
@@ -292,12 +247,13 @@
         }
 
         var data = {
-            "qgdis.id": $('#disa').combobox('getValue'),
+            "qgdis.id": dis,
             "collector": '',
             "collectore": '',
             "lockNum": $("#lockNum").val(),
             "lockCode": $("#lockCode").val(),
-            "lockDate": $("#lockDate").val()
+            "lockDate": $("#lockDate").val(),
+            "lockType":$('#lockType').combobox('getValue')
         };
         $.ajax({
             type: "post",

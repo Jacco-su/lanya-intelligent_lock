@@ -47,16 +47,31 @@
                 },
                 columns: [[
                     {
-                        title: '智能锁编号',
+                        title: '门锁编号',
                         field: 'lockNum',
-                        width: 250,
-                        align: 'center'
+                        width: 200,
+                        align: 'left'
                     },
                     {
                         title: '识别码',
                         field: 'lockCode',
                         width: 250,
-                        align: 'center'
+                        align: 'left'
+                    },
+                    {
+                        title: '门锁类型',
+                        field: 'lockType',
+                        width: 50,
+                        align: 'center',
+                        formatter : function(value,rowData,rowIndx) {
+                            if(value==0)value="挂锁";
+                            if(value==1)value="机柜锁";
+                            if(value==2)value="箱变锁";
+                            if(value==3)value="暗梁锁";
+                            if(value==4)value="防火门锁";
+                            if(value==5)value="防盗门锁";
+                            return value;
+                        }
                     },
                     {
                         title: '所属站点',
@@ -64,14 +79,14 @@
                         formatter: function (value, rowData, rowIndx) {
                             return rowData.qgdis.name;
                         },
-                        width: $(this).width() * 0.1,
-                        align: 'center'
+                        width: $(this).width() * 0.2,
+                        align: 'left'
                     },
                     {
                         title: '地址',
                         field: 'address',
                         width: 200,
-                        align: 'center'
+                        align: 'left'
                     },
                     {
                         title: '添加时间',

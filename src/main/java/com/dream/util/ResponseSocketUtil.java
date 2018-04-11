@@ -69,9 +69,24 @@ public class ResponseSocketUtil {
         } else if (t == 1) {
             String tStr = data.substring(10, data.length() - 4);
             try {
+                /*byte [] bytes = Des.decrypt(ByteUtil.hexToBytes(tStr), Constants.KEY.getBytes());
+                System.out.println(tStr.length());
+                byte lockNum [] = new byte[32];
+                int i=0;
+                while (i<32){
+                    lockNum[i]=bytes[i];
+                    i += 1;
+                }*/
                 tStr = ByteUtil.bytesToHex(Des.decrypt(ByteUtil.hexToBytes(tStr), Constants.KEY.getBytes()));
-
-                str += "*门锁识别号;" + ByteUtil.hexStr2Str(tStr.substring(0, 32));
+                String lockNum=tStr.substring(0, 32);
+                String bankString = "";
+                for(int i=0;i<lockNum.length();i++){
+                    if(i%4==0 && i>0){
+                        bankString += "-";
+                    }
+                    bankString += lockNum.charAt(i);
+                }
+                str += "*门锁识别号;" + bankString;
                 //int msStatus=Integer.parseInt(tStr.substring(32,34),16);
                 str += ";锁舌状态;未知";
                 str += ";门磁状态;未知";
@@ -141,7 +156,7 @@ public class ResponseSocketUtil {
                 }
                 str += ";用户编号;" + tStr.substring(40, 48);
                 System.out.println(tStr);
-                str += ";门锁识别号;" + ByteUtil.hexStr2Str(tStr.substring(48, 80));
+                str += ";门锁识别号;" + tStr.substring(48, 80);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -150,7 +165,8 @@ public class ResponseSocketUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println("*************".lastIndexOf("*") + 1);
+
+        System.out.println(V("FAFB010022974DF2F35180008E51828A85CA4076264ED8E0D5852C8417CD0E13D01B978883F08A"));
     }
 
     public static String hexString2String(String src) {

@@ -21,6 +21,20 @@
                 </td>
             </tr>
             <tr>
+                <td>门锁类型:</td>
+                <td colspan="3">
+                    <select class="easyui-combobox" name="lockType" id="lockType" style="width: 180px;"
+                            data-options="editable:false,valueField:'id', textField:'text'">
+                        <option <c:if test="${locks.lockType==0}">selected</c:if> value="0">挂锁</option>
+                        <option <c:if test="${locks.lockType==1}">selected</c:if> value="1">机柜锁</option>
+                        <option <c:if test="${locks.lockType==2}">selected</c:if> value="2">箱变锁</option>
+                        <option <c:if test="${locks.lockType==3}">selected</c:if> value="3">暗梁锁</option>
+                        <option <c:if test="${locks.lockType==4}">selected</c:if> value="4">防火门锁</option>
+                        <option <c:if test="${locks.lockType==5}">selected</c:if> value="5">防盗门锁</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
                 <td>识别码:</td>
                 <td>
                     <input name="lockCode"   readonly value="${locks.lockCode}" class="easyui-validatebox" required="true"/>
