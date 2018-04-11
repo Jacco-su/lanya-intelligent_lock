@@ -1,5 +1,6 @@
 package com.dream.brick.admin.action;
 
+import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.brick.admin.bean.Operation;
 import com.dream.brick.admin.dao.IOperationDao;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -64,11 +66,12 @@ public class OperationAction {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public String delete(String ids){
+	public String delete(String ids, HttpServletRequest request){
 		if (StringUtils.isNotBlank(ids)) {
 			for (String id : ids.split(",")) {
 				Operation operation = operationDao.find(Operation.class, id);
 				operationDao.delete(operation);
+				SessionData.createSyslog(request,3, "删除权限");
 			}
 		}
 		return "success";
@@ -76,15 +79,17 @@ public class OperationAction {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public String add(@ModelAttribute Operation operation){
+	public String add(@ModelAttribute Operation operation, HttpServletRequest request){
 		operationDao.save(operation);
+		SessionData.createSyslog(request,1, "添加权限");
 		return "success";
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
-	public String update(@ModelAttribute Operation operation){
+	public String update(@ModelAttribute Operation operation, HttpServletRequest request){
 		operationDao.update(operation);
+		SessionData.createSyslog(request,2, "更新权限");
 		return "success";
 	}
 

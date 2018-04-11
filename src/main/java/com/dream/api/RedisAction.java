@@ -78,10 +78,12 @@ public class RedisAction {
             }
             authLogDao.save(authLog);
             authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(keys[7],keys[4],keys[2],keys[5],keys[6],1),Constants.LOCK_KEY).toString();//
+            SessionData.createSyslog(request,9, "用户离线授权");
         }else if("1".equals(keys[1])){
             //获取门锁信息  key=0000000002,1,DF:98,
             //采集器id:指令字:控制器mac地址
             authModel=new AuthModel(new byte[]{1},AuthModel.toData(1,1),Constants.KEY).toString();
+            SessionData.createSyslog(request,9, "读取门锁信息");
         }else if("2".equals(keys[1])){
             //初始化锁      key=0000000002,2,DF:98:deptId,lockCode,disId
             if(StringUtils.isNotEmpty(lockNum)) {
@@ -99,6 +101,7 @@ public class RedisAction {
                     lockNum += "-" + str;
                 }
             }
+            SessionData.createSyslog(request,9, "初始化锁");
             authModel=new AuthModel(new byte[]{2},AuthModel.toLockDataByte(32,lockNum),Constants.KEY).toString();
         }else if("13".equals(keys[1])){
             //获取钥匙Mac地址

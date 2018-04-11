@@ -1,5 +1,6 @@
 package com.dream.brick.admin.action;
 
+import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.brick.admin.bean.Module;
 import com.dream.brick.admin.bean.Operation;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -88,7 +90,7 @@ public class RoleAction {
 	}
 	@RequestMapping("/delete")
 	@ResponseBody
-	public String delete(String ids){
+	public String delete(String ids, HttpServletRequest request){
 		if (StringUtils.isNotBlank(ids)) {
 			for (String id : ids.split(",")) {
 				if(AppData.getRoleName(id)!=null){
@@ -97,6 +99,8 @@ public class RoleAction {
 				Role role = new Role();
 				role.setRoId(id);
 				roleDao.delete(role);
+				SessionData.createSyslog(request,3, "删除角色");
+
 			}
 		}
 		return "success";
@@ -104,7 +108,7 @@ public class RoleAction {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public String add(@ModelAttribute Role role, String opIdList)
+	public String add(@ModelAttribute Role role, String opIdList, HttpServletRequest request)
 	{
 		Set<Operation> s = new HashSet<Operation>();
 		if (StringUtils.isNotBlank(opIdList)) {
@@ -115,12 +119,13 @@ public class RoleAction {
 		}
 		role.setOperations(s);
 		roleDao.save(role);
+		SessionData.createSyslog(request,1, "新加角色");
 		return "success";
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
-	public String update(@ModelAttribute Role role, String opIdList)
+	public String update(@ModelAttribute Role role, String opIdList, HttpServletRequest request)
 	{
 		Set<Operation> s = new HashSet<Operation>();
 		if (StringUtils.isNotBlank(opIdList)) {
@@ -131,6 +136,7 @@ public class RoleAction {
 		}
 		role.setOperations(s);
 		roleDao.update(role);
+		SessionData.createSyslog(request,2, "更新角色");
 		return "success";
 	}
 

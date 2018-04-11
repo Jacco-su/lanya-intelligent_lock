@@ -85,6 +85,7 @@ public class AuthLogAction {
             authLog.setAuthStatus("0");
             authLog.setCreateTime(FormatDate.getYMdHHmmss());
             authLogDao.save(authLog);
+            SessionData.createSyslog(request,1, "多个在线授权");
             message = StringUtil.jsonValue("1", "添加授权任务成功！");
         } catch (Exception e) {
             e.printStackTrace();

@@ -107,12 +107,11 @@ public class DeptAction {
 			model.addAttribute("area", area);
 		}
 		model.addAttribute("parentId", parentId);
-		SessionData.createSyslog(request,1, "添加区域");
 		return "admin/dept/add";
 	}
 
 	@RequestMapping("/prUpdate")
-    public String prUpdate(String id, ModelMap model, HttpServletRequest request) {
+    public String prUpdate(String id, ModelMap model) {
         Department dept = deptDao.find(Department.class, id);
 		Area area = areaInfoDao.find(Area.class, dept.getAreacode());
 		model.addAttribute("area", area);
@@ -122,7 +121,7 @@ public class DeptAction {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(@ModelAttribute Department dept) {
+    public String add(@ModelAttribute Department dept, HttpServletRequest request) {
         String message = "";
         try {
             if (StringUtils.isBlank(dept.getParentId())) {
@@ -130,7 +129,8 @@ public class DeptAction {
             }
             dept.setQgorgId("1001");
 			deptDao.save(dept);
-			message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+	        SessionData.createSyslog(request,1, "添加区域");
+	        message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
             message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);

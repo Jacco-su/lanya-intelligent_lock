@@ -7,6 +7,7 @@ import com.dream.brick.equipment.bean.Locks;
 import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.ILocksDao;
 import com.dream.brick.equipment.dao.QgdisDao;
+import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
@@ -75,7 +76,7 @@ public class LocksAction {
 
     @RequestMapping("/add")
     @ResponseBody
-    public String daa(@ModelAttribute Locks locks) {
+    public String daa(@ModelAttribute Locks locks,HttpServletRequest request) {
         String message = "";
 //        locks.setLockNum(locks.getLockNum());
 //        locks.setLockCode(locks.getLockCode());
@@ -98,6 +99,7 @@ public class LocksAction {
         locks.setLockDate(FormatDate.getYMdHHmmss());
         try {
             ilocksDao.save(locks);
+            SessionData.createSyslog(request,1, "添加钥匙");
             Qgdis qgdis= disDao.find(Qgdis.class,locks.getQgdis().getId());
             if(qgdis.getLockCount()==null)
             qgdis.setLockCount(1);
@@ -134,7 +136,7 @@ public class LocksAction {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public String update(@ModelAttribute Locks locks) {
+    public String update(@ModelAttribute Locks locks,HttpServletRequest request) {
         String message = "";
         try {
 //            Qgdis qgdis= BasicData.findAreaByAreacode(locks.getDissId());
@@ -144,6 +146,8 @@ public class LocksAction {
 //            locks.setLockDate(locks.getLockDate().trim());
             locks.setLockDate(FormatDate.getYMdHHmmss().trim());
             ilocksDao.update(locks);
+            SessionData.createSyslog(request,2, "更新门锁");
+
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {
             message = StringUtil.jsonValue("0", AppMsg.UPDATE_ERROR);
@@ -166,7 +170,7 @@ public class LocksAction {
 
     @RequestMapping("/delete")
     @ResponseBody
-    public String delete(String id) {
+    public String delete(String id,HttpServletRequest request) {
         String message = "";
 //        String hql = "select count(*) from Lock t where t.locksId=?";
 //        int count = ilocksDao.getResultNumber(hql, id);
@@ -178,6 +182,7 @@ public class LocksAction {
         try {
             Locks locks = ilocksDao.find(Locks.class, id);
             ilocksDao.delete(locks);
+            SessionData.createSyslog(request,3, "删除钥匙");
             message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

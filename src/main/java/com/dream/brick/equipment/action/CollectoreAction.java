@@ -9,6 +9,7 @@ import com.dream.brick.equipment.bean.Collector;
 import com.dream.brick.equipment.bean.Collectore;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.CollectoreDao;
+import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -93,12 +95,13 @@ public class CollectoreAction {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(@ModelAttribute Collectore collectorea) {
+    public String add(@ModelAttribute Collectore collectorea, HttpServletRequest request) {
         String message = "";
         try {
             collectorea.setCeDate(FormatDate.getYMdHHmmss());
 //                collectorea.setCeCode(collectorea.getCeCode());
             collectoreDao.addCollectore(collectorea);
+            SessionData.createSyslog(request,1, "添加控制器");
             message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,13 +132,14 @@ public class CollectoreAction {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public String update(@ModelAttribute Collectore collectore) {
+    public String update(@ModelAttribute Collectore collectore, HttpServletRequest request) {
         String message = "";
 
         try{
 
             collectoreDao.update(collectore);
-                message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
+            SessionData.createSyslog(request,2, "更新控制器");
+            message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
             } catch (Exception e) {
                 e.printStackTrace();
                 message = StringUtil.jsonValue("0", AppMsg.UPDATE_ERROR);
@@ -145,11 +149,12 @@ public class CollectoreAction {
 
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public String delete(String id) {
+    public String delete(String id, HttpServletRequest request) {
         String message = "";
         try {
             Collectore collectore = collectoreDao.find(Collectore.class, id);
             collectoreDao.delete(collectore);
+            SessionData.createSyslog(request,1, "删除控制器");
             message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

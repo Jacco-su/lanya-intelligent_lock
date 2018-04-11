@@ -7,6 +7,7 @@ import com.dream.brick.equipment.bean.Collector;
 import com.dream.brick.equipment.bean.Locks;
 import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.QgdisDao;
+import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
@@ -77,11 +78,12 @@ public class DistributionAction {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(@ModelAttribute Qgdis disa) {
+    public String add(@ModelAttribute Qgdis disa, HttpServletRequest request) {
         String message = "";
         try {
             disa.setCreateTime(FormatDate.getYMdHHmmss());
             disDao.addDis(disa);
+            SessionData.createSyslog(request,1, "添加站点");
             message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,7 +108,7 @@ public class DistributionAction {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public String update(@ModelAttribute Qgdis disa) {
+    public String update(@ModelAttribute Qgdis disa, HttpServletRequest request) {
         String message = "";
 //        disa.setCreateTime(FormatDate.getYMdHHmmss().trim());
         try {
@@ -114,6 +116,7 @@ public class DistributionAction {
             disa.setName(disa.getName().trim());
 //            disa.setCreateTime(disa.getCreateTime());
             disDao.update(disa);
+            SessionData.createSyslog(request,2, "更新站点");
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {
             message = StringUtil.jsonValue("0", AppMsg.UPDATE_ERROR);
@@ -167,8 +170,8 @@ public class DistributionAction {
 
         try {
             Qgdis disa = disDao.find(Qgdis.class, id);
-            System.out.println(disa);
             disDao.delete(disa);
+            SessionData.createSyslog(request,3, "删除站点");
             message = StringUtil.jsonValue("3", AppMsg.DEL_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

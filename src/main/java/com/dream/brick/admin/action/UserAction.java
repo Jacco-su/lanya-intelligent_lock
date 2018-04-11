@@ -140,7 +140,7 @@ public class UserAction {
 
     @RequestMapping(value = "/uadd", method = RequestMethod.POST)
     @ResponseBody
-	public String uadd(@ModelAttribute User users, String[] roIdList, String[] deptIdList)
+	public String uadd(@ModelAttribute User users, String[] roIdList, String[] deptIdList, HttpServletRequest request)
 			throws Exception {
 		users.setStatus(1);
 		users.setRdate(sdf.format(new Date().getTime()));
@@ -150,7 +150,9 @@ public class UserAction {
 		String message = "";
         try {
 			userDao.addUser(users);
-			message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
+	        SessionData.createSyslog(request,1, "新加用户");
+
+	        message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {
 			e.printStackTrace();
 			message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
@@ -160,7 +162,7 @@ public class UserAction {
 
 	@RequestMapping(value="/add",method = RequestMethod.POST)
 	@ResponseBody
-	public String add(@ModelAttribute User user, String[] roIdList, String[] deptIdList)
+	public String add(@ModelAttribute User user, String[] roIdList, String[] deptIdList, HttpServletRequest request)
 			throws Exception {
 		user.setStatus(1);
 		user.setPassword(MD5.encrytion(user.getPassword()));
@@ -169,6 +171,7 @@ public class UserAction {
 		String message="";
 		try{
 			userDao.addUser(user);
+			SessionData.createSyslog(request,1, "新加用户");
 			message=StringUtil.jsonValue("1",AppMsg.ADD_SUCCESS);
 		}catch(Exception e){
 			message=StringUtil.jsonValue("0",AppMsg.ADD_ERROR);
@@ -198,7 +201,7 @@ public class UserAction {
 
 	@RequestMapping(value="/update",method = RequestMethod.POST)
 	@ResponseBody
-	public String update(@ModelAttribute User user, String[] roIdList, String[] deptIdList) {
+	public String update(@ModelAttribute User user, String[] roIdList, String[] deptIdList, HttpServletRequest request) {
 
 		String message="";
 		try{
@@ -207,6 +210,7 @@ public class UserAction {
 			User oldUser=userDao.find(User.class,user.getId());
 			user.setPassword(oldUser.getPassword());//密码不能修改
 			userDao.updateUser(user);
+			SessionData.createSyslog(request,1, "更新用户");
 			message=StringUtil.jsonValue("1",AppMsg.UPDATE_SUCCESS);
 			for(String roleId:roIdList){
 				if((AppData.JIXAOROLEID).equals(roleId)){
@@ -295,7 +299,7 @@ public class UserAction {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public String delete(String ids){
+	public String delete(String ids, HttpServletRequest request){
 		String msg = "success";
 		if (StringUtils.isNotBlank(ids)) {
 			for (String id : ids.split(",")) {
@@ -309,6 +313,7 @@ public class UserAction {
 					User user =userDao.find(User.class, id);
 					user.setStatus(0);
 					userDao.deleteUser(user);
+					SessionData.createSyslog(request,3, "删除用户");
 				} else {
 					msg = AppMsg.getMessage("user100");
 				}

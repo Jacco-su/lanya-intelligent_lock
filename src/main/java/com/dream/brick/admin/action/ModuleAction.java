@@ -2,6 +2,7 @@ package com.dream.brick.admin.action;
 
 import com.dream.brick.admin.bean.Module;
 import com.dream.brick.admin.dao.IModuleDao;
+import com.dream.brick.listener.SessionData;
 import com.dream.util.AppMsg;
 import com.dream.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -76,7 +77,7 @@ public class ModuleAction {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public String delete(String ids){
+	public String delete(String ids, HttpServletRequest request){
 		String message="";
 		String hql="select count(*) from Module t where t.parentId=?";
 		int count=moduleDao.getResultNumber(hql,ids);
@@ -92,7 +93,8 @@ public class ModuleAction {
 			hql="delete from Operation t where t.cls=?";
 			//删除操作权限
 			moduleDao.executeUpdate(hql,ids);
-			message=StringUtil.jsonValue("1",AppMsg.DEL_SUCCESS);
+	        SessionData.createSyslog(request,1, "删除菜单");
+	        message=StringUtil.jsonValue("1",AppMsg.DEL_SUCCESS);
         }catch(Exception e){
         	message=StringUtil.jsonValue("0",AppMsg.DEL_ERROR);
         }
@@ -101,17 +103,19 @@ public class ModuleAction {
 
 	@RequestMapping(value="/add",method = RequestMethod.POST)
 	@ResponseBody
-	public String add(@ModelAttribute Module module){
+	public String add(@ModelAttribute Module module, HttpServletRequest request){
 		if (StringUtils.isBlank(module.getParentId()))
 			module.setParentId("null");
 		moduleDao.save(module);
+		SessionData.createSyslog(request,1, "添加菜单");
 		return "success";
 	}
 
 	@RequestMapping(value="/update",method = RequestMethod.POST)
 	@ResponseBody
-	public String update(@ModelAttribute Module module){
+	public String update(@ModelAttribute Module module, HttpServletRequest request){
 		moduleDao.update(module);
+		SessionData.createSyslog(request,2, "更新区域");
 		return "success";
 	}
 

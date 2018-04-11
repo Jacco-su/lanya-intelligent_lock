@@ -7,6 +7,7 @@ import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.brick.equipment.bean.Collector;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.QgdisDao;
+import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.util.AppMsg;
 import com.dream.util.FormatDate;
@@ -83,17 +84,16 @@ public class CollectorAction {
     }
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(@ModelAttribute Collector collector) {
+    public String add(@ModelAttribute Collector collector, HttpServletRequest request) {
         String message = "";
 
         if (collector.getDis() == null) {
             message = StringUtil.jsonValue("3", "请选择站点");
-            System.out.println(collector.getDis());
-
         } else {
             try {
                 collector.setCdate(FormatDate.getYMdHHmmss());
                 collectorDao.save(collector);
+                SessionData.createSyslog(request,1, "添加采集器");
                 message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -129,7 +129,7 @@ public class CollectorAction {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public String update(@ModelAttribute Collector collector) {
+    public String update(@ModelAttribute Collector collector, HttpServletRequest request) {
         String message = "";
         try {
             /*collector.setCcode(collector.getCcode().trim());
@@ -138,6 +138,7 @@ public class CollectorAction {
             /*System.out.println(collector.getCcode());
             System.out.println(collector.getCip());*/
             collectorDao.update(collector);
+            SessionData.createSyslog(request,2, "更新采集器");
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {
             message = StringUtil.jsonValue("0", AppMsg.UPDATE_ERROR);
@@ -148,7 +149,7 @@ public class CollectorAction {
 
     @RequestMapping("/delete")
     @ResponseBody
-    public String delete(String id) {
+    public String delete(String id, HttpServletRequest request) {
         String message = "";
         String hql = "select count(1) from Collectore t where t.collector.id=?";
         int count = collectorDao.getResultNumber(hql, id);
@@ -160,6 +161,7 @@ public class CollectorAction {
         try {
             Collector collector = collectorDao.find(Collector.class, id);
             collectorDao.delete(collector);
+            SessionData.createSyslog(request,3, "删除采集器");
             message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);
         } catch (Exception e) {
             message = StringUtil.jsonValue("0", AppMsg.DEL_ERROR);

@@ -7,6 +7,7 @@ import com.dream.brick.admin.dao.impl.UserDao;
 import com.dream.brick.equipment.bean.Keyss;
 import com.dream.brick.equipment.dao.CollectorDao;
 import com.dream.brick.equipment.dao.IKeyssDao;
+import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
 import com.dream.socket.entity.AuthModel;
 import com.dream.socket.utils.ByteUtil;
@@ -111,6 +112,8 @@ public class KeyssAction {
 
             keyss.setKeyssDate(FormatDate.getYMdHHmmss());
             ikeyssDao.save(keyss);
+            SessionData.createSyslog(request,1, "添加钥匙");
+
             message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -137,6 +140,8 @@ public class KeyssAction {
             String  authModel=new AuthModel(new byte[]{7}, AuthModel.toBingKeyData(14, ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keyss.getUser().getId(),8))), Constants.KEY).toString();
             redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel+";"+request.getSession().getAttribute("userUUID")+";"+"COM1");
             ikeyssDao.update(keyss);
+            SessionData.createSyslog(request,2, "更新钥匙");
+
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -154,11 +159,12 @@ public class KeyssAction {
 
     @RequestMapping("/delete")
     @ResponseBody
-    public String delete(String id) {
+    public String delete(String id,HttpServletRequest request) {
         String message = "";
         try {
             Keyss keyss = ikeyssDao.find(Keyss.class, id);
             ikeyssDao.delete(keyss);
+            SessionData.createSyslog(request,3, "删除钥匙");
             message = StringUtil.jsonValue("1", AppMsg.DEL_SUCCESS);
         } catch (Exception e) {
 

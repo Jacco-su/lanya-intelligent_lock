@@ -10,6 +10,7 @@ import com.dream.brick.equipment.dao.IAuthLogDao;
 import com.dream.brick.equipment.dao.IKeysAuthDao;
 import com.dream.brick.equipment.dao.IKeyssDao;
 import com.dream.brick.equipment.dao.QgdisDao;
+import com.dream.brick.listener.SessionData;
 import com.dream.socket.entity.AuthModel;
 import com.dream.socket.utils.ByteUtil;
 import com.dream.socket.utils.Constants;
@@ -164,7 +165,10 @@ public class OfflineAction {
             }else if("1".equals(T)) {
                 //获取门锁信息  key=0000000002,1,DF:98,
                 authModel = new AuthModel(new byte[]{1}, AuthModel.toData(1, 1), Constants.KEY).toString();
+                SessionData.createSyslog(request,9, "获取门锁信息");
+
             }else if("2".equals(T)){
+                SessionData.createSyslog(request,9, "初始化锁");
                 if(StringUtils.isEmpty(disId)){
                     disId="135";
                 }
@@ -199,12 +203,15 @@ public class OfflineAction {
 
 
                  String   clearAuthModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,0),Constants.LOCK_KEY).toString();
+                SessionData.createSyslog(request,9, "离线授权");
 
                 redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, clearAuthModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
                 Thread.sleep(5000);
             }else if("13".equals(T)){
                 //获取钥匙Mac地址
                 authModel = new AuthModel(new byte[]{13}).toString();
+                SessionData.createSyslog(request,9, "钥匙地址获取");
+
             }
 //            serialPortData.setResponseString("");
 //            serialPortData.selectPort(serial);
@@ -259,6 +266,7 @@ public class OfflineAction {
             authLog.setAuthStatus("0");
             authLog.setCreateTime(FormatDate.getYMdHHmmss());
             authLogDao.save(authLog);
+            SessionData.createSyslog(request,1, "多个离线授权");
             message = StringUtil.jsonValue("1", "添加授权任务成功！");
         } catch (Exception e) {
             e.printStackTrace();
