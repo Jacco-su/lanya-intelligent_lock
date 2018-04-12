@@ -201,7 +201,7 @@ public class OfflineAction {
                 authLog.setAuthLocks(lockNum);
                 authLog.setAuthLocksId(lockNum);
                 authLog.setAuthEndTime(FormatDate.dateSdfHHmmssParse(endDate));
-                authLogDao.save(authLog);
+                //authLogDao.save(authLog);
                 authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,1),Constants.LOCK_KEY).toString();
 
 

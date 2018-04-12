@@ -76,7 +76,7 @@ public class RedisAction {
             if(!"".equals(keys[6])) {
                 authLog.setAuthEndTime(FormatDate.dateSdfHHmmssParse(keys[6]));
             }
-            authLogDao.save(authLog);
+            //authLogDao.save(authLog);
             authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(keys[7],keys[4],keys[2],keys[5],keys[6],1),Constants.LOCK_KEY).toString();//
             SessionData.createSyslog(request,9, "用户离线授权");
         }else if("1".equals(keys[1])){
