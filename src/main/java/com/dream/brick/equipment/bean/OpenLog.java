@@ -20,6 +20,7 @@ public class OpenLog {
 	private String logNum;
 	private String createTime;
 	private String lockName;
+	private int     status;
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	public String getId() {
@@ -77,5 +78,13 @@ public class OpenLog {
 
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

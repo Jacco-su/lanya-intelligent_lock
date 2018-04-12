@@ -97,7 +97,7 @@ public class OpenDoorAction {
 				if (files[i].isDirectory()) { // 判断是文件还是文件夹
 					getFileList(files[i].getAbsolutePath()); // 获取文件绝对路径
 				} else if (fileName.endsWith("jpg")) { // 判断文件名是否以.avi结尾
-					filelist.add(files[i].getPath().split("uploads/")[1]);
+					filelist.add(files[i].getPath().split("uploads")[1]);
 				} else {
 					continue;
 				}

@@ -13,23 +13,11 @@
             <td>${keyss.keyssCode}</td>
         </tr>
         <tr>
-            <td>自定义名称:</td>
-            <td>
-                ${keyss.keyssName}
-            </td>
-        </tr>
-        <tr>
             <td>钥匙MAC:</td>
             <td>
                 ${keyss.keyssMAC}
             </td>
         </tr>
-        <%--<tr>--%>
-        <%--<td width="100">领用人:</td>--%>
-        <%--<td>--%>
-        <%--${keyss.userName}--%>
-        <%--</td>--%>
-        <%--</tr>--%>
         <tr>
             <td>领用时间:</td>
             <td>${keyss.keyssDate}

@@ -56,21 +56,9 @@
                         align: 'center'
                     },
                     {
-                        title: '日志编号',
-                        field: 'logNum',
-                        width: $(this).width() * 0.1,
-                        align: 'left'
-                    },
-                    {
-                        title: '开锁时间',
+                        title: '开闭锁时间',
                         field: 'openTime',
                         width: $(this).width() * 0.1,
-                        align: 'left'
-                    },
-                    {
-                        title: '锁具编号',
-                        field: 'lockNum',
-                        width: $(this).width() * 0.2,
                         align: 'left'
                     },
                     {
@@ -78,6 +66,23 @@
                         field: 'lockName',
                         width: $(this).width() * 0.2,
                         align: 'left'
+                    },
+                    {
+                        title: '状态',
+                        field: 'status',
+                        width: $(this).width() * 0.1,
+                        align: 'left',
+                        formatter: function (value, rowData, rowIndx) {
+                            if(value=="1"){
+                                value="开锁";
+                            }else
+                                if(value=="0"){
+                                value="关锁";
+                            }else{
+                                    value="其它";
+                                }
+                            return value;
+                        }
                     },
                     {
                         title: '创建时间',

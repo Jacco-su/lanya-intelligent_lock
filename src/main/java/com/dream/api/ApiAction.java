@@ -118,10 +118,10 @@ public class ApiAction {
 		if(StringUtils.isNotEmpty(openlog.getLockNum())){
 			Map<String,String> map=new HashMap<>();
 			map.put("lockCode",openlog.getLockNum());
-          List<Locks> list= ilocksDao.findLocks(map);
-          if(list.size()>0){
-	          openlog.setLockName(list.get(0).getLockNum());
-          }
+			List<Locks> list= ilocksDao.findLocks(map);
+			if(list.size()>0){
+				openlog.setLockName(list.get(0).getLockNum());
+			}
 		}
 
 		openLogDao.save(openlog);
@@ -147,7 +147,10 @@ public class ApiAction {
 	public void apiDoor(@ModelAttribute OpenDoor openDoor){
 		openDoor.setCreateTime(FormatDate.getYMdHHmmss());
 		try {
-			openDoorDao.save(openDoor);
+			OpenDoor door=openDoorDao.find(OpenDoor.class,openDoor.getId());
+			if(door==null){
+				openDoorDao.save(openDoor);
+			}
 		}catch (Exception e){
 
 		}
