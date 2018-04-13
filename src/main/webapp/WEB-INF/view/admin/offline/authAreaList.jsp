@@ -115,128 +115,128 @@
                         .combobox("loadData", serialData).combobox("setValue", d[0]);
                 }
             });
-            function stepAuth(num) {
-                if(num==1){
-                    $("#stepOne").panel('open');
-                    //$("#stepTwo").panel('close');
-                    $("#stepThere").panel('close');
-                }
-                if(num==2){
-                    if (deptId != "") {
-                        if($("#keys").val()!="暂无钥匙用户信息"){
-                            $("#stepOne").panel('close');
-                            $("#stepThere").panel('open');
-                        }else{
-                            $.messager.alert('警告', '暂无获取要钥匙用户，请检查！', 'warning');
-                            return;
-                        }
+        });
+        function stepAuth(num) {
+            if(num==1){
+                $("#stepOne").panel('open');
+                //$("#stepTwo").panel('close');
+                $("#stepThere").panel('close');
+            }
+            if(num==2){
+                if (deptId != "") {
+                    if($("#keys").val()!="暂无钥匙用户信息"){
+                        $("#stepOne").panel('close');
+                        $("#stepThere").panel('open');
                     }else{
-                        $.messager.alert('警告', '请选择一个区域', 'warning');
+                        $.messager.alert('警告', '暂无获取要钥匙用户，请检查！', 'warning');
                         return;
                     }
+                }else{
+                    $.messager.alert('警告', '请选择一个区域', 'warning');
+                    return;
                 }
             }
-            //离线授权
-            function offlineAuth() {
-                var userId=$('#userId').val();
-                var keysId=$('#keysId').val();
-                var locksRows=$("#locksList").datagrid("getChecked");
-                if(locksRows==""){
-                    $.messager.alert('警告', '请至少选择一个锁具', 'warning');
-                    return;
-                }
-                var authName=$('#authName').val();
-                if(authName==""){
-                    $.messager.alert('警告', '请填写授权名称', 'warning');
-                    return;
-                }
-                var authStartTime=$('#authStartTime').val();
-                if(authStartTime==""){
-                    $.messager.alert('警告', '请填写授权开始时间', 'warning');
-                    return;
-                }
-                var authEndTime=$('#authEndTime').val();
-                if(authEndTime==""){
-                    $.messager.alert('警告', '请填写授权结束时间', 'warning');
-                    return;
-                }
-                var serial=$('#serials').combobox('getValue');
-                if(serial==""){
-                    alert("请选择串口!");
-                    return;
-                }
-                var authLocks="";
-                var authLocksId="";
-                for(var i=0;i<locksRows.length;i++){
-                    authLocks+=locksRows[i].name+",";
-                    authLocksId+=locksRows[i].id+",";
-                }
-                progress();
-                var data={
-                    "user.id":userId,
-                    "keysId":keysId,
-                    "authName":authName,
-                    "authType":$("#authType").val(),
-                    "authStartTime":authStartTime,
-                    "authEndTime":authEndTime,
-                    "authKeys":keysId,
-                    "authKeysId":keysId,
-                    "authLocks":authLocks,
-                    "authLocksId":authLocksId,
-                    "serial":serial
-                };
-                $.ajax({
-                    type: "post",
-                    url: basePath + "/offline/save",
-                    cache: false,
-                    async: true,
-                    data: data,
-                    dataType: "json",
-                    success: function (data) {
-                        $.messager.progress('close');
-                        if(data.result=="1"){
-                            alert(data.message);
-                        }else{
-                            alert("保存失败!");
-                        }
-                    }
-                })
+        }
+        //离线授权
+        function offlineAuth() {
+            var userId=$('#userId').val();
+            var keysId=$('#keysId').val();
+            var locksRows=$("#locksList").datagrid("getChecked");
+            if(locksRows==""){
+                $.messager.alert('警告', '请至少选择一个锁具', 'warning');
+                return;
             }
-            function findKeysByUser() {
-                var serial=$('#serials').combobox('getValue');
-                if(serial==""){
-                    alert("请选择串口!");
-                    return;
-                }
-                var data={
-                    "serial":serial,
-                    "T":13
-                };
-                $.ajax({
-                    type: "post",
-                    url: basePath+"/offline/read/user",
-                    cache:false,
-                    async:true,
-                    data:data,
-                    dataType: "json",
-                    success: function(data){
-                        if(data.result=="1"){
-                            var msg=data.message.split(";");
-                            if(msg.length>2){
-                                $('#keys').val("钥匙绑定人:"+msg[0]+";钥匙编号:"+msg[1]);
-                                $('#userId').val(msg[2]);
-                                $('#keysId').val(msg[3]);
-                            }else {
-                                $('#keys').val(data.message);
-                            }
-                        }else{
-                            alert("蓝牙钥匙获取失败，请重试！");
-                        }
+            var authName=$('#authName').val();
+            if(authName==""){
+                $.messager.alert('警告', '请填写授权名称', 'warning');
+                return;
+            }
+            var authStartTime=$('#authStartTime').val();
+            if(authStartTime==""){
+                $.messager.alert('警告', '请填写授权开始时间', 'warning');
+                return;
+            }
+            var authEndTime=$('#authEndTime').val();
+            if(authEndTime==""){
+                $.messager.alert('警告', '请填写授权结束时间', 'warning');
+                return;
+            }
+            var serial=$('#serials').combobox('getValue');
+            if(serial==""){
+                alert("请选择串口!");
+                return;
+            }
+            var authLocks="";
+            var authLocksId="";
+            for(var i=0;i<locksRows.length;i++){
+                authLocks+=locksRows[i].name+",";
+                authLocksId+=locksRows[i].id+",";
+            }
+            progress();
+            var data={
+                "user.id":userId,
+                "keysId":keysId,
+                "authName":authName,
+                "authType":$("#authType").val(),
+                "authStartTime":authStartTime,
+                "authEndTime":authEndTime,
+                "authKeys":keysId,
+                "authKeysId":keysId,
+                "authLocks":authLocks,
+                "authLocksId":authLocksId,
+                "serial":serial
+            };
+            $.ajax({
+                type: "post",
+                url: basePath + "/offline/save",
+                cache: false,
+                async: true,
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    $.messager.progress('close');
+                    if(data.result=="1"){
+                        alert(data.message);
+                    }else{
+                        alert("保存失败!");
                     }
+                }
+            })
+        }
+        function findKeysByUser() {
+            var serial=$('#serials').combobox('getValue');
+            if(serial==""){
+                alert("请选择串口!");
+                return;
+            }
+            var data={
+                "serial":serial,
+                "T":13
+            };
+            $.ajax({
+                type: "post",
+                url: basePath+"/offline/read/user",
+                cache:false,
+                async:true,
+                data:data,
+                dataType: "json",
+                success: function(data){
+                    if(data.result=="1"){
+                        var msg=data.message.split(";");
+                        if(msg.length>2){
+                            $('#keys').val("钥匙绑定人:"+msg[0]+";钥匙编号:"+msg[1]);
+                            $('#userId').val(msg[2]);
+                            $('#keysId').val(msg[3]);
+                        }else {
+                            $('#keys').val(data.message);
+                        }
+                    }else{
+                        alert("蓝牙钥匙获取失败，请重试！");
+                    }
+                }
 
-                });
-            }
-        });
+            });
+        }
     </script>
 </head>
 <body>
