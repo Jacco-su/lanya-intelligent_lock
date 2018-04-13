@@ -196,6 +196,7 @@
                 "serial":serial,
                 "T":13
             };
+            progress();
             $.ajax({
                 type: "post",
                 url: basePath+"/offline/read",
@@ -204,6 +205,7 @@
                 data: data,
                 dataType: "json",
                 success: function (data) {
+                    $.messager.progress('close');
                     if (data.result == "1") {
                         $('#keyssMAC').val(data.message.split("->")[1]);
                     } else {
@@ -276,5 +278,13 @@
     </tr>
 </table>
 </div>
+<script type="text/javascript">
+    function progress(){
+        $.messager.progress({
+            title:'请等待',
+            msg:'正在加载数据...'
+        });
+    }
+</script>
 </body>
 </html>

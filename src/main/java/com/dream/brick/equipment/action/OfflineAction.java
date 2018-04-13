@@ -82,7 +82,7 @@ public class OfflineAction {
         //return JSON.toJSONString(list);
         redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, "FAFB"+";"+request.getSession().getAttribute("userUUID")+";findPort");
         try {
-            Thread.sleep(6000);
+            Thread.sleep(7500);
         } catch (InterruptedException e) {
             e.printStackTrace();
             return  "";

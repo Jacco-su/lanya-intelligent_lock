@@ -95,6 +95,7 @@
                         "T":7,
                         "userId":userId
                     };
+                    progress();
                     $.ajax({
                         type: "post",
                         url: basePath+"/offline/read",
@@ -103,6 +104,7 @@
                         data:data,
                         dataType: "json",
                         success: function(data){
+                            $.messager.progress('close');
                             if (data.result == "1") {
                                 alert(data.message);
                             } else {
@@ -116,7 +118,7 @@
         }
         function keyTiming() {
             var serial=$('#serials').combobox('getValue');
-            if(serial==""){
+            if(serial==""||serial=="0"){
                 alert("请选择串口!");
                 return;
             }
@@ -124,6 +126,7 @@
                 "serial":serial,
                 "T":12
             };
+            progress();
             $.ajax({
                 type: "post",
                 url: basePath+"/offline/read",
@@ -132,6 +135,7 @@
                 data:data,
                 dataType: "json",
                 success: function(data){
+                    $.messager.progress('close');
                     if(data.result=="1"){
                         alert(data.message);
                     }else{
@@ -172,6 +176,7 @@
                 alert("请先获取钥匙地址！!");
                 return;
             }
+            progress();
             var data={
                 "serial":serial,
                 "T":5,
@@ -189,6 +194,7 @@
                 data:data,
                 dataType: "json",
                 success: function(data){
+                    $.messager.progress('close');
                     if(data.result=="1"){
                         alert(data.message);
                     }else{
@@ -228,17 +234,8 @@
                             alert(data.message);
                         }else{
                             $("#locks").empty();
-                            var collectorData = []; //创建数组
                             var lockNum=data.message.split(";")[1];
                             $("#locks").val(lockNum);
-                           /* collectorData.push({
-                                "id": lockNum,
-                                "text":lockNum
-                            });
-                            console.log(data.message.split(";")[1]);
-                            console.log(collectorData);
-                            $("#locks").combobox("clear")//下拉框加载数据,设置默认值为
-                                .combobox("loadData", collectorData).combobox("setValue",lockNum);*/
                         }
                     }else{
                         if(t==2){
@@ -261,6 +258,7 @@
                 "serial":serial,
                 "T":13
             };
+            progress();
             $.ajax({
                 type: "post",
                 url: basePath+"/offline/read",
@@ -269,14 +267,20 @@
                 data:data,
                 dataType: "json",
                 success: function(data){
+                    $.messager.progress('close');
                     if(data.result=="1"){
-                        //alert(data.message);
                         $('#keys').val(data.message.split("->")[1]);
                     }else{
                         alert("蓝牙钥匙获取失败，请重试！");
                     }
                 }
 
+            });
+        }
+        function progress(){
+            var win = $.messager.progress({
+                title:'请等待',
+                msg:'正在加载数据...'
             });
         }
     </script>
