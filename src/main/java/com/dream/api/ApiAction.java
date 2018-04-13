@@ -44,6 +44,8 @@ public class ApiAction {
 	private IOpenLogDao openLogDao;
 
 	@Resource
+	private CollectorDao collectorDao;
+	@Resource
 	private IOpenDoorDao openDoorDao;
 	@RequestMapping("keys")
 	@ResponseBody
@@ -123,16 +125,7 @@ public class ApiAction {
 				openlog.setLockName(list.get(0).getLockNum());
 			}
 		}
-
 		openLogDao.save(openlog);
-		/*String[] arr = syslog.getUsername().split("");
-		String userId=arr[1]+arr[3]+arr[5]+arr[7];
-		User user=userDao.findUserById(userId);
-		if(user!=null){
-			syslog.setUsername(userDao.findUserById(userId).getUsername());
-		}
-		syslog.setCreateTime(FormatDate.getYMdHHmmss());
-		BasicData.saveSyslog(syslog);*/
 	}
 	/**
 	 * @author       陶乐乐(wangyiqianyi@qq.com)
@@ -149,6 +142,12 @@ public class ApiAction {
 		try {
 			OpenDoor door=openDoorDao.find(OpenDoor.class,openDoor.getId());
 			if(door==null){
+				Map<String,String>  params=new HashMap<>();
+				params.put("ccode",openDoor.getRtuId());
+				List<Collector> collectorList=collectorDao.findCollector(params);
+				if(collectorList.size()>0) {
+					openDoor.setDeviceName(collectorList.get(0).getDis().getName());
+				}
 				openDoorDao.save(openDoor);
 			}
 		}catch (Exception e){

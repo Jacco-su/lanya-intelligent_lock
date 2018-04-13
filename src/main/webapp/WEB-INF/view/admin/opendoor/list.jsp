@@ -63,6 +63,12 @@
                         align: 'left'
                     },
                     {
+                        title: '站点',
+                        field: 'deviceName',
+                        width: $(this).width() * 0.2,
+                        align: 'left'
+                    },
+                    {
                         title: '创建时间',
                         field: 'createTime',
                         width: $(this).width() * 0.1,

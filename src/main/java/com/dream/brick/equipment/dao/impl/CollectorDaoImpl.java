@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 数据库 接口 实现类
@@ -28,15 +29,15 @@ public class CollectorDaoImpl extends BaseDaoImpl implements CollectorDao {
         String hql = "from Collector";
         return findList(hql);
     }
-//
+    //
 //    public Qgdis findQgdisByAreacode(String disId) {
 //        return (Qgdis) find(Qgdis.class, disId);
 //    }
 //
-public List<Collector> findCollectorByQgdisid(String disId) {
-      String hql = "from Collector t where disId="+disId;
-    return findList(hql);
-}
+    public List<Collector> findCollectorByQgdisid(String disId) {
+        String hql = "from Collector t where disId="+disId;
+        return findList(hql);
+    }
 
     public List<Collector> findCollectorList(Pager pager) {
         String hql = "from Collector";
@@ -70,5 +71,15 @@ public List<Collector> findCollectorByQgdisid(String disId) {
             hql = "from Collector order by cdate desc";
         }
         return findList(hql);
+    }
+
+    @Override
+    public List<Collector> findCollector(Map<String, String> params) {
+        StringBuilder hql=new StringBuilder();
+        hql.append("from Collector t where 1=1");
+        if(StringUtils.isNotEmpty(params.get("ccode"))){
+            hql.append(" and t.ccode ='").append(params.get("ccode")).append("'");
+        }
+        return findList(hql.toString());
     }
 }

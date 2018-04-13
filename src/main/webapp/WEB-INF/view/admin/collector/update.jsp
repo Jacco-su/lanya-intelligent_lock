@@ -16,7 +16,7 @@
                 <td>
                     <input type="hidden" name="id" value="${collectora.id}"/>
                     <input name="dept.id" type="hidden" value="${collectora.dis.id}"/>
-                    <input name="ccode" value="${collectora.ccode}" class="easyui-validatebox" required="true"
+                    <input name="ccode" value="${collectora.ccode}" class="easyui-validatebox" readonly required="true"
                            onblur="ce()"/></td>
             </tr>
 

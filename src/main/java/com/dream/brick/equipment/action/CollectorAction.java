@@ -28,7 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -86,11 +88,16 @@ public class CollectorAction {
     @ResponseBody
     public String add(@ModelAttribute Collector collector, HttpServletRequest request) {
         String message = "";
-
         if (collector.getDis() == null) {
             message = StringUtil.jsonValue("3", "请选择站点");
         } else {
             try {
+                Map<String,String>  params=new HashMap<>();
+                params.put("ccode",collector.getCcode());
+                List<Collector> collectorList=collectorDao.findCollector(params);
+                if(collectorList.size()>0){
+                    return  StringUtil.jsonValue("0", "采集器ID存在重复，禁止添加！");
+                }
                 collector.setCdate(FormatDate.getYMdHHmmss());
                 collectorDao.save(collector);
                 SessionData.createSyslog(request,1, "添加采集器");
@@ -107,7 +114,6 @@ public class CollectorAction {
     @RequestMapping("/prUpdate")
     public String prUpdate(String id, ModelMap model, String deptId, String dissName) throws ParseException {
         Collector collector = collectorDao.find(Collector.class, id);
-
         model.addAttribute("collectora", collector);
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
@@ -132,11 +138,6 @@ public class CollectorAction {
     public String update(@ModelAttribute Collector collector, HttpServletRequest request) {
         String message = "";
         try {
-            /*collector.setCcode(collector.getCcode().trim());
-            collector.setCip(collector.getCip().trim());*/
-//                collector.setDis(collector.getDis().trim());
-            /*System.out.println(collector.getCcode());
-            System.out.println(collector.getCip());*/
             collectorDao.update(collector);
             SessionData.createSyslog(request,2, "更新采集器");
             message = StringUtil.jsonValue("1", AppMsg.UPDATE_SUCCESS);
@@ -168,29 +169,4 @@ public class CollectorAction {
         }
         return message;
     }
-
-//    @RequestMapping("/info")
-//    @ResponseBody
-//    public String getChildren(String parentId, HttpServletRequest request)
-//            throws Exception {
-//        JSONArray datas = new JSONArray();
-//        String areacode= SessionData.getAreacode(request);
-//        List<Department> children = deptDao.getChildren(parentId,areacode);
-//        List<Department> deptAll=deptDao.findDeptIdAndName();
-//        for (Department dept : children) {
-//            Map<String, Object> tempMap = new HashMap<String, Object>();
-//            tempMap.put("id", dept.getId());
-//            tempMap.put("text", dept.getName());
-//            tempMap.put("iconCls", "icon-ok");
-//            for(Department d:deptAll){
-//                if((dept.getId()).equals(d.getParentId())){
-//                    tempMap.put("state", "closed");
-//                    break;
-//                }
-//            }
-//            datas.put(tempMap);
-//        }
-//        return datas.toString();
-//    }
-
 }

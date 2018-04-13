@@ -5,6 +5,7 @@ import com.dream.framework.dao.BaseDao;
 import com.dream.framework.dao.Pager;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 数据库访问接口
@@ -14,15 +15,16 @@ public interface CollectorDao extends BaseDao {
     //    public List<Qgdis> findAllQgdis();
 //
     public List<Collector> findAllCollector();
-//
+    //
 //    public Qgdis findQgdisByAreacode(String qgdisid);
 //
-public List<Collector> findCollectorByQgdisid(String deptid);
+    public List<Collector> findCollectorByQgdisid(String deptid);
 
     public List<Collector> findCollectorList(Pager pager);
     List<Collector> findCollectorList(String deptId, Pager pager);
     /*List<Collector>*/
 
-//    public void addCollector(Collector collector);
-List<Collector> findCollectorList(String deptId);
+    //    public void addCollector(Collector collector);
+    List<Collector> findCollectorList(String deptId);
+    List<Collector> findCollector(Map<String,String> params);
 }

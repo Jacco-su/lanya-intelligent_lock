@@ -69,18 +69,14 @@ public class OfflineAction {
     @ResponseBody
     @RequestMapping("/serial")
     public String serial(HttpServletRequest request) {
-        redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
-       /* ReadSerialPortData serialPortData=new ReadSerialPortData();
-        List<String> list=serialPortData.findPort();
-        List<JSONObject> jsonObjects=new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            JSONObject json=new JSONObject();
-            json.put("id", list.get(i));
-            json.put("name", list.get(i));
-            jsonObjects.add(json);
-        }*/
-        //return JSON.toJSONString(list);
-        redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, "FAFB"+";"+request.getSession().getAttribute("userUUID")+";findPort");
+        try
+        {
+            redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
+            redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, "FAFB"+";"+request.getSession().getAttribute("userUUID")+";findPort");
+        }catch (Exception e){
+            e.printStackTrace();
+            return  "";
+        }
         try {
             Thread.sleep(7500);
         } catch (InterruptedException e) {

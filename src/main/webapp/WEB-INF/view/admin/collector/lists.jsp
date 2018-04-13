@@ -168,11 +168,11 @@
                         success : function(data) {
                             var json=eval("("+data+")");
                             if(json.result=='1'){
-                                $.messager.alert('提示', '保存成功', 'warning');
+                                $.messager.alert('提示', json.message, 'warning');
                                 $.closeWin(addWin);
                                 refresh();
                             }else{
-                                $.messager.alert('提示', '保存失败', 'warning');
+                                $.messager.alert('提示', json.message, 'warning');
                                 $.closeWin(addWin);
                                 refresh();
                             }
