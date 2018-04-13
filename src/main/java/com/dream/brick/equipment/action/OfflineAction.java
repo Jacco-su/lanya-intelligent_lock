@@ -59,13 +59,13 @@ public class OfflineAction {
         return "admin/offline/authList";
     }
     /**
-    * class_name:
-    * param:
-    * describe: 获取可用串口
-    * creat_user: taller
-    * creat_date: 2018/3/30
-    * creat_time: 15:24
-    **/
+     * class_name:
+     * param:
+     * describe: 获取可用串口
+     * creat_user: taller
+     * creat_date: 2018/3/30
+     * creat_time: 15:24
+     **/
     @ResponseBody
     @RequestMapping("/serial")
     public String serial(HttpServletRequest request) {
@@ -152,7 +152,6 @@ public class OfflineAction {
                            String disId,
                            HttpServletRequest request) {
         String  authModel=null;
-        //ReadSerialPortData serialPortData=new ReadSerialPortData();
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         try {
             //钥匙绑定
@@ -168,17 +167,19 @@ public class OfflineAction {
 
             }else if("2".equals(T)){
                 SessionData.createSyslog(request,9, "初始化锁");
-                if(StringUtils.isEmpty(disId)){
-                    disId="135";
-                }
-                Qgdis qgdis= disDao.find(Qgdis.class,disId);
-                String str = String.format("%04d", qgdis.getOrderNum());
-                lockNum=deptId+"-"+str;
-                if(qgdis.getLockCount()==null){
-                    lockNum+="-0001";
-                }else{
-                    str = String.format("%04d", qgdis.getLockCount()+1);
-                    lockNum+="-"+str;
+                if(StringUtils.isEmpty(lockNum)||"".equals(lockNum)) {
+                    if (StringUtils.isEmpty(disId)) {
+                        disId = "135";
+                    }
+                    Qgdis qgdis = disDao.find(Qgdis.class, disId);
+                    String str = String.format("%04d", qgdis.getOrderNum());
+                    lockNum = deptId + "-" + str;
+                    if (qgdis.getLockCount() == null) {
+                        lockNum += "-0001";
+                    } else {
+                        str = String.format("%04d", qgdis.getLockCount() + 1);
+                        lockNum += "-" + str;
+                    }
                 }
                 authModel=new AuthModel(new byte[]{2},AuthModel.toLockDataByte(32,lockNum),Constants.KEY).toString();
             }else if("5".equals(T)){
@@ -201,7 +202,7 @@ public class OfflineAction {
                 authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,1),Constants.LOCK_KEY).toString();
 
 
-                 String   clearAuthModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,0),Constants.LOCK_KEY).toString();
+                String   clearAuthModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,0),Constants.LOCK_KEY).toString();
                 SessionData.createSyslog(request,9, "离线授权");
 
                 redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, clearAuthModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
@@ -258,6 +259,7 @@ public class OfflineAction {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public String add(@ModelAttribute AuthLog authLog,String serial,HttpServletRequest request) {
+        SessionData.createSyslog(request,5, "开始授权");
         String message = "";
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         try {

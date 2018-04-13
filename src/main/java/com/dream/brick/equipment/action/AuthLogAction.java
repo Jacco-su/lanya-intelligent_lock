@@ -78,6 +78,7 @@ public class AuthLogAction {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public String add(@ModelAttribute AuthLog authLog,HttpServletRequest request) {
+        SessionData.createSyslog(request,5, "开始授权");
         String message = "";
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         try {

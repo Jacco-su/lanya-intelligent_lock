@@ -86,7 +86,7 @@ public class RedisAction {
             SessionData.createSyslog(request,9, "读取门锁信息");
         }else if("2".equals(keys[1])){
             //初始化锁      key=0000000002,2,DF:98:deptId,lockCode,disId
-            if(StringUtils.isNotEmpty(lockNum)) {
+            if(StringUtils.isEmpty(lockNum)||"".equals(lockNum)) {
                 String disId = keys[5];
                 if (StringUtils.isEmpty(disId)) {
                     disId = "135";
@@ -102,6 +102,7 @@ public class RedisAction {
                 }
             }
             SessionData.createSyslog(request,9, "初始化锁");
+            System.out.println(lockNum+":lockNum");
             authModel=new AuthModel(new byte[]{2},AuthModel.toLockDataByte(32,lockNum),Constants.KEY).toString();
         }else if("13".equals(keys[1])){
             //获取钥匙Mac地址
