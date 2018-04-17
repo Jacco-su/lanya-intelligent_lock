@@ -44,6 +44,7 @@
                     }
                     $('#keysList').datagrid('loadData', keyData);
                 });
+                console.log(keyData);
             }
             function getUsers(obj) {
                 var data={
@@ -94,7 +95,6 @@
                     deptId=node.id;
                     getUsers(deptId);
                     getLocks(deptId);
-                    findKeysByUser();
                 },onLoadSuccess: function (node, data) {
                     $('#tree').tree('expandAll');
                 }
@@ -119,28 +119,49 @@
         function stepAuth(num) {
             if(num==1){
                 $("#stepOne").panel('open');
-                //$("#stepTwo").panel('close');
+                $("#stepTwo").panel('close');
                 $("#stepThere").panel('close');
             }
             if(num==2){
                 if (deptId != "") {
-                    if($("#keys").val()!="暂无钥匙用户信息"){
-                        $("#stepOne").panel('close');
-                        $("#stepThere").panel('open');
-                    }else{
-                        $.messager.alert('警告', '暂无获取要钥匙用户，请检查！', 'warning');
-                        return;
-                    }
+                    //getUsers(deptId);
+                    $("#stepOne").panel('close');
+                    $("#stepTwo").panel('open');
+                    $("#stepThere").panel('close');
                 }else{
                     $.messager.alert('警告', '请选择一个区域', 'warning');
+                }
+            }
+            if(num==3){
+                var userRow = $("#userList").datagrid("getChecked");
+                var keysRow = $("#keysList").datagrid("getChecked");
+                if(userRow==""){
+                    $.messager.alert('警告', '请选择一个用户', 'warning');
                     return;
                 }
+                if(keysRow==""){
+                    $.messager.alert('警告', '请选择一个钥匙', 'warning');
+                    return;
+                }
+                $("#stepOne").panel('close');
+                $("#stepTwo").panel('close');
+                $("#stepThere").panel('open');
             }
         }
         //离线授权
         function offlineAuth() {
-            var userId=$('#userId').val();
-            var keysId=$('#keysId').val();
+            var userRow = $("#userList").datagrid("getChecked");
+            var keysRow = $("#keysList").datagrid("getChecked");
+            if(userRow==""){
+                $.messager.alert('警告', '请选择一个用户', 'warning');
+                return;
+            }
+            if(keysRow==""){
+                $.messager.alert('警告', '请选择一个钥匙', 'warning');
+                return;
+            }
+            var userId=userRow[0].id;
+            var keysId=keysRow[0].id;
             var locksRows=$("#locksList").datagrid("getChecked");
             if(locksRows==""){
                 $.messager.alert('警告', '请至少选择一个锁具', 'warning');
@@ -172,7 +193,6 @@
                 authLocks+=locksRows[i].name+",";
                 authLocksId+=locksRows[i].id+",";
             }
-            progress();
             var data={
                 "user.id":userId,
                 "keysId":keysId,
@@ -180,7 +200,7 @@
                 "authType":$("#authType").val(),
                 "authStartTime":authStartTime,
                 "authEndTime":authEndTime,
-                "authKeys":keysId,
+                "authKeys":$("#keysList").datagrid("getChecked")[0].keyssCode,
                 "authKeysId":keysId,
                 "authLocks":authLocks,
                 "authLocksId":authLocksId,
@@ -194,48 +214,14 @@
                 data: data,
                 dataType: "json",
                 success: function (data) {
-                    $.messager.progress('close');
                     if(data.result=="1"){
                         alert(data.message);
+
                     }else{
                         alert("保存失败!");
                     }
                 }
             })
-        }
-        function findKeysByUser() {
-            var serial=$('#serials').combobox('getValue');
-            if(serial==""){
-                alert("请选择串口!");
-                return;
-            }
-            var data={
-                "serial":serial,
-                "T":13
-            };
-            $.ajax({
-                type: "post",
-                url: basePath+"/offline/read/user",
-                cache:false,
-                async:true,
-                data:data,
-                dataType: "json",
-                success: function(data){
-                    if(data.result=="1"){
-                        var msg=data.message.split(";");
-                        if(msg.length>2){
-                            $('#keys').val("钥匙绑定人:"+msg[0]+";钥匙编号:"+msg[1]);
-                            $('#userId').val(msg[2]);
-                            $('#keysId').val(msg[3]);
-                        }else {
-                            $('#keys').val(data.message);
-                        }
-                    }else{
-                        alert("蓝牙钥匙获取失败，请重试！");
-                    }
-                }
-
-            });
         }
     </script>
 </head>
@@ -271,15 +257,7 @@
                         <tr>
                             <td>授权名称:</td>
                             <td colspan="5">
-                                <input  style="width: 230px" name="authName" id="authName">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>钥匙用户信息:</td>
-                            <td>
-                                <input style="width: 230px;" name="keys" id="keys" readonly>
-                                <input id="userId" type="hidden"/>
-                                <input id="keysId" type="hidden"/>
+                                <input width="180px" style="width: 200px" name="authName" id="authName">
                             </td>
                         </tr>
                         <tr>
@@ -295,14 +273,14 @@
                     </table>
                 </div>
             </div>
-            <%--<div class="easyui-panel" title="选择人员->选择钥匙" style="width:800px" id="stepTwo">
+            <div class="easyui-panel" title="选择人员->选择钥匙" style="width:800px" id="stepTwo">
                 <div style="padding:10px 60px 20px 60px">
                     <table cellpadding="5">
                         <tr>
                             <td colspan="3">
-                                &lt;%&ndash;<select class="easyui-combobox"  name="users" id="users" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
+                                <%--<select class="easyui-combobox"  name="users" id="users" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
                                     <option value="0">---请选择---</option>
-                                </select>&ndash;%&gt;
+                                </select>--%>
                                 <table class="easyui-datagrid" id="userList"  data-options="singleSelect:true" title = "用户列表" style="width:350px;height:250px">
                                     <thead>
                                     <tr>
@@ -334,7 +312,7 @@
                         </tr>
                     </table>
                 </div>
-            </div>--%>
+            </div>
             <div class="easyui-panel" title="门锁->离线授权" style="width:800px" id="stepThere">
                 <div style="padding:10px 60px 20px 60px">
                     <table cellpadding="5">
@@ -354,8 +332,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><button class="easyui-linkbutton" onclick="stepAuth(1)">上一步</button></td>
-                            <td><button class="easyui-linkbutton" onclick="offlineAuth(2)">完 成</button></td>
+                            <td><button class="easyui-linkbutton" onclick="stepAuth(2)">上一步</button></td>
+                            <td><button class="easyui-linkbutton" onclick="offlineAuth(3)">完成</button></td>
                         </tr>
                     </table>
                 </div>
@@ -363,13 +341,5 @@
         </td>
     </tr>
 </table>
-<script type="text/javascript">
-    function progress(){
-        $.messager.progress({
-            title:'请等待',
-            msg:'正在加载数据...'
-        });
-    }
-</script>
 </body>
 </html>
