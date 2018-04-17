@@ -162,6 +162,7 @@ public class KeyssAction {
        StringBuilder sb=new StringBuilder();
        sb.append("from AuthLog where 1=1 ");
        sb.append(" and authKeysId ='").append(keyss.getKeyssMAC()).append("'");
+       sb.append(" and authStatus=1");
        sb.append(" order by createTime desc");
        List<AuthLog> authLogList=authLogDao.findList(sb.toString());
        if(authLogList!=null&&authLogList.size()>0){

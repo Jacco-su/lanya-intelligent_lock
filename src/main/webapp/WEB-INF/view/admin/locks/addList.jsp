@@ -177,7 +177,7 @@
                alert("请填写锁识别码!");
                return
            }
-           if(lockCode.length!=16){
+           if(lockCode.length!=39){
                alert("请输入正确的识别码");
                return;
            }
@@ -357,6 +357,7 @@
                     "lockCode": $("#lockCode").val(),
                     "lockDate": $("#lockDate").val(),
                     "lockNum": $("#lockNum").val(),
+                    "address":$("#address").val(),
                     "lockType":$('#lockType').combobox('getValue')
                 };
                 $.ajax({

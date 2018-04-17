@@ -95,4 +95,8 @@ public class StringUtil {
 		}
 		return str;
 	}
+
+	public static void main(String[] args) {
+		System.out.println(addZeroForNum("4101",6));
+	}
 }

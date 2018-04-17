@@ -102,6 +102,13 @@ public class AuthLogAction {
     }
     private void auth(AuthLog authLog,String adminId,String uuid,String collectorId){
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
+        String cleatAuthModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), "0041-0001-0000-0027-0005-0000-0000-0000", authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),0), Constants.LOCK_KEY).toString();//
+        redisTemplateUtil.setList("lanya-lite", cleatAuthModel+";"+adminId);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //读取控制器
         List<Collectore> collectoreList = collectoreDao.findCollectoreByCollector(collectorId);
         // System.out.println(collectoreList);
@@ -115,13 +122,6 @@ public class AuthLogAction {
                         String [] locks=authLog.getAuthLocksId().split(",");
                         String  checkTimeAuthModel=new AuthModel(new byte[]{12},AuthModel.toData(12,14),Constants.LOCK_KEY).toString();//校时成功
                         redisTemplateUtil.setList("lanya-lite", checkTimeAuthModel+";"+adminId);
-                        String cleatAuthModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[0], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),0), Constants.LOCK_KEY).toString();//
-                        redisTemplateUtil.setList("lanya-lite", cleatAuthModel+";"+adminId);
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
                         for (int i = 0; i <locks.length ; i++) {
                             if(StringUtils.isNotEmpty(locks[i])){
                                 System.out.println(locks[i]);

@@ -91,9 +91,13 @@ public class RedisAction {
                 if (StringUtils.isEmpty(disId)) {
                     disId = "135";
                 }
+                lockNum=keys[3];
                 Qgdis qgdis = disDao.find(Qgdis.class, disId);
+                if(lockNum.length()<10) {
+                    lockNum+= "-0000";
+                }
                 String str = String.format("%04d", qgdis.getOrderNum());
-                lockNum = keys[3] + "-" + str;
+                lockNum = lockNum + "-" + str;
                 if (qgdis.getLockCount() == null) {
                     lockNum += "-0001";
                 } else {
@@ -149,7 +153,7 @@ public class RedisAction {
                 }
             }*/
             if (o == null) {
-                return   StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+                return   StringUtil.jsonValue("0", "暂未获取到信息，请稍后尝试!");
             } else {
                 int t=o.toString().lastIndexOf("*")+1;
                 if(keys[1].equals(t+"")){

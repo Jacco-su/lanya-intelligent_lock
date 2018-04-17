@@ -119,7 +119,7 @@ public class ApiAction {
 
 		if(StringUtils.isNotEmpty(openlog.getLockNum())){
 			Map<String,String> map=new HashMap<>();
-			map.put("lockCode",openlog.getLockNum());
+			map.put("lockCode",openlog.getLockNum().replace("-",""));
 			List<Locks> list= ilocksDao.findLocks(map);
 			if(list.size()>0){
 				openlog.setLockName(list.get(0).getLockNum());

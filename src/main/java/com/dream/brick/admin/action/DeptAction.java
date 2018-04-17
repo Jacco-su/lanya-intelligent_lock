@@ -133,7 +133,7 @@ public class DeptAction {
 	        message = StringUtil.jsonValue("1", AppMsg.ADD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
+            message = StringUtil.jsonValue("0", "所添加区域编号重复，请修改后重新添加！");
         }
         return message;
     }

@@ -308,7 +308,7 @@ public class AuthModel {
 	 */
 	public  static int [] AuthorizationKey(byte[] userCode,String lockNum,String macAddress,String startDate,String endDate,int status){
 		byte[] lockCode=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(lockNum.getBytes()));
-		String db=lockNum.substring(4,6)+lockNum.substring(14,16);
+		String db=lockNum.substring(12,16);
 		int[] arrayOfInt = new int[64];
 		for (int i = 0; i < 4; i++) {
 			arrayOfInt[i] =  userCode[i];
@@ -458,7 +458,8 @@ public class AuthModel {
 	 */
 	public  static int [] AuthorizationKeyX(String userCode,String lockNum,String macAddress,String startDate,String endDate,int status){
 		lockNum=lockNum.replace("-","");
-		String db=lockNum.substring(4,6)+lockNum.substring(14,16);
+		//String db=lockNum.substring(4,6)+lockNum.substring(14,16);
+		String db=lockNum.substring(16,20);
 		byte []lockCode=ByteUtil.hexStr2Str(lockNum).getBytes();
 		//byte [] userByteCode=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(userCode.getBytes()));
 		int[] arrayOfInt = new int[64];
@@ -515,8 +516,8 @@ public class AuthModel {
 				arrayOfInt[(i + 85)] = Integer.parseInt(macString[i], 16);
 				i += 1;
 			}
-			arrayOfInt[91] = Integer.parseInt(db.substring(0,2));//存储位置
-			arrayOfInt[92] = Integer.parseInt(db.substring(2,4));//存储位置
+			arrayOfInt[91] = Integer.parseInt(db.substring(0,2),16);//存储位置
+			arrayOfInt[92] = Integer.parseInt(db.substring(2,4),16);//存储位置
 			arrayOfInt[93] = 10;//
 			arrayOfInt[94] = 10;//
 			//arrayOfInt[95] = 0xff;//次数 待定
@@ -624,9 +625,9 @@ public class AuthModel {
 		//String authModel2=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyToByte("1071","0041-0001-0011-0018-0001-0000-0000-0000","EE:56:8A:87:D9:5F","20180411101525","20180412101527",1),Constants.LOCK_KEY).toString();
 
 		System.out.println(authModel);
-
+		System.out.println(Integer.parseInt("29", 16));
 		//System.out.println(authModel2);
-		System.out.println(ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(String.valueOf("1").getBytes())).length);
+		System.out.println(ByteUtil.bytesToHex(String.valueOf("2706").getBytes()));
 	}
 	private static void toStringMethod(int[] arr) {
 		// 自定义一个字符缓冲区，
