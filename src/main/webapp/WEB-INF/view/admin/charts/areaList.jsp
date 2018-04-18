@@ -159,6 +159,18 @@
 	</script>
 </head>
 <body>
+<table style='font-size:12px;'>
+	<tr>
+		<td>开始日期：</td>
+		<td>
+			<input id="authStartTime" name="authStartTime" class="easyui-validatebox"  value=""/>
+			<img onclick="WdatePicker({el:'authStartTime',dateFmt:'yyyy-MM-dd'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+			-<input id="authEndTime" name="authEndTime" class="easyui-validatebox"    value=""/>
+			<img onclick="WdatePicker({el:'authEndTime',dateFmt:'yyyy-MM-dd'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+		</td>
+		<td><button onclick="searchRpt()">查询</button></td>
+	</tr>
+</table>
 <table id="infolist"></table>
 </body>
 </html>

@@ -25,10 +25,10 @@ public class OpenLogDaoImpl extends BaseDaoImpl implements IOpenLogDao {
 		StringBuilder hql=new StringBuilder();
 		hql.append(" from OpenLog t where 1=1");
 		if(StringUtils.isNotEmpty(params.get("authStartTime"))){
-			hql.append(" and authStartTime >= '").append(params.get("authStartTime")).append("'");
+			hql.append(" and openTime >= '").append(params.get("authStartTime")).append("'");
 		}
 		if(StringUtils.isNotEmpty(params.get("authEndTime"))){
-			hql.append(" and authEndTime <= '").append(params.get("authEndTime")).append("'");
+			hql.append(" and openTime <= '").append(params.get("authEndTime")).append("'");
 		}
 		return findList(hql.toString());
 	}
