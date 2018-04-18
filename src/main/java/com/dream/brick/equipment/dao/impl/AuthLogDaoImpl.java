@@ -53,4 +53,23 @@ public class AuthLogDaoImpl extends BaseDaoImpl implements IAuthLogDao {
         hql.append(" order by t.createTime desc");
         return query(hql.toString(),pager);
     }
+
+    @Override
+    public List<AuthLog> findList(String keysId, String authStartTime, String authEndTime) {
+        StringBuilder hql=new StringBuilder();
+        hql.append("from AuthLog t where 1=1 ");
+        if(StringUtils.isNotEmpty(keysId)){
+            hql.append("and t.authKeysId = '").append(keysId).append("'");
+        }
+        if(StringUtils.isNotEmpty(authStartTime)){
+            //authStartTime= FormatDate.dateParse(authStartTime);
+            hql.append(" and t.authStartTime  >='").append(authStartTime).append("'");
+
+        }
+        if(StringUtils.isNotEmpty(authEndTime)){
+            //authEndTime= FormatDate.dateParse(authEndTime);
+            hql.append(" and t.authEndTime  <= '").append(authEndTime).append("'");
+        }
+        return findList(hql.toString());
+    }
 }

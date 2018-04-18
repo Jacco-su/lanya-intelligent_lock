@@ -185,7 +185,7 @@
                 }
             }
         }
-        
+
         function getMAC() {
             alert("暂不支持自动获取!");
             return;

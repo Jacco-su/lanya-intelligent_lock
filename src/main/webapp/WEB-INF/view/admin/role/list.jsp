@@ -23,7 +23,7 @@
 			title : '角色列表',
 			iconCls : 'icon-users',
 			width : '95%',
-			height : 560,
+			height : 660,
 			pageSize : 20,
 			pageList : [ 20, 30, 50, 100 ],
 			nowrap : false,

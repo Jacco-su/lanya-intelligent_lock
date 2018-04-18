@@ -1,11 +1,11 @@
 package com.dream.brick.equipment.dao;
 
-import com.dream.brick.equipment.bean.Locks;
 import com.dream.brick.equipment.bean.OpenLog;
 import com.dream.framework.dao.BaseDao;
 import com.dream.framework.dao.Pager;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 陶乐乐(wangyiqianyi@qq.com)
@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface IOpenLogDao extends BaseDao {
 	 List<OpenLog> findLockLogList(String deptId, Pager pager);
+	List<OpenLog> findOpenLog(Map<String,String> params);
 }

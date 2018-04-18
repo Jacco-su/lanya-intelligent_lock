@@ -111,7 +111,6 @@ public class AuthLogAction {
         }
         //读取控制器
         List<Collectore> collectoreList = collectoreDao.findCollectoreByCollector(collectorId);
-        // System.out.println(collectoreList);
         if (collectoreList != null && collectoreList.size() > 0) {
             for (int z = 0; z < collectoreList.size(); z++) {
                 Collectore collectore = collectoreList.get(z);

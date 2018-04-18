@@ -10,7 +10,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>开闭锁统计</title>
+	<title>钥匙开闭锁统计</title>
 	<link rel="stylesheet" type="text/css"
 		  href="${basePath}/js/easyui/themes/default/easyui.css" />
 	<link rel="stylesheet" type="text/css"
@@ -37,7 +37,7 @@
                 collapsible : false,
                 fitColumns : true,
                 singleSelect : true,
-                url : '${basePath}/chart/kbsReport',
+                url : '${basePath}/chart/keysReport',
                 queryParams:{
                     'deptId':deptId
                 },
@@ -45,12 +45,20 @@
                 remoteSort : false,
                 columns : [ [
                     {
-                        title : '站点',
-                        field : 'disId',
+                        title : '钥匙编号',
+                        field : 'keyName',
                         width : $(this).width() * 0.1,
                         rowspan : 2,
                         align : 'center'
-                    }, {
+                    },
+                    {
+                        title : '钥匙地址',
+                        field : 'keyCode',
+                        width : $(this).width() * 0.1,
+                        rowspan : 2,
+                        align : 'center'
+                    },
+                    {
                         title : '次数',
                         field : 'count',
                         width : $(this).width() * 0.2,
@@ -64,7 +72,7 @@
 
             function refresh(obj) {
                 infolist.datagrid( {
-                    url : '${basePath}/chart/kbsReport?deptId='+obj,
+                    url : '${basePath}/chart/keysReport?deptId='+obj,
                     queryParams:{
                         'deptId':deptId
                     },
@@ -138,7 +146,7 @@
             var authStartTime=$('#authStartTime').val();
             var authEndTime=$('#authEndTime').val();
             $('#infolist').datagrid( {
-                url : '${basePath}/chart/kbsReport',
+                url : '${basePath}/chart/keysReport',
                 queryParams:{
                     'deptId':deptId,
 					'authEndTime':authEndTime,

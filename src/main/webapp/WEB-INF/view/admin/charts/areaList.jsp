@@ -37,7 +37,7 @@
                 collapsible : false,
                 fitColumns : true,
                 singleSelect : true,
-                url : '${basePath}/chart/kbsReport',
+                url : '${basePath}/chart/areaReport',
                 queryParams:{
                     'deptId':deptId
                 },
@@ -45,8 +45,8 @@
                 remoteSort : false,
                 columns : [ [
                     {
-                        title : '站点',
-                        field : 'disId',
+                        title : '区域',
+                        field : 'keyName',
                         width : $(this).width() * 0.1,
                         rowspan : 2,
                         align : 'center'
@@ -64,7 +64,7 @@
 
             function refresh(obj) {
                 infolist.datagrid( {
-                    url : '${basePath}/chart/kbsReport?deptId='+obj,
+                    url : '${basePath}/chart/areaReport?deptId='+obj,
                     queryParams:{
                         'deptId':deptId
                     },
@@ -138,7 +138,7 @@
             var authStartTime=$('#authStartTime').val();
             var authEndTime=$('#authEndTime').val();
             $('#infolist').datagrid( {
-                url : '${basePath}/chart/kbsReport',
+                url : '${basePath}/chart/areaReport',
                 queryParams:{
                     'deptId':deptId,
 					'authEndTime':authEndTime,
@@ -159,29 +159,6 @@
 	</script>
 </head>
 <body>
-<table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
-	<tr>
-		<td width="12%" valign="top"
-			style="border: 1px solid #99bbe8; border-right: 0;">
-			<div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
-			<ul id="tree" style="margin-top: 10px;"></ul>
-		</td>
-		<td valign="top" style="border: 1px solid #99bbe8;">
-			<table style='font-size:12px;'>
-				<tr>
-					<td>开始日期：</td>
-					<td>
-						<input id="authStartTime" name="authStartTime" class="easyui-validatebox"  value=""/>
-						<img onclick="WdatePicker({el:'authStartTime',dateFmt:'yyyy-MM-dd'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
-						-<input id="authEndTime" name="authEndTime" class="easyui-validatebox"    value=""/>
-						<img onclick="WdatePicker({el:'authEndTime',dateFmt:'yyyy-MM-dd'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">
-					</td>
-					<td><button onclick="searchRpt()">查询</button></td>
-				</tr>
-			</table>
-			<table id="infolist"></table>
-		</td>
-	</tr>
-</table>
+<table id="infolist"></table>
 </body>
 </html>

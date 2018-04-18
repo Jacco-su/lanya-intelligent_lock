@@ -18,7 +18,7 @@ import java.util.List;
 public class ChartsDaoImpl extends BaseDaoImpl implements IChartsDao {
 
     public List<Charts> findAllCharts() {
-        String hql = "from Charta t order by t.sortorder";
+        String hql = "from Chart t order by t.sortorder";
         return findList(hql);
     }
 

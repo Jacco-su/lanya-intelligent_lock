@@ -54,7 +54,15 @@ public class LocksDaoImpl extends BaseDaoImpl implements ILocksDao {
         hql.append(" order by t.lockDate desc");
         return query(hql.toString(), pager);
     }
-
+    public List<Locks> findLocksAreaList(String areaCode) {
+        StringBuilder hql=new StringBuilder();
+        hql.append(" from Locks t where 1=1 ");
+        if(StringUtils.isNotEmpty(areaCode)){
+            hql.append(" and qgdis.dept.areacode = '").append(areaCode).append("'");
+        }
+        hql.append(" order by t.lockDate desc");
+        return findList(hql.toString());
+    }
     @Override
     public List<Locks> findLocks(Map<String,String> params) {
         StringBuilder hql=new StringBuilder();

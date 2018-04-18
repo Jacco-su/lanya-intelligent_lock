@@ -3,6 +3,7 @@ package com.dream.brick.admin.dao.impl;
 import com.dream.brick.admin.bean.Department;
 import com.dream.brick.admin.dao.IDeptDao;
 import com.dream.framework.dao.BaseDaoImpl;
+import com.dream.framework.dao.Pager;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,5 +53,11 @@ public class DeptDao extends BaseDaoImpl implements IDeptDao {
 		if (query != null && query.size() > 0)
 			return (Department) query.get(0);
 		return null;
+	}
+
+	@Override
+	public List<Department> findDeptList(String areacode, Pager pager) {
+    	String hql="from Department where  areacode like '" + areacode + "%' order by Id asc";
+		return query(hql,pager);
 	}
 }

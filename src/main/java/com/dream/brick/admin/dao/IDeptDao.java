@@ -2,6 +2,7 @@ package com.dream.brick.admin.dao;
 
 import com.dream.framework.dao.BaseDao;
 import com.dream.brick.admin.bean.Department;
+import com.dream.framework.dao.Pager;
 
 import java.util.List;
 
@@ -19,5 +20,6 @@ public interface IDeptDao extends BaseDao {
 	List<Department> getChildren(String parentId, String areacode);
 	public List<Department> findDeptIdAndName();
 	public Department getDeptByName(String deptName, String areacode);
+	List<Department> findDeptList(String areacode,Pager pager);
 	
 }
