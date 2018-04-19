@@ -172,6 +172,12 @@ public class OfflineAction {
                         disId = "135";
                     }
                     Qgdis qgdis = disDao.find(Qgdis.class, disId);
+                    if(deptId.length()<5){
+                        deptId+= "-0001";
+                    }
+                    if(deptId.length()<10){
+                            deptId+= "-0001";
+                    }
                     String str = String.format("%04d", qgdis.getOrderNum());
                     lockNum = deptId + "-" + str;
                     if (qgdis.getLockCount() == null) {

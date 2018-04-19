@@ -93,8 +93,11 @@ public class RedisAction {
                 }
                 lockNum=keys[3];
                 Qgdis qgdis = disDao.find(Qgdis.class, disId);
+                if(lockNum.length()<5) {
+                    lockNum+= "-0001";
+                }
                 if(lockNum.length()<10) {
-                    lockNum+= "-0000";
+                    lockNum+= "-0001";
                 }
                 String str = String.format("%04d", qgdis.getOrderNum());
                 lockNum = lockNum + "-" + str;
@@ -121,7 +124,7 @@ public class RedisAction {
         jsonDataProtocol.setContent(dataProtocol.toString());
         jsonDataProtocol.setDataType("client");
         System.out.println(dataProtocol.toString());
-        String authKey=JSON.toJSONString(jsonDataProtocol)+";"+SessionData.getAdminId(request);
+        String authKey=JSON.toJSONString(jsonDataProtocol)+";"+request.getSession().getAttribute("userUUID");
         /*if("2".equals(keys[1])){
             redisTemplateUtil.setList("lanya-lite", authKey);
         }else {
@@ -130,7 +133,7 @@ public class RedisAction {
             }
         }*/
         redisTemplateUtil.setList("lanya-lite", authKey);
-        int time=10000;
+        int time=8500;
         try {
             Thread.sleep(time);
             Object o = redisTemplateUtil.get(authKey);

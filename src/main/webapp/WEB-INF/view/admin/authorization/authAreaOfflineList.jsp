@@ -260,7 +260,8 @@
                 "disId":dissRow[0].id,
                 "authLocks":authLocks,
                 "authLocksId":authLocksId,
-                "collectorId":collectorId
+                "collectorId":collectorId,
+                "kzqId":collectorListRow[0].ccode.split("->")[1]
             };
             console.log(data);
             $.ajax({

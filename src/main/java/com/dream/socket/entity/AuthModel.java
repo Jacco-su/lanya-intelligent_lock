@@ -459,7 +459,9 @@ public class AuthModel {
 	public  static int [] AuthorizationKeyX(String userCode,String lockNum,String macAddress,String startDate,String endDate,int status){
 		lockNum=lockNum.replace("-","");
 		//String db=lockNum.substring(4,6)+lockNum.substring(14,16);
-		String db=lockNum.substring(16,20);
+		String db=lockNum.substring(14,16)+lockNum.substring(18,20);
+
+		//String db=lockNum.substring(16,20);
 		byte []lockCode=ByteUtil.hexStr2Str(lockNum).getBytes();
 		//byte [] userByteCode=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(userCode.getBytes()));
 		int[] arrayOfInt = new int[64];
@@ -628,6 +630,9 @@ public class AuthModel {
 		System.out.println(Integer.parseInt("29", 16));
 		//System.out.println(authModel2);
 		System.out.println(ByteUtil.bytesToHex(String.valueOf("2706").getBytes()));
+		lockNum="0041-0001-0001-0001-0009-0000-0000-0000".replace("-","");
+		lockNum=lockNum.substring(14,16)+lockNum.substring(18,20);
+		System.out.println(lockNum);
 	}
 	private static void toStringMethod(int[] arr) {
 		// 自定义一个字符缓冲区，

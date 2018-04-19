@@ -244,7 +244,7 @@ public class AuthorizationAction {
     public String getLocksAction(String disaId) {
         if(StringUtils.isNotEmpty(disaId)) {
             if (!disaId.contains("请选择")) {
-                return JSON.toJSONString(authorizationDao.findList("from Locks where dissId=" + disaId));
+                return JSON.toJSONString(authorizationDao.findList("from Locks where dissId=" + disaId+"  order by lockDate desc"));
             }
         }
         return null;
@@ -256,7 +256,7 @@ public class AuthorizationAction {
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
             if (!deptId.contains("请选择")) {
-                return JSON.toJSONString(authorizationDao.findList("from Locks where qgdis.dept.areacode like '" + deptId+"%'"));
+                return JSON.toJSONString(authorizationDao.findList("from Locks where qgdis.dept.areacode like '" + deptId+"%' order by lockDate desc"));
             }
         }
         return null;

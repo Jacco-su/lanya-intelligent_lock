@@ -51,6 +51,8 @@ public class AuthLogAction {
     private RedisTemplate redisTemplate;
     private RedisTemplateUtil redisTemplateUtil = null;
 
+    private boolean authStatus=false;
+
     @RequestMapping("/prList")
     public String prList()
             throws Exception {
@@ -78,6 +80,7 @@ public class AuthLogAction {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public String add(@ModelAttribute AuthLog authLog,HttpServletRequest request) {
+        authStatus=true;
         SessionData.createSyslog(request,5, "开始授权");
         String message = "";
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
@@ -94,7 +97,7 @@ public class AuthLogAction {
         }
         String adminId= SessionData.getAdminId(request);
         if(StringUtils.isNotEmpty(authLog.getCollectorId())){
-            auth(authLog,adminId,uuid);
+            auth(authLog,adminId,uuid,authLog.getCollectorId());
         }else{
             auth(authLog,adminId,uuid);
         }
@@ -105,10 +108,12 @@ public class AuthLogAction {
         String cleatAuthModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), "0041-0001-0000-0027-0005-0000-0000-0000", authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),0), Constants.LOCK_KEY).toString();//
         redisTemplateUtil.setList("lanya-lite", cleatAuthModel+";"+adminId);
         try {
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        String  checkTimeAuthModel=new AuthModel(new byte[]{12},AuthModel.toData(12,14),Constants.LOCK_KEY).toString();//校时成功
+        redisTemplateUtil.setList("lanya-lite", checkTimeAuthModel+";"+adminId);
         //读取控制器
         List<Collectore> collectoreList = collectoreDao.findCollectoreByCollector(collectorId);
         if (collectoreList != null && collectoreList.size() > 0) {
@@ -119,12 +124,8 @@ public class AuthLogAction {
                     macAddess="00000000000000000000"+macAddess;
                     if(StringUtils.isNotEmpty(authLog.getAuthLocksId())) {
                         String [] locks=authLog.getAuthLocksId().split(",");
-                        String  checkTimeAuthModel=new AuthModel(new byte[]{12},AuthModel.toData(12,14),Constants.LOCK_KEY).toString();//校时成功
-                        redisTemplateUtil.setList("lanya-lite", checkTimeAuthModel+";"+adminId);
                         for (int i = 0; i <locks.length ; i++) {
                             if(StringUtils.isNotEmpty(locks[i])){
-                                System.out.println(locks[i]);
-                                System.out.println(ByteUtil.bytesToHex(locks[i].getBytes()));
                                 String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[i], collectore.getCeMAC(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1), Constants.LOCK_KEY).toString();//
                                 System.out.println("开始授权！");
                                 auth("5", macAddess,collectore.getCollector().getCcode(), adminId, authModel,uuid);//ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(keys[4].getBytes()))
@@ -135,7 +136,7 @@ public class AuthLogAction {
             }
         }
     }
-   private void auth(AuthLog authLog,String adminId,String uuid){
+private void auth(AuthLog authLog,String adminId,String uuid){
        //读取采集器
        List<Collector> collectorList=collectorDao.findCollectorByQgdisid(authLog.getDisId());
        if(collectorList!=null&&collectorList.size()>0) {
@@ -152,31 +153,29 @@ public class AuthLogAction {
         jsonDataProtocol.setCollectorId(collectorId);
         jsonDataProtocol.setContent(dataProtocol.toString());
         jsonDataProtocol.setDataType("client");
-        System.out.println(dataProtocol.toString());
+        System.out.println(JSON.toJSONString(jsonDataProtocol));
         String authKey= JSON.toJSONString(jsonDataProtocol)+";"+adminId;
-        for (int i = 0; i < 3; i++) {
-            redisTemplateUtil.setList("lanya-lite", authKey);
-        }
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Object o = redisTemplateUtil.get(authKey);
-        if (o == null) {
-            return   "";
-        } else {
-            if("5".equals(t)){
-                System.out.println("第一次授权开始");
-                if(o.toString().indexOf("授权成功")>-1){
-                    System.out.println("第二次授权开始");
-                    AuthLog authLog=authLogDao.find(AuthLog.class,uuid);
-                    authLog.setAuthStatus("1");
-                    authLogDao.update(authLog);
+        redisTemplateUtil.setList("lanya-lite", authKey);
+        if (authStatus){
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Object o = redisTemplateUtil.get(authKey);
+            if (o != null)  {
+                if("5".equals(t)){
+                    System.out.println("第一次授权开始");
+                    if(o.toString().indexOf("授权成功")>-1){
+                        authStatus=false;
+                        System.out.println("第二次授权开始");
+                        AuthLog authLog=authLogDao.find(AuthLog.class,uuid);
+                        authLog.setAuthStatus("1");
+                        authLogDao.update(authLog);
+                    }
                 }
             }
-            return  StringUtil.jsonValue("1", o.toString());
         }
-
+       return "";
     }
 }

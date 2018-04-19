@@ -27,6 +27,7 @@ public class AuthLog {
 	private String authLocksId;
 	private String collectorId;//采集器ID
 	private String disId;
+	private String kzqId;//控制器ID
 	@Id
 	public String getId() {
 		return id;
@@ -141,5 +142,13 @@ public class AuthLog {
 
 	public void setDisId(String disId) {
 		this.disId = disId;
+	}
+
+	public String getKzqId() {
+		return kzqId;
+	}
+
+	public void setKzqId(String kzqId) {
+		this.kzqId = kzqId;
 	}
 }
