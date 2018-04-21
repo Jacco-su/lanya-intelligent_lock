@@ -134,10 +134,26 @@ public class RedisAction {
         }*/
         redisTemplateUtil.setList("lanya-lite", authKey);
         int time=8500;
-        try {
+        Object o=null;
+        while (time>0){
+            o = redisTemplateUtil.get(authKey);
+            if (o != null) {
+                int t=o.toString().lastIndexOf("*")+1;
+                if(keys[1].equals(t+"")){
+                    //time=0;
+                    redisTemplateUtil.set(authKey,"");
+                    break;
+                }
+            }
+            try {
+                Thread.sleep(500);
+                time=time-500;
+            }catch (Exception e){
+            }
+        }
+/*        try {
             Thread.sleep(time);
-            Object o = redisTemplateUtil.get(authKey);
-            /*while (time>0){
+            *//*while (time>0){
                 o = redisTemplateUtil.get(authKey);
                 if(o==null){
                     redisTemplateUtil.setList("lanya-lite", authKey);
@@ -154,22 +170,22 @@ public class RedisAction {
                         Thread.sleep(3000);
                     }
                 }
-            }*/
-            if (o == null) {
-                return   StringUtil.jsonValue("0", "暂未获取到信息，请稍后尝试!");
-            } else {
-                int t=o.toString().lastIndexOf("*")+1;
-                if(keys[1].equals(t+"")){
-                    return  StringUtil.jsonValue("1", o.toString().replace("*",""));
-                }else{
-                    return  StringUtil.jsonValue("0", "暂未获取到信息，请稍后尝试!");
-                }
-            }
+            }*//*
+
         } catch (InterruptedException e) {
             e.printStackTrace();
             return  StringUtil.jsonValue("0", "连接失败!");
+        }*/
+        if (o == null) {
+            return   StringUtil.jsonValue("0", "暂未获取到信息，请稍后尝试!");
+        } else {
+            int t=o.toString().lastIndexOf("*")+1;
+            if(keys[1].equals(t+"")){
+                return  StringUtil.jsonValue("1", o.toString().replace("*",""));
+            }else{
+                return  StringUtil.jsonValue("0", "暂未获取到信息，请稍后尝试!");
+            }
         }
-
     }
 
     @RequestMapping("/set")

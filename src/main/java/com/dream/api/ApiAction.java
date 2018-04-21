@@ -111,21 +111,29 @@ public class ApiAction {
 	@RequestMapping("open/log")
 	@ResponseBody
 	public void apiLog(@ModelAttribute OpenLog openlog){
-		String[] arr = openlog.getUser().getId().split("");
-		String userId=arr[1]+arr[3]+arr[5]+arr[7];
-		openlog.setCreateTime(FormatDate.getYMdHHmmss());
-		User user=userDao.findUserById(userId);
-		openlog.setUser(user);
-
-		if(StringUtils.isNotEmpty(openlog.getLockNum())){
-			Map<String,String> map=new HashMap<>();
-			map.put("lockCode",openlog.getLockNum().replace("-",""));
-			List<Locks> list= ilocksDao.findLocks(map);
-			if(list.size()>0){
-				openlog.setLockName(list.get(0).getLockNum());
+		try {
+			openlog.setCreateTime(FormatDate.getYMdHHmmss());
+			if(StringUtils.isNotEmpty(openlog.getLockNum())){
+				Map<String,String> map=new HashMap<>();
+				char[] bankArray = openlog.getLockNum().toCharArray();
+				String bankString = "";
+				for(int i=0;i<bankArray.length;i++){
+					if(i%4==0 && i>0){
+						bankString +="-";
+					}
+					bankString += bankArray[i];
+				}
+				map.put("lockCode",bankString);
+				List<Locks> list= ilocksDao.findLocks(map);
+				if(list.size()>0){
+					openlog.setLockName(list.get(0).getLockNum());
+				}
 			}
+			openLogDao.save(openlog);
+		}catch (Exception e){
+			e.printStackTrace();
 		}
-		openLogDao.save(openlog);
+
 	}
 	/**
 	 * @author       陶乐乐(wangyiqianyi@qq.com)
@@ -153,5 +161,17 @@ public class ApiAction {
 		}catch (Exception e){
 
 		}
+	}
+
+	public static void main(String[] args) {
+		char[] bankArray = "00410001001200210001000000000000".toCharArray();
+		String bankString = "";
+		for(int i=0;i<bankArray.length;i++){
+			if(i%4==0 && i>0){
+				bankString +="-";
+			}
+			bankString += bankArray[i];
+		}
+		System.out.println(bankString);
 	}
 }

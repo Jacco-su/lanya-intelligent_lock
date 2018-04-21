@@ -88,6 +88,7 @@ public class AuthLogAction {
             authLog.setId(uuid);
             authLog.setAuthStatus("0");
             authLog.setCreateTime(FormatDate.getYMdHHmmss());
+            authLog.setAuthType(1);
             authLogDao.save(authLog);
             SessionData.createSyslog(request,1, "多个在线授权");
             message = StringUtil.jsonValue("1", "添加授权任务成功！");
@@ -155,7 +156,10 @@ private void auth(AuthLog authLog,String adminId,String uuid){
         jsonDataProtocol.setDataType("client");
         System.out.println(JSON.toJSONString(jsonDataProtocol));
         String authKey= JSON.toJSONString(jsonDataProtocol)+";"+adminId;
-        redisTemplateUtil.setList("lanya-lite", authKey);
+        //redisTemplateUtil.setList("lanya-lite", authKey);
+        for (int i = 0; i < 3; i++) {
+            redisTemplateUtil.setList("lanya-lite", authKey);
+        }
         if (authStatus){
             try {
                 Thread.sleep(5000);

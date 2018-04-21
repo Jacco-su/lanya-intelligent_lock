@@ -296,7 +296,7 @@
                                 <tr>
                                     <td width="100">门锁识别码:</td>
                                     <td colspan="2">
-                                        <input id="lockCode" name="lockCode" style="width: 200px;" required="true"/>
+                                        <input id="lockCode" name="lockCode" style="width: 250px;" required="true"/>
                                         <a class="easyui-linkbutton"
                                            onclick="getLock(1,'')">获取门锁识别码</a>
                                         <a class="easyui-linkbutton"
