@@ -318,7 +318,7 @@
                         <tr>
                             <td>钥匙Mac地址:</td>
                             <td>
-                                <input width="180px" name="keys" id="keys" readonly>
+                                <input width="180px" name="keys" id="keys">
                                 <%-- <select class="easyui-combobox" name="locks" id="locks" style="width: 180px;"
                                          data-options="editable:false,valueField:'id', textField:'text'">
                                      <option value="0">---请选择---</option>

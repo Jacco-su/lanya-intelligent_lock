@@ -456,13 +456,13 @@ public class AuthModel {
 	 * @return
 	 * @throws
 	 */
-	public  static int [] AuthorizationKeyX(String userCode,String lockNum,String macAddress,String startDate,String endDate,int status){
+	public  static int [] AuthorizationKeyX(String userCode,String lockNum,String macAddress,String startDate,String endDate,int status,int index){
 		lockNum=lockNum.replace("-","");
 		//String db=lockNum.substring(4,6)+lockNum.substring(14,16);
 		String db=lockNum.substring(14,16)+lockNum.substring(18,20);
 
 		//String db=lockNum.substring(16,20);
-		byte []lockCode=ByteUtil.hexStr2Str(lockNum).getBytes();
+		byte []lockCode=ByteUtil.hexStrToByteArray(lockNum);//ByteUtil.hexStr2Str().getBytes();
 		//byte [] userByteCode=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(userCode.getBytes()));
 		int[] arrayOfInt = new int[64];
 		for (int i = 0; i < 4; i++) {
@@ -518,8 +518,15 @@ public class AuthModel {
 				arrayOfInt[(i + 85)] = Integer.parseInt(macString[i], 16);
 				i += 1;
 			}
-			arrayOfInt[91] = Integer.parseInt(db.substring(0,2),16);//存储位置
-			arrayOfInt[92] = Integer.parseInt(db.substring(2,4),16);//存储位置
+			String str = String.format("%04d",index);
+			byte [] logNumCode=ByteUtil.hexStr2Str(str).getBytes();
+			i=0;
+			while (i<2){
+				arrayOfInt[i+91]=logNumCode[i];
+				i +=1;
+			}
+			//arrayOfInt[91] =0x00; //Integer.parseInt(db.substring(0,2),16);//存储位置
+			//arrayOfInt[92] =0x01; //Integer.parseInt(db.substring(2,4),16);//存储位置
 			arrayOfInt[93] = 10;//
 			arrayOfInt[94] = 10;//
 			//arrayOfInt[95] = 0xff;//次数 待定
@@ -621,18 +628,23 @@ public class AuthModel {
 		System.out.println(ByteUtil.bytesToHex(userCode.getBytes()));
 		System.out.println(ByteUtil.bytesToHex("2101".getBytes()));
 
-		String authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX("1071","0041-0001-0011-0019-0004-0000-0000-0000","EE:56:8A:87:D9:5F","20180411101525","20180412101527",1),Constants.LOCK_KEY).toString();
+		String authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX("1071","0041-0001-0011-0019-0004-0000-0000-0000","EE:56:8A:87:D9:5F","20180411101525","20180412101527",1,0),Constants.LOCK_KEY).toString();
 
 
 		//String authModel2=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyToByte("1071","0041-0001-0011-0018-0001-0000-0000-0000","EE:56:8A:87:D9:5F","20180411101525","20180412101527",1),Constants.LOCK_KEY).toString();
 
 		System.out.println(authModel);
-		System.out.println(Integer.parseInt("29", 16));
+		String xxs="2710";
+		System.out.println(xxs.substring(2,4)+"xx");
+		System.out.println(xxs.substring(2,4)+"xx");
+		System.out.println(Integer.parseInt(xxs.substring(0,2), 16));
+		System.out.println(Integer.parseInt(xxs.substring(2,4), 16));
+
 		//System.out.println(authModel2);
-		System.out.println(ByteUtil.bytesToHex(String.valueOf("2706").getBytes()));
-		lockNum="0041-0001-0001-0001-0009-0000-0000-0000".replace("-","");
-		lockNum=lockNum.substring(14,16)+lockNum.substring(18,20);
-		System.out.println(lockNum);
+		//System.out.println(ByteUtil.bytesToHex(String.valueOf("2706").getBytes()));
+		//lockNum="0041-0001-0001-0001-0009-0000-0000-0000".replace("-","");
+		//lockNum=lockNum.substring(14,16)+lockNum.substring(18,20);
+		//System.out.println(lockNum);
 	}
 	private static void toStringMethod(int[] arr) {
 		// 自定义一个字符缓冲区，

@@ -106,7 +106,7 @@ public class AuthLogAction {
     }
     private void auth(AuthLog authLog,String adminId,String uuid,String collectorId){
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
-        String cleatAuthModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), "0041-0001-0000-0027-0005-0000-0000-0000", authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),0), Constants.LOCK_KEY).toString();//
+        String cleatAuthModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), "0041-0001-0000-0027-0005-0000-0000-0000", authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),0,1), Constants.LOCK_KEY).toString();//
         redisTemplateUtil.setList("lanya-lite", cleatAuthModel+";"+adminId);
         try {
             Thread.sleep(3000);
@@ -127,7 +127,7 @@ public class AuthLogAction {
                         String [] locks=authLog.getAuthLocksId().split(",");
                         for (int i = 0; i <locks.length ; i++) {
                             if(StringUtils.isNotEmpty(locks[i])){
-                                String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[i], collectore.getCeMAC(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1), Constants.LOCK_KEY).toString();//
+                                String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[i], collectore.getCeMAC(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1,i+1), Constants.LOCK_KEY).toString();//
                                 System.out.println("开始授权！");
                                 auth("5", macAddess,collectore.getCollector().getCcode(), adminId, authModel,uuid);//ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(keys[4].getBytes()))
                             }

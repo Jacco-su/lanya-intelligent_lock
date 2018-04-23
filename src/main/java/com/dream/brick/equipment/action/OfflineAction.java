@@ -53,6 +53,7 @@ public class OfflineAction {
     private IKeyssDao ikeyssDao;
     @Resource
     private QgdisDao disDao;
+    private boolean authStatus=false;
     //在线授权
     @RequestMapping("/prViewAuth")
     public String prViewAuth( ModelMap model) {
@@ -205,10 +206,10 @@ public class OfflineAction {
                 authLog.setAuthLocksId(lockNum);
                 authLog.setAuthEndTime(FormatDate.dateSdfHHmmssParse(endDate));
                 //authLogDao.save(authLog);
-                authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,1),Constants.LOCK_KEY).toString();
+                authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,1,1),Constants.LOCK_KEY).toString();
 
 
-                String   clearAuthModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,0),Constants.LOCK_KEY).toString();
+                String   clearAuthModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,0,1),Constants.LOCK_KEY).toString();
                 SessionData.createSyslog(request,9, "离线授权");
 
                 redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, clearAuthModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
@@ -228,7 +229,6 @@ public class OfflineAction {
             return  StringUtil.jsonValue("0","操作失败，请重新获取!");
         }
         redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
-
         try {
             Thread.sleep(8000);
         } catch (InterruptedException e) {
@@ -265,6 +265,7 @@ public class OfflineAction {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public String add(@ModelAttribute AuthLog authLog,String serial,HttpServletRequest request) {
+        authStatus=true;
         SessionData.createSyslog(request,5, "开始授权");
         String message = "";
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
@@ -290,7 +291,7 @@ public class OfflineAction {
         if (StringUtils.isNotEmpty(authLog.getAuthLocksId())) {
             String[] locks = authLog.getAuthLocksId().split(",");
             if(locks.length>0){
-                String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[0], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),0), Constants.LOCK_KEY).toString();//
+                String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[0], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),0,1), Constants.LOCK_KEY).toString();//
                 redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
                 redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
                 try {
@@ -301,7 +302,7 @@ public class OfflineAction {
             }
             for (int i = 0; i < locks.length; i++) {
                 if (StringUtils.isNotEmpty(locks[i])) {
-                    String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[i], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1), Constants.LOCK_KEY).toString();//
+                    String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[i], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1,i+1), Constants.LOCK_KEY).toString();//
                     auth(authModel,serial,authLog,locks[i],authLog.getAuthKeysId(),request);
                 }
             }
@@ -315,14 +316,18 @@ public class OfflineAction {
         serialPortData.write(authModel);
         serialPortData.startRead(2);*/
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
-        redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
-        try{
-            Thread.sleep(8000);
-            String responseStr="";
+        for(int i=0;i<3;i++) {
+            redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel + ";" + request.getSession().getAttribute("userUUID") + ";" + serial);
+        }
+        if (authStatus){
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             Object o = redisTemplateUtil.get(authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
-            if(o==null||o.toString()==""){
-                responseStr="暂未获取到信息，请重试！";
-            }else {
+            String responseStr="";
+            if(o!=null){
                 responseStr= ResponseSocketUtil.V(o.toString());
                 responseStr =responseStr.replace("*", "");
                 if (responseStr.indexOf("授权成功") > -1) {
@@ -337,10 +342,8 @@ public class OfflineAction {
                     keysAuthDao.save(keysAuth);
                 }
             }
-            return  StringUtil.jsonValue("1",responseStr);
-        }catch (Exception e){
-            return  StringUtil.jsonValue("0","操作失败，请重新获取!");
         }
+        return "";
     }
     //prViewOfflineAuth
     @RequestMapping("/prViewOfflineAuth")
