@@ -458,10 +458,6 @@ public class AuthModel {
 	 */
 	public  static int [] AuthorizationKeyX(String userCode,String lockNum,String macAddress,String startDate,String endDate,int status,int index){
 		lockNum=lockNum.replace("-","");
-		//String db=lockNum.substring(4,6)+lockNum.substring(14,16);
-		String db=lockNum.substring(14,16)+lockNum.substring(18,20);
-
-		//String db=lockNum.substring(16,20);
 		byte []lockCode=ByteUtil.hexStrToByteArray(lockNum);//ByteUtil.hexStr2Str().getBytes();
 		//byte [] userByteCode=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(userCode.getBytes()));
 		int[] arrayOfInt = new int[64];
@@ -600,7 +596,7 @@ public class AuthModel {
 		String authModel3=new AuthModel(new byte[]{12},toData(12,14),"SDtt6789").toString();
 
 		System.out.println(authModel3.toString());*/
-     String userCode="1000";
+        String userCode="1000";
 		for (int i = 0; i < 4; i++) {
 			System.out.println(userCode.charAt(i));
 		}

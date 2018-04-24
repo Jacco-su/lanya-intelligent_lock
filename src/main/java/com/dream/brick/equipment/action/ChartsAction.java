@@ -109,9 +109,7 @@ public class ChartsAction {
                     OpenLog openLog=openLogList.get(j);
                     for (int k = 0; k <locksList.size() ; k++) {
                         Locks locks=locksList.get(k);
-                        //System.out.println(openLog.getLockNum()+"XXX"+locks.getLockCode());
-                        //System.out.println(openLog.getLockNum().equals(locks.getLockNum()));
-                        if(openLog.getLockNum().equals(locks.getLockCode())){
+                        if(openLog.getLockNum().equals(locks.getLockCode().replace("-",""))){
                             count++;
                         }
                     }
@@ -249,7 +247,7 @@ public class ChartsAction {
                     OpenLog openLog=openLogList.get(j);
                     for (int k = 0; k <locksList.size() ; k++) {
                         Locks locks=locksList.get(k);
-                        if(openLog.getLockNum().equals(locks.getLockCode())){
+                        if(openLog.getLockNum().equals(locks.getLockCode().replace("-",""))){
                             count++;
                         }
                     }

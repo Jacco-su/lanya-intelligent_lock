@@ -319,7 +319,7 @@ public class AuthorizationAction {
                                         for (int ii = 0; ii < locksList.size(); ii++) {
                                             Locks locks=locksList.get(ii);
                                             System.out.println(locks.getLockCode());
-                                            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,locks.getLockCode(),collectore.getCeMAC(),startDate,endDate,1,ii+1),Constants.LOCK_KEY).toString();//
+                                            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,locks.getLockCode(),collectore.getCeMAC(),startDate,endDate,1,ii),Constants.LOCK_KEY).toString();//
                                             System.out.println("开始授权！");
                                             auth("5",macAddess,collector.getCcode(),adminId,authModel);
                                         }

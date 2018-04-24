@@ -52,6 +52,7 @@ public class AuthLogAction {
     private RedisTemplateUtil redisTemplateUtil = null;
 
     private boolean authStatus=false;
+    private int authIndex=0;
 
     @RequestMapping("/prList")
     public String prList()
@@ -81,6 +82,7 @@ public class AuthLogAction {
     @ResponseBody
     public String add(@ModelAttribute AuthLog authLog,HttpServletRequest request) {
         authStatus=true;
+        authIndex=0;
         SessionData.createSyslog(request,5, "开始授权");
         String message = "";
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
@@ -106,7 +108,7 @@ public class AuthLogAction {
     }
     private void auth(AuthLog authLog,String adminId,String uuid,String collectorId){
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
-        String cleatAuthModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), "0041-0001-0000-0027-0005-0000-0000-0000", authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),0,1), Constants.LOCK_KEY).toString();//
+        String cleatAuthModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), "0041-0001-0000-0027-0005-0000-0000-0000", authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),2,1), Constants.LOCK_KEY).toString();//
         redisTemplateUtil.setList("lanya-lite", cleatAuthModel+";"+adminId);
         try {
             Thread.sleep(3000);
@@ -114,7 +116,14 @@ public class AuthLogAction {
             e.printStackTrace();
         }
         String  checkTimeAuthModel=new AuthModel(new byte[]{12},AuthModel.toData(12,14),Constants.LOCK_KEY).toString();//校时成功
-        redisTemplateUtil.setList("lanya-lite", checkTimeAuthModel+";"+adminId);
+        //for (int i = 0; i < 2; i++) {
+            redisTemplateUtil.setList("lanya-lite", checkTimeAuthModel+";"+adminId);
+        //}
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //读取控制器
         List<Collectore> collectoreList = collectoreDao.findCollectoreByCollector(collectorId);
         if (collectoreList != null && collectoreList.size() > 0) {
@@ -127,7 +136,7 @@ public class AuthLogAction {
                         String [] locks=authLog.getAuthLocksId().split(",");
                         for (int i = 0; i <locks.length ; i++) {
                             if(StringUtils.isNotEmpty(locks[i])){
-                                String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[i], collectore.getCeMAC(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1,i+1), Constants.LOCK_KEY).toString();//
+                                String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[i], collectore.getCeMAC(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1,i), Constants.LOCK_KEY).toString();//
                                 System.out.println("开始授权！");
                                 auth("5", macAddess,collectore.getCollector().getCcode(), adminId, authModel,uuid);//ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(keys[4].getBytes()))
                             }
@@ -157,7 +166,7 @@ private void auth(AuthLog authLog,String adminId,String uuid){
         System.out.println(JSON.toJSONString(jsonDataProtocol));
         String authKey= JSON.toJSONString(jsonDataProtocol)+";"+adminId;
         //redisTemplateUtil.setList("lanya-lite", authKey);
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             redisTemplateUtil.setList("lanya-lite", authKey);
         }
         if (authStatus){
@@ -166,20 +175,32 @@ private void auth(AuthLog authLog,String adminId,String uuid){
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Object o = redisTemplateUtil.get(authKey);
-            if (o != null)  {
-                if("5".equals(t)){
-                    System.out.println("第一次授权开始");
-                    if(o.toString().indexOf("授权成功")>-1){
-                        authStatus=false;
-                        System.out.println("第二次授权开始");
-                        AuthLog authLog=authLogDao.find(AuthLog.class,uuid);
+        }
+        /*try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        Object o = redisTemplateUtil.get(authKey);
+        if (o != null)  {
+            if("5".equals(t)){
+                System.out.println("第一次授权开始");
+                if(o.toString().indexOf("授权成功")>-1){
+                    authIndex++;
+                    authStatus=false;
+                    System.out.println("第二次授权开始");
+                    if(!authStatus) {
+                        AuthLog authLog = authLogDao.find(AuthLog.class, uuid);
                         authLog.setAuthStatus("1");
+                        authLog.setAuthIndex(authIndex);
                         authLogDao.update(authLog);
                     }
                 }
             }
         }
+        AuthLog authLog = authLogDao.find(AuthLog.class, uuid);
+        authLog.setAuthIndex(authIndex);
+        authLogDao.update(authLog);
        return "";
     }
 }

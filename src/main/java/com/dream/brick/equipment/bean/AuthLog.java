@@ -28,6 +28,7 @@ public class AuthLog {
 	private String collectorId;//采集器ID
 	private String disId;
 	private String kzqId;//控制器ID
+	private int authIndex;//授权次数
 	@Id
 	public String getId() {
 		return id;
@@ -150,5 +151,13 @@ public class AuthLog {
 
 	public void setKzqId(String kzqId) {
 		this.kzqId = kzqId;
+	}
+
+	public int getAuthIndex() {
+		return authIndex;
+	}
+
+	public void setAuthIndex(int authIndex) {
+		this.authIndex = authIndex;
 	}
 }

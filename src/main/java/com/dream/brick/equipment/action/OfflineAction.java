@@ -209,7 +209,7 @@ public class OfflineAction {
                 authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,1,1),Constants.LOCK_KEY).toString();
 
 
-                String   clearAuthModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,0,1),Constants.LOCK_KEY).toString();
+                String   clearAuthModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,2,1),Constants.LOCK_KEY).toString();
                 SessionData.createSyslog(request,9, "离线授权");
 
                 redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, clearAuthModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
@@ -218,12 +218,7 @@ public class OfflineAction {
                 //获取钥匙Mac地址
                 authModel = new AuthModel(new byte[]{13}).toString();
                 SessionData.createSyslog(request,9, "钥匙地址获取");
-
             }
-//            serialPortData.setResponseString("");
-//            serialPortData.selectPort(serial);
-//            serialPortData.write(authModel);
-//            serialPortData.startRead(3);
         }catch (Exception e){
             e.printStackTrace();
             return  StringUtil.jsonValue("0","操作失败，请重新获取!");
@@ -291,7 +286,7 @@ public class OfflineAction {
         if (StringUtils.isNotEmpty(authLog.getAuthLocksId())) {
             String[] locks = authLog.getAuthLocksId().split(",");
             if(locks.length>0){
-                String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[0], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),0,1), Constants.LOCK_KEY).toString();//
+                String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[0], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),2,1), Constants.LOCK_KEY).toString();//
                 redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
                 redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
                 try {
@@ -302,7 +297,7 @@ public class OfflineAction {
             }
             for (int i = 0; i < locks.length; i++) {
                 if (StringUtils.isNotEmpty(locks[i])) {
-                    String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[i], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1,i+1), Constants.LOCK_KEY).toString();//
+                    String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[i], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1,i), Constants.LOCK_KEY).toString();//
                     auth(authModel,serial,authLog,locks[i],authLog.getAuthKeysId(),request);
                 }
             }
@@ -310,13 +305,8 @@ public class OfflineAction {
         }
     }
     private String  auth(String authModel,String serial,AuthLog authLogFirst,String lockNum,String keysId,HttpServletRequest request){
-        /*ReadSerialPortData serialPortData=new ReadSerialPortData();
-        serialPortData.setResponseString("");
-        serialPortData.selectPort(serial);
-        serialPortData.write(authModel);
-        serialPortData.startRead(2);*/
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
-        for(int i=0;i<3;i++) {
+        for(int i=0;i<2;i++) {
             redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel + ";" + request.getSession().getAttribute("userUUID") + ";" + serial);
         }
         if (authStatus){
