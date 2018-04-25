@@ -54,6 +54,8 @@ public class OfflineAction {
     @Resource
     private QgdisDao disDao;
     private boolean authStatus=false;
+    private int lockNum=0;
+    private int openCount;//授权成功次数
     //在线授权
     @RequestMapping("/prViewAuth")
     public String prViewAuth( ModelMap model) {
@@ -297,7 +299,7 @@ public class OfflineAction {
             }
             for (int i = 0; i < locks.length; i++) {
                 if (StringUtils.isNotEmpty(locks[i])) {
-                    String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[i], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1,i), Constants.LOCK_KEY).toString();//
+                    String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[i], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),1,i+1), Constants.LOCK_KEY).toString();//
                     auth(authModel,serial,authLog,locks[i],authLog.getAuthKeysId(),request);
                 }
             }
@@ -306,15 +308,16 @@ public class OfflineAction {
     }
     private String  auth(String authModel,String serial,AuthLog authLogFirst,String lockNum,String keysId,HttpServletRequest request){
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
-        for(int i=0;i<2;i++) {
-            redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel + ";" + request.getSession().getAttribute("userUUID") + ";" + serial);
+       /* for(int i=0;i<2;i++) {
+        }*/
+        redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel + ";" + request.getSession().getAttribute("userUUID") + ";" + serial);
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         if (authStatus){
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             Object o = redisTemplateUtil.get(authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
             String responseStr="";
             if(o!=null){
@@ -323,13 +326,15 @@ public class OfflineAction {
                 if (responseStr.indexOf("授权成功") > -1) {
                     System.out.println("第二次授权开始");
                     AuthLog authLog = authLogDao.find(AuthLog.class, authLogFirst.getId());
+                    openCount++;
+                    authLog.setAuthIndex(openCount);
                     authLog.setAuthStatus("1");
                     authLogDao.update(authLog);
-                    KeysAuth keysAuth = new KeysAuth();
+                    /*KeysAuth keysAuth = new KeysAuth();
                     keysAuth.setKeysId(keysId);
                     keysAuth.setLockName("测试");
                     keysAuth.setLockNum(lockNum);
-                    keysAuthDao.save(keysAuth);
+                    keysAuthDao.save(keysAuth);*/
                 }
             }
         }

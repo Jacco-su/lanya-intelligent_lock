@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,7 +53,7 @@ public class AuthLogAction {
     private RedisTemplateUtil redisTemplateUtil = null;
 
     private boolean authStatus=false;
-    private int authIndex=0;
+    private int openCount;//授权成功次数
 
     @RequestMapping("/prList")
     public String prList()
@@ -78,11 +79,16 @@ public class AuthLogAction {
         datas.put("rows", list);
         return datas.toString();
     }
+    @RequestMapping("/prView")
+    public String prView(String id, ModelMap model) {
+        AuthLog authLog = authLogDao.find(AuthLog.class, id);
+        model.addAttribute("authLog", authLog);
+        return "admin/authlog/view";
+    }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public String add(@ModelAttribute AuthLog authLog,HttpServletRequest request) {
         authStatus=true;
-        authIndex=0;
         SessionData.createSyslog(request,5, "开始授权");
         String message = "";
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
@@ -166,21 +172,32 @@ private void auth(AuthLog authLog,String adminId,String uuid){
         System.out.println(JSON.toJSONString(jsonDataProtocol));
         String authKey= JSON.toJSONString(jsonDataProtocol)+";"+adminId;
         //redisTemplateUtil.setList("lanya-lite", authKey);
-        for (int i = 0; i < 2; i++) {
+        //for (int i = 0; i < 2; i++) {
             redisTemplateUtil.setList("lanya-lite", authKey);
+       // }
+        try {
+            Thread.sleep(6000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         if (authStatus){
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            Object o = redisTemplateUtil.get(authKey);
+            if(o!=null){
+                if (o.toString().indexOf("授权成功") > -1) {
+                    openCount++;
+                    System.out.println("第二次授权开始");
+                    AuthLog authLog = authLogDao.find(AuthLog.class, uuid);
+                    authLog.setAuthStatus("1");
+                    authLog.setAuthIndex(openCount);
+                    authLogDao.update(authLog);
+                }
             }
         }
-        /*try {
+  /*      *//*try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }*//*
         Object o = redisTemplateUtil.get(authKey);
         if (o != null)  {
             if("5".equals(t)){
@@ -189,18 +206,16 @@ private void auth(AuthLog authLog,String adminId,String uuid){
                     authIndex++;
                     authStatus=false;
                     System.out.println("第二次授权开始");
-                    if(!authStatus) {
                         AuthLog authLog = authLogDao.find(AuthLog.class, uuid);
                         authLog.setAuthStatus("1");
                         authLog.setAuthIndex(authIndex);
                         authLogDao.update(authLog);
-                    }
                 }
             }
         }
         AuthLog authLog = authLogDao.find(AuthLog.class, uuid);
         authLog.setAuthIndex(authIndex);
-        authLogDao.update(authLog);
+        authLogDao.update(authLog);*/
        return "";
     }
 }

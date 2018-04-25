@@ -123,6 +123,13 @@
                                 return value;
                         }
                     }
+                    ,
+                    {
+                        title: '已授权门锁数',
+                        field: 'authIndex',
+                        width: $(this).width() * 0.05,
+                        align: 'left'
+                    }
                 ]],
                 pagination: true,
                 rownumbers: true,
@@ -152,33 +159,6 @@
             var updateWin;
             var seeuWin;
 
-            function add() {
-                addWin = $.createWin({
-                    title: "添加",
-                    url: '${basePath}/keyss/prAdd',
-                    height: 350,
-                    width: 800,
-                    buttons: [{
-                        text: '保存',
-                        iconCls: 'icon-ok',
-                        handler: save
-                    }]
-                });
-            }
-
-            function save() {
-                $('#addForm').form('submit', {
-                    onSubmit: function () {
-                        return $(this).form('validate');
-                    },
-                    success: function (data) {
-                        var json = eval("(" + data + ")");
-                        $.messager.alert('提示', json.message, 'warning');
-                        $.closeWin(addWin);
-                        refresh();
-                    }
-                });
-            }
 
             function seedetail() {
                 var select = infolist.datagrid('getSelected');
@@ -192,7 +172,7 @@
             function detail(id) {
                 seeWin = $.createWin({
                     title: "详情",
-                    url: '${basePath}/keyss/prView',
+                    url: '${basePath}/authlog/prView',
                     data: 'id=' + id,
                     height: 550,
                     width: 800,
