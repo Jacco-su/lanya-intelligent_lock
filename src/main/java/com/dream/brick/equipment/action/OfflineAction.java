@@ -2,14 +2,8 @@ package com.dream.brick.equipment.action;
 
 import com.alibaba.fastjson.JSON;
 import com.dream.brick.admin.bean.User;
-import com.dream.brick.equipment.bean.AuthLog;
-import com.dream.brick.equipment.bean.KeysAuth;
-import com.dream.brick.equipment.bean.Keyss;
-import com.dream.brick.equipment.bean.Qgdis;
-import com.dream.brick.equipment.dao.IAuthLogDao;
-import com.dream.brick.equipment.dao.IKeysAuthDao;
-import com.dream.brick.equipment.dao.IKeyssDao;
-import com.dream.brick.equipment.dao.QgdisDao;
+import com.dream.brick.equipment.bean.*;
+import com.dream.brick.equipment.dao.*;
 import com.dream.brick.listener.SessionData;
 import com.dream.socket.entity.AuthModel;
 import com.dream.socket.utils.ByteUtil;
@@ -56,6 +50,8 @@ public class OfflineAction {
     private boolean authStatus=false;
     private int lockNum=0;
     private int openCount;//授权成功次数
+    @Resource
+    private ILocksDao ilocksDao;
     //在线授权
     @RequestMapping("/prViewAuth")
     public String prViewAuth( ModelMap model) {
@@ -211,7 +207,7 @@ public class OfflineAction {
                 authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,1,1),Constants.LOCK_KEY).toString();
 
 
-                String   clearAuthModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,startDate,endDate,2,1),Constants.LOCK_KEY).toString();
+                String   clearAuthModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,lockNum,keysId,"20160411101525","20990412101527",2,1),Constants.LOCK_KEY).toString();
                 SessionData.createSyslog(request,9, "离线授权");
 
                 redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, clearAuthModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
@@ -220,6 +216,8 @@ public class OfflineAction {
                 //获取钥匙Mac地址
                 authModel = new AuthModel(new byte[]{13}).toString();
                 SessionData.createSyslog(request,9, "钥匙地址获取");
+            }else if("55".equals(T)){
+                authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,"ffffffffffffffffffffffffffffffff",keysId,"20160411101525","20990412101527",2,0),Constants.LOCK_KEY).toString();
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -247,8 +245,16 @@ public class OfflineAction {
                     keysAuth.setLockNum(lockNum);
                     keysAuthDao.save(keysAuth);
                 }
+                if(responseStr.indexOf("门锁识别号")>-1){
+                    Map<String,String> params =new HashMap<>();
+                    params.put("lockCode",responseStr.split(";")[1]);
+                  List<Locks>  locksList= ilocksDao.findLocks(params);
+                  if(locksList.size()>0){
+                      Locks locks=locksList.get(0);
+                      responseStr="门锁识别号已存在"+locks.getQgdis().getName();
+                  }
+                }
             }
-            System.out.println(responseStr+"PPPP");
             return  StringUtil.jsonValue("1",responseStr);
         }catch (Exception e){
             e.printStackTrace();
@@ -288,7 +294,7 @@ public class OfflineAction {
         if (StringUtils.isNotEmpty(authLog.getAuthLocksId())) {
             String[] locks = authLog.getAuthLocksId().split(",");
             if(locks.length>0){
-                String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), locks[0], authLog.getAuthKeysId(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime()),2,1), Constants.LOCK_KEY).toString();//
+                String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), "ffffffffffffffffffffffffffffffff", authLog.getAuthKeysId(), "20160411101525","20990412101527",2,0), Constants.LOCK_KEY).toString();//
                 redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
                 redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
                 try {

@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.dream.brick.admin.bean.User;
 import com.dream.brick.equipment.bean.AuthLog;
 import com.dream.brick.equipment.bean.Authorization;
+import com.dream.brick.equipment.bean.Locks;
 import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.IAuthLogDao;
 import com.dream.brick.equipment.dao.IAuthorizationDao;
+import com.dream.brick.equipment.dao.ILocksDao;
 import com.dream.brick.equipment.dao.QgdisDao;
 import com.dream.brick.listener.SessionData;
 import com.dream.socket.entity.AuthModel;
@@ -27,6 +29,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -41,6 +46,9 @@ public class RedisAction {
     private QgdisDao disDao;
     @Resource
     private IAuthLogDao authLogDao;
+
+    @Resource
+    private ILocksDao ilocksDao;
     @RequestMapping(value = "/get", method = {RequestMethod.POST})
     @ResponseBody
     public String get(String key,String lockNum, HttpServletRequest request) {
@@ -181,6 +189,15 @@ public class RedisAction {
         } else {
             int t=o.toString().lastIndexOf("*")+1;
             if(keys[1].equals(t+"")){
+                if(o.toString().indexOf("门锁识别号")>-1){
+                    Map<String,String> params =new HashMap<>();
+                    params.put("lockCode",o.toString().split(";")[1]);
+                    List<Locks> locksList= ilocksDao.findLocks(params);
+                    if(locksList.size()>0){
+                        Locks locks=locksList.get(0);
+                        return  StringUtil.jsonValue("1", "门锁识别号已存在"+locks.getQgdis().getName());
+                    }
+                }
                 return  StringUtil.jsonValue("1", o.toString().replace("*",""));
             }else{
                 return  StringUtil.jsonValue("0", "暂未获取到信息，请稍后尝试!");

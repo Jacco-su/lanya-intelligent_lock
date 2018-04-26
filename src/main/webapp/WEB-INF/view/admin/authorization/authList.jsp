@@ -304,8 +304,12 @@
                             alert(data.message);
                         }else{
                             $("#locks").empty();
-                            var lockNum=data.message.split(";")[1];
-                            $("#locks").val(lockNum);
+                            if(data.message.indexOf("已存在")>-1){
+                                alert(data.message);
+                            }else{
+                                var lockNum = data.message.split(";")[1];
+                                $("#lockCode").val(lockNum);
+                            }
                         }
                     }else{
                         if(t==2){
@@ -327,6 +331,38 @@
         function disLoad() {
             $(".datagrid-mask").remove();
             $(".datagrid-mask-msg").remove();
+        }
+        function clearKey() {
+            $.messager.confirm('警告', '确定要清除授权嘛', function (f) {
+                if (f) {
+                    var key=$('#collector').combobox('getText') +","
+                        +t+","
+                        +$('#collectore').combobox('getText')+","
+                        +deptAreaCode+","
+                        +$('#locks').val()+","
+                        +dis;
+                    var data={
+                        "key":key
+                    };
+                    $.ajax({
+                        type: "post",
+                        url: basePath+"/redis/get",
+                        cache:false,
+                        async:false,
+                        data:data,
+                        dataType: "json",
+                        success: function(data){
+                            $.messager.progress('close');
+                            if (data.result == "1") {
+                                alert(data.message);
+                            } else {
+                                alert("清除蓝牙钥匙授权失败!");
+                            }
+                        }
+
+                    });
+                }
+            });
         }
     </script>
 </head>

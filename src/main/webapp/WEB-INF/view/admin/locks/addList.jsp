@@ -214,8 +214,12 @@
                         if (t == 2) {
                             alert(data.message);
                         } else {
-                            var lockNum = data.message.split(";")[1];
-                            $("#lockCode").val(lockNum);
+                            if(data.message.indexOf("已存在")>-1){
+                                alert(data.message);
+                            }else{
+                                var lockNum = data.message.split(";")[1];
+                                $("#lockCode").val(lockNum);
+                            }
                         }
                     } else {
                         if (t == 2) {

@@ -624,7 +624,7 @@ public class AuthModel {
 		System.out.println(ByteUtil.bytesToHex(userCode.getBytes()));
 		System.out.println(ByteUtil.bytesToHex("2101".getBytes()));
 
-		String authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX("1071","0041-0001-0011-0019-0004-0000-0000-0000","EE:56:8A:87:D9:5F","20180411101525","20180412101527",1,0),Constants.LOCK_KEY).toString();
+		String authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX("1111","ffffffffffffffffffffffffffffffff","EE:56:8A:87:D9:5F","20180411101525","20180412101527",2,0),Constants.LOCK_KEY).toString();
 
 
 		//String authModel2=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyToByte("1071","0041-0001-0011-0018-0001-0000-0000-0000","EE:56:8A:87:D9:5F","20180411101525","20180412101527",1),Constants.LOCK_KEY).toString();
@@ -641,6 +641,8 @@ public class AuthModel {
 		//lockNum="0041-0001-0001-0001-0009-0000-0000-0000".replace("-","");
 		//lockNum=lockNum.substring(14,16)+lockNum.substring(18,20);
 		//System.out.println(lockNum);
+		System.out.println(ByteUtil.bytesToHex(Des.decrypt(ByteUtil.hexToBytes("c08308da61af8480db48b09696f5f92d8508b3edb2c7f543d3820cc872oa787a8ad79ac0aea0db48a83c06788b33fbf6854a48c9a24e282807e3e795e1561f5b"),Constants.OLD_KEY.getBytes())));
+		System.out.println(ByteUtil.hexStr2Str("3230313730393031313031303130"));
 	}
 	private static void toStringMethod(int[] arr) {
 		// 自定义一个字符缓冲区，
@@ -656,4 +658,5 @@ public class AuthModel {
 		}
 		System.out.println(sb);
 	}
+
 }

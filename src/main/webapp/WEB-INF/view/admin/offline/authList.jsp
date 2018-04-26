@@ -116,6 +116,51 @@
                 }
                 });
         }
+        function clearKey() {
+            $.messager.confirm('警告', '确定要清除授权嘛', function (f) {
+                if (f) {
+                    var serial=$('#serials').combobox('getValue');
+                    if(serial==""){
+                        alert("请选择串口!");
+                        return;
+                    }
+                    var userId=$('#users').combobox('getValue');
+                    if(userId=="0"||userId==""){
+                        alert("请选择用户!");
+                        return;
+                    }
+                    var keys=$('#keys').val();
+                    if(keys==""){
+                        alert("请先获取钥匙地址！!");
+                        return;
+                    }
+                    var data={
+                        "serial":serial,
+                        "T":55,
+                        "userId":userId,
+                        "keysId":keys
+                    };
+                    progress();
+                    $.ajax({
+                        type: "post",
+                        url: basePath+"/offline/read",
+                        cache:false,
+                        async:false,
+                        data:data,
+                        dataType: "json",
+                        success: function(data){
+                            $.messager.progress('close');
+                            if (data.result == "1") {
+                                alert(data.message);
+                            } else {
+                                alert("清除蓝牙钥匙授权失败!");
+                            }
+                        }
+
+                    });
+                }
+            });
+        }
         function keyTiming() {
             var serial=$('#serials').combobox('getValue');
             if(serial==""||serial=="0"){
@@ -176,7 +221,7 @@
                 alert("请先获取钥匙地址！!");
                 return;
             }
-            progress();
+            //progress();
             var data={
                 "serial":serial,
                 "T":5,
@@ -312,7 +357,8 @@
                             </td>
                             <td colspan="3">
                                 <button class="easyui-linkbutton" onclick="keyBinding()">绑定钥匙</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button class="easyui-linkbutton" onclick="keyTiming()">钥匙校时</button>
+                                <button class="easyui-linkbutton" onclick="keyTiming()">钥匙校时</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button class="easyui-linkbutton" onclick="clearKey()">删除授权</button>
                             </td>
                         </tr>
                         <tr>

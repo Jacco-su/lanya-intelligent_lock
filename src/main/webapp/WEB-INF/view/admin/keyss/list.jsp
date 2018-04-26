@@ -273,7 +273,43 @@
                     $.messager.alert('警告', '未选中任何数据', 'warning');
                 }
             }
+            function delAuth() {
+                var selected = infolist.datagrid('getSelected');
+                if (selected) {
+                    $.messager.confirm('警告', '确定要删除授权么?', function (f) {
+                        if (f) {
+                            var data={
+                                "serial":serial,
+                                "T":5,
+                                "startDate":startDate,
+                                "endDate":endDate,
+                                "lockNum":lockNum,
+                                "userId":userId,
+                                "keysId":keys
+                            };
+                            $.ajax({
+                                type: "post",
+                                url: basePath+"/offline/read",
+                                cache:false,
+                                async:false,
+                                data:data,
+                                dataType: "json",
+                                success: function(data){
+                                    $.messager.progress('close');
+                                    if(data.result=="1"){
+                                        alert(data.message);
+                                    }else{
+                                        alert("授权失败!");
+                                    }
+                                }
 
+                            });
+                        }
+                    });
+                } else {
+                    $.messager.alert('警告', '未选中任何数据', 'warning');
+                }
+            }
 //----------------------------------------------
             function search() {
                 addWin = $.createWin({

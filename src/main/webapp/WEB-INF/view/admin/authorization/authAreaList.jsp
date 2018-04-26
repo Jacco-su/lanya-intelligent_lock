@@ -223,7 +223,6 @@
                 success: function (data) {
                     if(data.result=="1"){
                         alert(data.message);
-
                     }else{
                         alert("保存失败!");
                     }
