@@ -59,7 +59,7 @@ public class CollectorAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, Pager pager,String deptId)
+    public String list(int page, int rows, Pager pager, HttpServletRequest request,String deptId)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
@@ -67,6 +67,8 @@ public class CollectorAction {
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
+        }else{
+            deptId=SessionData.getAreacode(request);
         }
         List<Collector> list = collectorDao.findCollectorList(deptId,pager);
         datas.put("total", pager.getTotalRow());

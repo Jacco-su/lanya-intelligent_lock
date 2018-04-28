@@ -132,7 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				text : '查询',
 				iconCls : 'icon-search',
 				handler : search
-			} ]
+			}]
 		});
 		displayMsg();
 

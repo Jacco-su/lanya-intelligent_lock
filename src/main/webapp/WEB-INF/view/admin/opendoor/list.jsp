@@ -26,7 +26,7 @@
                 title: '开门记录列表',
                 iconCls: 'icon-users',
                 width: '95%',
-                height: 500,
+                height: 600,
                 pageSize: 20,
                 pageList: [20, 30, 50, 100],
                 nowrap: false,

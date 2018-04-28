@@ -15,7 +15,7 @@ public class OpenDoor {
 	private String createTime;
     private String deviceName;
     private String deviceNum;
-	private char status;// 0开门，1关门
+	//private char status;// 0开门，1关门
 	private String openTime;
 
 	private String context;
@@ -48,13 +48,13 @@ public class OpenDoor {
 		this.deviceName = deviceName;
 	}
 
-	public char getStatus() {
+	/*public char getStatus() {
 		return status;
 	}
 
 	public void setStatus(char status) {
 		this.status = status;
-	}
+	}*/
 
 	public String getOpenTime() {
 		return openTime;

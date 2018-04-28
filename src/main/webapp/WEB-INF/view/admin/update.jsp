@@ -92,17 +92,11 @@
                     <td><input name="email" size="40" class="easyui-validatebox" validType="email"
                                value="${user.email}"/></td>
                 </tr>
-                <%--<tr>
-                    <td>排序序号:</td>
-                    <td>
-                        <select id="orderId" name="orderId" style="width:100px;">
-                            <c:forEach var="x" begin="1" end="40" step="1">
-                                <option value="${x}" <c:if test="${user.orderId==x}">selected</c:if>>${x}</option>
-                            </c:forEach>
-                        </select>
-
-                    </td>
-                </tr>--%>
+                <tr>
+                    <td>串口中间件:</td>
+                    <td><input name="disName" size="40" class="easyui-validatebox"
+                               value="${user.disName}"/></td>
+                </tr>
                 <tr>
                     <td>角色:</td>
                     <td>

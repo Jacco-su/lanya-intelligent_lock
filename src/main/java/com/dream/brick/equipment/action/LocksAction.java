@@ -52,7 +52,7 @@ public class LocksAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, Pager pager,String deptId,String dissName) throws Exception {
+    public String list(int page, int rows, Pager pager, HttpServletRequest request,String deptId,String dissName) throws Exception {
 
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
@@ -60,6 +60,8 @@ public class LocksAction {
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
+        }else{
+            deptId=SessionData.getAreacode(request);
         }
         List<Locks> list = ilocksDao.findLocksList(deptId,dissName,pager);
         datas.put("total", pager.getTotalRow());

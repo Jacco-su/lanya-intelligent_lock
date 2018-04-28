@@ -68,13 +68,17 @@ public class KeyssAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String List(int page, int rows, Pager pager,String deptId) throws Exception {
+    public String List(int page, int rows,
+            HttpServletRequest request,
+                       Pager pager,String deptId) throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
+        }else{
+            deptId=SessionData.getAreacode(request);
         }
         List<Keyss> list = ikeyssDao.findKeyssList(deptId,pager);
         datas.put("total", pager.getTotalRow());

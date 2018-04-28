@@ -85,6 +85,7 @@ public class ChartsAction {
                           String dissName,
                           String authStartTime,
                           String authEndTime,
+                          HttpServletRequest request,
                           Pager pager){
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
@@ -93,6 +94,8 @@ public class ChartsAction {
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
+        }else{
+            deptId=SessionData.getAreacode(request);
         }
         //
         List<Qgdis> qgdisList=disDao.findQgdisList(deptId,"",pager);
@@ -166,6 +169,7 @@ public class ChartsAction {
                           String dissName,
                           String authStartTime,
                           String authEndTime,
+                           HttpServletRequest request,
                           Pager pager){
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
@@ -174,6 +178,8 @@ public class ChartsAction {
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
+        }else{
+            deptId=SessionData.getAreacode(request);
         }
         List<Keyss> keyssList = ikeyssDao.findKeyssList(deptId,pager);
        // List<Keyss> keyssList = ikeyssDao.findKeyssUserList(deptId);

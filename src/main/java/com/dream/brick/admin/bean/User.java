@@ -70,6 +70,7 @@ public class User implements java.io.Serializable{
 	
 	private String loginTime;
 	private String loginKey;
+	private String  disName;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -208,4 +209,11 @@ public class User implements java.io.Serializable{
 		this.loginKey = loginKey;
 	}
 
+	public String getDisName() {
+		return disName;
+	}
+
+	public void setDisName(String disName) {
+		this.disName = disName;
+	}
 }

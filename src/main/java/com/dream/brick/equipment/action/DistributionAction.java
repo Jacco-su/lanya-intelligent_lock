@@ -55,7 +55,12 @@ public class DistributionAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows, String deptId, String dissName, Pager pager)
+    public String list(int page,
+                       int rows,
+                       String deptId,
+                       String dissName,
+                        HttpServletRequest request,
+                       Pager pager)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
@@ -63,6 +68,8 @@ public class DistributionAction {
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
+        }else{
+            deptId=SessionData.getAreacode(request);
         }
         List<Qgdis> list = disDao.findQgdisList(deptId, dissName, pager);
         datas.put("total", pager.getTotalRow());

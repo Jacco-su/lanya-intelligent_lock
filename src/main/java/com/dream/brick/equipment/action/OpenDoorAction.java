@@ -49,7 +49,7 @@ public class OpenDoorAction {
 		pager.setCurrentPage(page);
 		pager.setPageSize(rows);
 		JSONObject datas = new JSONObject();
-		List<OpenDoor> list = openDoorDao.findDoorLogList(deptId,pager);
+		List<OpenDoor> list = openDoorDao.findDoorLogList("",pager);
 		datas.put("total", pager.getTotalRow());
 		datas.put("rows", list);
 		return datas.toString();

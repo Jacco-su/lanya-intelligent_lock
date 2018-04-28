@@ -271,10 +271,12 @@ public class AuthorizationAction {
 
     @RequestMapping("/allCollector")
     @ResponseBody
-    public String allCollector(String deptId) throws ParseException {
+    public String allCollector(String deptId ,HttpServletRequest request) throws ParseException {
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
+        }else{
+            deptId=SessionData.getAreacode(request);
         }
         return JSON.toJSONString(collectorDao.findCollectorList(deptId), SerializerFeature.DisableCircularReferenceDetect);
     }

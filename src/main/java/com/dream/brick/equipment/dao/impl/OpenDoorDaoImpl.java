@@ -16,7 +16,7 @@ import java.util.List;
 public class OpenDoorDaoImpl extends BaseDaoImpl implements IOpenDoorDao {
 	public List<OpenDoor> findDoorLogList(String deptId, Pager pager) {
 		StringBuilder hql=new StringBuilder();
-		hql.append(" from OpenDoor t where 1=1 order by t.createTime desc");
+		hql.append(" from OpenDoor order by createTime desc");
 		return query(hql.toString(), pager);
 	}
 }

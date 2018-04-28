@@ -9,10 +9,7 @@ import com.dream.brick.admin.dao.IModuleDao;
 import com.dream.brick.admin.dao.IUserDao;
 import com.dream.brick.equipment.bean.Qgorg;
 import com.dream.brick.listener.SessionData;
-import com.dream.util.AppData;
-import com.dream.util.AppMsg;
-import com.dream.util.MD5;
-import com.dream.util.StringUtil;
+import com.dream.util.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -79,6 +76,11 @@ public class ConsoleAction {
 
 				request.getSession().setAttribute("userUUID",uuid);
 				request.getSession().setAttribute("seareacode", dept.getAreacode());    //**
+				if(admin.getDisName()!=null&&admin.getDisName()!="null"){
+					Const.REDIS_PROJECT_KEY=Const.REDIS_PROJECT_KEY+admin.getDisName();
+				}
+
+
                 admin.setRoles(userDao.findRoles(admin.getId()));
 				List<Role> roles = admin.getRoles();
 				if(roles.size()==0){

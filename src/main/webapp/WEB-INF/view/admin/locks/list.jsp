@@ -26,7 +26,7 @@
                 title: '智能锁列表',
                 iconCls: 'icon-users',
                 width: '95%',
-                height: 500,
+                height: 600,
                 pageSize: 20,
                 pageList: [20, 30, 50, 100],
                 nowrap: false,
@@ -49,7 +49,7 @@
                     {
                         title: '门锁编号',
                         field: 'lockNum',
-                        width: 200,
+                        width: 150,
                         align: 'left'
                     },
                     {
@@ -357,7 +357,7 @@
     </script>
 </head>
 <body>
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" height="530">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" height="630">
         <tr>
             <td width="12%" valign="top"
                 style="border: 1px solid #99bbe8; border-right: 0;">
