@@ -453,13 +453,13 @@ public class AuthModel {
 	 * @params       userCode 用户编号
 	 *               lockCode 锁识别号
 	 *               macAddress MAC地址
+	 *               index       锁ID
 	 * @return
 	 * @throws
 	 */
 	public  static int [] AuthorizationKeyX(String userCode,String lockNum,String macAddress,String startDate,String endDate,int status,int index){
 		lockNum=lockNum.replace("-","");
 		byte []lockCode=ByteUtil.hexStrToByteArray(lockNum);//ByteUtil.hexStr2Str().getBytes();
-		//byte [] userByteCode=ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(userCode.getBytes()));
 		int[] arrayOfInt = new int[64];
 		for (int i = 0; i < 4; i++) {
 			arrayOfInt[i] =  userCode.charAt(i);
