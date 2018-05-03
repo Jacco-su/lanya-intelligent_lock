@@ -167,10 +167,15 @@ public class OfflineAction {
             }else if("2".equals(T)){
                 SessionData.createSyslog(request,9, "初始化锁");
                 if(StringUtils.isEmpty(lockNum)||"".equals(lockNum)) {
+                    Qgdis qgdis=null;
                     if (StringUtils.isEmpty(disId)) {
-                        disId = "135";
+                        //disId = "135";
+                        qgdis=new Qgdis();
+                        qgdis.setLockCount(0);
+                        qgdis.setOrderNum(1);
+                    }else {
+                        qgdis = disDao.find(Qgdis.class, disId);
                     }
-                    Qgdis qgdis = disDao.find(Qgdis.class, disId);
                     if(deptId.length()<5){
                         deptId+= "-0001";
                     }

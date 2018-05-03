@@ -76,8 +76,9 @@ public class ConsoleAction {
 
 				request.getSession().setAttribute("userUUID",uuid);
 				request.getSession().setAttribute("seareacode", dept.getAreacode());    //**
-				if(admin.getDisName()!=null&&admin.getDisName()!="null"){
-					Const.REDIS_PROJECT_KEY=Const.REDIS_PROJECT_KEY+admin.getDisName();
+				//String key=Const.REDIS_PROJECT_KEY;
+				if(admin.getDisName()!=null&&admin.getDisName()!="null"&&admin.getDisName()!=""){
+					Const.REDIS_PROJECT_KEY="lanya-lite-client-server"+admin.getDisName();
 				}
 
 

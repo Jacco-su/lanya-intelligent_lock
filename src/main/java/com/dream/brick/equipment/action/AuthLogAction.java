@@ -140,7 +140,7 @@ public class AuthLogAction {
                                    auth(macAddess,collectore.getCollector().getCcode(), adminId, checkTimeAuthModel,uuid,0);//ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(keys[4].getBytes()))
                                    authStatus=false;
                                }
-                                auth(macAddess,collectore.getCollector().getCcode(), adminId, authModel,uuid,1000);//ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(keys[4].getBytes()))
+                                auth(macAddess,collectore.getCollector().getCcode(), adminId, authModel,uuid,10000);//ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(keys[4].getBytes()))
                             }
                         }
                     }
@@ -158,7 +158,12 @@ private void auth2(AuthLog authLog,String adminId,String uuid){
            }
        }
    }
-    private String  auth(String macAddess,String collectorId,String adminId,String authModel,String uuid,int time){
+    private void  auth(String macAddess,
+                       String collectorId,
+                       String adminId,
+                       String authModel,
+                       String uuid,
+                       int time){
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         DataProtocol dataProtocol=new DataProtocol(new byte[]{00,01}, ByteUtil.hexToBytes(macAddess),ByteUtil.hexToBytes(authModel));
         JsonDataProtocol jsonDataProtocol=new JsonDataProtocol();
@@ -175,7 +180,7 @@ private void auth2(AuthLog authLog,String adminId,String uuid){
             e.printStackTrace();
         }
         while(value>0){
-            time=time-500;
+            value=value-500;
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -191,7 +196,7 @@ private void auth2(AuthLog authLog,String adminId,String uuid){
                     authLog.setAuthIndex(openCount);
                     authLogDao.update(authLog);
                 }
-                break;
+                value=0;
             }
         }
        /* if (authStatus){
@@ -230,6 +235,6 @@ private void auth2(AuthLog authLog,String adminId,String uuid){
         AuthLog authLog = authLogDao.find(AuthLog.class, uuid);
         authLog.setAuthIndex(authIndex);
         authLogDao.update(authLog);*/
-       return "";
+       //return "";
     }
 }

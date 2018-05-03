@@ -38,6 +38,7 @@ public class FtpUtil {
             ftpClient.login(Const.FTP_USER_NAME, Const.FTP_PASSWORD);//用户名,//密码
             //设置文件传输类型
             ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+           // System.out.println(Const.FTP_IP);
             //检查延时
             reply = ftpClient.getReplyCode();
             //如果延时不在200到300之间，就关闭连接
@@ -45,11 +46,14 @@ public class FtpUtil {
                 ftpClient.disconnect();
                 return flag;
             }
+            ftpClient.setConnectTimeout(60000);
             ftpClient.changeWorkingDirectory("/");
-            ftpClient.enterLocalPassiveMode();
+            //ftpClient.enterLocalActiveMode();
+           ftpClient.enterLocalPassiveMode();
             flag = true;
             return flag;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception(e.getMessage());
         }
     }
@@ -163,7 +167,7 @@ public class FtpUtil {
             if (!entryDir.exists() || !entryDir.isDirectory()) {
                 entryDir.mkdirs();
             }
-            System.out.println(ftpFile.getName());
+           // System.out.println(ftpFile.getName());
             relativeLocalPath= relativeLocalPath + ftpFile.getName();
             File locaFile = new File(relativeLocalPath);
             //判断文件是否存在，存在则返回

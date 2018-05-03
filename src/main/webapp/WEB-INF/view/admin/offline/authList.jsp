@@ -279,8 +279,12 @@
                             alert(data.message);
                         }else{
                             $("#locks").empty();
-                            var lockNum=data.message.split(";")[1];
-                            $("#locks").val(lockNum);
+                            if(data.message.indexOf("已存在")>-1){
+                                alert(data.message);
+                            }else{
+                                var lockNum = data.message.split(";")[1];
+                                $("#locks").val(lockNum);
+                            }
                         }
                     }else{
                         if(t==2){

@@ -1,12 +1,10 @@
 package com.dream.brick.equipment.action;
 
 import com.dream.brick.equipment.bean.OpenDoor;
-import com.dream.brick.equipment.bean.OpenLog;
 import com.dream.brick.equipment.dao.IOpenDoorDao;
-import com.dream.brick.equipment.dao.IOpenLogDao;
 import com.dream.framework.dao.Pager;
-import com.dream.socket.utils.DateUtil;
 import com.dream.util.FormatDate;
+import com.dream.util.StringUtil;
 import com.dream.util.extend.FtpUtil;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -20,8 +18,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -60,10 +56,13 @@ public class OpenDoorAction {
 		ServletContext servletContext = request.getServletContext();//获取ServletContext的对象 代表当前WEB应用
         String time=openTime.substring(0,10).replace("-","");
         String path=servletContext.getRealPath("/uploads/hlxx/"+deviceNum+"/"+time+"/");
+		System.out.println("path:"+path);
 		FtpUtil.downfile(path,"/"+deviceNum,time);
 		openTime= FormatDate.dateMinuteParse(openTime);
 		List<String> filelist =getFileList(path);
 		List<String > list=new ArrayList<>();
+		//System.out.println("getFileList:"+filelist);
+		String timeOpen=openTime;
 		int count=0;
 		for (int i = 0; i < filelist.size(); i++) {
 			if(filelist.get(i).indexOf(openTime)>-1){
@@ -73,10 +72,10 @@ public class OpenDoorAction {
 				}
 			}
 		}
-       if(list.size()<9){
-	       openTime=FormatDate.addDateMinut(openTime,1);
+       if(count<10){
+	       timeOpen=FormatDate.addDateMinut(openTime,1);
 	       for (int i = 0; i < filelist.size(); i++) {
-		       if(filelist.get(i).indexOf(openTime)>-1){
+		       if(filelist.get(i).indexOf(timeOpen)>-1){
 			       if(count<10) {
 				       count++;
 				       list.add(filelist.get(i));
@@ -84,6 +83,63 @@ public class OpenDoorAction {
 		       }
 	       }
        }
+       if(count<10){
+	       timeOpen=FormatDate.addDateMinut(openTime,2);
+	       for (int i = 0; i < filelist.size(); i++) {
+		       if(filelist.get(i).indexOf(timeOpen)>-1){
+			       if(count<10) {
+				       count++;
+				       list.add(filelist.get(i));
+			       }
+		       }
+	       }
+       }
+		if(count<10){
+			timeOpen=FormatDate.addDateMinut(openTime,3);
+			for (int i = 0; i < filelist.size(); i++) {
+				if(filelist.get(i).indexOf(timeOpen)>-1){
+					if(count<10) {
+						count++;
+						list.add(filelist.get(i));
+					}
+				}
+			}
+		}
+		if(count<10){
+			timeOpen=FormatDate.addDateMinut(openTime,-1);
+			for (int i = 0; i < filelist.size(); i++) {
+				if(filelist.get(i).indexOf(timeOpen)>-1){
+					if(count<10) {
+						count++;
+						list.add(filelist.get(i));
+					}
+				}
+			}
+		}
+		if(count<10){
+			timeOpen=FormatDate.addDateMinut(openTime,-2);
+			for (int i = 0; i < filelist.size(); i++) {
+				if(filelist.get(i).indexOf(timeOpen)>-1){
+					if(count<10) {
+						count++;
+						list.add(filelist.get(i));
+					}
+				}
+			}
+		}
+		if(count<10){
+			timeOpen=FormatDate.addDateMinut(openTime,-3);
+			for (int i = 0; i < filelist.size(); i++) {
+				if(filelist.get(i).indexOf(timeOpen)>-1){
+					if(count<10) {
+						count++;
+						list.add(filelist.get(i));
+					}
+				}
+			}
+		}
+		System.out.println(timeOpen+"opentime");
+		System.out.println("list"+list);
 		model.addAttribute("pictureList",list);
 		return "admin/opendoor/pList";
 	}
@@ -132,7 +188,10 @@ public class OpenDoorAction {
 	}
 
 	public static void main(String[] args) {
+		System.out.println("2016-08-20".substring(0,10));
 		List<String > list=new ArrayList<>();
+		System.out.println(list.size());
+		/*List<String > list=new ArrayList<>();
 		list.add("hlxx/00000005/192.168.1.64_01_20180329140546219_ALARM_INPUT.jpg");
 		list.add("hlxx/00000005/192.168.1.64_01_20180329140548339_ALARM_INPUT.jpg");
 		list.add("hlxx/00000005/192.168.1.64_01_20180329140550888_ALARM_INPUT.jpg");
@@ -164,6 +223,6 @@ public class OpenDoorAction {
 		});
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println(list.get(i));
-		}
+		}*/
 	}
 }
