@@ -46,61 +46,6 @@
                 });
                 console.log(keyData);
             }
-            function getUsers(obj) {
-                var data={
-                    "disaId":obj
-                };
-                //获取使用人
-                $.post(basePath+"/authorization/user",data,function(data){
-                    var d=JSON.parse(data);
-                    var userData = []; //创建数组
-                    for(var i=0;i<d.length;i++){
-                        userData.push({
-                            "id": d[i].id,
-                            "name": d[i].username
-                        });
-                    }
-                    $('#userList').datagrid('loadData', userData);
-                });
-            }
-            //获取控制器
-            function getCollector(obj) {
-                var data={
-                    "deptId":obj
-                };
-                $('#collectorList').empty();
-                $.post(basePath+"/authorization/allCollector",data,function(data){
-                    var d=JSON.parse(data);
-                    var collectorData = []; //创建数组
-                    for(var i=0;i<d.length;i++){
-                        collectorData.push({
-                            "id": d[i].id,
-                            "ccode": d[i].dis.name +"->" +d[i].ccode,
-                            "disId":d[i].dis.id
-                        });
-                    }
-                    $('#collectorList').datagrid('loadData', collectorData);
-                });
-            }
-            //获取门锁
-            function getLocks(obj) {
-                var data={
-                    "deptId":obj
-                };
-                //获取锁具
-                $.post(basePath+"/authorization/dept/locks",data,function(data){
-                    var d=JSON.parse(data);
-                    $('#locksList').empty();
-                    var locksData = []; //创建数组
-                    for(var i=0;i<d.length;i++){
-                        locksData.push({
-                            "id": d[i].lockCode,
-                            "name": d[i].lockNum
-                        });
-                    }
-                    $('#locksList').datagrid('loadData', locksData);
-                });
-            }
             $("#stepTwo").panel('close');
             $("#stepThere").panel('close');
             $('#tree').tree({
@@ -151,6 +96,61 @@
                 $("#stepTwo").panel('close');
                 $("#stepThere").panel('open');
             }
+        }
+        function getUsers(obj) {
+            var data={
+                "disaId":obj
+            };
+            //获取使用人
+            $.post(basePath+"/authorization/user",data,function(data){
+                var d=JSON.parse(data);
+                var userData = []; //创建数组
+                for(var i=0;i<d.length;i++){
+                    userData.push({
+                        "id": d[i].id,
+                        "name": d[i].username
+                    });
+                }
+                $('#userList').datagrid('loadData', userData);
+            });
+        }
+        //获取控制器
+        function getCollector(obj) {
+            var data={
+                "deptId":obj
+            };
+            $('#collectorList').empty();
+            $.post(basePath+"/authorization/allCollector",data,function(data){
+                var d=JSON.parse(data);
+                var collectorData = []; //创建数组
+                for(var i=0;i<d.length;i++){
+                    collectorData.push({
+                        "id": d[i].id,
+                        "ccode": d[i].dis.name +"->" +d[i].ccode,
+                        "disId":d[i].dis.id
+                    });
+                }
+                $('#collectorList').datagrid('loadData', collectorData);
+            });
+        }
+        //获取门锁
+        function getLocks(obj) {
+            var data={
+                "deptId":obj
+            };
+            //获取锁具
+            $.post(basePath+"/authorization/dept/locks",data,function(data){
+                var d=JSON.parse(data);
+                $('#locksList').empty();
+                var locksData = []; //创建数组
+                for(var i=0;i<d.length;i++){
+                    locksData.push({
+                        "id": d[i].lockCode,
+                        "name": d[i].lockNum
+                    });
+                }
+                $('#locksList').datagrid('loadData', locksData);
+            });
         }
         //离线授权
         function offlineAuth() {
@@ -223,6 +223,16 @@
                 success: function (data) {
                     if(data.result=="1"){
                         alert(data.message);
+                        $("#stepOne").panel('open');
+                        $("#stepTwo").panel('close');
+                        $("#stepThere").panel('close');
+                        $('#authStartTime').val("");
+                        $('#authEndTime').val("");
+                        $('#authName').val("");
+                        getUsers(deptId);
+                        getLocks(deptId);
+                        getCollector(deptId);
+                        $('#keysList').datagrid('loadData', []);
                     }else{
                         alert("保存失败!");
                     }

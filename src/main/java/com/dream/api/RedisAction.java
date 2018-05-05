@@ -195,7 +195,7 @@ public class RedisAction {
                     List<Locks> locksList= ilocksDao.findLocks(params);
                     if(locksList.size()>0){
                         Locks locks=locksList.get(0);
-                        return  StringUtil.jsonValue("1", "门锁识别号已存在"+locks.getQgdis().getName());
+                        return  StringUtil.jsonValue("1", locks.getLockCode()+"门锁识别号已存在"+locks.getQgdis().getName());
                     }
                 }
                 return  StringUtil.jsonValue("1", o.toString().replace("*",""));

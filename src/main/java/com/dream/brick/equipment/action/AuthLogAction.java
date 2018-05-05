@@ -59,6 +59,8 @@ public class AuthLogAction {
     private boolean authStatus=false;
     private int openCount;//授权成功次数
 
+    private int retryCount=3;
+
     @RequestMapping("/prList")
     public String prList()
             throws Exception {
@@ -140,7 +142,7 @@ public class AuthLogAction {
                                    auth(macAddess,collectore.getCollector().getCcode(), adminId, checkTimeAuthModel,uuid,0);//ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(keys[4].getBytes()))
                                    authStatus=false;
                                }
-                                auth(macAddess,collectore.getCollector().getCcode(), adminId, authModel,uuid,10000);//ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(keys[4].getBytes()))
+                                auth(macAddess,collectore.getCollector().getCcode(), adminId, authModel,uuid,14000);//ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(keys[4].getBytes()))
                             }
                         }
                     }
@@ -188,6 +190,7 @@ private void auth2(AuthLog authLog,String adminId,String uuid){
             }
             o = redisTemplateUtil.get(authKey);
             if(o!=null){
+                retryCount=0;
                 if (o.toString().indexOf("授权成功") > -1) {
                     openCount++;
                     System.out.println("第二次授权开始");
@@ -198,6 +201,11 @@ private void auth2(AuthLog authLog,String adminId,String uuid){
                 }
                 value=0;
             }
+        }
+        if(o==null){
+            retryCount--;
+            if(retryCount>0)
+            auth(macAddess, collectorId, adminId, authModel,uuid,time);
         }
        /* if (authStatus){
             Object o = redisTemplateUtil.get(authKey);

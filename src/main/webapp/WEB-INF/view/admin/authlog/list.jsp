@@ -26,7 +26,7 @@
                 title: '授权记录列表',
                 iconCls: 'icon-users',
                 width: '95%',
-                height: 600,
+                height: '95%',
                 pageSize: 20,
                 pageList: [20, 30, 50, 100],
                 nowrap: false,
@@ -49,19 +49,30 @@
                     title: '授权名称',
                     field: 'authName',
                     width: $(this).width() * 0.1,
-                    align: 'center'
+                    align: 'left'
                 },
                     {
                         title: '创建时间',
                         field: 'createTime',
-                        width: $(this).width() * 0.1,
-                        align: 'center'
+                        width: $(this).width() * 0.2,
+                        align: 'left',
+                        formatter : function(value) {
+                            if (value != null) {
+                                var date = new Date(value);
+                                var getMonth = (date.getMonth() + 1) < 10 ? ("0" + (date.getMonth() + 1)) : (date.getMonth() + 1);
+                                var getDate = date.getDate() < 10 ? ("0" + date.getDate()) : date.getDate();
+                                var getHours = date.getHours() < 10 ? ("0" + date.getHours()) : date.getHours();
+                                var getMinutes = date.getMinutes() < 10 ? ("0" + date.getMinutes()) : date.getMinutes();
+                                var getSeconds = date.getSeconds() < 10 ? ("0" + date.getSeconds()) : date.getSeconds();
+                                return date.getFullYear() + "-" + getMonth + "-" + getDate + " " + getHours + ":" + getMinutes + ":" + getSeconds;
+                            }
+                        }
                     },
                     {
                         title: '授权类型',
                         field: 'authType',
                         width: $(this).width() * 0.1,
-                        align: 'center',
+                        align: 'left',
                         formatter: function (value, rowData, rowIndx) {
                             if(value=="0"){
                                 value="离线授权";
@@ -82,7 +93,7 @@
                             return rowData.user.username;
                         },
                         width: $(this).width() * 0.1,
-                        align: 'center'
+                        align: 'left'
                     },
                     {
                         title: '授权钥匙',

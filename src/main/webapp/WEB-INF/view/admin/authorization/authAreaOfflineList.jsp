@@ -51,42 +51,7 @@
                 });
                 console.log(keyData);
             }
-            //获取站点
-            function getDiss(obj) {
-                var data={
-                    "disaId":obj
-                };
-                $('#dissList').empty();
-                $.post(basePath+"/authorization/distribution",data,function(data){
-                    var d=JSON.parse(data);
-                    var disaData = []; //创建数组
-                    for(var i=0;i<d.length;i++){
-                        disaData.push({
-                            "id": d[i].id,
-                            "name": d[i].name
-                        });
-                    }
-                    $('#dissList').datagrid('loadData', disaData);
-                });
-            };
-            //获取控制器
-            function getCollector(obj) {
-                var data={
-                    "deptId":obj
-                };
-                $('#collectorList').empty();
-                $.post(basePath+"/authorization/allCollector",data,function(data){
-                    var d=JSON.parse(data);
-                    var collectorData = []; //创建数组
-                    for(var i=0;i<d.length;i++){
-                        collectorData.push({
-                            "id": d[i].id,
-                            "ccode": d[i].dis.name +"->" +d[i].ccode
-                        });
-                    }
-                    $('#collectorList').datagrid('loadData', collectorData);
-                });
-            }
+
             //获取门锁
             function getLocks(obj) {
                 var data={
@@ -142,6 +107,42 @@
                     });
                 }
                 $('#userList').datagrid('loadData', userData);
+            });
+        }
+        //获取站点
+        function getDiss(obj) {
+            var data={
+                "disaId":obj
+            };
+            $('#dissList').empty();
+            $.post(basePath+"/authorization/distribution",data,function(data){
+                var d=JSON.parse(data);
+                var disaData = []; //创建数组
+                for(var i=0;i<d.length;i++){
+                    disaData.push({
+                        "id": d[i].id,
+                        "name": d[i].name
+                    });
+                }
+                $('#dissList').datagrid('loadData', disaData);
+            });
+        };
+        //获取控制器
+        function getCollector(obj) {
+            var data={
+                "deptId":obj
+            };
+            $('#collectorList').empty();
+            $.post(basePath+"/authorization/allCollector",data,function(data){
+                var d=JSON.parse(data);
+                var collectorData = []; //创建数组
+                for(var i=0;i<d.length;i++){
+                    collectorData.push({
+                        "id": d[i].id,
+                        "ccode": d[i].dis.name +"->" +d[i].ccode
+                    });
+                }
+                $('#collectorList').datagrid('loadData', collectorData);
             });
         }
         function stepAuth(num) {
@@ -274,7 +275,19 @@
                 success: function (data) {
                     if(data.result=="1"){
                         alert(data.message);
-
+                        $("#stepOne").panel('open');
+                        $("#stepTwo").panel('close');
+                        $("#stepThere").panel('close');
+                        $("#stepFour").panel('close');
+                        $('#authStartTime').val("");
+                        $('#authEndTime').val("");
+                        $('#authName').val("");
+                        getUsers(deptId);
+                        getDiss(deptId);
+                        getCollector(deptId);
+                        $('#keysList').datagrid('loadData', []);
+                        $('#locksList').datagrid('loadData', []);
+                        $('#collectorList').datagrid('loadData', []);
                     }else{
                         alert("保存失败!");
                     }
