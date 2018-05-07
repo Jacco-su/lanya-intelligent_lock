@@ -256,7 +256,8 @@ public class OfflineAction {
                   List<Locks>  locksList= ilocksDao.findLocks(params);
                   if(locksList.size()>0){
                       Locks locks=locksList.get(0);
-                      responseStr="门锁识别号已存在"+locks.getQgdis().getName();
+                      //responseStr="门锁识别号已存在"+locks.getQgdis().getName();
+                      responseStr=locks.getLockNum()+":"+locks.getLockCode()+":"+locks.getQgdis().getName()+":"+locks.getQgdis().getDept().getName();
                   }
                 }
             }
@@ -319,8 +320,6 @@ public class OfflineAction {
     }
     private String  auth(String authModel,String serial,AuthLog authLogFirst,String lockNum,String keysId,HttpServletRequest request){
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
-       /* for(int i=0;i<2;i++) {
-        }*/
         redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel + ";" + request.getSession().getAttribute("userUUID") + ";" + serial);
 
         try {

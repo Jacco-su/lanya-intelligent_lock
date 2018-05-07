@@ -343,7 +343,7 @@
                                 <%--<select class="easyui-combobox"  name="users" id="users" style="width: 180px;" data-options="editable:false,valueField:'id', textField:'text'">
                                     <option value="0">---请选择---</option>
                                 </select>--%>
-                                    <table class="easyui-datagrid" id="userList"  data-options="singleSelect:true" title = "用户列表" style="width:350px;height:250px">
+                                    <table class="easyui-datagrid" id="userList"  data-options="singleSelect:true,rownumbers:true" title = "用户列表" style="width:350px;height:250px">
                                         <thead>
                                         <tr>
                                             <th data-options="field:'id',checkbox:true"></th>
@@ -355,7 +355,7 @@
                                     </table>
                             </td>
                             <td colspan="2">
-                                <table class="easyui-datagrid" id="keysList" data-options="singleSelect:true" title = "钥匙列表" style="width:350px;height:250px">
+                                <table class="easyui-datagrid" id="keysList" data-options="singleSelect:true,rownumbers:true" title = "钥匙列表" style="width:350px;height:250px">
                                     <thead>
                                     <tr>
                                         <th data-options="field:'id',checkbox:true"></th>
@@ -380,7 +380,7 @@
                     <table cellpadding="5">
                         <tr>
                             <td colspan="2">
-                                <table class="easyui-datagrid" id="dissList" data-options="singleSelect:true" title = "站点列表" style="width:350px;height:250px">
+                                <table class="easyui-datagrid" id="dissList" data-options="singleSelect:true,rownumbers:true" title = "站点列表" style="width:350px;height:250px">
                                     <thead>
                                     <tr>
                                         <th data-options="field:'id',checkbox:true"></th>
@@ -418,7 +418,7 @@
                     <table cellpadding="5">
                         <tr>
                             <td colspan="4">
-                                <table class="easyui-datagrid" id="collectorList" data-options="singleSelect:true" title = "采集器列表" style="width:350px;height:250px">
+                                <table class="easyui-datagrid" id="collectorList" data-options="singleSelect:true,rownumbers:true" title = "采集器列表" style="width:350px;height:250px">
                                     <thead>
                                     <tr>
                                         <th data-options="field:'id',checkbox:true"></th>
@@ -433,7 +433,7 @@
                         </tr>
                         <tr>
                             <td><button class="easyui-linkbutton" onclick="stepAuth(3)">上一步</button></td>
-                            <td><button class="easyui-linkbutton" onclick="offlineAuth(4)">完成</button></td>
+                            <td><button class="easyui-linkbutton" onclick="offlineAuth(4)">授权</button></td>
                         </tr>
                     </table>
                 </div>

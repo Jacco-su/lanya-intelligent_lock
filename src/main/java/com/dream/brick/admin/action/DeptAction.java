@@ -66,7 +66,7 @@ public class DeptAction {
 			menuTree.setId(dept.getId());
 			menuTree.setpId(dept.getParentId());
 			menuTree.setState("icon");
-			menuTree.setIconCls("icon-ok");
+			//menuTree.setIconCls("icon-ok");
 			menuTree.setText(dept.getName());
 			menuTree.setAreaCode(dept.getAreacode());
 			menuTrees.add(menuTree);

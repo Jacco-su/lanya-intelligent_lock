@@ -26,7 +26,7 @@
                 title: '授权记录列表',
                 iconCls: 'icon-users',
                 width: '95%',
-                height: '95%',
+                fit:false,
                 pageSize: 20,
                 pageList: [20, 30, 50, 100],
                 nowrap: false,

@@ -26,7 +26,7 @@
                 title: '开门记录列表',
                 iconCls: 'icon-users',
                 width: '95%',
-                height: 600,
+                fit:false,
                 pageSize: 20,
                 pageList: [20, 30, 50, 100],
                 nowrap: false,
@@ -172,25 +172,6 @@
                 });
 
             }
-
-            function del() {
-                var selected = infolist.datagrid('getSelected');
-                if (selected) {
-                    $.messager.confirm('警告', '确定要删除么?', function (f) {
-                        if (f) {
-                            $.post("${basePath}/keyss/delete", {"id": selected.id}, function (json) {
-                                $.messager.alert('提示', json.message);
-                                if (json.result == 1) {
-                                    infolist.datagrid('reload');
-                                }
-                            }, "json");
-                        }
-                    });
-                } else {
-                    $.messager.alert('警告', '未选中任何数据', 'warning');
-                }
-            }
-
 //----------------------------------------------
             function search() {
                 addWin = $.createWin({
@@ -237,8 +218,6 @@
             });
 
         });
-
-
     </script>
 </head>
 <body>

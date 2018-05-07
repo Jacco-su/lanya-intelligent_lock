@@ -21,6 +21,7 @@
         var basePath="${basePath}";
         var deptId="";
         $(function() {
+            $('#dlgLock').dialog('close');
            // getkeys();
             $('#tree').tree({
                 checkbox: false,
@@ -279,8 +280,13 @@
                             alert(data.message);
                         }else{
                             $("#locks").empty();
-                            if(data.message.indexOf("已存在")>-1){
-                                alert(data.message);
+                            if(data.message.indexOf(":")>-1){
+                                var locks=data.message.split(":");
+                                $('#lockName').html(locks[0]);
+                                $('#lockCodeS').html(locks[1]);
+                                $('#diss').html(locks[2]);
+                                $('#dept').html(locks[3]);
+                                $('#dlgLock').dialog('open');
                             }else{
                                 var lockNum = data.message.split(";")[1];
                                 $("#locks").val(lockNum);
@@ -307,7 +313,6 @@
                 "serial":serial,
                 "T":13
             };
-            progress();
             $.ajax({
                 type: "post",
                 url: basePath+"/offline/read",
@@ -316,7 +321,6 @@
                 data:data,
                 dataType: "json",
                 success: function(data){
-                    $.messager.progress('close');
                     if(data.result=="1"){
                         $('#keys').val(data.message.split("->")[1]);
                     }else{
@@ -324,12 +328,6 @@
                     }
                 }
 
-            });
-        }
-        function progress(){
-            var win = $.messager.progress({
-                title:'请等待',
-                msg:'正在加载数据...'
             });
         }
     </script>
@@ -426,5 +424,25 @@
         </td>
     </tr>
 </table>
+<div id="dlgLock" class="easyui-dialog" title="门锁信息" data-options="iconCls:'icon-save'" style="width:500px;height:200px;padding:10px">
+<table width="100%" border="1" cellpadding="0" cellspacing="0">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>识别码</th>
+        <th>归属变电站</th>
+        <th>归属班组</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td id="lockName"></td>
+        <td id="lockCodeS"></td>
+        <td id="diss"></td>
+        <td id="dept"></td>
+    </tr>
+    </tbody>
+</table>
+</div>
 </body>
 </html>
