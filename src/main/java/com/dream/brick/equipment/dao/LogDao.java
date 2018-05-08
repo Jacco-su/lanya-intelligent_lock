@@ -8,5 +8,5 @@ import java.util.List;
 
 
 public interface LogDao extends BaseDao {
-	public List<Log> findLogList(Pager pager);
+	public List<Log> findLogList(String userId,Pager pager);
 }

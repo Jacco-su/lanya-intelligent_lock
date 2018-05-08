@@ -27,11 +27,11 @@ public class LogAction {
     private LogDao logDao;
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public String list(int page, int rows, Pager pager) throws Exception {
+    public String list(int page, int rows,String userId, Pager pager) throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
-        List<Log> logList=logDao.findLogList(pager);
+        List<Log> logList=logDao.findLogList(userId,pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", logList);
         return datas.toString();

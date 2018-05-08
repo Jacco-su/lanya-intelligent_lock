@@ -10,15 +10,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>日志管理</title>
-<link rel="stylesheet" type="text/css"	href="${basePath}/css/mainframe.css" />
-<link rel="stylesheet" type="text/css"	href="${basePath}/js/easyui/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css"	href="${basePath}/js/easyui/themes/icon.css" />
-<script type="text/javascript" src="${basePath}/js/jquery.min.js" charset="UTF-8"></script>
-<script type="text/javascript" src="${basePath}/js/easyui/jquery.easyui.min.1.2.2.js" charset="UTF-8"></script>
-<script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
-<script type="text/javascript"	src="${basePath}/js/easyui/windowControl.js"></script>
-	<script type="text/javascript"	src="${basePath}/js/calendar/WdatePicker.js"></script>
-	<script type="text/javascript"	src="${basePath}/js/areacode.js"></script>
+	<link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
+	<link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
+	<script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="${basePath}/js/easyui/jquery.easyui.min.1.2.2.js"></script>
+	<script type="text/javascript" src="${basePath}/js/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
+	<script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
+	<script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var infolist = $('#infolist');
@@ -174,11 +173,70 @@
 			displayMsg();
 			$('#query').window('close');
 		}
+        $('#tree').tree({
+            checkbox: false,
+            url: '${basePath}/dept/getChildren',
+            onBeforeExpand:function(node,param){
+                $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId=" + node.id;
+            },
+            onClick:function(node){
+                deptId = node.id;
+                getUsers(deptId);
+            }
+        });
+        function getUsers(obj) {
+            var data={
+                "disaId":obj
+            };
+            //获取使用人
+            $.post("${basePath}/authorization/user",data,function(data){
+                var d=JSON.parse(data);
+                for(var i=0;i<d.length;i++){
+                    $('#userId').append("<option value='" + d[i].username + "'>" + d[i].username + "</option>");
+                }
+            });
+        }
 	});
+    function searchUser() {
+        $('#infolist').datagrid( {
+            url : '${basePath}/log/list',
+            queryParams:{
+                'userId':$('#userId').val()
+            },
+            loadMsg : '数据装载中......'
+        });
+        $('#infolist').datagrid("clearSelections");
+        //displayMsg();
+    }
+    function displayMsg() {
+        $('#infolist').datagrid('getPager').pagination({
+            beforePageText: '第',
+            afterPageText: '页，共{pages}页',
+            displayMsg: '当前显示从{from}到{to}共{total}记录'
+        });
+    }
 </script>
 </head>
 <body>
-
-<table id="infolist"></table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" height="630">
+	<tr>
+		<td width="12%" valign="top"
+			style="border: 1px solid #99bbe8; border-right: 0;">
+			<div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
+			<ul id="tree" style="margin-top: 10px;"></ul>
+		</td>
+		<td valign="top" style="border: 1px solid #99bbe8;">
+			<table style='font-size:12px;'>
+				<tr>
+					<td>用户：</td>
+					<td><select id='userId' style='width: 150px;'></select>
+					</td>
+					<td><button onclick="searchUser()">查询</button></td>
+				</tr>
+			</table>
+			<table id="infolist"></table>
+		</td>	
+	</tr>
+</table>
 </body>
 </html>

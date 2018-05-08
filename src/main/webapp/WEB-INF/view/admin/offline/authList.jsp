@@ -378,7 +378,7 @@
                         <tr>
                             <td>门锁识别码:</td>
                             <td>
-                                <input width="180px" name="locks" id="locks" readonly>
+                                <input width="180px" name="locks" id="locks">
                                <%-- <select class="easyui-combobox" name="locks" id="locks" style="width: 180px;"
                                         data-options="editable:false,valueField:'id', textField:'text'">
                                     <option value="0">---请选择---</option>
