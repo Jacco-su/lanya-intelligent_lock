@@ -75,7 +75,13 @@ public class AuthLogAction {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(int page, int rows,String authName,String authStartTime,String authEndTime, String userId,Pager pager)
+    public String list(int page,
+                       int rows,
+                       String authName,
+                       String authStartTime,
+                       String authEndTime,
+                       String userId,
+                       Pager pager)
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
@@ -207,42 +213,5 @@ private void auth2(AuthLog authLog,String adminId,String uuid){
             if(retryCount>0)
             auth(macAddess, collectorId, adminId, authModel,uuid,time);
         }
-       /* if (authStatus){
-            Object o = redisTemplateUtil.get(authKey);
-            if(o!=null){
-                if (o.toString().indexOf("授权成功") > -1) {
-                    openCount++;
-                    System.out.println("第二次授权开始");
-                    AuthLog authLog = authLogDao.find(AuthLog.class, uuid);
-                    authLog.setAuthStatus("1");
-                    authLog.setAuthIndex(openCount);
-                    authLogDao.update(authLog);
-                }
-            }
-        }*/
-  /*      *//*try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*//*
-        Object o = redisTemplateUtil.get(authKey);
-        if (o != null)  {
-            if("5".equals(t)){
-                System.out.println("第一次授权开始");
-                if(o.toString().indexOf("授权成功")>-1){
-                    authIndex++;
-                    authStatus=false;
-                    System.out.println("第二次授权开始");
-                        AuthLog authLog = authLogDao.find(AuthLog.class, uuid);
-                        authLog.setAuthStatus("1");
-                        authLog.setAuthIndex(authIndex);
-                        authLogDao.update(authLog);
-                }
-            }
-        }
-        AuthLog authLog = authLogDao.find(AuthLog.class, uuid);
-        authLog.setAuthIndex(authIndex);
-        authLogDao.update(authLog);*/
-       //return "";
     }
 }

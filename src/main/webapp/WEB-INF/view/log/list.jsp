@@ -235,7 +235,7 @@
 				</tr>
 			</table>
 			<table id="infolist"></table>
-		</td>	
+		</td>
 	</tr>
 </table>
 </body>

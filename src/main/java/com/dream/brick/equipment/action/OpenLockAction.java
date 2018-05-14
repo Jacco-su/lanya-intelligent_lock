@@ -33,12 +33,15 @@ public class OpenLockAction {
 
 	@RequestMapping("/list")
 	@ResponseBody
-	public String list(int page, int rows,String deptId,Pager pager)
+	public String list(int page, int rows,
+	                   String deptId,
+	                   String userId,
+	                   Pager pager)
 			throws Exception {
 		pager.setCurrentPage(page);
 		pager.setPageSize(rows);
 		JSONObject datas = new JSONObject();
-		List<OpenLog> list = openLogDao.findLockLogList(deptId,pager);
+		List<OpenLog> list = openLogDao.findLockLogList(deptId,userId,pager);
 		datas.put("total", pager.getTotalRow());
 		datas.put("rows", list);
 		return datas.toString();

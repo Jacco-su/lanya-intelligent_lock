@@ -103,8 +103,11 @@ public class DeptAction {
 	public String prAdd(String parentId, ModelMap model, HttpServletRequest request, String id) {
 		if (!"null".equals(parentId)) {
 			Department dept = deptDao.find(Department.class, parentId);
-			Area area = areaInfoDao.find(Area.class, dept.getAreacode());
-			model.addAttribute("area", area);
+			//Area area = areaInfoDao.find(Area.class, dept.getAreacode());
+			//model.addAttribute("area", area);
+			model.addAttribute("areaCode", dept.getAreacode());
+		}else{
+			model.addAttribute("areaCode", "0041");
 		}
 		model.addAttribute("parentId", parentId);
 		return "admin/dept/add";

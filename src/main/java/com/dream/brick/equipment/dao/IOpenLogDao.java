@@ -14,6 +14,6 @@ import java.util.Map;
  * @date 2018-03-10 下午2:15
  */
 public interface IOpenLogDao extends BaseDao {
-	 List<OpenLog> findLockLogList(String deptId, Pager pager);
+	 List<OpenLog> findLockLogList(String deptId,String userId, Pager pager);
 	List<OpenLog> findOpenLog(Map<String,String> params);
 }

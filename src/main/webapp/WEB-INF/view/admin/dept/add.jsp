@@ -14,19 +14,25 @@
 <table class="mytable" align="center">
 	<tr>
         <td>区域名称:</td>
-        <td><input type="hidden" name="parentId" value="${parentId }"/>
+        <td><input type="hidden" style="width: 200px" name="parentId" value="${parentId }"/>
 			<%--<input type="hidden" name="areacode" value="4101"/>--%>
             <input name="name" class="easyui-validatebox" required="true"/></td>
 	</tr>
-
 	<tr>
+		<td>区域编码:</td>
+		<td>
+			<input name="areacode" style="width: 200px" value="${areaCode}" class="easyui-validatebox" required="true"/>
+			<input type="hidden" name="treeShow" value="1"/>
+		</td>
+	</tr>
+	<%--<tr>
 		<td width="100">所属行政区:</td>
 		<td>
             <input type="text" name="areaname" id="addareaname" value="" required="true"/>
 			<a class="easyui-linkbutton" onclick="$('#selectArea').window('open');">选择</a>
             <input type="hidden" name="areacode" id="addareacode" value="" required="true"/>
 		</td>
-	</tr>
+	</tr>--%>
 
 	<%--<tr>--%>
 	<%--<td>所属行政区:</td>--%>

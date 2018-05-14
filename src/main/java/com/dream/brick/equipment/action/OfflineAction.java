@@ -300,9 +300,11 @@ public class OfflineAction {
         if (StringUtils.isNotEmpty(authLog.getAuthLocksId())) {
             String[] locks = authLog.getAuthLocksId().split(",");
             if(locks.length>0){
+                String  checkTimeAuthModel=new AuthModel(new byte[]{12},AuthModel.toData(12,14),Constants.LOCK_KEY).toString();//校时成功
                 String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKeyX(authLog.getUser().getId(), "ffffffffffffffffffffffffffffffff", authLog.getAuthKeysId(), "20160411101525","20990412101527",2,0), Constants.LOCK_KEY).toString();//
                 redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
-                redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
+                redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, checkTimeAuthModel+";"+request.getSession().getAttribute("userUUID")+";"+serial);
+                redisTemplateUtil.setList(Const.REDIS_PROJECT_KEY, authModel+";"+request.getSession().getAttribute("userUUID")+"Clear;"+serial);
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {

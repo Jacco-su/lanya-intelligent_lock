@@ -34,7 +34,7 @@
                 <td><input type="hidden" name="id" value="${dept.id}"/>
                     <input type="hidden" name="parentId" value="${dept.parentId}"/>
                     <input type="hidden" id="tempDeptId" value="${dept.id}"/>
-                    <input name="name" value="${dept.name }" class="easyui-validatebox" required="true"/></td>
+                    <input name="name" style="width: 200px" value="${dept.name }" class="easyui-validatebox" required="true"/></td>
             </tr>
             <%--<tr>
                 <td>排序:</td>
@@ -43,17 +43,17 @@
                 </td>
             </tr>--%>
 
-            <tr>
+            <%--<tr>
                 <td>所属行政区:</td>
                 <td>
-                    <%--<input name="areac" coords="" href="" alt="" value="${dept.areacode}"/>--%>
+                    &lt;%&ndash;<input name="areac" coords="" href="" alt="" value="${dept.areacode}"/>&ndash;%&gt;
 
                     <input type="text" name="areaname" id="areaname" value="${area.areaname}" readonly/>
-                    <%--readonly/>--%>
+                    &lt;%&ndash;readonly/>&ndash;%&gt;
                     <a class="easyui-linkbutton" id="area" onclick="addArea()">选择</a>
                     <input type="hidden" name="areacode" id="areacode" value="${dept.areacode}"/>
                 </td>
-            </tr>
+            </tr>--%>
 
 
             <tr>
@@ -61,7 +61,7 @@
                     区域编号:
                 </td>
                 <td>
-                    <input value="${dept.areacode}" disabled="true "/>
+                    <input value="${dept.areacode}" name="areacode" style="width: 200px" required="true"/>
                 </td>
             </tr>
         </table>

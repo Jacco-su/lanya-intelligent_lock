@@ -50,6 +50,9 @@
                         title: '开锁人员',
                         field: 'userName',
                         formatter: function (value, rowData, rowIndx) {
+                            if(typeof(rowData.user) == "undefined")
+                                return "";
+                            else
                             return rowData.user.username;
                         },
                         width: $(this).width() * 0.1,
@@ -59,7 +62,15 @@
                         title: '开闭锁时间',
                         field: 'openTime',
                         width: $(this).width() * 0.1,
-                        align: 'left'
+                        align: 'left',
+                        formatter: function (value) {
+                            if (value != null) {
+                                if(value.length==14){
+                                  return value.substring(0,4)+"-"+value.substring(4,6)+"-"+value.substring(6,8)+" "+value.substring(8,10)+":"+value.substring(10,12)+":"+value.substring(12,14);
+                                }
+                            }
+                            return value;
+                        }
                     },
                     {
                         title: '锁具名称',
@@ -259,24 +270,65 @@
                 $.closeWin(addWin);
             }
 
-            $('#infolist').tree({
+            $('#tree').tree({
                 checkbox: false,
-                url: basePath + '/user/list',
-                onBeforeExpand: function (node, param) {
-                    $('#tree').tree('options').url = basePath + "/dept/getChildren?parentId=" + node.id;
+                url: '${basePath}/dept/getChildren',
+                onBeforeExpand:function(node,param){
+                    $('#tree').tree('options').url = "${basePath}/dept/getChildren?parentId=" + node.id;
                 },
-                onClick: function (node) {
+                onClick:function(node){
                     deptId = node.id;
-                    refresh();
+                    getUsers(deptId);
                 }
             });
+            function getUsers(obj) {
+                var data={
+                    "disaId":obj
+                };
+                //获取使用人
+                $.post("${basePath}/authorization/user",data,function(data){
+                    var d=JSON.parse(data);
+                    for(var i=0;i<d.length;i++){
+                        $('#userId').append("<option value='" + d[i].id + "'>" + d[i].username + "</option>");
+                    }
+                });
+            }
 
         });
 
-
+        function searchUser() {
+            $('#infolist').datagrid( {
+                url : '${basePath}/openlog/list',
+                queryParams:{
+                    'userId':$('#userId').val()
+                },
+                loadMsg : '数据装载中......'
+            });
+            $('#infolist').datagrid("clearSelections");
+            //displayMsg();
+        }
     </script>
 </head>
 <body>
-<table id="infolist"></table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" height="630">
+    <tr>
+        <td width="12%" valign="top"
+            style="border: 1px solid #99bbe8; border-right: 0;">
+            <div class="panel-header" style="border-left: 0; border-right: 0;">区域</div>
+            <ul id="tree" style="margin-top: 10px;"></ul>
+        </td>
+        <td valign="top" style="border: 1px solid #99bbe8;">
+            <table style='font-size:12px;'>
+                <tr>
+                    <td>用户：</td>
+                    <td><select id='userId' style='width: 150px;'></select>
+                    </td>
+                    <td><button onclick="searchUser()">查询</button></td>
+                </tr>
+            </table>
+            <table id="infolist"></table>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

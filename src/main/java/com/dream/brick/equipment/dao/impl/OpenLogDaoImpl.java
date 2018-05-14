@@ -14,9 +14,13 @@ import java.util.Map;
 @Transactional
 @Repository
 public class OpenLogDaoImpl extends BaseDaoImpl implements IOpenLogDao {
-	public List<OpenLog> findLockLogList(String deptId, Pager pager) {
+	public List<OpenLog> findLockLogList(String deptId,String userId, Pager pager) {
 		StringBuilder hql=new StringBuilder();
-		hql.append(" from OpenLog t where 1=1 order by t.createTime desc");
+		hql.append(" from OpenLog t where 1=1");
+		if(StringUtils.isNotEmpty(userId)){
+            hql.append(" and t.user.id =").append(userId);
+		}
+		hql.append(" order by t.createTime desc");
 		return query(hql.toString(), pager);
 	}
 
