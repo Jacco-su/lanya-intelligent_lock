@@ -96,7 +96,6 @@
                         "T":7,
                         "userId":userId
                     };
-                    progress();
                     $.ajax({
                         type: "post",
                         url: basePath+"/offline/read",
@@ -105,7 +104,6 @@
                         data:data,
                         dataType: "json",
                         success: function(data){
-                            $.messager.progress('close');
                             if (data.result == "1") {
                                 alert(data.message);
                             } else {
@@ -141,7 +139,6 @@
                         "userId":userId,
                         "keysId":keys
                     };
-                    progress();
                     $.ajax({
                         type: "post",
                         url: basePath+"/offline/read",
@@ -150,7 +147,6 @@
                         data:data,
                         dataType: "json",
                         success: function(data){
-                            $.messager.progress('close');
                             if (data.result == "1") {
                                 alert(data.message);
                             } else {
@@ -172,7 +168,6 @@
                 "serial":serial,
                 "T":12
             };
-            progress();
             $.ajax({
                 type: "post",
                 url: basePath+"/offline/read",
@@ -181,7 +176,6 @@
                 data:data,
                 dataType: "json",
                 success: function(data){
-                    $.messager.progress('close');
                     if(data.result=="1"){
                         alert(data.message);
                     }else{
@@ -240,7 +234,6 @@
                 data:data,
                 dataType: "json",
                 success: function(data){
-                    $.messager.progress('close');
                     if(data.result=="1"){
                         alert(data.message);
                     }else{
