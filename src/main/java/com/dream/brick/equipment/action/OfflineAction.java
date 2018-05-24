@@ -223,6 +223,10 @@ public class OfflineAction {
                 SessionData.createSyslog(request,9, "钥匙地址获取");
             }else if("55".equals(T)){
                 authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKeyX(userId,"ffffffffffffffffffffffffffffffff",keysId,"20160411101525","20990412101527",2,0),Constants.LOCK_KEY).toString();
+            }else if("14".equals(T)){
+                //离线获取钥匙日志 by lwx
+                authModel = new AuthModel(new byte[]{14}).toString();
+                SessionData.createSyslog(request,9, "离线获取日志");
             }
         }catch (Exception e){
             e.printStackTrace();

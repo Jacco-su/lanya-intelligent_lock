@@ -203,21 +203,7 @@
                 });
             }
 
-            function showEdit(id) {
-                updateWin = $.createWin({
-                    title: "修改",
-                    url: '${basePath}/keyss/prUpdate',
-                    data: 'id=' + id,
-                    height: 550,
-                    width: 800,
-                    buttons: [{
-                        text: '修改',
-                        iconCls: 'icon-ok',
-                        handler: update
-                    }]
-                });
 
-            }
 
             function del() {
                 var selected = infolist.datagrid('getSelected');
@@ -250,6 +236,10 @@
                         text: '查询',
                         iconCls: 'icon-search',
                         handler: uquery
+                    },{
+                        text: '更新',
+                        iconCls: 'icon-edit',
+                        handler: showEdit
                     }]
                 });
             }
@@ -307,6 +297,28 @@
             $('#infolist').datagrid("clearSelections");
             //displayMsg();
         }
+        function showEdit() {
+            updateWin = $.createWin({
+                title: "修改",
+                url: '${basePath}/openlog/prUpdate',
+                data: 'id=' + 1,
+                height: 550,
+                width: 800,
+                buttons: []
+            });
+
+        }
+        function offlineAuthList() {
+            updateWin = $.createWin({
+                title: "修改",
+                url: '${basePath}/openlog/offlineAuthList',
+                data: 'id=' + 1,
+                height: 550,
+                width: 800,
+                buttons: []
+            });
+
+        }
     </script>
 </head>
 <body>
@@ -324,6 +336,8 @@
                     <td><select id='userId' style='width: 150px;'></select>
                     </td>
                     <td><button onclick="searchUser()">查询</button></td>
+                    <td><button onclick="offlineAuthList()">离线更新</button></td>
+                    <td><button onclick="showEdit()">在线更新</button></td>
                 </tr>
             </table>
             <table id="infolist"></table>

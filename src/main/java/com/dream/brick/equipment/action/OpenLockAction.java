@@ -46,4 +46,14 @@ public class OpenLockAction {
 		datas.put("rows", list);
 		return datas.toString();
 	}
+	@RequestMapping("/prUpdate")
+	public String Update(String id) throws Exception {
+
+		return "admin/openlog/update";
+	}
+	@RequestMapping("/offlineAuthList")
+	public String offlineAuthList(String id) throws Exception {
+
+		return "admin/openlog/offlineAuthList";
+	}
 }
