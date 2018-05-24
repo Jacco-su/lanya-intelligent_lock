@@ -49,39 +49,49 @@ public class ConsoleAction {
 		try {
 			moduleSet = new HashSet<String>();
 			User admin=userDao.findByName(loginName);
-			if (admin!=null) {
-				String ecpwd=MD5.encrytion(loginPwd);
-				if(!ecpwd.equals(admin.getPassword())){
-					errormsg =findLogMsg(101);
-					//101 登陆失败!请核对您的用户名和密码是否正确!
-					request.setAttribute("errormsg", errormsg);
-					return "/console/login";
-				}
-				if(admin.getStatus()!=1){
-					errormsg =findLogMsg(102);
-					//102 用户名无效!
-					request.setAttribute("errormsg", errormsg);
-					return "/console/login";
-				}
-				String username = admin.getName();
-				Department dept = admin.getDept();
-				/*if(!"null".equals(dept.getParentId())){
-					dept = deptDao.find(Department.class, dept.getParentId());
+            if (admin != null) {
+                String ecpwd = MD5.encrytion(loginPwd);
+                if (!ecpwd.equals(admin.getPassword())) {
+                    errormsg = findLogMsg(101);
+                    //101 登陆失败!请核对您的用户名和密码是否正确!
+                    request.setAttribute("errormsg", errormsg);
+                    return "/console/login";
+                }
+                if (admin.getStatus() != 1) {
+                    errormsg = findLogMsg(102);
+                    //102 用户名无效!
+                    request.setAttribute("errormsg", errormsg);
+                    return "/console/login";
+                }
+                String username = admin.getName();
+                Department dept = admin.getDept();
+                /*if(!"null".equals(dept.getParentId())){
+                    dept = deptDao.find(Department.class, dept.getParentId());
+<<<<<<< HEAD
 				}*/
-				//String qgorgId=dept.getQgorgId();
-				//Qgorg qgorg=deptDao.find(Qgorg.class, qgorgId);
-				request.getSession().setAttribute("admin", admin);
-				request.getSession().setAttribute("dept", dept);
-				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+                //String qgorgId=dept.getQgorgId();
+                //Qgorg qgorg=deptDao.find(Qgorg.class, qgorgId);
+                request.getSession().setAttribute("admin", admin);
+                request.getSession().setAttribute("dept", dept);
+                String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 
-				request.getSession().setAttribute("userUUID",uuid);
-				request.getSession().setAttribute("seareacode", dept.getAreacode());    //**
-				//String key=Const.REDIS_PROJECT_KEY;
-				if(admin.getDisName()!=null&&admin.getDisName()!="null"&&admin.getDisName()!=""){
-					Const.REDIS_PROJECT_KEY="lanya-lite-client-server"+admin.getDisName();
-				}
+                request.getSession().setAttribute("userUUID", uuid);
+                request.getSession().setAttribute("seareacode", dept.getAreacode());    //**
+                //String key=Const.REDIS_PROJECT_KEY;
+                if (admin.getDisName() != null && admin.getDisName() != "null" && admin.getDisName() != "") {
+                    Const.REDIS_PROJECT_KEY = "lanya-lite-client-server" + admin.getDisName();
+                }
 
 
+=======
+            }
+            //String qgorgId=dept.getQgorgId();
+            //Qgorg qgorg=deptDao.find(Qgorg.class, qgorgId);
+            request.getSession().setAttribute("admin", admin);
+            request.getSession().setAttribute("dept", dept);
+            //request.getSession().setAttribute("seqgorg",qgorg);
+            request.getSession().setAttribute("seareacode", "41");    //**
+>>>>>>>github / dev
                 admin.setRoles(userDao.findRoles(admin.getId()));
 				List<Role> roles = admin.getRoles();
 				if(roles.size()==0){

@@ -65,12 +65,18 @@ public class DistributionAction {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
+<<<<<<<HEAD
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
         }else{
             deptId=SessionData.getAreacode(request);
-        }
+=======
+            if (StringUtils.isNotEmpty(deptId)) {
+                Department department = deptDao.find(Department.class, deptId);
+                deptId = department.getAreacode();
+>>>>>>>github / dev
+            }
         List<Qgdis> list = disDao.findQgdisList(deptId, dissName, pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);

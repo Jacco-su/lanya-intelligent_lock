@@ -59,18 +59,29 @@ public class CollectorAction {
 
     @RequestMapping("/list")
     @ResponseBody
+<<<<<<<HEAD
     public String list(int page, int rows, Pager pager, HttpServletRequest request,String deptId)
+=======
+
+    public String list(int page, int rows, Pager pager, String deptId)
+>>>>>>>github/dev
             throws Exception {
         pager.setCurrentPage(page);
         pager.setPageSize(rows);
         JSONObject datas = new JSONObject();
+<<<<<<<HEAD
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
         }else{
             deptId=SessionData.getAreacode(request);
-        }
-        List<Collector> list = collectorDao.findCollectorList(deptId,pager);
+=======
+            if (StringUtils.isNotEmpty(deptId)) {
+                Department department = deptDao.find(Department.class, deptId);
+                deptId = department.getAreacode();
+>>>>>>>github / dev
+            }
+            List<Collector> list = collectorDao.findCollectorList(deptId, pager);
         datas.put("total", pager.getTotalRow());
         datas.put("rows", list);
         return datas.toString();
@@ -78,14 +89,19 @@ public class CollectorAction {
 
 
     @RequestMapping("/prAdd")
+<<<<<<<HEAD
     public String prAdd(ModelMap model,String deptId, String dissName) {
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
         }
         model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName)));
-        return "admin/collector/add";
-    }
+=======
+            public String prAdd (ModelMap model, String deptId, String dissName, Pager pager){
+                model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId, dissName, pager)));
+>>>>>>>github / dev
+                return "admin/collector/add";
+            }
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String add(@ModelAttribute Collector collector, HttpServletRequest request) {
@@ -117,11 +133,17 @@ public class CollectorAction {
     public String prUpdate(String id, ModelMap model, String deptId, String dissName) throws ParseException {
         Collector collector = collectorDao.find(Collector.class, id);
         model.addAttribute("collectora", collector);
+<<<<<<<HEAD
         if(StringUtils.isNotEmpty(deptId)){
             Department department =deptDao.find(Department.class,deptId);
             deptId=department.getAreacode();
         }
         model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId,dissName)));
+=======
+
+
+                model.addAttribute("qgdisList", JSON.toJSONString(qgdisDao.findQgdisList(deptId, dissName, pager)));
+>>>>>>>github / dev
 
 
         return "admin/collector/update";

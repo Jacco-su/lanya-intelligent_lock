@@ -513,7 +513,10 @@ a.active{outline: none;}
 	font-weight:bold;
 }
 .datebox-button-hover{
+	< < < < < < < HEAD
 	color: #8ffafd;
+= = = = = = = color: #adcdf1;
+> > > > > > > github / dev
 }
 .dialog-content{
 	overflow:auto;
@@ -1282,7 +1285,10 @@ a.s-btn-plain-active .s-btn-downarrow{
 	background: #fd93c0;
 }
 .tree-node-selected{
+	< < < < < < < HEAD
 	background: #ff9688;
+= = = = = = = background: #f98f38;
+> > > > > > > github / dev
 }
 .tree-checkbox{
 	display:inline-block;
@@ -1384,7 +1390,10 @@ a.s-btn-plain-active .s-btn-downarrow{
 }
 .window .window-body{
 	background:#fff;
+	< < < < < < < HEAD
 	border: 1px solid #45c2ff;
+= = = = = = = border: 1 px solid #99BBE8;
+> > > > > > > github / dev
 	border-top-width:0px;
 }
 .window .window-header .panel-icon{
@@ -1432,7 +1441,10 @@ a.s-btn-plain-active .s-btn-downarrow{
 .mytable td{
 	border-right: 1px solid #86bae8;
 	border-bottom: 1px solid #80b8e8;
+	< < < < < < < HEAD
 	background: #eae7e7;
+= = = = = = = background: #fff;
+> > > > > > > github / dev
 	padding: 3px 12px; 
 	font-size:14px;
 }

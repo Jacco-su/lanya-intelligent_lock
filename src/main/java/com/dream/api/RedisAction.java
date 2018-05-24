@@ -3,8 +3,11 @@ package com.dream.api;
 import com.alibaba.fastjson.JSON;
 import com.dream.brick.admin.bean.User;
 import com.dream.brick.equipment.bean.AuthLog;
+<<<<<<<HEAD
 import com.dream.brick.equipment.bean.Authorization;
 import com.dream.brick.equipment.bean.Locks;
+=======
+        >>>>>>>github/dev
 import com.dream.brick.equipment.bean.Qgdis;
 import com.dream.brick.equipment.dao.IAuthLogDao;
 import com.dream.brick.equipment.dao.IAuthorizationDao;
@@ -16,8 +19,15 @@ import com.dream.socket.entity.DataProtocol;
 import com.dream.socket.entity.JsonDataProtocol;
 import com.dream.socket.utils.ByteUtil;
 import com.dream.socket.utils.Constants;
+<<<<<<<HEAD
 import com.dream.util.*;
 import org.apache.commons.lang3.StringUtils;
+=======
+import com.dream.util.AppMsg;
+import com.dream.util.FormatDate;
+import com.dream.util.RedisTemplateUtil;
+import com.dream.util.StringUtil;
+>>>>>>>github/dev
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -141,6 +151,7 @@ public class RedisAction {
             }
         }*/
         redisTemplateUtil.setList("lanya-lite", authKey);
+<<<<<<<HEAD
         int time=8500;
         Object o=null;
         while (time>0){
@@ -162,9 +173,17 @@ public class RedisAction {
 /*        try {
             Thread.sleep(time);
             *//*while (time>0){
+=======
+        int time = 15000;
+        try {
+            Thread.sleep(time - 2000);
+            Object o = null;
+            while (time > 0) {
+>>>>>>> github/dev
                 o = redisTemplateUtil.get(authKey);
-                if(o==null){
+                if (o == null) {
                     redisTemplateUtil.setList("lanya-lite", authKey);
+<<<<<<< HEAD
                     time-=3000;
                     Thread.sleep(3000);
                 }else{
@@ -176,6 +195,17 @@ public class RedisAction {
                         o=null;
                         redisTemplateUtil.setList("lanya-lite", authKey);
                         Thread.sleep(3000);
+=======
+                    Thread.sleep(time - 1000);
+                } else {
+                    int t = o.toString().lastIndexOf("*") + 1;
+                    if (keys[1].equals(t)) {
+                        break;
+                    } else {
+                        o = null;
+                        redisTemplateUtil.setList("lanya-lite", authKey);
+                        Thread.sleep(time - 1000);
+>>>>>>> github/dev
                     }
                 }
             }*//*
