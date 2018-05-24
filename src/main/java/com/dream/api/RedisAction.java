@@ -16,10 +16,7 @@ import com.dream.socket.entity.DataProtocol;
 import com.dream.socket.entity.JsonDataProtocol;
 import com.dream.socket.utils.ByteUtil;
 import com.dream.socket.utils.Constants;
-import com.dream.util.AppMsg;
-import com.dream.util.FormatDate;
-import com.dream.util.RedisTemplateUtil;
-import com.dream.util.StringUtil;
+import com.dream.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -51,7 +48,7 @@ public class RedisAction {
     private ILocksDao ilocksDao;
     @RequestMapping(value = "/get", method = {RequestMethod.POST})
     @ResponseBody
-    public String get(String key,String lockNum, HttpServletRequest request) {
+    public String get(String serial,String key,String lockNum, HttpServletRequest request) {
         redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         String [] keys=key.split(",");
         String  authModel=null;
@@ -123,7 +120,10 @@ public class RedisAction {
             //获取钥匙Mac地址
             authModel = new AuthModel(new byte[]{13}).toString();
         }
-
+        //获取日志 by lwx
+        else if("14".equals(keys[1])){
+            authModel=new AuthModel(new byte[]{14}).toString();
+        }
         String macAddess=keys[2].replace(":","");
         macAddess="00000000000000000000"+macAddess;
         DataProtocol dataProtocol=new DataProtocol(new byte[]{00,01}, ByteUtil.hexToBytes(macAddess),ByteUtil.hexToBytes(authModel));
