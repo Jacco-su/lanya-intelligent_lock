@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>授权记录信息</title>
+    <title>授权记录信息 开关锁</title>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
@@ -17,6 +17,8 @@
     <script type="text/javascript" src="${basePath}/js/easyui/windowControl.js"></script>
     <script type="text/javascript" src="${basePath}/js/easyui/toolbar.js"></script>
     <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
+
+
     <script type="text/javascript">
         var basePath = "${basePath}";
         $(function () {
@@ -103,7 +105,18 @@
                     }
                 ]],
                 pagination: true,
-                rownumbers: true
+                rownumbers: true,
+                toolbar: [
+//                    {
+//                        text: '删除',
+//                        iconCls: 'icon-remove',
+//                        handler: del
+//                    },
+                    '-', {
+                        text: '查询',
+                        iconCls: 'icon-search',
+                        handler: search
+                    }]
             });
             displayMsg();
 
@@ -243,7 +256,7 @@
                     title: "查询条件",
                     contents: "<table style='font-size:12px;'>" +
                     "<tr><td>授权名称：</td><td><input id=authName /></td></tr>" +
-                    "<tr><td>授权日期：</td><td><input id=\"authStartTime\" name=\"authStartTime\" class=\"easyui-validatebox\"  value=\"\"/><img onclick=\"WdatePicker({el:'authStartTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})\" src=\"${basePath}/js/calendar/skin/datePicker.gif\" width=\"16\" height=\"22\" align=\"absmiddle\">-<input id=\"authEndTime\" name=\"authEndTime\" class=\"easyui-validatebox\"    value=\"\"/><img onclick=\"WdatePicker({el:'authEndTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})\" src=\"${basePath}/js/calendar/skin/datePicker.gif\" width=\"16\" height=\"22\" align=\"absmiddle\"></td></tr>" +
+                    "<tr><td>授权日期：</td><td><input id=\"openTime\" name=\"authStartTime\" class=\"easyui-validatebox\"  value=\"\"/><img onclick=\"WdatePicker({el:'authStartTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})\" src=\"${basePath}/js/calendar/skin/datePicker.gif\" width=\"16\" height=\"22\" align=\"absmiddle\">-<input id=\"createTime\" name=\"authEndTime\" class=\"easyui-validatebox\"    value=\"\"/><img onclick=\"WdatePicker({el:'authEndTime',dateFmt:'yyyy-MM-dd HH:mm:ss'})\" src=\"${basePath}/js/calendar/skin/datePicker.gif\" width=\"16\" height=\"22\" align=\"absmiddle\"></td></tr>" +
                     "<tr><td>授权人员：</td><td><input id=userId /></td></tr></table>",
                     width: 500,
                     buttons: [{
@@ -254,13 +267,14 @@
                 });
             }
 
+
             function uquery() {
                 infolist.datagrid({
-                    url: '${basePath}/authlog/list',
+                    url: '${basePath}/openlog/qTime',
                     queryParams: {
-                        'authName': $('#authName').val(),
-                        'authStartTime': $('#authStartTime').val(),
-                        'authEndTime': $('#authEndTime').val(),
+
+                        'openTime': $('#openTime').val(),
+                        'createTime': $('#createTime').val(),
                         'userId':$('#userId').val()
                     },
                     loadMsg: '数据装载中......'
@@ -269,6 +283,7 @@
                 displayMsg();
                 $.closeWin(addWin);
             }
+
 
             $('#tree').tree({
                 checkbox: false,
@@ -279,6 +294,7 @@
                 onClick:function(node){
                     deptId = node.id;
                     getUsers(deptId);
+                    getLock(deptId);
                 }
             });
             function getUsers(obj) {
@@ -290,6 +306,19 @@
                     var d=JSON.parse(data);
                     for(var i=0;i<d.length;i++){
                         $('#userId').append("<option value='" + d[i].id + "'>" + d[i].username + "</option>");
+                    }
+                });
+            }
+
+            function getLock(obj) {
+                var data = {
+                    "deptId": obj
+                };
+                //获取锁
+                $.post("${basePath}/authorization/dept/getlocks", data, function (data) {
+                    var d = JSON.parse(data);
+                    for (var i = 0; i < d.length; i++) {
+                        $('#lockName').append("<option value='" + d[i].lockNum + "'>" + d[i].lockNum + "</option>");
                     }
                 });
             }
@@ -307,6 +336,46 @@
             $('#infolist').datagrid("clearSelections");
             //displayMsg();
         }
+
+        //获取锁名称
+        function qureyLock() {
+            $('#infolist').datagrid({
+                url: '${basePath}/openlog/locklist',
+                queryParams: {
+                    'lockName': $('#lockName').val()
+                },
+                loadMsg: '数据装载中......'
+            });
+            $('#infolist').datagrid("clearSelections");
+
+        }
+
+
+        //时间查询
+        function queryTime(c) {
+            var openTime = $('#gopenTime').val();
+            var createTime = $('#gcreateTime').val();
+
+            alert('显示');
+            $('#infolist').datagrid({
+                url: '${basePath}/openlog/queryTime',
+
+                queryParams: {
+//                        'userId':userId,
+                    'openTime': openTime,
+                    'createTime': createTime,
+
+//                    'openTime':$('#openTime').val(),
+//                    'createTime':$('#createTime').val(),
+                },
+
+                loadMsg: '数据装载中......'
+            });
+            $('#infolist').datagrid("clearSelections");
+//                displayMsg();
+        }
+
+
     </script>
 </head>
 <body>
@@ -324,8 +393,55 @@
                     <td><select id='userId' style='width: 150px;'></select>
                     </td>
                     <td><button onclick="searchUser()">查询</button></td>
+
+                    <td>锁具编号：</td>
+                    <td><select id='lockName' style='width: 150px;'></select>
+                    </td>
+                    <td>
+                        <button onclick="qureyLock()">查询</button>
+                    </td>
+
+
+                    <%--<td>开闭锁时间：</td>--%>
+                    <%--<td>--%>
+                    <%--<input id="gopenTime" name="gopenTime" class="easyui-validatebox"  value=""/>--%>
+                    <%--<img onclick="WdatePicker({el:'gopenTime,',dateFmt:'yyyy-MM-dd'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">--%>
+                    <%---<input id="gcreateTime," name="gcreateTime," class="easyui-validatebox"    value=""/>--%>
+                    <%--<img onclick="WdatePicker({el:'gcreateTime,',dateFmt:'yyyy-MM-dd'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">--%>
+
+                    <%--&lt;%&ndash;<input id="qopenTime" name="openTime" class="easyui-validatebox"   value=""/>  <img onclick="WdatePicker({el:'openTime',dateFmt:'yyyy-MM-dd'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">&ndash;%&gt;--%>
+
+                    <%--</td>--%>
+                    <%--<td><button onclick="queryTime()">查询</button></td>--%>
+
+
                 </tr>
             </table>
+
+            <%--<table style='font-size:12px;'>--%>
+            <%--<tr>--%>
+            <%--<td>开闭锁时间：</td>--%>
+            <%--<td>--%>
+            <%--&lt;%&ndash;<input id="openTime" name="openTime" class="easyui-validatebox"  value=""/>&ndash;%&gt;--%>
+            <%--&lt;%&ndash;<img onclick="WdatePicker({el:'openTime,',dateFmt:'yyyy-MM-dd'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">&ndash;%&gt;--%>
+            <%--&lt;%&ndash;-<input id="createTime," name="createTime," class="easyui-validatebox"    value=""/>&ndash;%&gt;--%>
+            <%--&lt;%&ndash;<img onclick="WdatePicker({el:'createTime,',dateFmt:'yyyy-MM-dd'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">&ndash;%&gt;--%>
+
+            <%--<input id="qopenTime" name="openTime" class="easyui-validatebox"   value=""/>  <img onclick="WdatePicker({el:'openTime',dateFmt:'yyyy-MM-dd'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">--%>
+
+            <%--</td>--%>
+            <%--<td><button onclick="queryTime(1)">查询</button></td>--%>
+            <%--</tr>--%>
+            <%--<tr>--%>
+            <%--<td>授权  时间：</td>--%>
+            <%--<td>--%>
+
+            <%--<input id="qcreateTime," name="createTime," class="easyui-validatebox"    value=""/>--%>
+            <%--<img onclick="WdatePicker({el:'qcreateTime,',dateFmt:'yyyy-MM-dd'})" src="${basePath}/js/calendar/skin/datePicker.gif" width="16" height="22" align="absmiddle">--%>
+            <%--</td>--%>
+            <%--<td><button onclick="queryTime(2)">查询</button></td>--%>
+            <%--</tr>--%>
+            <%--</table>--%>
             <table id="infolist"></table>
         </td>
     </tr>

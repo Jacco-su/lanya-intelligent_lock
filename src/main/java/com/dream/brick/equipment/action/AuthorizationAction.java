@@ -249,6 +249,18 @@ public class AuthorizationAction {
         }
         return null;
     }
+
+    @RequestMapping("/dept/getlocks")
+    @ResponseBody
+    public String getLockAction(String deptId) {
+        if (StringUtils.isNotEmpty(deptId)) {
+            Department department = deptDao.find(Department.class, deptId);
+            deptId = department.getAreacode();
+        }
+        return JSON.toJSONString(authorizationDao.findList("from Locks where qgdis.dept.areacode like '" + deptId + "%' order by lockDate desc"));
+
+    }
+
     @RequestMapping("/dept/locks")
     @ResponseBody
     public String getLocksByDeptAction(String deptId) {

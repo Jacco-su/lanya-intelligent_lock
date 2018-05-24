@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>授权记录信息</title>
+    <title>授权消息列表</title>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/js/easyui/themes/icon.css"/>
     <script type="text/javascript" src="${basePath}/js/jquery-1.4.4.min.js"></script>
@@ -322,6 +322,7 @@
     </script>
 </head>
 <body>
+
 <table id="infolist"></table>
 </body>
 </html>

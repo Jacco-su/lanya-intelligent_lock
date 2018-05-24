@@ -81,6 +81,10 @@
                     text : '监控',
                     iconCls : 'icon-search',
                     handler : edit
+                }, '-', {
+                    text: '查询',
+                    iconCls: 'icon-search',
+                    handler: search
                 } ]
             });
             displayMsg();
